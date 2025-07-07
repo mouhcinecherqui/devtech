@@ -234,3 +234,65 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
   }
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+:root {
+  --color-bg: #f7f7f7;
+  --color-bg-card: #fff;
+  --color-text: #222;
+  --color-sidebar: #1a232b;
+  --color-sidebar-active: #2d3a48;
+  --color-primary: #4f8cff;
+  --color-success: #5ecba1;
+  --color-warning: #ffb347;
+  --color-danger: #ff6b6b;
+  --color-info: #4fc3f7;
+  --color-border: #e0e0e0;
+}
+.light-theme {
+  --color-bg: #f7f7f7;
+  --color-bg-card: #fff;
+  --color-text: #222;
+  --color-sidebar: #1a232b;
+  --color-sidebar-active: #2d3a48;
+}
+.dark-theme {
+  --color-bg: #181c20;
+  --color-bg-card: #23272f;
+  --color-text: #f7f7f7;
+  --color-sidebar: #23272f;
+  --color-sidebar-active: #2d3a48;
+}
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+}
+.card,
+.jh-card,
+.main-footer,
+.main-header,
+.dashboard-main {
+  background: var(--color-bg-card) !important;
+  color: var(--color-text) !important;
+}
+.sidebar-nav {
+  background: var(--color-sidebar);
+}
+.sidebar-nav li.active a,
+.sidebar-nav a:hover {
+  background: var(--color-sidebar-active);
+  color: var(--color-primary);
+}
+.theme-switch {
+  position: absolute;
+  top: 1.2rem;
+  right: 2.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--color-text);
+}

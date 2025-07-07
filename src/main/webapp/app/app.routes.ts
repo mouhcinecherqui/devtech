@@ -37,6 +37,24 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
   },
+  {
+    path: 'bug-report',
+    loadComponent: () => import('./bug-report/bug-report.component').then(m => m.BugReportComponent),
+    title: 'Bug Report',
+  },
+  {
+    path: 'user-dashboard',
+    loadComponent: () => import('./user-dashboard/user-dashboard.component').then(m => m.UserDashboardComponent),
+    canActivate: [UserRouteAccessService],
+    title: 'User Dashboard',
+  },
+  {
+    path: 'admin-dashboard',
+    loadComponent: () => import('./admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.ADMIN] },
+    title: 'Admin Dashboard',
+  },
   ...errorRoute,
 ];
 

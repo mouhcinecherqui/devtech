@@ -21,3 +21,49 @@ Main page styles
     background-size: contain;
   }
 }
+
+.landing-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.landing-navbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+}
+
+.landing-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.landing-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.landing-btn {
+  background: #008080;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  margin-bottom: 2.5rem;
+  cursor: pointer;
+}
+
+.landing-section {
+  margin-bottom: 2rem;
+}
+
+.landing-section h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}

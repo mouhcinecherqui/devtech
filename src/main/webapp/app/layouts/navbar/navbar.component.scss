@@ -34,3 +34,37 @@ Logo styles
   background: url('/content/images/logo-jhipster.png') no-repeat center center;
   background-size: contain;
 }
+
+.main-header {
+  width: 100vw;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 64px;
+}
+.header-left .site-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #008080;
+  text-decoration: none;
+}
+.header-nav {
+  display: flex;
+  gap: 1.5rem;
+}
+.header-nav a {
+  color: #222;
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+.header-nav a.active,
+.header-nav a:hover {
+  background: #e0f7fa;
+  color: #008080;
+}

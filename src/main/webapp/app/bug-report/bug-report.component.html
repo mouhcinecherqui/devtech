@@ -1,0 +1,19 @@
+<div class="bug-report-card">
+  <nav class="bug-report-navbar">
+    <span>Home</span>
+    <span style="float: right">Login</span>
+  </nav>
+  <h2>Submit a Bug Report</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!submitted">
+    <label>Name</label>
+    <input type="text" formControlName="name" required />
+    <label>Email</label>
+    <input type="email" formControlName="email" required />
+    <label>Website URL</label>
+    <input type="url" formControlName="website" />
+    <label>Description</label>
+    <textarea formControlName="description" required></textarea>
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+  <div *ngIf="submitted" class="success-message">Thank you for your report!</div>
+</div>

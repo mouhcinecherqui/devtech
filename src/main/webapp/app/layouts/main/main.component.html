@@ -4,10 +4,26 @@
   <router-outlet name="navbar" />
 </div>
 
-<div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet />
+<!-- Sidebar and theme switch only for authenticated pages -->
+<ng-container *ngIf="accountService.isAuthenticated()">
+  <div class="main-layout-with-sidebar">
+    <app-sidebar></app-sidebar>
+    <div class="main-content-area">
+      <button class="theme-switch" (click)="toggleTheme()">🌓</button>
+      <div class="container-fluid">
+        <div class="card jh-card">
+          <router-outlet />
+        </div>
+        <jhi-footer />
+      </div>
+    </div>
   </div>
-
-  <jhi-footer />
-</div>
+</ng-container>
+<ng-container *ngIf="!accountService.isAuthenticated()">
+  <div class="container-fluid">
+    <div class="card jh-card">
+      <router-outlet />
+    </div>
+    <jhi-footer />
+  </div>
+</ng-container>
