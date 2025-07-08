@@ -2,6 +2,8 @@
   <nav class="landing-navbar"></nav>
 
   <main>
+    <span *ngIf="account()?.authorities?.includes('ROLE_ADMIN')">Welcome, admin!</span>
+    <span *ngIf="account()?.authorities?.includes('ROLE_USER') && !account()?.authorities?.includes('ROLE_ADMIN')">Welcome, user!</span>
     <h1 class="landing-title">Professional Web Troubleshooting</h1>
     <p class="landing-subtitle">
       Need help fixing bugs or resolving technical issues on your website? We offer expert web support and bug fixing services.

@@ -1,0 +1,24 @@
+.main-layout-with-sidebar {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.main-content-area {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #f7f7f7;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.container-fluid {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}

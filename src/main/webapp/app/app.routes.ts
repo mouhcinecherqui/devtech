@@ -46,6 +46,7 @@ const routes: Routes = [
     path: 'user-dashboard',
     loadComponent: () => import('./user-dashboard/user-dashboard.component').then(m => m.UserDashboardComponent),
     canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.USER] },
     title: 'User Dashboard',
   },
   {
@@ -54,6 +55,11 @@ const routes: Routes = [
     canActivate: [UserRouteAccessService],
     data: { authorities: [Authority.ADMIN] },
     title: 'Admin Dashboard',
+  },
+  {
+    path: 'app-user-register',
+    loadComponent: () => import('./app-user-register/app-user-register.component').then(m => m.AppUserRegisterComponent),
+    title: 'Register New User',
   },
   ...errorRoute,
 ];

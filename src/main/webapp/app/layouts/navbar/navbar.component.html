@@ -1,11 +1,18 @@
 <header class="main-header">
   <div class="header-left">
-    <a class="site-title" routerLink="/">Devtech</a>
+    <a class="site-title" routerLink="/">
+      <img src="/content/images/devtech.png" alt="DevTech Logo" style="height: 160px; vertical-align: middle" />
+    </a>
   </div>
   <nav class="header-nav">
     <a routerLink="/" routerLinkActive="active">Home</a>
     <a routerLink="/bug-report" routerLinkActive="active">Bug Report</a>
-    <a *ngIf="account()" routerLink="/user-dashboard" routerLinkActive="active">User Dashboard</a>
+    <a
+      *ngIf="account() && account()?.authorities?.includes('ROLE_USER') && !account()?.authorities?.includes('ROLE_ADMIN')"
+      routerLink="/user-dashboard"
+      routerLinkActive="active"
+      >User Dashboard</a
+    >
     <a *ngIf="account() && account()?.authorities?.includes('ROLE_ADMIN')" routerLink="/admin-dashboard" routerLinkActive="active"
       >Admin Dashboard</a
     >

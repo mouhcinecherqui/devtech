@@ -13,6 +13,7 @@ import { SidebarComponent } from './sidebar.component';
 @Component({
   selector: 'jhi-main',
   templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss'],
   providers: [AppPageTitleStrategy],
   imports: [CommonModule, RouterOutlet, FooterComponent, PageRibbonComponent, SidebarComponent],
 })

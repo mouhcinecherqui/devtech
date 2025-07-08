@@ -1,12 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-bug-report',
   templateUrl: './bug-report.component.html',
   styleUrls: ['./bug-report.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class BugReportComponent {
   form: FormGroup;
@@ -23,6 +24,6 @@ export class BugReportComponent {
 
   submit() {
     this.submitted = true;
-    // You can handle the form data here: this.form.value
+    // Here you would send the data to the backend
   }
 }
