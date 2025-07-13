@@ -1,0 +1,45 @@
+<h2>Clients</h2>
+<p>Liste et gestion des clients enregistrés sur la plateforme.</p>
+<div style="display: flex; gap: 2rem; margin-bottom: 1rem">
+  <div><strong>Total:</strong> 6</div>
+  <div><strong>Actifs:</strong> 4</div>
+  <div><strong>Inactifs:</strong> 2</div>
+</div>
+<button style="margin-bottom: 1rem">Ajouter un client</button>
+<input type="text" placeholder="Rechercher un client..." style="margin-bottom: 1rem; display: block; width: 100%; max-width: 300px" />
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Statut</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let client of clients">
+      <td>{{ client.id }}</td>
+      <td>{{ client.name }}</td>
+      <td>{{ client.email }}</td>
+      <td>{{ client.status }}</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>David</td>
+      <td>david&#64;example.com</td>
+      <td>Actif</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Eva</td>
+      <td>eva&#64;example.com</td>
+      <td>Inactif</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Frank</td>
+      <td>frank&#64;example.com</td>
+      <td>Actif</td>
+    </tr>
+  </tbody>
+</table>

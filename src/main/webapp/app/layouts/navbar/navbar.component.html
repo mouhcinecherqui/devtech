@@ -6,7 +6,6 @@
   </div>
   <nav class="header-nav">
     <a routerLink="/" routerLinkActive="active">Home</a>
-    <a routerLink="/bug-report" routerLinkActive="active">Bug Report</a>
     <a
       *ngIf="account() && account()?.authorities?.includes('ROLE_USER') && !account()?.authorities?.includes('ROLE_ADMIN')"
       routerLink="/user-dashboard"
@@ -17,6 +16,7 @@
       >Admin Dashboard</a
     >
     <a *ngIf="!account()" (click)="login()">Login</a>
+    <a *ngIf="!account()" routerLink="/app-user-register" routerLinkActive="active">Register</a>
     <a *ngIf="account()" (click)="logout()">Logout</a>
   </nav>
 </header>

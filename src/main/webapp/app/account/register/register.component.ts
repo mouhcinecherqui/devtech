@@ -71,6 +71,10 @@ export default class RegisterComponent implements AfterViewInit {
     }
   }
 
+  loginWithProvider(provider: 'google') {
+    window.location.href = `/oauth2/authorization/${provider}`;
+  }
+
   private processError(response: HttpErrorResponse): void {
     if (response.status === 400 && response.error.type === LOGIN_ALREADY_USED_TYPE) {
       this.errorUserExists.set(true);

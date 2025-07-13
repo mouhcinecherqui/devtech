@@ -1,0 +1,35 @@
+<h2>Paramètres</h2>
+<p>Gérez les paramètres globaux de la plateforme et configurez les options système.</p>
+<div style="display: flex; gap: 2rem; margin-bottom: 1rem">
+  <div><strong>Total:</strong> 5</div>
+  <div><strong>Modifiables:</strong> 3</div>
+  <div><strong>Lecture seule:</strong> 2</div>
+</div>
+<button style="margin-bottom: 1rem">Ajouter un paramètre</button>
+<input type="text" placeholder="Rechercher un paramètre..." style="margin-bottom: 1rem; display: block; width: 100%; max-width: 300px" />
+<table>
+  <thead>
+    <tr>
+      <th>Clé</th>
+      <th>Valeur</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let parameter of parameters">
+      <td>{{ parameter.key }}</td>
+      <td>{{ parameter.value }}</td>
+      <td>{{ parameter.description }}</td>
+    </tr>
+    <tr>
+      <td>Max Users</td>
+      <td>1000</td>
+      <td>Nombre maximum d'utilisateurs</td>
+    </tr>
+    <tr>
+      <td>Maintenance</td>
+      <td>Off</td>
+      <td>Mode maintenance activé/désactivé</td>
+    </tr>
+  </tbody>
+</table>

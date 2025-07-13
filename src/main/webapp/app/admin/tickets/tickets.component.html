@@ -1,0 +1,58 @@
+<h2>Tickets</h2>
+<p>Gérez les tickets de support et suivez leur statut en temps réel.</p>
+<div style="display: flex; gap: 2rem; margin-bottom: 1rem">
+  <div><strong>Total:</strong> 8</div>
+  <div><strong>Ouverts:</strong> 3</div>
+  <div><strong>Fermés:</strong> 4</div>
+  <div><strong>En attente:</strong> 1</div>
+</div>
+<button style="margin-bottom: 1rem">Créer un nouveau ticket</button>
+<input type="text" placeholder="Rechercher un ticket..." style="margin-bottom: 1rem; display: block; width: 100%; max-width: 300px" />
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Statut</th>
+      <th>Créé le</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let ticket of tickets">
+      <td>{{ ticket.id }}</td>
+      <td>{{ ticket.title }}</td>
+      <td>{{ ticket.status }}</td>
+      <td>{{ ticket.created }}</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Erreur d'affichage</td>
+      <td>Fermé</td>
+      <td>2024-06-04</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Problème de notification</td>
+      <td>Ouvert</td>
+      <td>2024-06-05</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>Demande d'accès</td>
+      <td>Fermé</td>
+      <td>2024-06-06</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>Bug mobile</td>
+      <td>Fermé</td>
+      <td>2024-06-07</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>Problème de paiement</td>
+      <td>En attente</td>
+      <td>2024-06-08</td>
+    </tr>
+  </tbody>
+</table>

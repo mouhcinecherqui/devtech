@@ -1,0 +1,28 @@
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-login .btn-outline-primary {
+  border-color: #4285f4;
+  color: #4285f4;
+  background: #fff;
+}
+.social-login .btn-outline-primary:hover {
+  background: #4285f4;
+  color: #fff;
+}
+.social-login .btn-outline-info {
+  border-color: #0077b5;
+  color: #0077b5;
+  background: #fff;
+}
+.social-login .btn-outline-info:hover {
+  background: #0077b5;
+  color: #fff;
+}
+.social-login i {
+  margin-right: 0.5rem;
+}

@@ -1,5 +1,10 @@
 import { Routes } from '@angular/router';
 /* jhipster-needle-add-admin-module-import - JHipster will add admin modules imports here */
+import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { TicketsComponent } from './tickets/tickets.component';
+import { PaiementsComponent } from './paiements/paiements.component';
+import { ClientsComponent } from './clients/clients.component';
+import { ParametersComponent } from './parameters/parameters.component';
 
 const routes: Routes = [
   {
@@ -31,6 +36,30 @@ const routes: Routes = [
     path: 'metrics',
     loadComponent: () => import('./metrics/metrics.component'),
     title: 'metrics.title',
+  },
+  {
+    path: 'tickets',
+    component: TicketsComponent,
+    canActivate: [UserRouteAccessService],
+    data: { authorities: ['ROLE_ADMIN'], title: 'Tickets' },
+  },
+  {
+    path: 'paiements',
+    component: PaiementsComponent,
+    canActivate: [UserRouteAccessService],
+    data: { authorities: ['ROLE_ADMIN'], title: 'Paiements' },
+  },
+  {
+    path: 'clients',
+    component: ClientsComponent,
+    canActivate: [UserRouteAccessService],
+    data: { authorities: ['ROLE_ADMIN'], title: 'Clients' },
+  },
+  {
+    path: 'parameters',
+    component: ParametersComponent,
+    canActivate: [UserRouteAccessService],
+    data: { authorities: ['ROLE_ADMIN'], title: 'Paramètres' },
   },
   /* jhipster-needle-add-admin-route - JHipster will add admin routes here */
 ];

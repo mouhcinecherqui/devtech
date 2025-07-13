@@ -28,20 +28,25 @@ export class AppUserRegisterComponent {
     });
   }
 
-  submit() {
-    this.submitted = true;
-    if (this.form.invalid) return;
-    this.http.post('/api/app-users', this.form.value).subscribe({
-      next: () => {
-        this.success = true;
-        this.error = false;
-        this.form.reset();
-        this.submitted = false;
-      },
-      error: () => {
-        this.error = true;
-        this.success = false;
-      },
-    });
+  submit(): void {
+    if (this.form.valid) {
+      this.submitted = true;
+      this.http.post('/api/app-users', this.form.value).subscribe({
+        next: () => {
+          this.success = true;
+          this.error = false;
+          this.form.reset();
+          this.submitted = false;
+        },
+        error: () => {
+          this.error = true;
+          this.success = false;
+        },
+      });
+    }
+  }
+
+  loginWithProvider(provider: 'google') {
+    window.location.href = `/oauth2/authorization/${provider}`;
   }
 }

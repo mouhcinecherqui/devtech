@@ -38,6 +38,11 @@
   <div class="d-flex justify-content-center">
     <div class="col-md-8">
       @if (!success()) {
+        <div class="social-login mb-4 text-center">
+          <button class="btn btn-outline-primary me-2" (click)="loginWithProvider('google')">
+            <i class="fab fa-google"></i> S'inscrire avec Google
+          </button>
+        </div>
         <form name="form" (ngSubmit)="register()" [formGroup]="registerForm">
           <div class="mb-3">
             <label class="form-label" for="login" jhiTranslate="global.form.username.label">Nom d&apos;utilisateur</label>

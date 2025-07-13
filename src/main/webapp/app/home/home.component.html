@@ -1,26 +1,78 @@
-<div class="landing-container">
-  <nav class="landing-navbar"></nav>
-
-  <main>
-    <span *ngIf="account()?.authorities?.includes('ROLE_ADMIN')">Welcome, admin!</span>
-    <span *ngIf="account()?.authorities?.includes('ROLE_USER') && !account()?.authorities?.includes('ROLE_ADMIN')">Welcome, user!</span>
-    <h1 class="landing-title">Professional Web Troubleshooting</h1>
-    <p class="landing-subtitle">
-      Need help fixing bugs or resolving technical issues on your website? We offer expert web support and bug fixing services.
-    </p>
-    <button class="landing-btn">GET HELP NOW</button>
-
-    <section class="landing-section">
-      <h2>Bug Fixing</h2>
-      <p>We diagnose and fix bugs affecting your site's functionality and performance.</p>
-    </section>
-    <section class="landing-section">
-      <h2>Security</h2>
-      <p>Protect your website from threats with our security solutions.</p>
-    </section>
-    <section class="landing-section">
-      <h2>Performance</h2>
-      <p>Improve your site's speed and overall performance.</p>
-    </section>
-  </main>
+<div class="landing-background-decor" *ngIf="!account()">
+  <div class="left-gradient"></div>
+  <div class="right-gradient"></div>
+</div>
+<div *ngIf="!account()">
+  <div class="landing-container">
+    <main>
+      <section class="company-intro">
+        <h1 class="landing-title">Welcome to DevTech</h1>
+        <p class="landing-subtitle">
+          DevTech is your trusted partner for digital innovation. We specialize in building modern web applications and robust e-commerce
+          platforms with CMS integration. Our mission is to empower your business with the latest web technologies and deliver solutions
+          tailored to your needs.
+        </p>
+      </section>
+      <section class="landing-section services">
+        <h2>Our Services</h2>
+        <ul>
+          <li>
+            <strong>Custom Web Application Development:</strong> Scalable, secure, and high-performance web apps for any business need.
+          </li>
+          <li>
+            <strong>E-commerce Website Development:</strong> Online stores with seamless CMS integration, payment gateways, and inventory
+            management.
+          </li>
+          <li><strong>Content Management Systems (CMS):</strong> Flexible and user-friendly CMS solutions for easy website management.</li>
+          <li>
+            <strong>Website Maintenance & Support:</strong> Ongoing support, bug fixing, and performance optimization for your digital
+            assets.
+          </li>
+          <li>
+            <strong>Web Consulting & Digital Strategy:</strong> Expert advice to help you choose the right technology stack and grow your
+            online presence.
+          </li>
+        </ul>
+      </section>
+      <section class="landing-section why-choose">
+        <h2>Why Choose DevTech?</h2>
+        <ul>
+          <li>Experienced team of web developers and designers</li>
+          <li>Client-focused approach and transparent communication</li>
+          <li>Agile development process for faster delivery</li>
+          <li>Latest web technologies and best practices</li>
+          <li>Comprehensive post-launch support</li>
+        </ul>
+      </section>
+      <section class="landing-section cta">
+        <h2>Ready to start your web project?</h2>
+        <p>Contact us today to discuss your web application or e-commerce needs and get a free consultation!</p>
+        <button class="landing-btn" (click)="login()">Get Started</button>
+      </section>
+    </main>
+  </div>
+</div>
+<div *ngIf="account()">
+  <div class="landing-container">
+    <main>
+      <section class="company-intro">
+        <h1 class="landing-title">Welcome back, {{ account()?.firstName || account()?.login }}!</h1>
+        <p class="landing-subtitle">
+          You are logged in as <strong>{{ account()?.login }}</strong
+          >.
+        </p>
+      </section>
+      <section class="landing-section">
+        <h2>Your Account</h2>
+        <ul>
+          <li><strong>Email:</strong> {{ account()?.email }}</li>
+          <li><strong>Role(s):</strong> {{ account()?.authorities?.join(', ') }}</li>
+        </ul>
+      </section>
+      <section class="landing-section">
+        <h2>Get Started</h2>
+        <p>Explore your dashboard or use the navigation above to access your features.</p>
+      </section>
+    </main>
+  </div>
 </div>

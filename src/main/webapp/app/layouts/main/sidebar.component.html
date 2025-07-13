@@ -1,19 +1,20 @@
+<div style="color: red; font-size: 10px; word-break: break-all">{{ accountService.trackCurrentAccount() | json }}</div>
 <nav class="sidebar-nav">
   <ul>
     <li routerLinkActive="active">
       <a routerLink="/user-dashboard"><span class="icon">🏠</span> Accueil</a>
     </li>
-    <li routerLinkActive="active">
-      <a routerLink="/tickets"><span class="icon">🎫</span> Tickets</a>
+    <li routerLinkActive="active" *ngIf="isAdmin">
+      <a routerLink="/admin/tickets"><span class="icon">🎫</span> Tickets</a>
     </li>
-    <li routerLinkActive="active">
-      <a routerLink="/clients"><span class="icon">👤</span> Clients</a>
+    <li routerLinkActive="active" *ngIf="isAdmin">
+      <a routerLink="/admin/clients"><span class="icon">👤</span> Clients</a>
     </li>
-    <li routerLinkActive="active">
-      <a routerLink="/payments"><span class="icon">💳</span> Paiements</a>
+    <li routerLinkActive="active" *ngIf="isAdmin">
+      <a routerLink="/admin/paiements"><span class="icon">💳</span> Paiements</a>
     </li>
-    <li routerLinkActive="active">
-      <a routerLink="/settings"><span class="icon">⚙️</span> Paramètres</a>
+    <li routerLinkActive="active" *ngIf="isAdmin">
+      <a routerLink="/admin/parameters"><span class="icon">⚙️</span> Paramètres</a>
     </li>
   </ul>
 </nav>
