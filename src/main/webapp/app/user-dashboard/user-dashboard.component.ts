@@ -1,5 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+interface Ticket {
+  id?: number;
+  type: string;
+  description: string;
+  backofficeUrl?: string;
+  backofficeLogin?: string;
+  backofficePassword?: string;
+  hostingUrl?: string;
+  createdDate?: string;
+  status?: string;
+}
 
 @Component({
   selector: 'app-user-dashboard',
@@ -8,18 +21,32 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
 })
-export class UserDashboardComponent {
-  tickets = [
-    { id: 18, title: 'Fix bix a problem', status: 'Open' },
-    { id: 35, title: 'Treading in issues', status: 'In Progress' },
-    { id: 28, title: 'Wrong threatening', status: 'Closed' },
-    { id: 27, title: 'Framrk problem', status: 'Closed' },
-    { id: 42, title: 'Fixcel reading noises', status: 'Closed' },
-    { id: 43, title: 'Dangers in crise', status: 'Closed' },
-  ];
+export class UserDashboardComponent implements OnInit {
+  tickets: Ticket[] = [];
+  loading = false;
+  error: string | null = null;
+  stats = { tickets: 0, open: 0, closed: 0 };
 
-  getStatusClass(status: string): string {
-    const normalized = status.toLowerCase().replace(/\s+/g, '-');
-    return normalized;
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.fetchTickets();
+  }
+
+  fetchTickets(): void {
+    this.loading = true;
+    this.http.get<Ticket[]>('/api/tickets').subscribe({
+      next: tickets => {
+        this.tickets = tickets;
+        this.stats.tickets = tickets.length;
+        this.stats.open = tickets.filter(t => t.status === 'Nouveau' || t.status === 'En cours').length;
+        this.stats.closed = tickets.filter(t => t.status === 'Résolu' || t.status === 'Fermé').length;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Erreur lors du chargement des tickets';
+        this.loading = false;
+      },
+    });
   }
 }

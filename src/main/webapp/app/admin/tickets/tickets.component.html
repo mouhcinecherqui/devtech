@@ -1,58 +1,89 @@
 <h2>Tickets</h2>
 <p>Gérez les tickets de support et suivez leur statut en temps réel.</p>
-<div style="display: flex; gap: 2rem; margin-bottom: 1rem">
-  <div><strong>Total:</strong> 8</div>
-  <div><strong>Ouverts:</strong> 3</div>
-  <div><strong>Fermés:</strong> 4</div>
-  <div><strong>En attente:</strong> 1</div>
-</div>
-<button style="margin-bottom: 1rem">Créer un nouveau ticket</button>
-<input type="text" placeholder="Rechercher un ticket..." style="margin-bottom: 1rem; display: block; width: 100%; max-width: 300px" />
-<table>
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+<table *ngIf="tickets.length && !loading">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Titre</th>
+      <th>Type</th>
+      <th>Description</th>
       <th>Statut</th>
       <th>Créé le</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let ticket of tickets">
       <td>{{ ticket.id }}</td>
-      <td>{{ ticket.title }}</td>
+      <td>{{ ticket.type }}</td>
+      <td>{{ ticket.description }}</td>
       <td>{{ ticket.status }}</td>
-      <td>{{ ticket.created }}</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>Erreur d'affichage</td>
-      <td>Fermé</td>
-      <td>2024-06-04</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Problème de notification</td>
-      <td>Ouvert</td>
-      <td>2024-06-05</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>Demande d'accès</td>
-      <td>Fermé</td>
-      <td>2024-06-06</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>Bug mobile</td>
-      <td>Fermé</td>
-      <td>2024-06-07</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td>Problème de paiement</td>
-      <td>En attente</td>
-      <td>2024-06-08</td>
+      <td>{{ ticket.createdDate | date: 'short' }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm" (click)="openDetailModal(ticket)">Détail</button>
+      </td>
     </tr>
   </tbody>
 </table>
+<div *ngIf="!tickets.length && !loading && !error">Aucun ticket trouvé.</div>
+
+<!-- Modale de détail/modification du ticket -->
+<div
+  *ngIf="showDetailModal"
+  style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
+>
+  <div class="admin-ticket-modal">
+    <button (click)="closeDetailModal()" class="close-modal-btn" aria-label="Fermer">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="12" fill="#e0e7ef" />
+        <path d="M8 8L16 16M16 8L8 16" stroke="#2563eb" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
+    <h3>Détail du ticket</h3>
+    <div *ngIf="selectedTicket">
+      <div class="admin-ticket-row">
+        <div class="admin-ticket-label">Type :</div>
+        <div class="admin-ticket-value">{{ selectedTicket.type }}</div>
+      </div>
+      <div class="admin-ticket-row">
+        <div class="admin-ticket-label">Description :</div>
+        <div class="admin-ticket-value">{{ selectedTicket.description }}</div>
+      </div>
+      <div class="admin-ticket-row">
+        <div class="admin-ticket-label">Statut :</div>
+        <div class="admin-ticket-value" style="width: 100%">
+          <select [(ngModel)]="selectedTicket.status">
+            <option value="Nouveau">Nouveau</option>
+            <option value="En cours">En cours</option>
+            <option value="Résolu">Résolu</option>
+            <option value="Fermé">Fermé</option>
+          </select>
+        </div>
+      </div>
+      <div class="admin-ticket-row">
+        <div class="admin-ticket-label" style="align-self: flex-start">Messages au client :</div>
+        <div class="admin-ticket-value" style="width: 100%">
+          <ul class="admin-ticket-messages">
+            <li *ngFor="let msg of selectedTicket.messages">{{ msg }}</li>
+          </ul>
+          <textarea [(ngModel)]="newMessage" rows="2" placeholder="Ajouter un message..."></textarea>
+        </div>
+      </div>
+      <div class="admin-ticket-actions">
+        <button class="btn btn-success btn-sm" (click)="saveTicket()">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</div>

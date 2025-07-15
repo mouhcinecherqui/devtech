@@ -5,19 +5,19 @@
   <h1>Tableau de bord</h1>
   <div class="dashboard-stats">
     <div class="stat-card stat-blue">
-      <div class="stat-value">10</div>
+      <div class="stat-value">{{ stats.tickets }}</div>
       <div class="stat-label">TICKETS</div>
     </div>
     <div class="stat-card stat-cyan">
-      <div class="stat-value">3</div>
+      <div class="stat-value">{{ stats.open }}</div>
       <div class="stat-label">EN COURS</div>
     </div>
     <div class="stat-card stat-green">
-      <div class="stat-value">5</div>
+      <div class="stat-value">{{ stats.closed }}</div>
       <div class="stat-label">RÉSOLUS</div>
     </div>
     <div class="stat-card stat-red">
-      <div class="stat-value">2</div>
+      <div class="stat-value">{{ stats.urgent }}</div>
       <div class="stat-label">URGENT</div>
     </div>
   </div>
@@ -26,38 +26,37 @@
     <table class="dashboard-table">
       <thead>
         <tr>
-          <th>Titre</th>
-          <th>Client</th>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Description</th>
           <th>Statut</th>
           <th>Date</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Erreur de paiement</td>
-          <td>Hugo Martin</td>
-          <td><span class="badge badge-cyan">En cours</span></td>
-          <td>24/04/2024</td>
+        <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.id }}</td>
+          <td>{{ ticket.type }}</td>
+          <td>{{ ticket.description }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-cyan': ticket.status === 'En cours' || ticket.status === 'Nouveau',
+                'badge-green': ticket.status === 'Résolu',
+                'badge-red': ticket.status === 'Urgent' || ticket.status === 'Fermé',
+              }"
+              >{{ ticket.status }}</span
+            >
+          </td>
+          <td>{{ ticket.createdDate | date: 'short' }}</td>
         </tr>
-        <tr>
-          <td>Problème d'affichage</td>
-          <td>Sophie Leroy</td>
-          <td><span class="badge badge-green">Résolu</span></td>
-          <td>23/04/2024</td>
-        </tr>
-        <tr>
-          <td>Erreur de paiement</td>
-          <td>Thomas Dubois</td>
-          <td><span class="badge badge-red">Urgent</span></td>
-          <td>22/04/2024</td>
-        </tr>
-        <tr>
-          <td>Bug de formulaire</td>
-          <td>Emma Bernard</td>
-          <td><span class="badge badge-cyan">En cours</span></td>
-          <td>21/04/2024</td>
+        <tr *ngIf="!tickets.length && !loading && !error">
+          <td colspan="5">Aucun ticket trouvé.</td>
         </tr>
       </tbody>
     </table>
+    <div *ngIf="loading">Chargement...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
   </section>
 </main>

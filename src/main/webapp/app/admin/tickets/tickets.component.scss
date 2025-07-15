@@ -11,3 +11,117 @@ td {
 th {
   background: #f4f4f4;
 }
+.admin-ticket-modal {
+  background: #f8fafd;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  padding: 2.5rem 2rem 2rem 2rem;
+  min-width: 350px;
+  max-width: 95vw;
+  position: relative;
+  margin: 0 auto;
+}
+.admin-ticket-modal h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.admin-ticket-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.1rem;
+}
+.admin-ticket-label {
+  min-width: 110px;
+  color: #4f8cff;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+.admin-ticket-value {
+  color: #222;
+  font-size: 1rem;
+  word-break: break-word;
+}
+.admin-ticket-actions {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+  justify-content: flex-end;
+}
+.admin-ticket-modal select,
+.admin-ticket-modal textarea {
+  border-radius: 8px;
+  border: 1px solid #d0d7e2;
+  padding: 0.4rem 0.7rem;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  background: #f4f8fb;
+  transition: border 0.2s;
+}
+.admin-ticket-modal select:focus,
+.admin-ticket-modal textarea:focus {
+  border: 1.5px solid #4f8cff;
+  outline: none;
+}
+.admin-ticket-modal button {
+  border-radius: 8px;
+  font-size: 0.98rem;
+  padding: 0.35rem 1.1rem;
+  border: none;
+  background: #4f8cff;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.admin-ticket-modal button.btn-secondary {
+  background: #e0e7ef;
+  color: #2563eb;
+}
+.admin-ticket-modal button.btn-success {
+  background: #22c55e;
+}
+.admin-ticket-modal button:hover {
+  background: #2563eb;
+  color: #fff;
+}
+.admin-ticket-messages {
+  background: #f4f8fb;
+  border-radius: 8px;
+  padding: 0.7rem 1rem;
+  margin-bottom: 0.7rem;
+  max-height: 120px;
+  overflow-y: auto;
+}
+.admin-ticket-messages li {
+  margin-bottom: 0.4rem;
+  color: #333;
+  font-size: 0.97rem;
+}
+.close-modal-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close-modal-btn:hover svg circle {
+  fill: #2563eb;
+}
+.close-modal-btn:hover svg path {
+  stroke: #fff;
+}

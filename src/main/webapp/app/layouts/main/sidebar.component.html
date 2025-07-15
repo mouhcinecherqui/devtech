@@ -4,16 +4,19 @@
     <li routerLinkActive="active">
       <a routerLink="/user-dashboard"><span class="icon">🏠</span> Accueil</a>
     </li>
-    <li routerLinkActive="active" *ngIf="isAdmin">
+    <li routerLinkActive="active" *ngIf="isUser">
+      <a routerLink="/user-tickets"><span class="icon">🎫</span> Mes tickets</a>
+    </li>
+    <li routerLinkActive="active" *ngIf="isAdminOrManager">
       <a routerLink="/admin/tickets"><span class="icon">🎫</span> Tickets</a>
     </li>
-    <li routerLinkActive="active" *ngIf="isAdmin">
+    <li routerLinkActive="active" *ngIf="isAdminOrManager">
       <a routerLink="/admin/clients"><span class="icon">👤</span> Clients</a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdmin">
       <a routerLink="/admin/paiements"><span class="icon">💳</span> Paiements</a>
     </li>
-    <li routerLinkActive="active" *ngIf="isAdmin">
+    <li routerLinkActive="active" *ngIf="isAdminOrManager">
       <a routerLink="/admin/parameters"><span class="icon">⚙️</span> Paramètres</a>
     </li>
   </ul>

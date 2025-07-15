@@ -25,6 +25,14 @@ const routes: Routes = [
     loadChildren: () => import('./admin/admin.routes'),
   },
   {
+    path: 'manager',
+    data: {
+      authorities: [Authority.MANAGER],
+    },
+    canActivate: [UserRouteAccessService],
+    loadChildren: () => import('./manager/manager.routes'),
+  },
+  {
     path: 'account',
     loadChildren: () => import('./account/account.route'),
   },
@@ -57,9 +65,23 @@ const routes: Routes = [
     title: 'Admin Dashboard',
   },
   {
+    path: 'manager-dashboard',
+    loadComponent: () => import('./manager-dashboard/manager-dashboard.component').then(m => m.ManagerDashboardComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.MANAGER] },
+    title: 'Manager Dashboard',
+  },
+  {
     path: 'app-user-register',
     loadComponent: () => import('./app-user-register/app-user-register.component').then(m => m.AppUserRegisterComponent),
     title: 'Register New User',
+  },
+  {
+    path: 'user-tickets',
+    loadComponent: () => import('./user-tickets/user-tickets.component').then(m => m.UserTicketsComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.USER] },
+    title: 'Mes tickets',
   },
   ...errorRoute,
 ];

@@ -1,20 +1,18 @@
-<div class="dashboard-header">Welcome, user!</div>
-<h2>My Tickets</h2>
-<table class="tickets-table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Title</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let ticket of tickets">
-      <td>{{ ticket.id }}</td>
-      <td>{{ ticket.title }}</td>
-      <td>
-        <span class="status {{ getStatusClass(ticket.status) }}">{{ ticket.status }}</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="dashboard-header">Bienvenue, utilisateur !</div>
+<main class="dashboard-main-area">
+  <h1>Mes tickets</h1>
+  <div class="dashboard-stats">
+    <div class="stat-card stat-blue">
+      <div class="stat-value">{{ stats.tickets }}</div>
+      <div class="stat-label">TICKETS</div>
+    </div>
+    <div class="stat-card stat-cyan">
+      <div class="stat-value">{{ stats.open }}</div>
+      <div class="stat-label">EN COURS</div>
+    </div>
+    <div class="stat-card stat-green">
+      <div class="stat-value">{{ stats.closed }}</div>
+      <div class="stat-label">RÉSOLUS / FERMÉS</div>
+    </div>
+  </div>
+</main>

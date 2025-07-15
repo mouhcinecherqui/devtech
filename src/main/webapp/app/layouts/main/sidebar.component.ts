@@ -16,4 +16,16 @@ export class SidebarComponent {
   get isAdmin(): boolean {
     return this.accountService.hasAnyAuthority('ROLE_ADMIN');
   }
+
+  get isManager(): boolean {
+    return this.accountService.hasAnyAuthority('ROLE_MANAGER');
+  }
+
+  get isAdminOrManager(): boolean {
+    return this.isAdmin || this.isManager;
+  }
+
+  get isUser(): boolean {
+    return this.accountService.hasAnyAuthority('ROLE_USER') && !this.isAdmin && !this.isManager;
+  }
 }

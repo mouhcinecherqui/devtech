@@ -1,0 +1,123 @@
+.dashboard-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-user {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.dashboard-main-area {
+  padding: 2rem;
+  background: #f8f9fa;
+  min-height: calc(100vh - 80px);
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  color: #666;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-blue .stat-value {
+  color: #007bff;
+}
+.stat-cyan .stat-value {
+  color: #17a2b8;
+}
+.stat-green .stat-value {
+  color: #28a745;
+}
+.stat-red .stat-value {
+  color: #dc3545;
+}
+
+.dashboard-table-section {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-table-section h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.dashboard-table th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.dashboard-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-cyan {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.badge-green {
+  background: #d4edda;
+  color: #155724;
+}
+
+.badge-red {
+  background: #f8d7da;
+  color: #721c24;
+}

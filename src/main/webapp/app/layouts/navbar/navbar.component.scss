@@ -68,3 +68,119 @@ Logo styles
   background: #e0f7fa;
   color: #008080;
 }
+
+.notification-bell {
+  position: relative;
+  display: inline-block;
+  margin-left: 1.5rem;
+  cursor: pointer;
+  svg {
+    vertical-align: middle;
+    transition: filter 0.2s;
+  }
+  &:hover svg {
+    filter: brightness(0.85);
+  }
+}
+.notification-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ff3b3b;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  padding: 2px 8px;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  border: 2px solid #fff;
+  z-index: 2;
+}
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: 2.5rem;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  min-width: 300px;
+  z-index: 10000;
+  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
+  animation: fadeInNotif 0.18s;
+  border: 1px solid #e0e7ef;
+}
+@keyframes fadeInNotif {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.notification-dropdown .dropdown-header {
+  font-weight: 700;
+  color: #2563eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.08rem;
+}
+.mark-all-btn {
+  background: none;
+  border: none;
+  color: #4f8cff;
+  font-size: 0.97rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.mark-all-btn:hover {
+  color: #2563eb;
+}
+.notification-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 240px;
+  overflow-y: auto;
+}
+.notification-dropdown li {
+  padding: 0.6rem 0.2rem 0.6rem 0.7rem;
+  border-bottom: 1px solid #f0f2f5;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border-radius: 8px;
+  transition: background 0.18s;
+}
+.notification-dropdown li.unread {
+  background: #eaf3ff;
+  font-weight: 600;
+}
+.notification-dropdown li:hover {
+  background: #f4f8fb;
+}
+.notif-icon {
+  color: #2563eb;
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+.notif-message {
+  color: #222;
+  font-size: 1.01rem;
+  flex: 1;
+}
+.notif-date {
+  color: #888;
+  font-size: 0.85rem;
+  margin-top: 2px;
+  align-self: flex-end;
+  min-width: 70px;
+  text-align: right;
+}

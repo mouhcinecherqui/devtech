@@ -1,9 +1,48 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { AlertService } from 'app/core/util/alert.service';
+import { HttpClient } from '@angular/common/http';
+
+export interface Notification {
+  id: number;
+  userLogin: string;
+  message: string;
+  type: string;
+  isRead: boolean;
+  createdDate: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class NotificationService {
+  notifications = signal<Notification[]>([]);
+  unreadCount = signal(0);
+
+  constructor(private http: HttpClient) {}
+
+  fetchNotifications() {
+    this.http.get<Notification[]>('/api/notifications').subscribe(list => {
+      // Force le signal en créant une nouvelle référence
+      this.notifications.set([...list]);
+      this.unreadCount.set(list.filter(n => !n.isRead).length);
+      console.log('Notifications rafraîchies:', list);
+    });
+  }
+
+  markAsRead(id: number) {
+    return this.http.put(`/api/notifications/${id}/read`, {}).subscribe(() => {
+      this.fetchNotifications();
+    });
+  }
+
+  markAllAsRead() {
+    return this.http.put('/api/notifications/read-all', {}).subscribe(() => {
+      this.fetchNotifications();
+    });
+  }
+}
 
 @Injectable()
 export class NotificationInterceptor implements HttpInterceptor {

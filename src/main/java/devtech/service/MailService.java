@@ -1,12 +1,15 @@
 package devtech.service;
 
+import devtech.domain.Ticket;
 import devtech.domain.User;
+import devtech.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -39,16 +42,23 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
 
+    private final UserRepository userRepository;
+
+    @Value("${admin.mail:admin@localhost}")
+    private String adminEmail;
+
     public MailService(
         JHipsterProperties jHipsterProperties,
         JavaMailSender javaMailSender,
         MessageSource messageSource,
-        SpringTemplateEngine templateEngine
+        SpringTemplateEngine templateEngine,
+        UserRepository userRepository
     ) {
         this.jHipsterProperties = jHipsterProperties;
         this.javaMailSender = javaMailSender;
         this.messageSource = messageSource;
         this.templateEngine = templateEngine;
+        this.userRepository = userRepository;
     }
 
     @Async
@@ -116,5 +126,49 @@ public class MailService {
     public void sendPasswordResetMail(User user) {
         LOG.debug("Sending password reset email to '{}'", user.getEmail());
         sendEmailFromTemplateSync(user, "mail/passwordResetEmail", "email.reset.title");
+    }
+
+    @Async
+    public void sendTicketCreatedEmail(Ticket ticket) {
+        userRepository
+            .findOneByLogin(ticket.getCreatedBy())
+            .ifPresent(user -> {
+                String subject = "Votre ticket a été créé";
+                String content =
+                    "Bonjour " +
+                    user.getFirstName() +
+                    ",\n\nVotre ticket (ID: " +
+                    ticket.getId() +
+                    ") a bien été créé.\n\nDescription : " +
+                    ticket.getDescription() +
+                    "\n\nStatut : " +
+                    ticket.getStatus() +
+                    "\n\nMerci de votre confiance.";
+                sendEmail(user.getEmail(), subject, content, false, false);
+            });
+        // Notifier l'admin
+        String subjectAdmin = "Nouveau ticket créé (ID: " + ticket.getId() + ")";
+        String contentAdmin = "Un nouveau ticket a été créé par " + ticket.getCreatedBy() + ".\nDescription : " + ticket.getDescription();
+        sendEmail(adminEmail, subjectAdmin, contentAdmin, false, false);
+    }
+
+    @Async
+    public void sendTicketUpdatedEmail(Ticket ticket) {
+        userRepository
+            .findOneByLogin(ticket.getCreatedBy())
+            .ifPresent(user -> {
+                String subject = "Mise à jour de votre ticket (ID: " + ticket.getId() + ")";
+                String content =
+                    "Bonjour " +
+                    user.getFirstName() +
+                    ",\n\nVotre ticket a été mis à jour.\n\nNouveau statut : " +
+                    ticket.getStatus() +
+                    "\n\nDernier message : " +
+                    (ticket.getMessages() != null && !ticket.getMessages().isEmpty()
+                            ? ticket.getMessages().get(ticket.getMessages().size() - 1)
+                            : "") +
+                    "\n\nMerci de votre confiance.";
+                sendEmail(user.getEmail(), subject, content, false, false);
+            });
     }
 }

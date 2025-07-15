@@ -1,6 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../layouts/main/sidebar.component';
+import { HttpClient } from '@angular/common/http';
+
+interface Ticket {
+  id: number;
+  type: string;
+  description: string;
+  backofficeUrl?: string;
+  backofficeLogin?: string;
+  backofficePassword?: string;
+  hostingUrl?: string;
+  createdDate?: string;
+  status?: string;
+  messages?: string[];
+  author?: string;
+}
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -9,17 +24,34 @@ import { SidebarComponent } from '../layouts/main/sidebar.component';
   standalone: true,
   imports: [CommonModule, SidebarComponent],
 })
-export class AdminDashboardComponent {
-  stats = {
-    tickets: 10,
-    open: 3,
-    inProgress: 5,
-    closed: 2,
-  };
-  tickets = [
-    { id: 41, title: 'Fix bix a problem', author: 'user', created: 'Apr 21, 2022, at 1:55 AM' },
-    { id: 28, title: 'Threaten it issues', author: 'admin', created: 'Apr 21, 2022, at 1:34 AM' },
-    { id: 34, title: 'Wrong threatening', author: 'Jordon', created: 'Apr 21, 2022, at 1:34 AM' },
-    { id: 45, title: 'Fixcel reading noise-admin', author: 'admin', created: 'Apr 21, 2022, at 1:34 AM' },
-  ];
+export class AdminDashboardComponent implements OnInit {
+  tickets: Ticket[] = [];
+  loading = false;
+  error: string | null = null;
+  stats = { tickets: 0, open: 0, inProgress: 0, closed: 0, urgent: 0 };
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.fetchTickets();
+  }
+
+  fetchTickets(): void {
+    this.loading = true;
+    this.http.get<Ticket[]>('/api/tickets').subscribe({
+      next: tickets => {
+        this.tickets = tickets;
+        this.stats.tickets = tickets.length;
+        this.stats.open = tickets.filter(t => t.status === 'Nouveau' || t.status === 'En cours').length;
+        this.stats.inProgress = tickets.filter(t => t.status === 'En cours').length;
+        this.stats.closed = tickets.filter(t => t.status === 'Résolu' || t.status === 'Fermé').length;
+        this.stats.urgent = tickets.filter(t => t.status === 'Urgent').length;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Erreur lors du chargement des tickets';
+        this.loading = false;
+      },
+    });
+  }
 }
