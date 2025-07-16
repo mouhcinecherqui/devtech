@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable, inject, signal } from '@angular/core';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { AlertService } from 'app/core/util/alert.service';
 import { HttpClient } from '@angular/common/http';
@@ -23,12 +23,25 @@ export class NotificationService {
   constructor(private http: HttpClient) {}
 
   fetchNotifications() {
-    this.http.get<Notification[]>('/api/notifications').subscribe(list => {
-      // Force le signal en créant une nouvelle référence
-      this.notifications.set([...list]);
-      this.unreadCount.set(list.filter(n => !n.isRead).length);
-      console.log('Notifications rafraîchies:', list);
-    });
+    this.http
+      .get<Notification[]>('/api/notifications')
+      .pipe(
+        catchError(err => {
+          if (err.status === 401) {
+            // Not authenticated, clear notifications and do not throw error
+            this.notifications.set([]);
+            this.unreadCount.set(0);
+            return of([]);
+          }
+          throw err;
+        }),
+      )
+      .subscribe(list => {
+        // Force le signal en créant une nouvelle référence
+        this.notifications.set([...list]);
+        this.unreadCount.set(list.filter(n => !n.isRead).length);
+        console.log('Notifications rafraîchies:', list);
+      });
   }
 
   markAsRead(id: number) {

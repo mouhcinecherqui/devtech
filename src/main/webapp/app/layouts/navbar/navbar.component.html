@@ -23,6 +23,9 @@
     <a *ngIf="account() && account()?.authorities?.includes('ROLE_MANAGER')" routerLink="/manager-dashboard" routerLinkActive="active"
       >Manager Dashboard</a
     >
+    <a *ngIf="account() && account()?.authorities?.includes('ROLE_CLIENT')" routerLink="/client-dashboard" routerLinkActive="active">
+      Client Dashboard
+    </a>
     <div *ngIf="account()" class="notification-bell" (click)="toggleNotificationsDropdown()">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
         <path

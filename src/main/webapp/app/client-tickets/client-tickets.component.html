@@ -1,0 +1,188 @@
+<div class="client-tickets-container">
+  <h2>Mes tickets</h2>
+
+  <button class="btn btn-primary" (click)="openModal()">Créer un ticket</button>
+
+  <div
+    *ngIf="showModal()"
+    style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      style="
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        padding: 2rem;
+        min-width: 350px;
+        max-width: 95vw;
+        position: relative;
+      "
+    >
+      <h3>Créer un ticket</h3>
+      <form [formGroup]="ticketForm" (ngSubmit)="submit()" class="ticket-form">
+        <div>
+          <label for="type">Type de ticket *</label>
+          <select id="type" formControlName="type" required #typeInput>
+            <option value="" disabled>Sélectionner un type</option>
+            <option *ngFor="let t of ticketTypes" [value]="t">{{ t }}</option>
+          </select>
+        </div>
+        <div>
+          <label for="description">Description du problème *</label>
+          <textarea id="description" formControlName="description" required rows="3"></textarea>
+        </div>
+        <div>
+          <label for="backofficeUrl">Lien du backoffice</label>
+          <input id="backofficeUrl" formControlName="backofficeUrl" type="text" />
+        </div>
+        <div>
+          <label for="backofficeLogin">Identifiant backoffice</label>
+          <input id="backofficeLogin" formControlName="backofficeLogin" type="text" />
+        </div>
+        <div>
+          <label for="backofficePassword">Mot de passe backoffice</label>
+          <input id="backofficePassword" formControlName="backofficePassword" type="text" />
+        </div>
+        <div>
+          <label for="hostingUrl">URL d'hébergement</label>
+          <input id="hostingUrl" formControlName="hostingUrl" type="text" />
+        </div>
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="ticketForm.invalid || loading()">Créer le ticket</button>
+        </div>
+        <div *ngIf="error()" class="error">{{ error() }}</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modale de détails du ticket -->
+  <div
+    *ngIf="showDetailModal()"
+    style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <div
+      style="
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        padding: 2rem;
+        min-width: 350px;
+        max-width: 95vw;
+        position: relative;
+      "
+    >
+      <button
+        (click)="closeDetailModal()"
+        style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer"
+      >
+        &times;
+      </button>
+      <h3>Détail du ticket</h3>
+      <div *ngIf="selectedTicket">
+        <div class="workflow-bar">
+          <ng-container *ngFor="let step of workflowSteps; let i = index">
+            <div
+              class="workflow-step"
+              [ngClass]="{
+                'active-step': i <= getStepIndex(selectedTicket.status || 'Nouveau'),
+                'inactive-step': i > getStepIndex(selectedTicket.status || 'Nouveau'),
+              }"
+            >
+              <div class="step-circle">{{ i + 1 }}</div>
+              <div class="step-label">{{ step }}</div>
+            </div>
+            <span *ngIf="i < workflowSteps.length - 1" class="workflow-sep">→</span>
+          </ng-container>
+        </div>
+        <div class="ticket-detail-card">
+          <div class="ticket-detail-title">Informations du ticket</div>
+          <div class="ticket-detail-row">
+            <div class="ticket-detail-label">Statut :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.status }}</div>
+          </div>
+          <div class="ticket-detail-row">
+            <div class="ticket-detail-label">Type :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.type }}</div>
+          </div>
+          <div class="ticket-detail-row">
+            <div class="ticket-detail-label">Description :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.description }}</div>
+          </div>
+          <div class="ticket-detail-row" *ngIf="selectedTicket.backofficeUrl">
+            <div class="ticket-detail-label">Backoffice URL :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.backofficeUrl }}</div>
+          </div>
+          <div class="ticket-detail-row" *ngIf="selectedTicket.backofficeLogin">
+            <div class="ticket-detail-label">Backoffice Login :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.backofficeLogin }}</div>
+          </div>
+          <div class="ticket-detail-row" *ngIf="selectedTicket.backofficePassword">
+            <div class="ticket-detail-label">Backoffice Password :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.backofficePassword }}</div>
+          </div>
+          <div class="ticket-detail-row" *ngIf="selectedTicket.hostingUrl">
+            <div class="ticket-detail-label">Hébergement :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.hostingUrl }}</div>
+          </div>
+          <div class="ticket-detail-row">
+            <div class="ticket-detail-label">Date :</div>
+            <div class="ticket-detail-value">{{ selectedTicket.createdDate | date: 'short' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Historique de mes tickets</h3>
+  <div *ngIf="loading()">Chargement...</div>
+  <table *ngIf="tickets().length">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Backoffice</th>
+        <th>Hébergement</th>
+        <th>Date</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets()" (click)="openDetailModal(ticket)" style="cursor: pointer">
+        <td>{{ ticket.type }}</td>
+        <td>{{ ticket.description }}</td>
+        <td>
+          <div *ngIf="ticket.backofficeUrl">URL: {{ ticket.backofficeUrl }}</div>
+          <div *ngIf="ticket.backofficeLogin">Login: {{ ticket.backofficeLogin }}</div>
+          <div *ngIf="ticket.backofficePassword">Mot de passe: {{ ticket.backofficePassword }}</div>
+        </td>
+        <td>{{ ticket.hostingUrl }}</td>
+        <td>{{ ticket.createdDate | date: 'short' }}</td>
+        <td>{{ ticket.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!tickets().length && !loading()">Aucun ticket pour le moment.</div>
+</div>

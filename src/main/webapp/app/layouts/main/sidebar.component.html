@@ -13,11 +13,17 @@
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
       <a routerLink="/admin/clients"><span class="icon">👤</span> Clients</a>
     </li>
+    <li routerLinkActive="active" *ngIf="isClient">
+      <a routerLink="/client-tickets"><span class="icon">🎫</span> Mes tickets</a>
+    </li>
     <li routerLinkActive="active" *ngIf="isAdmin">
       <a routerLink="/admin/paiements"><span class="icon">💳</span> Paiements</a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
       <a routerLink="/admin/parameters"><span class="icon">⚙️</span> Paramètres</a>
+    </li>
+    <li routerLinkActive="active" *ngIf="isAdmin">
+      <a routerLink="/admin/users"><span class="icon">👥</span> Utilisateurs</a>
     </li>
   </ul>
 </nav>

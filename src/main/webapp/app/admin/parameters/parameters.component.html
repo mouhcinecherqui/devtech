@@ -1,35 +1,217 @@
-<h2>Paramètres</h2>
-<p>Gérez les paramètres globaux de la plateforme et configurez les options système.</p>
-<div style="display: flex; gap: 2rem; margin-bottom: 1rem">
-  <div><strong>Total:</strong> 5</div>
-  <div><strong>Modifiables:</strong> 3</div>
-  <div><strong>Lecture seule:</strong> 2</div>
+<h2 class="mb-4">Paramètres</h2>
+<p class="mb-4 text-secondary">Gérez les paramètres globaux de la plateforme et configurez les options système.</p>
+
+<div class="row g-4">
+  <!-- Section Statuts de tickets -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Statuts de tickets</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-status')">Ajouter un statut</button>
+        </div>
+        <div *ngIf="formType === 'ticket-status' && showForm" class="mb-3">
+          <form (ngSubmit)="save()" class="row g-2 align-items-end">
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+            </div>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Clé</th>
+                <th>Valeur</th>
+                <th>Description</th>
+                <th style="width: 110px">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parameter of ticketStatusList">
+                <td>{{ parameter.key }}</td>
+                <td>{{ parameter.value }}</td>
+                <td>{{ parameter.description }}</td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Types de tickets -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Types de tickets</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-type')">Ajouter un type</button>
+        </div>
+        <div *ngIf="formType === 'ticket-type' && showForm" class="mb-3">
+          <form (ngSubmit)="save()" class="row g-2 align-items-end">
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+            </div>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Clé</th>
+                <th>Valeur</th>
+                <th>Description</th>
+                <th style="width: 110px">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parameter of ticketTypeList">
+                <td>{{ parameter.key }}</td>
+                <td>{{ parameter.value }}</td>
+                <td>{{ parameter.description }}</td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Priorités de tickets -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Priorités de tickets</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-priority')">Ajouter une priorité</button>
+        </div>
+        <div *ngIf="formType === 'ticket-priority' && showForm" class="mb-3">
+          <form (ngSubmit)="save()" class="row g-2 align-items-end">
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+            </div>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Clé</th>
+                <th>Valeur</th>
+                <th>Description</th>
+                <th style="width: 110px">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parameter of ticketPriorityList">
+                <td>{{ parameter.key }}</td>
+                <td>{{ parameter.value }}</td>
+                <td>{{ parameter.description }}</td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section Autres paramètres -->
+  <div class="col-md-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="card-title mb-0">Autres paramètres</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('other')">Ajouter un paramètre</button>
+        </div>
+        <div *ngIf="formType === 'other' && showForm" class="mb-3">
+          <form (ngSubmit)="save()" class="row g-2 align-items-end">
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.type" name="type" placeholder="Type" />
+            </div>
+            <div class="col">
+              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+            </div>
+          </form>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Clé</th>
+                <th>Valeur</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th style="width: 110px">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let parameter of otherList">
+                <td>{{ parameter.key }}</td>
+                <td>{{ parameter.value }}</td>
+                <td>{{ parameter.type }}</td>
+                <td>{{ parameter.description }}</td>
+                <td>
+                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
+                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<button style="margin-bottom: 1rem">Ajouter un paramètre</button>
-<input type="text" placeholder="Rechercher un paramètre..." style="margin-bottom: 1rem; display: block; width: 100%; max-width: 300px" />
-<table>
-  <thead>
-    <tr>
-      <th>Clé</th>
-      <th>Valeur</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let parameter of parameters">
-      <td>{{ parameter.key }}</td>
-      <td>{{ parameter.value }}</td>
-      <td>{{ parameter.description }}</td>
-    </tr>
-    <tr>
-      <td>Max Users</td>
-      <td>1000</td>
-      <td>Nombre maximum d'utilisateurs</td>
-    </tr>
-    <tr>
-      <td>Maintenance</td>
-      <td>Off</td>
-      <td>Mode maintenance activé/désactivé</td>
-    </tr>
-  </tbody>
-</table>

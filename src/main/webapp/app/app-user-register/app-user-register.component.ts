@@ -25,6 +25,8 @@ export class AppUserRegisterComponent {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      type: ['client'],
     });
   }
 
