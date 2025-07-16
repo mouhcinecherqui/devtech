@@ -23,6 +23,9 @@
     <include file="config/liquibase/changelog/20240610_added_ticket_table.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240614_add_ticket_messages.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240614_add_notification_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240614_add_app_parameter_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240614_add_appuser_password.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240614_add_appuser_type.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

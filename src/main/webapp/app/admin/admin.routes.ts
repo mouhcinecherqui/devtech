@@ -4,11 +4,11 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { TicketsComponent } from './tickets/tickets.component';
 import { PaiementsComponent } from './paiements/paiements.component';
 import { ClientsComponent } from './clients/clients.component';
-import { ParametersComponent } from './parameters/parameters.component';
+import userManagementRoute from './user-management/user-management.route';
 
 const routes: Routes = [
   {
-    path: 'user-management',
+    path: 'users',
     loadChildren: () => import('./user-management/user-management.route'),
     title: 'userManagement.home.title',
   },
@@ -57,7 +57,7 @@ const routes: Routes = [
   },
   {
     path: 'parameters',
-    component: ParametersComponent,
+    loadComponent: () => import('./parameters/parameters.component').then(m => m.ParametersComponent),
     canActivate: [UserRouteAccessService],
     data: { authorities: ['ROLE_ADMIN'], title: 'Paramètres' },
   },

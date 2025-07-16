@@ -83,6 +83,20 @@ const routes: Routes = [
     data: { authorities: [Authority.USER] },
     title: 'Mes tickets',
   },
+  {
+    path: 'client-dashboard',
+    loadComponent: () => import('./client-dashboard/client-dashboard.component').then(m => m.ClientDashboardComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.CLIENT] },
+    title: 'Client Dashboard',
+  },
+  {
+    path: 'client-tickets',
+    loadComponent: () => import('./client-tickets/client-tickets.component').then(m => m.ClientTicketsComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.CLIENT] },
+    title: 'Mes Tickets',
+  },
   ...errorRoute,
 ];
 

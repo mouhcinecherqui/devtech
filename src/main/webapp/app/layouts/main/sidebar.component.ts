@@ -28,4 +28,8 @@ export class SidebarComponent {
   get isUser(): boolean {
     return this.accountService.hasAnyAuthority('ROLE_USER') && !this.isAdmin && !this.isManager;
   }
+
+  get isClient(): boolean {
+    return this.accountService.hasAnyAuthority('ROLE_CLIENT') && !this.isAdmin && !this.isManager;
+  }
 }

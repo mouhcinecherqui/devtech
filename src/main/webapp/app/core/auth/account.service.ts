@@ -78,7 +78,15 @@ export class AccountService {
   }
 
   private fetch(): Observable<Account> {
-    return this.http.get<Account>(this.applicationConfigService.getEndpointFor('api/account'));
+    return this.http.get<Account>(this.applicationConfigService.getEndpointFor('api/account')).pipe(
+      catchError(err => {
+        if (err.status === 401) {
+          // Not authenticated, return null to avoid unhandled error
+          return of(null as unknown as Account);
+        }
+        throw err;
+      }),
+    );
   }
 
   private navigateToStoredUrl(): void {
