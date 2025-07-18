@@ -1,6 +1,8 @@
 package devtech.web.rest;
 
+import devtech.domain.AppUser;
 import devtech.domain.User;
+import devtech.repository.AppUserRepository;
 import devtech.repository.UserRepository;
 import devtech.security.SecurityUtils;
 import devtech.service.MailService;
@@ -16,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,10 +43,21 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final AppUserRepository appUserRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public AccountResource(
+        UserRepository userRepository,
+        UserService userService,
+        MailService mailService,
+        AppUserRepository appUserRepository,
+        PasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.appUserRepository = appUserRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -63,6 +77,17 @@ public class AccountResource {
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
         mailService.sendActivationEmail(user);
+        // If client, also create AppUser
+        if ("client".equalsIgnoreCase(managedUserVM.getType())) {
+            AppUser appUser = new AppUser();
+            appUser.setFirstName(managedUserVM.getFirstName());
+            appUser.setLastName(managedUserVM.getLastName());
+            appUser.setEmail(managedUserVM.getEmail());
+            appUser.setPhone(managedUserVM.getPhone());
+            appUser.setPassword(passwordEncoder.encode(managedUserVM.getPassword()));
+            appUser.setType("client");
+            appUserRepository.save(appUser);
+        }
     }
 
     /**
@@ -82,15 +107,11 @@ public class AccountResource {
     /**
      * {@code GET  /account} : get the current user.
      *
-     * @return the current user.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be returned.
+     * @return the current user, or null if not authenticated.
      */
     @GetMapping("/account")
     public AdminUserDTO getAccount() {
-        return userService
-            .getUserWithAuthorities()
-            .map(AdminUserDTO::new)
-            .orElseThrow(() -> new AccountResourceException("User could not be found"));
+        return userService.getUserWithAuthorities().map(AdminUserDTO::new).orElse(null); // Return null for unauthenticated users
     }
 
     /**

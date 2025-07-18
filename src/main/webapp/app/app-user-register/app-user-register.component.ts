@@ -25,7 +25,6 @@ export class AppUserRegisterComponent {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4)]],
       type: ['client'],
     });
   }
@@ -33,7 +32,20 @@ export class AppUserRegisterComponent {
   submit(): void {
     if (this.form.valid) {
       this.submitted = true;
-      this.http.post('/api/app-users', this.form.value).subscribe({
+      const formValue = this.form.value;
+      // Generate a random password for the client
+      const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-4);
+      const payload = {
+        login: formValue.email, // using email as login
+        email: formValue.email,
+        password: randomPassword,
+        langKey: 'fr', // or dynamically set as needed
+        type: 'client',
+        firstName: formValue.firstName,
+        lastName: formValue.lastName,
+        phone: formValue.phone,
+      };
+      this.http.post('/api/register', payload).subscribe({
         next: () => {
           this.success = true;
           this.error = false;

@@ -1,0 +1,38 @@
+.login-card {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 24px;
+  box-shadow:
+    0 12px 48px 0 rgba(0, 188, 212, 0.22),
+    0 2px 12px rgba(0, 0, 0, 0.1);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 400px;
+  width: 100%;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(24px) saturate(160%);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  animation: fadeInUpLogin 0.8s;
+  z-index: 1;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s,
+    background 0.3s;
+}
+.login-card:hover {
+  box-shadow:
+    0 20px 64px 0 rgba(0, 188, 212, 0.28),
+    0 4px 16px rgba(0, 0, 0, 0.13);
+  background: rgba(255, 255, 255, 0.32);
+  transform: translateY(-4px) scale(1.02);
+}
+.login-side-decoration.left {
+  left: 0;
+  background-image: url('../../content/images/lignes2.png');
+  transform: scaleX(-1);
+}
+.login-side-decoration.right {
+  right: 0;
+  background-image: url('../../content/images/lignes2.png');
+}

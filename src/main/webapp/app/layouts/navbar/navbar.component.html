@@ -1,11 +1,15 @@
 <header class="main-header">
   <div class="header-left">
-    <a class="site-title" routerLink="/">
-      <img src="/content/images/devtech.png" alt="DevTech Logo" style="height: 160px; vertical-align: middle" />
+    <a class="site-title" routerLink="/home">
+      <img
+        src="/content/images/devtech-logo.png"
+        alt="DevTech Logo"
+        style="height: 160px; vertical-align: middle; background: transparent"
+      />
     </a>
   </div>
   <nav class="header-nav">
-    <a routerLink="/" routerLinkActive="active">Home</a>
+    <a routerLink="/home" routerLinkActive="active" jhiActiveMenu>Home</a>
     <a
       *ngIf="
         account() &&
@@ -17,9 +21,9 @@
       routerLinkActive="active"
       >User Dashboard</a
     >
-    <a *ngIf="account() && account()?.authorities?.includes('ROLE_ADMIN')" routerLink="/admin-dashboard" routerLinkActive="active"
-      >Admin Dashboard</a
-    >
+    <ng-container *ngIf="account() && account()?.authorities?.includes('ROLE_ADMIN')">
+      <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/admin-dashboard" routerLinkActive="active"> Admin Dashboard </a>
+    </ng-container>
     <a *ngIf="account() && account()?.authorities?.includes('ROLE_MANAGER')" routerLink="/manager-dashboard" routerLinkActive="active"
       >Manager Dashboard</a
     >

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 interface Paiement {
   id: number;
@@ -12,6 +13,7 @@ interface Paiement {
   selector: 'app-admin-paiements',
   templateUrl: './paiements.component.html',
   styleUrls: ['./paiements.component.scss'],
+  imports: [CommonModule],
 })
 export class PaiementsComponent {
   paiements: Paiement[] = [

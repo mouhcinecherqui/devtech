@@ -36,6 +36,16 @@ export default class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/register']);
   }
 
+  onWhyChooseCardMouseEnter(event: MouseEvent) {
+    const card = event.currentTarget as HTMLElement;
+    const bounds = card.getBoundingClientRect();
+    const x = event.clientX - bounds.left;
+    const y = event.clientY - bounds.top;
+    // Set transform-origin as a percentage
+    card.style.setProperty('--hover-x', `${(x / bounds.width) * 100}%`);
+    card.style.setProperty('--hover-y', `${(y / bounds.height) * 100}%`);
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

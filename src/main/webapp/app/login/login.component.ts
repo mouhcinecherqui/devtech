@@ -34,7 +34,7 @@ export default class LoginComponent implements OnInit {
     // if already authenticated then navigate to home page
     this.accountService.identity().subscribe(() => {
       if (this.accountService.isAuthenticated()) {
-        this.router.navigate(['']);
+        this.router.navigate(['/home']);
       }
     });
   }
@@ -62,7 +62,7 @@ export default class LoginComponent implements OnInit {
           // Si c'est un compte admin, rediriger vers home, sinon vers dashboard client
           if ((result as any).authorities) {
             if (!this.router.getCurrentNavigation()) {
-              this.router.navigate(['']);
+              this.router.navigate(['/home']);
             }
           } else {
             this.router.navigate(['/user-dashboard']);
