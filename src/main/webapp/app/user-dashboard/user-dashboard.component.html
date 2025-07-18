@@ -1,6 +1,8 @@
-<div class="dashboard-header">Bienvenue, utilisateur !</div>
+<header class="dashboard-header">
+  <span class="dashboard-user">Utilisateur</span>
+</header>
 <main class="dashboard-main-area">
-  <h1>Mes tickets</h1>
+  <h1>Tableau de bord</h1>
   <div class="dashboard-stats">
     <div class="stat-card stat-blue">
       <div class="stat-value">{{ stats.tickets }}</div>
@@ -15,4 +17,42 @@
       <div class="stat-label">RÉSOLUS / FERMÉS</div>
     </div>
   </div>
+  <section class="dashboard-table-section">
+    <h2>Mes dernières demandes</h2>
+    <table class="dashboard-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Statut</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.id }}</td>
+          <td>{{ ticket.type }}</td>
+          <td>{{ ticket.description }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-cyan': ticket.status === 'En cours' || ticket.status === 'Nouveau',
+                'badge-green': ticket.status === 'Résolu',
+                'badge-red': ticket.status === 'Urgent' || ticket.status === 'Fermé',
+              }"
+              >{{ ticket.status }}</span
+            >
+          </td>
+          <td>{{ ticket.createdDate | date: 'short' }}</td>
+        </tr>
+        <tr *ngIf="!tickets.length && !loading && !error">
+          <td colspan="5">Aucun ticket trouvé.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="loading">Chargement...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+  </section>
 </main>

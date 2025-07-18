@@ -103,8 +103,20 @@ Generic styles
   opacity: 1;
 }
 
-.footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
+.footer,
+.main-footer {
+  padding-left: 120px;
+  padding-right: 120px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 1200px) {
+  .footer,
+  .main-footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .hand,
@@ -235,6 +247,236 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
+/* ==========================================================================
+Shared styles from home.component.scss
+========================================================================== */
+
+.landing-btn {
+  background: #008080;
+  color: #fff;
+  border: none;
+  padding: 1.1rem 2.5rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.landing-btn:hover {
+  background: #005f5f;
+}
+
+.landing-section {
+  margin-bottom: 2.5rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+}
+.landing-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #008080;
+}
+.landing-section ul {
+  font-size: 1.15rem;
+  margin-left: 1.5rem;
+  color: #333;
+}
+
+.service-card {
+  position: relative;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+  flex: 1 1 0;
+  min-width: 260px;
+  max-width: 370px;
+  padding: 2.5rem 2rem 2.5rem 2rem;
+  transition:
+    background 0.3s,
+    color 0.3s,
+    box-shadow 0.3s;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  animation: fadeInUp 0.8s forwards;
+}
+.service-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.service-card:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.service-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.service-card:hover {
+  background: linear-gradient(135deg, #222 60%, #4f8cff 100%);
+  color: #fff;
+  box-shadow: 0 4px 24px rgba(79, 140, 255, 0.12);
+}
+.service-card:hover h3,
+.service-card:hover p {
+  color: #fff;
+}
+.service-bg-number {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  opacity: 0.25;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.service-card h3 {
+  position: relative;
+  font-size: 1.35rem;
+  font-weight: bold;
+  margin-bottom: 1.1rem;
+  z-index: 1;
+  color: #222;
+  transition: color 0.3s;
+}
+.service-card p {
+  position: relative;
+  font-size: 1.08rem;
+  z-index: 1;
+  color: #444;
+  transition: color 0.3s;
+}
+
+@media (max-width: 900px) {
+  .landing-section {
+    padding: 1rem 0.5rem;
+  }
+  .landing-title {
+    font-size: 2.2rem;
+  }
+  .services-columns {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .service-card {
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeInUpText {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animated-fade-in {
+  opacity: 0;
+  animation: fadeInUpText 0.9s forwards;
+}
+
+@keyframes flipIn {
+  0% {
+    opacity: 0;
+    transform: rotateY(90deg) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: rotateY(-10deg) scale(1.05);
+  }
+  80% {
+    transform: rotateY(5deg) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) scale(1);
+  }
+}
+.animated-flip-in {
+  opacity: 0;
+  animation: flipIn 0.8s forwards;
+}
+
+.why-choose-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  border: 1.5px solid #e0e7ef;
+  flex: 1 1 220px;
+  min-width: 220px;
+  max-width: 260px;
+  padding: 2rem 1.2rem 1.5rem 1.2rem;
+  text-align: center;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s,
+    border-color 0.3s;
+  overflow: hidden;
+  opacity: 0;
+  animation: flipIn 0.8s forwards;
+  z-index: 1;
+}
+.why-choose-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 188, 212, 0.18);
+  border-color: #00bcd4;
+  transform: translateY(-8px) scale(1.04) rotateZ(-1deg);
+}
+.why-choose-card:hover p {
+  color: #fff;
+  font-size: 1.18rem;
+  font-weight: 700;
+  text-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.45),
+    0 1px 0 #222,
+    0 0 2px #000;
+  filter: none;
+}
+.why-choose-card p {
+  position: relative;
+  z-index: 1;
+  color: #1a222a;
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin: 0;
+  transition:
+    color 0.3s,
+    filter 0.3s,
+    text-shadow 0.3s,
+    font-size 0.3s,
+    font-weight 0.3s;
+}
+
+.why-choose-card::before,
+.why-choose-card::after,
+.why-choose-card:nth-child(1)::before,
+.why-choose-card:nth-child(2)::before,
+.why-choose-card:nth-child(3)::before,
+.why-choose-card:nth-child(4)::before,
+.why-choose-card:nth-child(5)::before,
+.why-choose-card:hover::before,
+.why-choose-card:hover::after {
+  /* Keep pseudo-element rules in home.component.scss if they are only used there */
+}
+
 :root {
   --color-bg: #f7f7f7;
   --color-bg-card: #fff;
@@ -295,4 +537,8 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
   color: var(--color-text);
+}
+
+.container-fluid {
+  padding-top: 4rem; // Ensure content is always below the fixed navbar
 }

@@ -36,6 +36,9 @@ Logo styles
 }
 
 .main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100vw;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -44,12 +47,24 @@ Logo styles
   justify-content: space-between;
   padding: 0 2rem;
   height: 64px;
+  z-index: 1000;
 }
-.header-left .site-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #008080;
-  text-decoration: none;
+
+.header-left {
+  background: transparent;
+  border-right: none;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.header-left .site-title img {
+  height: 48px;
+  max-height: 100%;
+  width: auto;
+  display: block;
 }
 .header-nav {
   display: flex;

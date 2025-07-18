@@ -17,6 +17,8 @@ public class ManagedUserVM extends AdminUserDTO {
 
     private String type;
 
+    private String phone;
+
     public ManagedUserVM() {
         // Empty constructor needed for Jackson.
     }
@@ -35,6 +37,14 @@ public class ManagedUserVM extends AdminUserDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     // prettier-ignore
