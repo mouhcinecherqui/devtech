@@ -10,6 +10,7 @@ export interface AppUser {
   phone: string;
   password: string;
   type?: string;
+  createdDate?: string;
 }
 
 @Injectable({ providedIn: 'root' })

@@ -2,9 +2,13 @@ package devtech.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "app_user")
+@EntityListeners(AuditingEntityListener.class)
 public class AppUser implements Serializable {
 
     @Id
@@ -28,6 +32,10 @@ public class AppUser implements Serializable {
 
     @Column(name = "type", nullable = false)
     private String type;
+
+    @CreatedDate
+    @Column(name = "created_date", updatable = false)
+    private Instant createdDate;
 
     // Getters and setters
     public Long getId() {
@@ -84,5 +92,13 @@ public class AppUser implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Instant getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 }

@@ -1,3 +1,4 @@
+// Modification forcée pour déclencher la recompilation Angular des styles du composant login
 import { AfterViewInit, Component, ElementRef, OnInit, inject, signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -12,6 +13,7 @@ import { catchError, of } from 'rxjs';
   selector: 'jhi-login',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
+  styleUrl: './login.component.scss',
 })
 export default class LoginComponent implements OnInit {
   authenticationError = signal(false);
@@ -31,12 +33,8 @@ export default class LoginComponent implements OnInit {
   private readonly router = inject(Router);
 
   ngOnInit(): void {
-    // if already authenticated then navigate to home page
-    this.accountService.identity().subscribe(() => {
-      if (this.accountService.isAuthenticated()) {
-        this.router.navigate(['/home']);
-      }
-    });
+    // Suppression de la redirection automatique vers /home
+    // L'utilisateur peut accéder à /home même s'il est authentifié
   }
 
   login(): void {

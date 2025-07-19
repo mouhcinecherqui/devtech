@@ -93,31 +93,4 @@
   </div>
   <div class="page-side-decoration right"></div>
 </div>
-<div *ngIf="account()">
-  <div class="landing-container">
-    <main>
-      <section class="company-intro">
-        <h1 class="landing-title animated-fade-in" style="animation-delay: 0s">
-          Welcome back, {{ account()?.firstName || account()?.login }}!
-        </h1>
-        <p class="landing-subtitle animated-fade-in" style="animation-delay: 0.2s">
-          You are logged in as <strong>{{ account()?.login }}</strong
-          >.
-        </p>
-      </section>
-      <section class="landing-section">
-        <h2 class="animated-fade-in" style="animation-delay: 0.4s">Your Account</h2>
-        <ul class="animated-fade-in" style="animation-delay: 0.6s">
-          <li><strong>Email:</strong> {{ account()?.email }}</li>
-          <li><strong>Role(s):</strong> {{ account()?.authorities?.join(', ') }}</li>
-        </ul>
-      </section>
-      <section class="landing-section">
-        <h2 class="animated-fade-in" style="animation-delay: 0.8s">Get Started</h2>
-        <p class="animated-fade-in" style="animation-delay: 1s">
-          Explore your dashboard or use the navigation above to access your features.
-        </p>
-      </section>
-    </main>
-  </div>
-</div>
+<!-- Section dashboard admin supprimée : on ne montre plus le dashboard admin sur la page home après authentification -->

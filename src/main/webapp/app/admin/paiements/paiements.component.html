@@ -1,58 +1,51 @@
-<h2>Paiements</h2>
-<p>Consultez l’historique des paiements et gérez les transactions des clients.</p>
-<div style="display: flex; gap: 2rem; margin-bottom: 1rem">
-  <div><strong>Total:</strong> 7</div>
-  <div><strong>Complétés:</strong> 3</div>
-  <div><strong>En attente:</strong> 2</div>
-  <div><strong>Échoués:</strong> 2</div>
+<div class="paiements-header">
+  <h2>Paiements</h2>
+  <button class="mat-btn mat-primary" (click)="ajouterPaiement()">Ajouter un paiement</button>
 </div>
-<button style="margin-bottom: 1rem">Ajouter un paiement</button>
-<input type="text" placeholder="Rechercher un paiement..." style="margin-bottom: 1rem; display: block; width: 100%; max-width: 300px" />
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Utilisateur</th>
-      <th>Montant</th>
-      <th>Date</th>
-      <th>Statut</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let paiement of paiements">
-      <td>{{ paiement.id }}</td>
-      <td>{{ paiement.user }}</td>
-      <td>{{ paiement.amount }}</td>
-      <td>{{ paiement.date }}</td>
-      <td>{{ paiement.status }}</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>David</td>
-      <td>120</td>
-      <td>2024-06-04</td>
-      <td>Complété</td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>Eva</td>
-      <td>200</td>
-      <td>2024-06-05</td>
-      <td>En attente</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td>Frank</td>
-      <td>90</td>
-      <td>2024-06-06</td>
-      <td>Échoué</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>Grace</td>
-      <td>150</td>
-      <td>2024-06-07</td>
-      <td>Complété</td>
-    </tr>
-  </tbody>
-</table>
+<p class="paiements-desc">Consultez l’historique des paiements et gérez les transactions des clients.</p>
+<div class="paiements-stats">
+  <div><span>Total :</span> {{ paiements.length }}</div>
+  <div><span>Complétés :</span> {{ paiementsCompletes }}</div>
+  <div><span>En attente :</span> {{ paiementsEnAttente }}</div>
+  <div><span>Échoués :</span> {{ paiementsEchoues }}</div>
+</div>
+<input type="text" placeholder="Rechercher un paiement..." [(ngModel)]="search" class="mat-input" />
+<div class="paiements-table-container">
+  <table class="mat-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Utilisateur</th>
+        <th>Montant</th>
+        <th>Date</th>
+        <th>Statut</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let paiement of paiements | filterPaiements: search">
+        <td>{{ paiement.id }}</td>
+        <td>{{ paiement.user }}</td>
+        <td>{{ paiement.amount | currency: 'EUR' }}</td>
+        <td>{{ paiement.date }}</td>
+        <td>
+          <span
+            class="mat-badge"
+            [ngClass]="{
+              'badge-success': paiement.status === 'Completed' || paiement.status === 'Complété',
+              'badge-pending': paiement.status === 'Pending' || paiement.status === 'En attente',
+              'badge-failed': paiement.status === 'Failed' || paiement.status === 'Échoué',
+            }"
+          >
+            {{ paiement.status }}
+          </span>
+        </td>
+        <td>
+          <button class="mat-btn mat-accent" (click)="exporterFacturePDF(paiement)">
+            <span class="material-icons">picture_as_pdf</span> Facture PDF
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

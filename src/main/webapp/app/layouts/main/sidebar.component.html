@@ -1,9 +1,6 @@
 <div style="color: red; font-size: 10px; word-break: break-all">{{ accountService.trackCurrentAccount() | json }}</div>
 <nav class="sidebar-nav">
   <ul>
-    <li routerLinkActive="active">
-      <a routerLink="/user-dashboard"><span class="icon">🏠</span> Accueil</a>
-    </li>
     <li routerLinkActive="active" *ngIf="isUser">
       <a routerLink="/user-tickets"><span class="icon">🎫</span> Mes tickets</a>
     </li>

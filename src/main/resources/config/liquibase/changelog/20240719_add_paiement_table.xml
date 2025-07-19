@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240719-01-add-paiement-table" author="ai">
+        <createTable tableName="paiement">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user" type="varchar(255)"/>
+            <column name="amount" type="decimal(19,2)"/>
+            <column name="date" type="date"/>
+            <column name="status" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog> 

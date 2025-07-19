@@ -122,6 +122,32 @@ Main page styles (refactored)
   max-width: 240px;
   margin: 0 0.5rem;
   position: relative;
+  transition:
+    transform 0.3s cubic-bezier(0.4, 2, 0.6, 1),
+    box-shadow 0.3s,
+    background 0.3s,
+    color 0.3s,
+    border-radius 0.4s cubic-bezier(0.4, 2, 0.6, 1);
+  cursor: pointer;
+  z-index: 1;
+}
+.service-card:hover {
+  background: linear-gradient(135deg, #23272f 0%, #4f8cff 100%);
+  color: #fff;
+  box-shadow:
+    0 16px 40px rgba(0, 188, 212, 0.22),
+    0 4px 16px rgba(0, 0, 0, 0.13);
+  border-radius: 36% 64% 60% 40% / 40% 36% 64% 60%;
+  transform: translateY(-10px) scale(1.04);
+}
+.service-card:hover .service-bg-number {
+  color: #fff;
+  opacity: 0.18;
+}
+.service-card:hover h3,
+.service-card:hover p {
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
 }
 .service-bg-number {
   position: absolute;
@@ -279,4 +305,202 @@ Main page styles (refactored)
 :host ::ng-deep .main-content {
   position: relative;
   z-index: 1;
+}
+
+/* =====================
+   Admin Home Dashboard (vif)
+   ===================== */
+.admin-home {
+  background: #f4f8ff;
+  border-radius: 22px;
+  box-shadow: 0 6px 32px rgba(37, 99, 235, 0.1);
+  padding: 2.5rem 2rem;
+  margin: 2rem auto;
+  max-width: 1300px;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.admin-home mat-card {
+  margin-bottom: 28px;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+}
+
+.admin-home mat-card-title {
+  font-size: 2.3rem;
+  font-weight: 900;
+  color: #2563eb;
+  margin-bottom: 0.7rem;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 12px #b3d1ff44;
+}
+
+.admin-home mat-card-content {
+  font-size: 1.18rem;
+  color: #1a222a;
+}
+
+.admin-home .dashboard-summary {
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.admin-home .summary-card {
+  height: 140px;
+  min-width: 180px;
+  max-width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 6px rgba(37, 99, 235, 0.07);
+  padding: 0.7rem 0.5rem 1rem 0.5rem;
+  text-align: center;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+  border: 1.5px solid #e0e7ff;
+  margin: 0 auto;
+}
+.admin-home .summary-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin-bottom: 0.2rem;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.admin-home .summary-value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #2563eb;
+  margin-bottom: 0.1rem;
+  line-height: 1.1;
+  word-break: break-word;
+  white-space: normal;
+  max-width: 100px;
+  text-align: center;
+}
+.admin-home .summary-sub {
+  font-size: 0.95rem;
+  color: #222;
+  margin-bottom: 0.1rem;
+  line-height: 1.1;
+}
+
+.admin-home mat-grid-list {
+  margin-bottom: 0.5rem;
+}
+
+.admin-home .summary-card:hover {
+  box-shadow: 0 12px 36px #2563eb33;
+  border-color: #2563eb;
+  transform: translateY(-6px) scale(1.03);
+}
+.admin-home .summary-value {
+  font-size: 2.7rem;
+  font-weight: 900;
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+  letter-spacing: -2px;
+}
+
+.admin-home mat-icon {
+  font-size: 1.1rem !important;
+  vertical-align: middle;
+  margin-right: 0.3rem;
+  color: #2563eb;
+  line-height: 1;
+}
+
+.admin-home .mat-badge-content {
+  font-size: 1.05rem;
+  font-weight: 700;
+  background: #2563eb !important;
+  color: #fff !important;
+}
+
+.admin-home mat-list-item {
+  font-size: 1.13rem;
+  color: #333;
+}
+
+.admin-home .online {
+  color: #22c55e;
+  font-weight: 800;
+}
+
+.admin-home mat-action-list button[mat-list-item] {
+  font-size: 1.13rem;
+  color: #2563eb;
+  font-weight: 700;
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+  background: #e0e7ff;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 2px 8px #2563eb11;
+}
+.admin-home mat-action-list button[mat-list-item]:hover {
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 6px 18px #2563eb33;
+}
+
+.admin-home mat-card-title,
+.admin-home mat-card-content,
+.admin-home mat-list-item {
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.admin-home .recent-activity mat-card-title,
+.admin-home .quick-access mat-card-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #2563eb;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+.admin-home .recent-activity mat-list-item {
+  color: #444;
+  font-size: 1.08rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-home .quick-access mat-card {
+  background: #f1f5fd;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px #2563eb11;
+}
+
+@media (max-width: 1100px) {
+  .admin-home {
+    padding: 1.2rem 0.5rem;
+    max-width: 99vw;
+  }
+  .admin-home mat-grid-list {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .admin-home .summary-card {
+    max-width: 100%;
+    min-width: 120px;
+  }
+}
+@media (max-width: 700px) {
+  .admin-home mat-grid-list {
+    grid-template-columns: 1fr !important;
+  }
+  .admin-home .recent-activity,
+  .admin-home .quick-access {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+  .admin-home .summary-card {
+    margin-bottom: 0.7rem;
+  }
 }

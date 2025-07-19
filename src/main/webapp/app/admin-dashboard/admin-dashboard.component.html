@@ -1,63 +1,114 @@
-<header class="dashboard-header">
-  <span class="dashboard-user">Admin</span>
-</header>
-<app-sidebar></app-sidebar>
-<main class="dashboard-main-area">
-  <h1>Tableau de bord</h1>
-  <div class="dashboard-stats">
-    <div class="stat-card stat-blue">
-      <div class="stat-value">{{ stats.tickets }}</div>
-      <div class="stat-label">TICKETS</div>
+<div class="admin-home">
+  <main class="dashboard-main-area">
+    <h1>Tableau de bord</h1>
+
+    <!-- Section infos admin -->
+    <mat-card class="admin-info-card mat-elevation-z2">
+      <div class="admin-info-header">
+        <mat-icon class="admin-avatar">admin_panel_settings</mat-icon>
+        <div>
+          <div class="admin-welcome">
+            Bienvenue, <span class="admin-name">{{ account?.firstName || account?.login }}</span>
+          </div>
+          <div class="admin-role-badge">Administrateur</div>
+        </div>
+      </div>
+      <div class="admin-info-details">
+        <div class="admin-info-item">
+          <mat-icon>email</mat-icon>
+          <span>{{ account?.email }}</span>
+        </div>
+        <div class="admin-info-item">
+          <mat-icon>security</mat-icon>
+          <span>{{ account?.authorities?.join(', ') }}</span>
+        </div>
+        <div class="admin-info-item">
+          <mat-icon>check_circle</mat-icon>
+          <span class="admin-status online">En ligne</span>
+        </div>
+      </div>
+    </mat-card>
+
+    <!-- Section dashboard résumé -->
+    <!-- (cartes supprimées) -->
+
+    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 2rem">
+      <mat-card class="mat-elevation-z1 recent-activity" style="flex: 1 1 350px; min-width: 300px">
+        <mat-card-title>Activité récente</mat-card-title>
+        <mat-list>
+          <mat-list-item *ngFor="let activity of recentActivities">
+            <mat-icon matListIcon>fiber_manual_record</mat-icon>
+            {{ activity.text }} <span style="margin-left: auto; color: #888; font-size: 0.9em">{{ activity.time }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+      <mat-card class="mat-elevation-z1 quick-access" style="flex: 1 1 350px; min-width: 300px">
+        <mat-card-title>Accès rapide</mat-card-title>
+        <mat-action-list>
+          <button mat-list-item color="primary" routerLink="/admin/tickets"><mat-icon>add_circle</mat-icon>Créer un nouveau ticket</button>
+          <button mat-list-item color="primary" routerLink="/admin/clients"><mat-icon>person_add</mat-icon>Ajouter un client</button>
+          <button mat-list-item color="primary" routerLink="/admin/paiements"><mat-icon>payment</mat-icon>Gérer les paiements</button>
+          <button mat-list-item color="primary" routerLink="/admin/parameters"><mat-icon>settings</mat-icon>Modifier</button>
+        </mat-action-list>
+      </mat-card>
     </div>
-    <div class="stat-card stat-cyan">
-      <div class="stat-value">{{ stats.open }}</div>
-      <div class="stat-label">EN COURS</div>
+
+    <!-- Stats et tableau des tickets existants -->
+    <div class="dashboard-stats">
+      <div class="stat-card stat-blue">
+        <div class="stat-value">{{ stats.tickets }}</div>
+        <div class="stat-label">TICKETS</div>
+      </div>
+      <div class="stat-card stat-cyan">
+        <div class="stat-value">{{ stats.open }}</div>
+        <div class="stat-label">EN COURS</div>
+      </div>
+      <div class="stat-card stat-green">
+        <div class="stat-value">{{ stats.closed }}</div>
+        <div class="stat-label">RÉSOLUS</div>
+      </div>
+      <div class="stat-card stat-red">
+        <div class="stat-value">{{ stats.urgent }}</div>
+        <div class="stat-label">URGENT</div>
+      </div>
     </div>
-    <div class="stat-card stat-green">
-      <div class="stat-value">{{ stats.closed }}</div>
-      <div class="stat-label">RÉSOLUS</div>
-    </div>
-    <div class="stat-card stat-red">
-      <div class="stat-value">{{ stats.urgent }}</div>
-      <div class="stat-label">URGENT</div>
-    </div>
-  </div>
-  <section class="dashboard-table-section">
-    <h2>Dernières demandes</h2>
-    <table class="dashboard-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Statut</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let ticket of tickets">
-          <td>{{ ticket.id }}</td>
-          <td>{{ ticket.type }}</td>
-          <td>{{ ticket.description }}</td>
-          <td>
-            <span
-              class="badge"
-              [ngClass]="{
-                'badge-cyan': ticket.status === 'En cours' || ticket.status === 'Nouveau',
-                'badge-green': ticket.status === 'Résolu',
-                'badge-red': ticket.status === 'Urgent' || ticket.status === 'Fermé',
-              }"
-              >{{ ticket.status }}</span
-            >
-          </td>
-          <td>{{ ticket.createdDate | date: 'short' }}</td>
-        </tr>
-        <tr *ngIf="!tickets.length && !loading && !error">
-          <td colspan="5">Aucun ticket trouvé.</td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="loading">Chargement...</div>
-    <div *ngIf="error" class="error">{{ error }}</div>
-  </section>
-</main>
+    <section class="dashboard-table-section">
+      <h2>Dernières demandes</h2>
+      <table class="dashboard-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Statut</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ticket of tickets">
+            <td>{{ ticket.id }}</td>
+            <td>{{ ticket.type }}</td>
+            <td>{{ ticket.description }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'badge-cyan': ticket.status === 'En cours' || ticket.status === 'Nouveau',
+                  'badge-green': ticket.status === 'Résolu',
+                  'badge-red': ticket.status === 'Urgent' || ticket.status === 'Fermé',
+                }"
+                >{{ ticket.status }}</span
+              >
+            </td>
+            <td>{{ ticket.createdDate | date: 'short' }}</td>
+          </tr>
+          <tr *ngIf="!tickets.length && !loading && !error">
+            <td colspan="5">Aucun ticket trouvé.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="loading">Chargement...</div>
+      <div *ngIf="error" class="error">{{ error }}</div>
+    </section>
+  </main>
+</div>

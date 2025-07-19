@@ -53,7 +53,10 @@ export default class NavbarComponent implements OnInit {
       this.inProduction = profileInfo.inProduction;
       this.openAPIEnabled = profileInfo.openAPIEnabled;
     });
-    this.notificationService.fetchNotifications();
+    // Appeler fetchNotifications uniquement si l'utilisateur est authentifié
+    if (this.account()) {
+      this.notificationService.fetchNotifications();
+    }
   }
 
   changeLanguage(languageKey: string): void {

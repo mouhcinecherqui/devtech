@@ -9,7 +9,7 @@
     </a>
   </div>
   <nav class="header-nav">
-    <a routerLink="/home" routerLinkActive="active" jhiActiveMenu>Home</a>
+    <a *ngIf="!account()" routerLink="/home" routerLinkActive="active">Home</a>
     <a
       *ngIf="
         account() &&

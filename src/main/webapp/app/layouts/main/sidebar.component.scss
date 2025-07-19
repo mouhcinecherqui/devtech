@@ -1,12 +1,17 @@
 .sidebar-nav {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  width: 220px;
+  height: calc(100vh - 64px);
   background: #1a232b;
   color: #fff;
-  min-height: 100vh;
-  width: 220px;
   padding: 2rem 0 2rem 0;
   display: flex;
   flex-direction: column;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+  z-index: 100;
+  overflow-y: auto;
 }
 .sidebar-nav ul {
   list-style: none;
