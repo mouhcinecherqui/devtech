@@ -1,32 +1,32 @@
-<h2>Tickets</h2>
-<p>Gérez les tickets de support et suivez leur statut en temps réel.</p>
-<div *ngIf="loading">Chargement...</div>
+<h2>{{ 'ticketsAdmin.title' | translate }}</h2>
+<p>{{ 'ticketsAdmin.subtitle' | translate }}</p>
+<div *ngIf="loading">{{ 'ticketsAdmin.loading' | translate }}</div>
 <div *ngIf="error" class="error">{{ error }}</div>
 <table *ngIf="tickets.length && !loading">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Statut</th>
-      <th>Créé le</th>
-      <th>Actions</th>
+      <th>{{ 'ticketsAdmin.id' | translate }}</th>
+      <th>{{ 'ticketsAdmin.type' | translate }}</th>
+      <th>{{ 'ticketsAdmin.description' | translate }}</th>
+      <th>{{ 'ticketsAdmin.status' | translate }}</th>
+      <th>{{ 'ticketsAdmin.created' | translate }}</th>
+      <th>{{ 'ticketsAdmin.actions' | translate }}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let ticket of tickets">
       <td>{{ ticket.id }}</td>
-      <td>{{ ticket.type }}</td>
+      <td>{{ 'parameters.interface.' + ticket.type | translate }}</td>
       <td>{{ ticket.description }}</td>
-      <td>{{ ticket.status }}</td>
+      <td>{{ 'parameters.interface.' + ticket.status | translate }}</td>
       <td>{{ ticket.createdDate | date: 'short' }}</td>
       <td>
-        <button class="btn btn-primary btn-sm" (click)="openDetailModal(ticket)">Détail</button>
+        <button class="btn btn-primary btn-sm" (click)="openDetailModal(ticket)">{{ 'ticketsAdmin.detail' | translate }}</button>
       </td>
     </tr>
   </tbody>
 </table>
-<div *ngIf="!tickets.length && !loading && !error">Aucun ticket trouvé.</div>
+<div *ngIf="!tickets.length && !loading && !error">{{ 'ticketsAdmin.noTickets' | translate }}</div>
 
 <!-- Modale de détail/modification du ticket -->
 <div
@@ -51,38 +51,33 @@
         <path d="M8 8L16 16M16 8L8 16" stroke="#2563eb" stroke-width="2" stroke-linecap="round" />
       </svg>
     </button>
-    <h3>Détail du ticket</h3>
+    <h3>{{ 'ticketsAdmin.detail' | translate }}</h3>
     <div *ngIf="selectedTicket">
       <div class="admin-ticket-row">
-        <div class="admin-ticket-label">Type :</div>
-        <div class="admin-ticket-value">{{ selectedTicket.type }}</div>
+        <div class="admin-ticket-label">{{ 'ticketsAdmin.type' | translate }} :</div>
+        <div class="admin-ticket-value">{{ 'parameters.interface.' + selectedTicket?.type | translate }}</div>
       </div>
       <div class="admin-ticket-row">
-        <div class="admin-ticket-label">Description :</div>
+        <div class="admin-ticket-label">{{ 'ticketsAdmin.description' | translate }} :</div>
         <div class="admin-ticket-value">{{ selectedTicket.description }}</div>
       </div>
       <div class="admin-ticket-row">
-        <div class="admin-ticket-label">Statut :</div>
-        <div class="admin-ticket-value" style="width: 100%">
-          <select [(ngModel)]="selectedTicket.status">
-            <option value="Nouveau">Nouveau</option>
-            <option value="En cours">En cours</option>
-            <option value="Résolu">Résolu</option>
-            <option value="Fermé">Fermé</option>
-          </select>
+        <div class="admin-ticket-label">{{ 'ticketsAdmin.status' | translate }} :</div>
+        <div class="admin-ticket-value">
+          {{ 'parameters.interface.' + selectedTicket?.status | translate }}
         </div>
       </div>
       <div class="admin-ticket-row">
-        <div class="admin-ticket-label" style="align-self: flex-start">Messages au client :</div>
+        <div class="admin-ticket-label" style="align-self: flex-start">{{ 'ticketsAdmin.messages' | translate }}</div>
         <div class="admin-ticket-value" style="width: 100%">
           <ul class="admin-ticket-messages">
             <li *ngFor="let msg of selectedTicket.messages">{{ msg }}</li>
           </ul>
-          <textarea [(ngModel)]="newMessage" rows="2" placeholder="Ajouter un message..."></textarea>
+          <textarea [(ngModel)]="newMessage" rows="2" placeholder="{{ 'ticketsAdmin.addMessage' | translate }}"></textarea>
         </div>
       </div>
       <div class="admin-ticket-actions">
-        <button class="btn btn-success btn-sm" (click)="saveTicket()">Enregistrer</button>
+        <button class="btn btn-success btn-sm" (click)="saveTicket()">{{ 'ticketsAdmin.save' | translate }}</button>
       </div>
     </div>
   </div>

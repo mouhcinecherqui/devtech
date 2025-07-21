@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal, HostListener } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import SharedModule from 'app/shared/shared.module';
@@ -20,7 +21,7 @@ import { computed } from '@angular/core';
   selector: 'jhi-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, ActiveMenuDirective],
+  imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, ActiveMenuDirective, FormsModule],
 })
 export default class NavbarComponent implements OnInit {
   inProduction?: boolean;
@@ -34,8 +35,8 @@ export default class NavbarComponent implements OnInit {
   unreadCount = this.notificationService.unreadCount;
   showNotificationsDropdown = signal(false);
 
+  public translateService = inject(TranslateService);
   private readonly loginService = inject(LoginService);
-  private readonly translateService = inject(TranslateService);
   private readonly stateStorageService = inject(StateStorageService);
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);

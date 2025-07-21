@@ -1,5 +1,5 @@
-<h2 class="mb-4">Paramètres</h2>
-<p class="mb-4 text-secondary">Gérez les paramètres globaux de la plateforme et configurez les options système.</p>
+<h2 class="mb-4">{{ 'parameters.title' | translate }}</h2>
+<p class="mb-4 text-secondary">{{ 'parameters.subtitle' | translate }}</p>
 
 <div class="row g-4">
   <!-- Section Statuts de tickets -->
@@ -7,23 +7,39 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">Statuts de tickets</h5>
-          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-status')">Ajouter un statut</button>
+          <h5 class="card-title mb-0">{{ 'parameters.ticketStatus.title' | translate }}</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-status')">
+            {{ 'parameters.ticketStatus.add' | translate }}
+          </button>
         </div>
         <div *ngIf="formType === 'ticket-status' && showForm" class="mb-3">
           <form (ngSubmit)="save()" class="row g-2 align-items-end">
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.key"
+                name="key"
+                required
+                [readonly]="editMode"
+                [placeholder]="'parameters.key' | translate"
+              />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+              <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.description"
+                name="description"
+                [placeholder]="'parameters.description' | translate"
+              />
             </div>
             <div class="col-auto">
-              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+              <button type="submit" class="btn btn-success">
+                {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
             </div>
           </form>
         </div>
@@ -31,10 +47,10 @@
           <table class="table table-sm align-middle mb-0">
             <thead class="table-light">
               <tr>
-                <th>Clé</th>
-                <th>Valeur</th>
-                <th>Description</th>
-                <th style="width: 110px">Actions</th>
+                <th>{{ 'parameters.key' | translate }}</th>
+                <th>{{ 'parameters.value' | translate }}</th>
+                <th>{{ 'parameters.description' | translate }}</th>
+                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -59,23 +75,37 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">Types de tickets</h5>
-          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-type')">Ajouter un type</button>
+          <h5 class="card-title mb-0">{{ 'parameters.ticketType.title' | translate }}</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-type')">{{ 'parameters.ticketType.add' | translate }}</button>
         </div>
         <div *ngIf="formType === 'ticket-type' && showForm" class="mb-3">
           <form (ngSubmit)="save()" class="row g-2 align-items-end">
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.key"
+                name="key"
+                required
+                [readonly]="editMode"
+                [placeholder]="'parameters.key' | translate"
+              />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+              <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.description"
+                name="description"
+                [placeholder]="'parameters.description' | translate"
+              />
             </div>
             <div class="col-auto">
-              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+              <button type="submit" class="btn btn-success">
+                {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
             </div>
           </form>
         </div>
@@ -83,10 +113,10 @@
           <table class="table table-sm align-middle mb-0">
             <thead class="table-light">
               <tr>
-                <th>Clé</th>
-                <th>Valeur</th>
-                <th>Description</th>
-                <th style="width: 110px">Actions</th>
+                <th>{{ 'parameters.key' | translate }}</th>
+                <th>{{ 'parameters.value' | translate }}</th>
+                <th>{{ 'parameters.description' | translate }}</th>
+                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -111,23 +141,39 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">Priorités de tickets</h5>
-          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-priority')">Ajouter une priorité</button>
+          <h5 class="card-title mb-0">{{ 'parameters.ticketPriority.title' | translate }}</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-priority')">
+            {{ 'parameters.ticketPriority.add' | translate }}
+          </button>
         </div>
         <div *ngIf="formType === 'ticket-priority' && showForm" class="mb-3">
           <form (ngSubmit)="save()" class="row g-2 align-items-end">
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.key"
+                name="key"
+                required
+                [readonly]="editMode"
+                [placeholder]="'parameters.key' | translate"
+              />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+              <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.description"
+                name="description"
+                [placeholder]="'parameters.description' | translate"
+              />
             </div>
             <div class="col-auto">
-              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+              <button type="submit" class="btn btn-success">
+                {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
             </div>
           </form>
         </div>
@@ -135,10 +181,10 @@
           <table class="table table-sm align-middle mb-0">
             <thead class="table-light">
               <tr>
-                <th>Clé</th>
-                <th>Valeur</th>
-                <th>Description</th>
-                <th style="width: 110px">Actions</th>
+                <th>{{ 'parameters.key' | translate }}</th>
+                <th>{{ 'parameters.value' | translate }}</th>
+                <th>{{ 'parameters.description' | translate }}</th>
+                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -163,26 +209,40 @@
     <div class="card shadow-sm">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">Autres paramètres</h5>
-          <button class="btn btn-primary btn-sm" (click)="openAddForm('other')">Ajouter un paramètre</button>
+          <h5 class="card-title mb-0">{{ 'parameters.other.title' | translate }}</h5>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('other')">{{ 'parameters.other.add' | translate }}</button>
         </div>
         <div *ngIf="formType === 'other' && showForm" class="mb-3">
           <form (ngSubmit)="save()" class="row g-2 align-items-end">
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.key" name="key" required [readonly]="editMode" placeholder="Clé" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.key"
+                name="key"
+                required
+                [readonly]="editMode"
+                [placeholder]="'parameters.key' | translate"
+              />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.value" name="value" required placeholder="Valeur" />
+              <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.type" name="type" placeholder="Type" />
+              <input class="form-control" [(ngModel)]="form.type" name="type" [placeholder]="'parameters.type' | translate" />
             </div>
             <div class="col">
-              <input class="form-control" [(ngModel)]="form.description" name="description" placeholder="Description" />
+              <input
+                class="form-control"
+                [(ngModel)]="form.description"
+                name="description"
+                [placeholder]="'parameters.description' | translate"
+              />
             </div>
             <div class="col-auto">
-              <button type="submit" class="btn btn-success">{{ editMode ? 'Enregistrer' : 'Ajouter' }}</button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">Annuler</button>
+              <button type="submit" class="btn btn-success">
+                {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
             </div>
           </form>
         </div>
@@ -190,11 +250,11 @@
           <table class="table table-sm align-middle mb-0">
             <thead class="table-light">
               <tr>
-                <th>Clé</th>
-                <th>Valeur</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th style="width: 110px">Actions</th>
+                <th>{{ 'parameters.key' | translate }}</th>
+                <th>{{ 'parameters.value' | translate }}</th>
+                <th>{{ 'parameters.type' | translate }}</th>
+                <th>{{ 'parameters.description' | translate }}</th>
+                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>

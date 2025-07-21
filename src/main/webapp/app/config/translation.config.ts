@@ -12,7 +12,8 @@ export class MissingTranslationHandlerImpl implements MissingTranslationHandler 
 }
 
 export function translatePartialLoader(http: HttpClient): TranslateLoader {
-  return new TranslateHttpLoader(http, 'i18n/', `.json?_=${I18N_HASH}`);
+  // Charge le fichier unique all-in-one.json pour chaque langue depuis assets
+  return new TranslateHttpLoader(http, 'assets/i18n/', '/all-in-one.json');
 }
 
 export function missingTranslationHandler(): MissingTranslationHandler {

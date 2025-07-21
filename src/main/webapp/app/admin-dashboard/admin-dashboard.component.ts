@@ -12,6 +12,7 @@ import { MatActionList } from '@angular/material/list';
 import { AccountService } from 'app/core/auth/account.service';
 import { PaiementsService } from 'app/admin/paiements/paiements.service';
 import { ClientsService } from 'app/admin/clients/clients.service';
+import SharedModule from '../shared/shared.module';
 
 interface Ticket {
   id: number;
@@ -36,6 +37,7 @@ interface Ticket {
     MatBadgeModule,
     MatButtonModule,
     MatActionList,
+    SharedModule,
   ],
 })
 export class AdminDashboardComponent implements OnInit {

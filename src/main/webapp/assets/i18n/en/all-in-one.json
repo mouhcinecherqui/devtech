@@ -1,0 +1,368 @@
+{
+  "userDashboard": {
+    "header": "User",
+    "title": "Dashboard",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "closed": "RESOLVED / CLOSED"
+    },
+    "table": {
+      "title": "My latest requests",
+      "id": "ID",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "date": "Date",
+      "notFound": "No ticket found."
+    },
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "managerDashboard": {
+    "header": "Manager",
+    "title": "Dashboard",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "resolved": "RESOLVED",
+      "urgent": "URGENT"
+    },
+    "table": {
+      "title": "Latest requests",
+      "titleCol": "Title",
+      "client": "Client",
+      "status": "Status",
+      "date": "Date"
+    },
+    "status": {
+      "inProgress": "In progress",
+      "resolved": "Resolved",
+      "urgent": "Urgent"
+    }
+  },
+  "global": {
+    "title": "Devtech",
+    "menu": {
+      "home": "Home",
+      "login": "Sign in",
+      "register": "Register",
+      "account": {
+        "main": "Account",
+        "settings": "Profile",
+        "password": "Password",
+        "logout": "Sign out"
+      }
+    },
+    "form": {
+      "username": "Username",
+      "password": "Password",
+      "email": "Email"
+    },
+    "messages": {
+      "error": {
+        "dontmatch": "The password and its confirmation do not match!"
+      }
+    },
+    "field": {
+      "id": "ID"
+    },
+    "item-count": "Item count: {{count}}",
+    "home": {
+      "title": "Welcome to DevTech!",
+      "subtitle": "Manage your support tickets and platform services easily.",
+      "servicesTitle": "Our Services",
+      "service1": {
+        "title": "Ticket Management",
+        "desc": "Create, track, and resolve your support tickets efficiently."
+      },
+      "service2": {
+        "title": "Client Area",
+        "desc": "Access your client dashboard and manage your information."
+      },
+      "service3": {
+        "title": "Admin Tools",
+        "desc": "Advanced tools for administrators and managers."
+      }
+    }
+  },
+  "adminDashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome,",
+    "role": "Administrator",
+    "status": { "online": "Online" },
+    "recentActivity": "Recent activity",
+    "quickAccess": "Quick access",
+    "createTicket": "Create a new ticket",
+    "addClient": "Add a client",
+    "managePayments": "Manage payments",
+    "editSettings": "Edit settings",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "resolved": "RESOLVED",
+      "urgent": "URGENT"
+    },
+    "table": {
+      "title": "Latest requests",
+      "id": "ID",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "date": "Date",
+      "notFound": "No ticket found."
+    },
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "navbar": {
+    "home": "Home",
+    "userDashboard": "User Dashboard",
+    "adminDashboard": "Admin Dashboard",
+    "managerDashboard": "Manager Dashboard",
+    "clientDashboard": "Client Dashboard",
+    "notifications": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "sidebar": {
+    "myTickets": "My tickets",
+    "tickets": "Tickets",
+    "clients": "Clients",
+    "payments": "Payments",
+    "settings": "Settings",
+    "users": "Users"
+  },
+  "login": {
+    "title": "Login",
+    "messages": {
+      "error": {
+        "authentication": "Authentication error! Please check your login credentials."
+      }
+    },
+    "form": {
+      "password": "Password",
+      "password.placeholder": "Your password",
+      "rememberme": "Keep session open",
+      "button": "Login"
+    },
+    "password": {
+      "forgot": "Did you forget your password?"
+    }
+  },
+  "register": {
+    "title": "User account creation",
+    "messages": {
+      "success": "Account registered! Please check your confirmation email.",
+      "error": {
+        "fail": "Account not created! Please try again later.",
+        "userexists": "This user account already exists! Please choose another one.",
+        "emailexists": "This email is already used! Please choose another one."
+      },
+      "validate": {
+        "login": {
+          "required": "Your username is required.",
+          "minlength": "Your username must be longer than one character.",
+          "maxlength": "Your username cannot be longer than 50 characters.",
+          "pattern": "Your username is invalid."
+        }
+      }
+    },
+    "form": {
+      "button": "Register"
+    }
+  },
+  "appUserRegister": {
+    "title": "Register New User",
+    "google": "Sign up with Google",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "submit": "Register",
+    "firstNameRequired": "First name is required.",
+    "lastNameRequired": "Last name is required.",
+    "emailRequired": "Valid email is required.",
+    "phoneRequired": "Phone number is required.",
+    "success": "Registration successful!",
+    "error": "Registration failed. Please try again."
+  },
+  "clientDashboard": {
+    "header": "Welcome, client!",
+    "title": "My tickets",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "closed": "RESOLVED / CLOSED"
+    }
+  },
+  "ticketsUser": {
+    "title": "My tickets",
+    "create": "Create ticket",
+    "type": "Ticket type",
+    "selectType": "Select a type",
+    "description": "Problem description",
+    "backofficeUrl": "Backoffice link",
+    "backofficeLogin": "Backoffice login",
+    "backofficePassword": "Backoffice password",
+    "hostingUrl": "Hosting URL",
+    "cancel": "Cancel",
+    "detail": "Ticket detail",
+    "info": "Ticket information",
+    "status": "Status",
+    "date": "Date",
+    "history": "My ticket history",
+    "loading": "Loading...",
+    "backoffice": "Backoffice",
+    "hosting": "Hosting",
+    "noTickets": "No tickets yet."
+  },
+  "ticketsAdmin": {
+    "title": "Tickets",
+    "subtitle": "Manage support tickets and track their status in real time.",
+    "loading": "Loading...",
+    "id": "ID",
+    "type": "Type",
+    "description": "Description",
+    "status": "Status",
+    "created": "Created on",
+    "actions": "Actions",
+    "detail": "Detail",
+    "noTickets": "No ticket found.",
+    "statusNew": "New",
+    "statusInProgress": "In progress",
+    "statusResolved": "Resolved",
+    "statusClosed": "Closed",
+    "messages": "Messages to client:",
+    "addMessage": "Add a message...",
+    "save": "Save"
+  },
+  "ticketsClient": {
+    "title": "My tickets",
+    "create": "Create ticket",
+    "type": "Ticket type",
+    "selectType": "Select a type",
+    "description": "Problem description",
+    "backofficeUrl": "Backoffice link",
+    "backofficeLogin": "Backoffice login",
+    "backofficePassword": "Backoffice password",
+    "hostingUrl": "Hosting URL",
+    "cancel": "Cancel",
+    "detail": "Ticket detail",
+    "info": "Ticket information",
+    "status": "Status",
+    "date": "Date",
+    "history": "My ticket history",
+    "loading": "Loading...",
+    "backoffice": "Backoffice",
+    "hosting": "Hosting",
+    "noTickets": "No tickets yet."
+  },
+  "clientsAdmin": {
+    "title": "Clients",
+    "subtitle": "List and manage clients registered on the platform.",
+    "add": "Add client",
+    "total": "Total",
+    "search": "Search for a client...",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "actions": "Actions",
+    "noClients": "No client found."
+  },
+  "paiementsAdmin": {
+    "title": "Payments",
+    "add": "Add payment",
+    "subtitle": "View payment history and manage client transactions.",
+    "total": "Total",
+    "completed": "Completed",
+    "pending": "Pending",
+    "failed": "Failed",
+    "search": "Search for a payment...",
+    "user": "User",
+    "amount": "Amount",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions",
+    "invoice": "Invoice PDF"
+  },
+  "userManagement": {
+    "home": {
+      "title": "Users",
+      "refreshListLabel": "Refresh list",
+      "createLabel": "Create a new user"
+    },
+    "login": "Login",
+    "email": "Email",
+    "langKey": "Language",
+    "profiles": "Roles",
+    "createdDate": "Created on",
+    "lastModifiedBy": "Modified by",
+    "lastModifiedDate": "Modified on",
+    "activated": "Activated",
+    "deactivated": "Deactivated"
+  },
+  "parameters": {
+    "title": "Settings",
+    "subtitle": "Manage global platform settings and configure system options.",
+    "key": "Key",
+    "value": "Value",
+    "description": "Description",
+    "type": "Type",
+    "actions": "Actions",
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "ticketStatus": {
+      "title": "Ticket statuses",
+      "add": "Add status"
+    },
+    "ticketType": {
+      "title": "Ticket types",
+      "add": "Add type"
+    },
+    "ticketPriority": {
+      "title": "Ticket priorities",
+      "add": "Add priority"
+    },
+    "other": {
+      "title": "Other settings",
+      "add": "Add setting"
+    },
+    "interface": {
+      "ticket": "Ticket",
+      "tickets": "Tickets",
+      "type": "Type",
+      "ticketType": "Ticket type",
+      "ticketTypes": "Ticket types",
+      "status": "Status",
+      "statuses": "Statuses",
+      "priority": "Priority",
+      "priorities": "Priorities",
+      "parameter": "Parameter",
+      "parameters": "Parameters",
+      "interface": "Interface",
+      "Bug": "Bug",
+      "Demande": "Request",
+      "Support": "Support",
+      "Autre": "Other",
+      "Nouveau": "New",
+      "En cours": "In progress",
+      "Résolu": "Resolved",
+      "Fermé": "Closed",
+      "Urgent": "Urgent",
+      "Request": "Request",
+      "Support": "Support"
+    }
+  },
+  "entity": {
+    "action": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    }
+  }
+}

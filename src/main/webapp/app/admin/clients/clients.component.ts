@@ -5,13 +5,14 @@ import { CommonModule } from '@angular/common';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientsAddDialogComponent } from './clients-add-dialog.component';
 import { ClientsEditDialogComponent } from './clients-edit-dialog.component';
+import SharedModule from '../../shared/shared.module';
 
 @Component({
   selector: 'app-admin-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SharedModule],
 })
 export class ClientsComponent implements OnInit {
   clients: AppUser[] = [];

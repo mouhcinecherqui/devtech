@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { JsonPipe, CommonModule } from '@angular/common';
+import SharedModule from '../../shared/shared.module';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [RouterModule, JsonPipe, CommonModule],
+  imports: [RouterModule, JsonPipe, CommonModule, SharedModule],
 })
 export class SidebarComponent {
   constructor(public accountService: AccountService) {}

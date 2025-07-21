@@ -1,0 +1,23 @@
+{
+  "devtechApp": {
+    "adminAuthority": {
+      "home": {
+        "title": "Autoridades",
+        "refreshListLabel": "Actualizar lista",
+        "createLabel": "Crear una nueva Autoridad",
+        "createOrEditLabel": "Crear o editar una Autoridad",
+        "notFound": "No se encontró ninguna Autoridad"
+      },
+      "created": "Se ha creado una nueva Autoridad con el identificador {{ param }}",
+      "updated": "La Autoridad con el identificador {{ param }} ha sido actualizada",
+      "deleted": "La Autoridad con el identificador {{ param }} ha sido eliminada",
+      "delete": {
+        "question": "¿Está seguro de que desea eliminar la Autoridad {{ id }}?"
+      },
+      "detail": {
+        "title": "Autoridad"
+      },
+      "name": "Nombre"
+    }
+  }
+}

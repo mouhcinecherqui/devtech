@@ -1,0 +1,368 @@
+{
+  "userDashboard": {
+    "header": "Usuario",
+    "title": "Panel de control",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "closed": "RESUELTOS / CERRADOS"
+    },
+    "table": {
+      "title": "Mis últimas solicitudes",
+      "id": "ID",
+      "type": "Tipo",
+      "description": "Descripción",
+      "status": "Estado",
+      "date": "Fecha",
+      "notFound": "No se encontraron tickets."
+    },
+    "loading": "Cargando...",
+    "error": "Error"
+  },
+  "managerDashboard": {
+    "header": "Manager",
+    "title": "Panel de control",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "resolved": "RESUELTOS",
+      "urgent": "URGENTE"
+    },
+    "table": {
+      "title": "Últimas solicitudes",
+      "titleCol": "Título",
+      "client": "Cliente",
+      "status": "Estado",
+      "date": "Fecha"
+    },
+    "status": {
+      "inProgress": "En curso",
+      "resolved": "Resuelto",
+      "urgent": "Urgente"
+    }
+  },
+  "global": {
+    "title": "Devtech",
+    "menu": {
+      "home": "Inicio",
+      "login": "Iniciar sesión",
+      "register": "Registrarse",
+      "account": {
+        "main": "Cuenta",
+        "settings": "Perfil",
+        "password": "Contraseña",
+        "logout": "Cerrar sesión"
+      }
+    },
+    "form": {
+      "username": "Usuario",
+      "password": "Contraseña",
+      "email": "Correo electrónico"
+    },
+    "messages": {
+      "error": {
+        "dontmatch": "¡La contraseña y su confirmación no coinciden!"
+      }
+    },
+    "field": {
+      "id": "ID"
+    },
+    "item-count": "Cantidad de elementos: {{count}}",
+    "home": {
+      "title": "¡Bienvenido a DevTech!",
+      "subtitle": "Gestiona tus tickets de soporte y los servicios de la plataforma fácilmente.",
+      "servicesTitle": "Nuestros servicios",
+      "service1": {
+        "title": "Gestión de tickets",
+        "desc": "Crea, sigue y resuelve tus tickets de soporte de manera eficiente."
+      },
+      "service2": {
+        "title": "Área de clientes",
+        "desc": "Accede a tu panel de cliente y gestiona tu información."
+      },
+      "service3": {
+        "title": "Herramientas de administración",
+        "desc": "Herramientas avanzadas para administradores y managers."
+      }
+    }
+  },
+  "adminDashboard": {
+    "title": "Panel de control",
+    "welcome": "Bienvenido,",
+    "role": "Administrador",
+    "status": { "online": "En línea" },
+    "recentActivity": "Actividad reciente",
+    "quickAccess": "Acceso rápido",
+    "createTicket": "Crear un nuevo ticket",
+    "addClient": "Agregar un cliente",
+    "managePayments": "Gestionar pagos",
+    "editSettings": "Modificar",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "resolved": "RESUELTOS",
+      "urgent": "URGENTE"
+    },
+    "table": {
+      "title": "Últimas solicitudes",
+      "id": "ID",
+      "type": "Tipo",
+      "description": "Descripción",
+      "status": "Estado",
+      "date": "Fecha",
+      "notFound": "No se encontraron tickets."
+    },
+    "loading": "Cargando...",
+    "error": "Error"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "userDashboard": "Panel de usuario",
+    "adminDashboard": "Panel de admin",
+    "managerDashboard": "Panel de manager",
+    "clientDashboard": "Panel de cliente",
+    "notifications": "Notificaciones",
+    "markAllRead": "Marcar todo como leído",
+    "noNotifications": "Sin notificaciones",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión"
+  },
+  "sidebar": {
+    "myTickets": "Mis tickets",
+    "tickets": "Tickets",
+    "clients": "Clientes",
+    "payments": "Pagos",
+    "settings": "Parámetros",
+    "users": "Usuarios"
+  },
+  "login": {
+    "title": "Autenticación",
+    "messages": {
+      "error": {
+        "authentication": "¡Error de autenticación! Por favor, verifique sus credenciales."
+      }
+    },
+    "form": {
+      "password": "Contraseña",
+      "password.placeholder": "Su contraseña",
+      "rememberme": "Mantener la sesión abierta",
+      "button": "Iniciar sesión"
+    },
+    "password": {
+      "forgot": "¿Olvidó su contraseña?"
+    }
+  },
+  "register": {
+    "title": "Creación de cuenta de usuario",
+    "messages": {
+      "success": "¡Cuenta registrada! Por favor, revise su correo de confirmación.",
+      "error": {
+        "fail": "¡Cuenta no creada! Por favor, inténtelo de nuevo más tarde.",
+        "userexists": "¡Esta cuenta de usuario ya existe! Por favor, elija otra.",
+        "emailexists": "¡Este correo electrónico ya está en uso! Por favor, elija otro."
+      },
+      "validate": {
+        "login": {
+          "required": "Su nombre de usuario es obligatorio.",
+          "minlength": "Su nombre de usuario debe tener más de un carácter.",
+          "maxlength": "Su nombre de usuario no puede tener más de 50 caracteres.",
+          "pattern": "Su nombre de usuario no es válido."
+        }
+      }
+    },
+    "form": {
+      "button": "Registrar"
+    }
+  },
+  "appUserRegister": {
+    "title": "Registrar nuevo usuario",
+    "google": "Registrarse con Google",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "submit": "Registrar",
+    "firstNameRequired": "El nombre es obligatorio.",
+    "lastNameRequired": "El apellido es obligatorio.",
+    "emailRequired": "Se requiere un correo electrónico válido.",
+    "phoneRequired": "El número de teléfono es obligatorio.",
+    "success": "¡Registro exitoso!",
+    "error": "El registro falló. Por favor, inténtelo de nuevo."
+  },
+  "clientDashboard": {
+    "header": "¡Bienvenido, cliente!",
+    "title": "Mis tickets",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "closed": "RESUELTOS / CERRADOS"
+    }
+  },
+  "ticketsUser": {
+    "title": "Mis tickets",
+    "create": "Crear ticket",
+    "type": "Tipo de ticket",
+    "selectType": "Seleccionar un tipo",
+    "description": "Descripción del problema",
+    "backofficeUrl": "Enlace de backoffice",
+    "backofficeLogin": "Login de backoffice",
+    "backofficePassword": "Contraseña de backoffice",
+    "hostingUrl": "URL de hosting",
+    "cancel": "Cancelar",
+    "detail": "Detalle del ticket",
+    "info": "Información del ticket",
+    "status": "Estado",
+    "date": "Fecha",
+    "history": "Historial de mis tickets",
+    "loading": "Cargando...",
+    "backoffice": "Backoffice",
+    "hosting": "Hosting",
+    "noTickets": "No hay tickets todavía."
+  },
+  "ticketsAdmin": {
+    "title": "Tickets",
+    "subtitle": "Gestione los tickets de soporte y siga su estado en tiempo real.",
+    "loading": "Cargando...",
+    "id": "ID",
+    "type": "Tipo",
+    "description": "Descripción",
+    "status": "Estado",
+    "created": "Creado el",
+    "actions": "Acciones",
+    "detail": "Detalle",
+    "noTickets": "No se encontraron tickets.",
+    "statusNew": "Nuevo",
+    "statusInProgress": "En curso",
+    "statusResolved": "Resuelto",
+    "statusClosed": "Cerrado",
+    "messages": "Mensajes al cliente:",
+    "addMessage": "Agregar un mensaje...",
+    "save": "Guardar"
+  },
+  "ticketsClient": {
+    "title": "Mis tickets",
+    "create": "Crear ticket",
+    "type": "Tipo de ticket",
+    "selectType": "Seleccionar un tipo",
+    "description": "Descripción del problema",
+    "backofficeUrl": "Enlace de backoffice",
+    "backofficeLogin": "Login de backoffice",
+    "backofficePassword": "Contraseña de backoffice",
+    "hostingUrl": "URL de hosting",
+    "cancel": "Cancelar",
+    "detail": "Detalle del ticket",
+    "info": "Información del ticket",
+    "status": "Estado",
+    "date": "Fecha",
+    "history": "Historial de mis tickets",
+    "loading": "Cargando...",
+    "backoffice": "Backoffice",
+    "hosting": "Hosting",
+    "noTickets": "No hay tickets todavía."
+  },
+  "clientsAdmin": {
+    "title": "Clientes",
+    "subtitle": "Lista y gestión de los clientes registrados en la plataforma.",
+    "add": "Agregar cliente",
+    "total": "Total",
+    "search": "Buscar un cliente...",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "actions": "Acciones",
+    "noClients": "No se encontró ningún cliente."
+  },
+  "paiementsAdmin": {
+    "title": "Pagos",
+    "add": "Agregar pago",
+    "subtitle": "Consulte el historial de pagos y gestione las transacciones de los clientes.",
+    "total": "Total",
+    "completed": "Completados",
+    "pending": "Pendiente",
+    "failed": "Fallidos",
+    "search": "Buscar un pago...",
+    "user": "Usuario",
+    "amount": "Monto",
+    "date": "Fecha",
+    "status": "Estado",
+    "actions": "Acciones",
+    "invoice": "Factura PDF"
+  },
+  "userManagement": {
+    "home": {
+      "title": "Usuarios",
+      "refreshListLabel": "Actualizar lista",
+      "createLabel": "Crear un nuevo usuario"
+    },
+    "login": "Usuario",
+    "email": "Correo electrónico",
+    "langKey": "Idioma",
+    "profiles": "Roles",
+    "createdDate": "Creado el",
+    "lastModifiedBy": "Modificado por",
+    "lastModifiedDate": "Modificado el",
+    "activated": "Activado",
+    "deactivated": "Desactivado"
+  },
+  "parameters": {
+    "title": "Parámetros",
+    "subtitle": "Administra los parámetros globales de la plataforma y configura las opciones del sistema.",
+    "key": "Clave",
+    "value": "Valor",
+    "description": "Descripción",
+    "type": "Tipo",
+    "actions": "Acciones",
+    "add": "Agregar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "ticketStatus": {
+      "title": "Estados de tickets",
+      "add": "Agregar estado"
+    },
+    "ticketType": {
+      "title": "Tipos de tickets",
+      "add": "Agregar tipo"
+    },
+    "ticketPriority": {
+      "title": "Prioridades de tickets",
+      "add": "Agregar prioridad"
+    },
+    "other": {
+      "title": "Otros parámetros",
+      "add": "Agregar parámetro"
+    },
+    "interface": {
+      "ticket": "Ticket",
+      "tickets": "Tickets",
+      "type": "Tipo",
+      "ticketType": "Tipo de ticket",
+      "ticketTypes": "Tipos de tickets",
+      "status": "Estado",
+      "statuses": "Estados",
+      "priority": "Prioridad",
+      "priorities": "Prioridades",
+      "parameter": "Parámetro",
+      "parameters": "Parámetros",
+      "interface": "Interfaz",
+      "Bug": "Bug",
+      "Demande": "Solicitud",
+      "Support": "Soporte",
+      "Autre": "Otro",
+      "Nouveau": "Nuevo",
+      "En cours": "En curso",
+      "Résolu": "Resuelto",
+      "Fermé": "Cerrado",
+      "Urgent": "Urgente",
+      "Request": "Solicitud",
+      "Support": "Soporte"
+    }
+  },
+  "entity": {
+    "action": {
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
+  }
+}

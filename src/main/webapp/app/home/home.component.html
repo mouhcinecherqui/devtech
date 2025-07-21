@@ -4,36 +4,34 @@
     <!-- main content start -->
     <main>
       <section class="company-intro">
-        <h1 class="landing-title animated-fade-in welcome-title" style="animation-delay: 0s">Welcome to DevTech</h1>
+        <h1 class="landing-title animated-fade-in welcome-title" style="animation-delay: 0s">{{ 'global.home.title' | translate }}</h1>
         <p class="landing-subtitle animated-fade-in" style="animation-delay: 0.2s">
-          DevTech is your trusted partner for digital innovation. We specialize in building modern web applications and robust e-commerce
-          platforms with CMS integration. Our mission is to empower your business with the latest web technologies and deliver solutions
-          tailored to your needs.
+          {{ 'global.home.subtitle' | translate }}
         </p>
       </section>
       <!-- Modern Services Section -->
-      <h2 class="animated-fade-in services-title" style="animation-delay: 0.8s">Our Services</h2>
+      <h2 class="animated-fade-in services-title" style="animation-delay: 0.8s">{{ 'global.home.servicesTitle' | translate }}</h2>
       <section class="services-presentation">
         <div class="services-columns">
           <div class="service-card">
             <span class="service-bg-number">01</span>
-            <h3>Custom Web Application Development</h3>
-            <p>Scalable, secure, and high-performance web apps for any business need.</p>
+            <h3>{{ 'global.home.service1.title' | translate }}</h3>
+            <p>{{ 'global.home.service1.desc' | translate }}</p>
           </div>
           <div class="service-card">
             <span class="service-bg-number">02</span>
-            <h3>E-commerce Website Development</h3>
-            <p>Online stores with seamless CMS integration, payment gateways, and inventory management.</p>
+            <h3>{{ 'global.home.service2.title' | translate }}</h3>
+            <p>{{ 'global.home.service2.desc' | translate }}</p>
           </div>
           <div class="service-card">
             <span class="service-bg-number">03</span>
-            <h3>Content Management Systems (CMS)</h3>
-            <p>Flexible and user-friendly CMS solutions for easy website management.</p>
+            <h3>{{ 'global.home.service3.title' | translate }}</h3>
+            <p>{{ 'global.home.service3.desc' | translate }}</p>
           </div>
         </div>
       </section>
       <section class="landing-section why-choose">
-        <h2 class="animated-fade-in why-choose-title" style="animation-delay: 0.4s">Why Choose DevTech?</h2>
+        <h2 class="animated-fade-in why-choose-title" style="animation-delay: 0.4s">{{ 'global.home.whyChooseTitle' | translate }}</h2>
         <div class="why-choose-columns-modern">
           <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.1s">
             <span class="why-choose-badge-modern">
@@ -42,7 +40,7 @@
                 <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
-            <p>Experienced team of web developers and designers</p>
+            <p>{{ 'global.home.why1' | translate }}</p>
           </div>
           <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.2s">
             <span class="why-choose-badge-modern">
@@ -51,7 +49,7 @@
                 <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
-            <p>Client-focused approach and transparent communication</p>
+            <p>{{ 'global.home.why2' | translate }}</p>
           </div>
           <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.3s">
             <span class="why-choose-badge-modern">
@@ -60,7 +58,7 @@
                 <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
-            <p>Agile development process for faster delivery</p>
+            <p>{{ 'global.home.why3' | translate }}</p>
           </div>
           <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.4s">
             <span class="why-choose-badge-modern">
@@ -69,7 +67,7 @@
                 <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
-            <p>Latest web technologies and best practices</p>
+            <p>{{ 'global.home.why4' | translate }}</p>
           </div>
           <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.5s">
             <span class="why-choose-badge-modern">
@@ -78,15 +76,15 @@
                 <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </span>
-            <p>Comprehensive post-launch support</p>
+            <p>{{ 'global.home.why5' | translate }}</p>
           </div>
         </div>
       </section>
       <!-- Modern, visually distinct CTA section -->
       <section class="cta-section animated-cta" style="animation-delay: 1.1s">
-        <h2 class="cta-title-alt">Ready to start your web project?</h2>
-        <p class="cta-desc">Contact us today to discuss your web application or e-commerce needs and get a free consultation!</p>
-        <button class="cta-btn" routerLink="/account/register">Get Started</button>
+        <h2 class="cta-title-alt">{{ 'global.home.ctaTitle' | translate }}</h2>
+        <p class="cta-desc">{{ 'global.home.ctaDesc' | translate }}</p>
+        <button class="cta-btn" routerLink="/account/register">{{ 'global.home.ctaBtn' | translate }}</button>
       </section>
     </main>
     <!-- main content end -->

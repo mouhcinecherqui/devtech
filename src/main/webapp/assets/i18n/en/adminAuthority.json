@@ -1,0 +1,23 @@
+{
+  "devtechApp": {
+    "adminAuthority": {
+      "home": {
+        "title": "Authorities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Authority",
+        "createOrEditLabel": "Create or edit an Authority",
+        "notFound": "No Authority found"
+      },
+      "created": "A new Authority has been created with the identifier {{ param }}",
+      "updated": "The Authority with the identifier {{ param }} has been updated",
+      "deleted": "The Authority with the identifier {{ param }} has been deleted",
+      "delete": {
+        "question": "Are you sure you want to delete the Authority {{ id }}?"
+      },
+      "detail": {
+        "title": "Authority"
+      },
+      "name": "Name"
+    }
+  }
+}

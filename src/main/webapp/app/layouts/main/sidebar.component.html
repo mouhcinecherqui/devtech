@@ -2,25 +2,25 @@
 <nav class="sidebar-nav">
   <ul>
     <li routerLinkActive="active" *ngIf="isUser">
-      <a routerLink="/user-tickets"><span class="icon">🎫</span> Mes tickets</a>
+      <a routerLink="/user-tickets"><span class="icon">🎫</span> {{ 'sidebar.myTickets' | translate }}</a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
-      <a routerLink="/admin/tickets"><span class="icon">🎫</span> Tickets</a>
+      <a routerLink="/admin/tickets"><span class="icon">🎫</span> {{ 'sidebar.tickets' | translate }}</a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
-      <a routerLink="/admin/clients"><span class="icon">👤</span> Clients</a>
+      <a routerLink="/admin/clients"><span class="icon">👤</span> {{ 'sidebar.clients' | translate }}</a>
     </li>
     <li routerLinkActive="active" *ngIf="isClient">
-      <a routerLink="/client-tickets"><span class="icon">🎫</span> Mes tickets</a>
+      <a routerLink="/client-tickets"><span class="icon">🎫</span> {{ 'sidebar.myTickets' | translate }}</a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdmin">
-      <a routerLink="/admin/paiements"><span class="icon">💳</span> Paiements</a>
+      <a routerLink="/admin/paiements"><span class="icon">💳</span> {{ 'sidebar.payments' | translate }}</a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
-      <a routerLink="/admin/parameters"><span class="icon">⚙️</span> Paramètres</a>
+      <a routerLink="/admin/parameters"><span class="icon">⚙️</span> {{ 'sidebar.settings' | translate }}</a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdmin">
-      <a routerLink="/admin/users"><span class="icon">👥</span> Utilisateurs</a>
+      <a routerLink="/admin/users"><span class="icon">👥</span> {{ 'sidebar.users' | translate }}</a>
     </li>
   </ul>
 </nav>

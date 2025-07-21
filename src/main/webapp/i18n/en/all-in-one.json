@@ -1,0 +1,317 @@
+{
+  "adminAuthority": {
+    "devtechApp": {
+      "adminAuthority": {
+        "home": {
+          "title": "Authorities",
+          "refreshListLabel": "Refresh list",
+          "createLabel": "Create a new Authority",
+          "createOrEditLabel": "Create or edit an Authority",
+          "notFound": "No Authority found"
+        },
+        "created": "A new Authority has been created with the identifier {{ param }}",
+        "updated": "The Authority with the identifier {{ param }} has been updated",
+        "deleted": "The Authority with the identifier {{ param }} has been deleted",
+        "delete": { "question": "Are you sure you want to delete the Authority {{ id }}?" },
+        "detail": { "title": "Authority" },
+        "name": "Name"
+      }
+    }
+  },
+  "health": {
+    "health": {
+      "title": "Diagnostics",
+      "refresh.button": "Refresh",
+      "stacktrace": "Stacktrace",
+      "details": { "details": "Details", "properties": "Properties", "name": "Name", "value": "Value", "error": "Error" },
+      "indicator": {
+        "diskSpace": "Disk space",
+        "mail": "Email",
+        "livenessState": "Liveness state",
+        "readinessState": "Readiness state",
+        "ping": "Application",
+        "db": "Database"
+      },
+      "table": { "service": "Service name", "status": "Status" },
+      "status": { "UNKNOWN": "UNKNOWN", "UP": "AVAILABLE", "OUT_OF_SERVICE": "OUT OF SERVICE", "DOWN": "OUT OF ORDER" }
+    }
+  },
+  "home": {
+    "home": {
+      "title": "Welcome, Java Hipster!",
+      "subtitle": "This is your home page",
+      "logged": { "message": "You are logged in as \"{{username}}\"." },
+      "question": "If you have questions about JHipster:",
+      "link": {
+        "homepage": "JHipster homepage",
+        "stackoverflow": "JHipster on Stack Overflow",
+        "bugtracker": "JHipster bug tracker",
+        "chat": "JHipster public chat room",
+        "follow": "Follow @jhipster on Twitter"
+      },
+      "like": "If you like JHipster, give us a star on",
+      "github": "GitHub "
+    }
+  },
+  "reset": {
+    "reset": {
+      "request": {
+        "title": "Reset your password",
+        "form": { "button": "Reset password" },
+        "messages": {
+          "info": "Please enter the email address you used to register",
+          "success": "Please check your new emails and follow the instructions to reset your password."
+        }
+      },
+      "finish": {
+        "title": "Password reset",
+        "form": { "button": "Reset password" },
+        "messages": {
+          "info": "Choose a new password",
+          "success": "<strong>Your password has been reset.</strong> Thank you for ",
+          "keymissing": "The reset key is missing",
+          "error": "Your password could not be reset. The reset request is only valid for 24 hours."
+        }
+      }
+    }
+  },
+  "user-management": {
+    "userManagement": {
+      "home": {
+        "title": "Users",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new user",
+        "createOrEditLabel": "Create or edit a user"
+      },
+      "created": "The user {{ param }} has been created.",
+      "updated": "The user {{ param }} has been updated.",
+      "deleted": "The user {{ param }} has been deleted.",
+      "delete": { "question": "Are you sure you want to delete the user {{ login }}?" },
+      "detail": { "title": "User" },
+      "login": "Login",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "activated": "Activated",
+      "deactivated": "Deactivated",
+      "profiles": "Rights",
+      "langKey": "Language",
+      "createdBy": "Created by",
+      "createdDate": "Created on",
+      "lastModifiedBy": "Modified by",
+      "lastModifiedDate": "Modified on"
+    }
+  },
+  "global": {
+    "global": {
+      "home": {
+        "title": "Welcome to DevTech",
+        "subtitle": "DevTech is your trusted partner for digital innovation. We specialize in building modern web applications and robust e-commerce platforms with CMS integration. Our mission is to empower your business with the latest web technologies and deliver solutions tailored to your needs.",
+        "servicesTitle": "Our Services",
+        "service1": {
+          "title": "Custom Web Application Development",
+          "desc": "Scalable, secure, and high-performance web apps for any business need."
+        },
+        "service2": {
+          "title": "E-commerce Website Development",
+          "desc": "Online stores with seamless CMS integration, payment gateways, and inventory management."
+        },
+        "service3": {
+          "title": "Content Management Systems (CMS)",
+          "desc": "Flexible and user-friendly CMS solutions for easy website management."
+        },
+        "whyChooseTitle": "Why Choose DevTech?",
+        "why1": "Experienced team of web developers and designers",
+        "why2": "Client-focused approach and transparent communication",
+        "why3": "Agile development process for faster delivery",
+        "why4": "Latest web technologies and best practices",
+        "why5": "Comprehensive post-launch support",
+        "ctaTitle": "Ready to start your web project?",
+        "ctaDesc": "Contact us today to discuss your web application or e-commerce needs and get a free consultation!",
+        "ctaBtn": "Get Started"
+      }
+    }
+  },
+  "activate": {
+    "activate": {
+      "title": "Activation",
+      "messages": {
+        "success": "<strong>Your user account has been activated.</strong> Thank you for logging in.",
+        "error": "<strong>Your user account could not be activated.</strong> Use the registration form to create a new one."
+      }
+    }
+  },
+  "configuration": {
+    "configuration": {
+      "title": "Configuration",
+      "filter": "Filter (by prefix)",
+      "table": { "prefix": "Prefix", "properties": "Properties" }
+    }
+  },
+  "logs": {
+    "logs": {
+      "title": "Logs",
+      "nbloggers": "Total of {{ total }} \"loggers\".",
+      "filter": "Filter",
+      "table": { "name": "Name", "level": "Level" }
+    }
+  },
+  "metrics": {
+    "metrics": {
+      "health": {
+        "title": "Diagnostics",
+        "refresh.button": "Refresh",
+        "stacktrace": "Stacktrace",
+        "details": { "details": "Details", "properties": "Properties", "name": "Name", "value": "Value", "error": "Error" },
+        "indicator": {
+          "diskSpace": "Disk space",
+          "mail": "Email",
+          "livenessState": "Liveness state",
+          "readinessState": "Readiness state",
+          "ping": "Application",
+          "db": "Database"
+        },
+        "table": { "service": "Service name", "status": "Status" },
+        "status": { "UNKNOWN": "UNKNOWN", "UP": "AVAILABLE", "OUT_OF_SERVICE": "OUT OF SERVICE", "DOWN": "OUT OF ORDER" }
+      }
+    }
+  },
+  "register": {
+    "register": {
+      "title": "User account creation",
+      "form": { "button": "Register" },
+      "messages": {
+        "validate": {
+          "login": {
+            "required": "Your username is required.",
+            "minlength": "Your username must be longer than one character.",
+            "maxlength": "Your username cannot be longer than 50 characters.",
+            "pattern": "Your username is invalid."
+          }
+        },
+        "success": "<strong>Account registered!</strong> Please check your confirmation email.",
+        "error": {
+          "fail": "<strong>Account not created!</strong> Please try again later.",
+          "userexists": "<strong>This user account already exists!</strong> Please choose another one.",
+          "emailexists": "<strong>This email is already used!</strong> Please choose another one."
+        }
+      }
+    }
+  },
+  "sessions": {
+    "sessions": {
+      "title": "Active sessions for [<strong>{{username}}</strong>]",
+      "table": { "ipaddress": "IP address", "useragent": "User Agent", "date": "Date", "button": "Invalidate" },
+      "messages": {
+        "success": "<strong>The session has been invalidated!</strong>",
+        "error": "<strong>An error occurred!</strong> The session cannot be invalidated."
+      }
+    }
+  },
+  "settings": {
+    "settings": {
+      "title": "User profile [<strong>{{username}}</strong>]",
+      "form": {
+        "firstname": "First name",
+        "firstname.placeholder": "Your first name",
+        "lastname": "Last name",
+        "lastname.placeholder": "Your last name",
+        "language": "Language",
+        "button": "Save"
+      },
+      "messages": {
+        "error": {
+          "fail": "<strong>An error occurred!</strong> Your profile was not saved.",
+          "emailexists": "<strong>This email is already used!</strong> Please choose another one."
+        },
+        "success": "<strong>Your profile has been saved!</strong>",
+        "validate": {
+          "firstname": {
+            "required": "Your first name is required.",
+            "minlength": "Your first name must be at least one character.",
+            "maxlength": "Your first name cannot be longer than 50 characters."
+          },
+          "lastname": {
+            "required": "Your last name is required.",
+            "minlength": "Your last name must be at least one character.",
+            "maxlength": "Your last name cannot be longer than 50 characters."
+          }
+        }
+      }
+    }
+  },
+  "password": {
+    "password": {
+      "title": "Change password for [<strong>{{username}}</strong>]",
+      "form": { "button": "Save" },
+      "messages": {
+        "error": "<strong>An error occurred!</strong> The password could not be changed.",
+        "success": "<strong>The password has been changed!</strong>"
+      }
+    }
+  },
+  "error": {
+    "error": {
+      "title": "Error page!",
+      "http": {
+        "400": "Bad request.",
+        "403": "You do not have permission to access this page.",
+        "404": "The page does not exist.",
+        "405": "The HTTP verb you used is not recognized by this URL.",
+        "500": "Internal server error."
+      },
+      "concurrencyFailure": "Another user modified this data at the same time as you. Your changes were not saved.",
+      "validation": "Server-side validation error."
+    }
+  },
+  "login": {
+    "login": {
+      "title": "Authentication",
+      "form": { "password": "Password", "password.placeholder": "Your password", "rememberme": "Keep session open", "button": "Login" },
+      "messages": { "error": { "authentication": "<strong>Authentication error!</strong> Please check your login credentials." } },
+      "password": { "forgot": "Did you forget your password?" }
+    }
+  },
+  "userDashboard": {
+    "header": "User",
+    "title": "Dashboard",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "closed": "RESOLVED / CLOSED"
+    },
+    "table": {
+      "title": "My latest requests",
+      "id": "ID",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "date": "Date",
+      "notFound": "No ticket found."
+    },
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "managerDashboard": {
+    "header": "Manager",
+    "title": "Dashboard",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "resolved": "RESOLVED",
+      "urgent": "URGENT"
+    },
+    "table": {
+      "title": "Latest requests",
+      "titleCol": "Title",
+      "client": "Client",
+      "status": "Status",
+      "date": "Date"
+    },
+    "status": {
+      "inProgress": "In progress",
+      "resolved": "Resolved",
+      "urgent": "Urgent"
+    }
+  }
+}
