@@ -1,7 +1,7 @@
 <div class="client-tickets-container">
-  <h2>Mes tickets</h2>
+  <h2>{{ 'ticketsClient.title' | translate }}</h2>
 
-  <button class="btn btn-primary" (click)="openModal()">Créer un ticket</button>
+  <button class="btn btn-primary" (click)="openModal()">{{ 'ticketsClient.create' | translate }}</button>
 
   <div
     *ngIf="showModal()"
@@ -29,38 +29,40 @@
         position: relative;
       "
     >
-      <h3>Créer un ticket</h3>
+      <h3>{{ 'ticketsClient.create' | translate }}</h3>
       <form [formGroup]="ticketForm" (ngSubmit)="submit()" class="ticket-form">
         <div>
-          <label for="type">Type de ticket *</label>
+          <label for="type">{{ 'ticketsClient.type' | translate }} *</label>
           <select id="type" formControlName="type" required #typeInput>
-            <option value="" disabled>Sélectionner un type</option>
-            <option *ngFor="let t of ticketTypes" [value]="t">{{ t }}</option>
+            <option value="" disabled>{{ 'ticketsClient.selectType' | translate }}</option>
+            <option *ngFor="let t of ticketTypes" [value]="t">{{ t | translate }}</option>
           </select>
         </div>
         <div>
-          <label for="description">Description du problème *</label>
+          <label for="description">{{ 'ticketsClient.description' | translate }} *</label>
           <textarea id="description" formControlName="description" required rows="3"></textarea>
         </div>
         <div>
-          <label for="backofficeUrl">Lien du backoffice</label>
+          <label for="backofficeUrl">{{ 'ticketsClient.backofficeUrl' | translate }}</label>
           <input id="backofficeUrl" formControlName="backofficeUrl" type="text" />
         </div>
         <div>
-          <label for="backofficeLogin">Identifiant backoffice</label>
+          <label for="backofficeLogin">{{ 'ticketsClient.backofficeLogin' | translate }}</label>
           <input id="backofficeLogin" formControlName="backofficeLogin" type="text" />
         </div>
         <div>
-          <label for="backofficePassword">Mot de passe backoffice</label>
+          <label for="backofficePassword">{{ 'ticketsClient.backofficePassword' | translate }}</label>
           <input id="backofficePassword" formControlName="backofficePassword" type="text" />
         </div>
         <div>
-          <label for="hostingUrl">URL d'hébergement</label>
+          <label for="hostingUrl">{{ 'ticketsClient.hostingUrl' | translate }}</label>
           <input id="hostingUrl" formControlName="hostingUrl" type="text" />
         </div>
         <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
-          <button type="submit" class="btn btn-primary" [disabled]="ticketForm.invalid || loading()">Créer le ticket</button>
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">{{ 'ticketsClient.cancel' | translate }}</button>
+          <button type="submit" class="btn btn-primary" [disabled]="ticketForm.invalid || loading()">
+            {{ 'ticketsClient.create' | translate }}
+          </button>
         </div>
         <div *ngIf="error()" class="error">{{ error() }}</div>
       </form>
@@ -100,7 +102,7 @@
       >
         &times;
       </button>
-      <h3>Détail du ticket</h3>
+      <h3>{{ 'ticketsClient.detail' | translate }}</h3>
       <div *ngIf="selectedTicket">
         <div class="workflow-bar">
           <ng-container *ngFor="let step of workflowSteps; let i = index">
@@ -118,37 +120,37 @@
           </ng-container>
         </div>
         <div class="ticket-detail-card">
-          <div class="ticket-detail-title">Informations du ticket</div>
+          <div class="ticket-detail-title">{{ 'ticketsClient.info' | translate }}</div>
           <div class="ticket-detail-row">
-            <div class="ticket-detail-label">Statut :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.status }}</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.status' | translate }} :</div>
+            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket?.status | translate }}</div>
           </div>
           <div class="ticket-detail-row">
-            <div class="ticket-detail-label">Type :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.type }}</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.type' | translate }} :</div>
+            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket?.type | translate }}</div>
           </div>
           <div class="ticket-detail-row">
-            <div class="ticket-detail-label">Description :</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.description' | translate }} :</div>
             <div class="ticket-detail-value">{{ selectedTicket.description }}</div>
           </div>
           <div class="ticket-detail-row" *ngIf="selectedTicket.backofficeUrl">
-            <div class="ticket-detail-label">Backoffice URL :</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.backofficeUrl' | translate }} :</div>
             <div class="ticket-detail-value">{{ selectedTicket.backofficeUrl }}</div>
           </div>
           <div class="ticket-detail-row" *ngIf="selectedTicket.backofficeLogin">
-            <div class="ticket-detail-label">Backoffice Login :</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.backofficeLogin' | translate }} :</div>
             <div class="ticket-detail-value">{{ selectedTicket.backofficeLogin }}</div>
           </div>
           <div class="ticket-detail-row" *ngIf="selectedTicket.backofficePassword">
-            <div class="ticket-detail-label">Backoffice Password :</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.backofficePassword' | translate }} :</div>
             <div class="ticket-detail-value">{{ selectedTicket.backofficePassword }}</div>
           </div>
           <div class="ticket-detail-row" *ngIf="selectedTicket.hostingUrl">
-            <div class="ticket-detail-label">Hébergement :</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.hostingUrl' | translate }} :</div>
             <div class="ticket-detail-value">{{ selectedTicket.hostingUrl }}</div>
           </div>
           <div class="ticket-detail-row">
-            <div class="ticket-detail-label">Date :</div>
+            <div class="ticket-detail-label">{{ 'ticketsClient.date' | translate }} :</div>
             <div class="ticket-detail-value">{{ selectedTicket.createdDate | date: 'short' }}</div>
           </div>
         </div>
@@ -156,33 +158,33 @@
     </div>
   </div>
 
-  <h3>Historique de mes tickets</h3>
-  <div *ngIf="loading()">Chargement...</div>
+  <h3>{{ 'ticketsClient.history' | translate }}</h3>
+  <div *ngIf="loading()">{{ 'ticketsClient.loading' | translate }}</div>
   <table *ngIf="tickets().length">
     <thead>
       <tr>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Backoffice</th>
-        <th>Hébergement</th>
-        <th>Date</th>
-        <th>Statut</th>
+        <th>{{ 'ticketsClient.type' | translate }}</th>
+        <th>{{ 'ticketsClient.description' | translate }}</th>
+        <th>{{ 'ticketsClient.backoffice' | translate }}</th>
+        <th>{{ 'ticketsClient.hosting' | translate }}</th>
+        <th>{{ 'ticketsClient.date' | translate }}</th>
+        <th>{{ 'ticketsClient.status' | translate }}</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ticket of tickets()" (click)="openDetailModal(ticket)" style="cursor: pointer">
-        <td>{{ ticket.type }}</td>
+        <td>{{ 'parameters.interface.' + ticket.type | translate }}</td>
         <td>{{ ticket.description }}</td>
         <td>
           <div *ngIf="ticket.backofficeUrl">URL: {{ ticket.backofficeUrl }}</div>
           <div *ngIf="ticket.backofficeLogin">Login: {{ ticket.backofficeLogin }}</div>
-          <div *ngIf="ticket.backofficePassword">Mot de passe: {{ ticket.backofficePassword }}</div>
+          <div *ngIf="ticket.backofficePassword">{{ 'ticketsClient.backofficePassword' | translate }}: {{ ticket.backofficePassword }}</div>
         </td>
         <td>{{ ticket.hostingUrl }}</td>
         <td>{{ ticket.createdDate | date: 'short' }}</td>
-        <td>{{ ticket.status }}</td>
+        <td>{{ 'parameters.interface.' + ticket.status | translate }}</td>
       </tr>
     </tbody>
   </table>
-  <div *ngIf="!tickets().length && !loading()">Aucun ticket pour le moment.</div>
+  <div *ngIf="!tickets().length && !loading()">{{ 'ticketsClient.noTickets' | translate }}</div>
 </div>

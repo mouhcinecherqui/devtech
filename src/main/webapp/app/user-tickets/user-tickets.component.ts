@@ -2,6 +2,7 @@ import { Component, OnInit, signal, ViewChild, ElementRef, ChangeDetectorRef } f
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import SharedModule from '../shared/shared.module';
 
 interface Ticket {
   id?: number;
@@ -20,14 +21,14 @@ interface Ticket {
   templateUrl: './user-tickets.component.html',
   styleUrls: ['./user-tickets.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule],
 })
 export class UserTicketsComponent implements OnInit {
   tickets = signal<Ticket[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
   ticketForm: FormGroup;
-  ticketTypes = ['Bug', 'Demande', 'Support', 'Autre'];
+  ticketTypes = ['parameters.interface.bug', 'parameters.interface.request', 'parameters.interface.support', 'parameters.interface.other'];
   showModal = signal(false);
   workflowSteps = ['Nouveau', 'En cours', 'Résolu', 'Fermé'];
 

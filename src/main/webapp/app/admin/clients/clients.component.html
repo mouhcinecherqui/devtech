@@ -5,27 +5,26 @@
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-              <h2 class="mb-1">Clients</h2>
-              <p class="text-secondary mb-0">Liste et gestion des clients enregistrés sur la plateforme.</p>
+              <h2 class="mb-1">{{ 'clientsAdmin.title' | translate }}</h2>
+              <p class="text-secondary mb-0">{{ 'clientsAdmin.subtitle' | translate }}</p>
             </div>
-            <button class="btn btn-primary" (click)="openAddForm()">Ajouter un client</button>
+            <button class="btn btn-primary" (click)="openAddForm()">{{ 'clientsAdmin.add' | translate }}</button>
           </div>
-
           <div class="mb-3 d-flex justify-content-between align-items-center">
             <div>
-              <span class="badge bg-primary me-2">Total : {{ clients.length }}</span>
+              <span class="badge bg-primary me-2">{{ 'clientsAdmin.total' | translate }} : {{ clients.length }}</span>
             </div>
-            <input type="text" class="form-control w-auto" placeholder="Rechercher un client..." style="max-width: 300px" />
+            <input type="text" class="form-control w-auto" placeholder="{{ 'clientsAdmin.search' | translate }}" style="max-width: 300px" />
           </div>
           <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
               <thead class="table-light">
                 <tr>
                   <th>ID</th>
-                  <th>Nom</th>
-                  <th>Email</th>
-                  <th>Téléphone</th>
-                  <th style="width: 120px">Actions</th>
+                  <th>{{ 'clientsAdmin.name' | translate }}</th>
+                  <th>{{ 'clientsAdmin.email' | translate }}</th>
+                  <th>{{ 'clientsAdmin.phone' | translate }}</th>
+                  <th style="width: 120px">{{ 'clientsAdmin.actions' | translate }}</th>
                 </tr>
               </thead>
               <tbody>
@@ -42,7 +41,7 @@
                   </td>
                 </tr>
                 <tr *ngIf="!clients.length">
-                  <td colspan="5" class="text-center text-muted">Aucun client trouvé.</td>
+                  <td colspan="5" class="text-center text-muted">{{ 'clientsAdmin.noClients' | translate }}</td>
                 </tr>
               </tbody>
             </table>

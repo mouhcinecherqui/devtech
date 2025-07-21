@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaiementsService } from './paiements.service';
 import { FilterPaiementsPipe } from './filterPaiements.pipe';
+import SharedModule from '../../shared/shared.module';
 
 interface Paiement {
   id: number;
@@ -16,7 +17,7 @@ interface Paiement {
   selector: 'app-admin-paiements',
   templateUrl: './paiements.component.html',
   styleUrls: ['./paiements.component.scss'],
-  imports: [CommonModule, FormsModule, FilterPaiementsPipe],
+  imports: [CommonModule, FormsModule, FilterPaiementsPipe, SharedModule],
 })
 export class PaiementsComponent implements OnInit {
   paiements: Paiement[] = [];

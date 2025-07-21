@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import SharedModule from '../shared/shared.module';
 
 interface Ticket {
   id?: number;
@@ -19,7 +20,7 @@ interface Ticket {
   templateUrl: './client-dashboard.component.html',
   styleUrls: ['./client-dashboard.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
 })
 export class ClientDashboardComponent implements OnInit {
   tickets: Ticket[] = [];

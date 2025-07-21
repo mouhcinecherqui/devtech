@@ -1,25 +1,33 @@
 <div class="paiements-header">
-  <h2>Paiements</h2>
-  <button class="mat-btn mat-primary" (click)="ajouterPaiement()">Ajouter un paiement</button>
+  <h2>{{ 'paiementsAdmin.title' | translate }}</h2>
+  <button class="mat-btn mat-primary" (click)="ajouterPaiement()">{{ 'paiementsAdmin.add' | translate }}</button>
 </div>
-<p class="paiements-desc">Consultez l’historique des paiements et gérez les transactions des clients.</p>
+<p class="paiements-desc">{{ 'paiementsAdmin.subtitle' | translate }}</p>
 <div class="paiements-stats">
-  <div><span>Total :</span> {{ paiements.length }}</div>
-  <div><span>Complétés :</span> {{ paiementsCompletes }}</div>
-  <div><span>En attente :</span> {{ paiementsEnAttente }}</div>
-  <div><span>Échoués :</span> {{ paiementsEchoues }}</div>
+  <div>
+    <span>{{ 'paiementsAdmin.total' | translate }} :</span> {{ paiements.length }}
+  </div>
+  <div>
+    <span>{{ 'paiementsAdmin.completed' | translate }} :</span> {{ paiementsCompletes }}
+  </div>
+  <div>
+    <span>{{ 'paiementsAdmin.pending' | translate }} :</span> {{ paiementsEnAttente }}
+  </div>
+  <div>
+    <span>{{ 'paiementsAdmin.failed' | translate }} :</span> {{ paiementsEchoues }}
+  </div>
 </div>
-<input type="text" placeholder="Rechercher un paiement..." [(ngModel)]="search" class="mat-input" />
+<input type="text" placeholder="{{ 'paiementsAdmin.search' | translate }}" [(ngModel)]="search" class="mat-input" />
 <div class="paiements-table-container">
   <table class="mat-table">
     <thead>
       <tr>
         <th>ID</th>
-        <th>Utilisateur</th>
-        <th>Montant</th>
-        <th>Date</th>
-        <th>Statut</th>
-        <th>Actions</th>
+        <th>{{ 'paiementsAdmin.user' | translate }}</th>
+        <th>{{ 'paiementsAdmin.amount' | translate }}</th>
+        <th>{{ 'paiementsAdmin.date' | translate }}</th>
+        <th>{{ 'paiementsAdmin.status' | translate }}</th>
+        <th>{{ 'paiementsAdmin.actions' | translate }}</th>
       </tr>
     </thead>
     <tbody>
@@ -42,7 +50,7 @@
         </td>
         <td>
           <button class="mat-btn mat-accent" (click)="exporterFacturePDF(paiement)">
-            <span class="material-icons">picture_as_pdf</span> Facture PDF
+            <span class="material-icons">picture_as_pdf</span> {{ 'paiementsAdmin.invoice' | translate }}
           </button>
         </td>
       </tr>

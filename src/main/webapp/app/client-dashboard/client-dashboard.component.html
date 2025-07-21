@@ -1,18 +1,18 @@
-<div class="dashboard-header">Bienvenue, client !</div>
+<div class="dashboard-header">{{ 'clientDashboard.header' | translate }}</div>
 <main class="dashboard-main-area">
-  <h1>Mes tickets</h1>
+  <h1>{{ 'clientDashboard.title' | translate }}</h1>
   <div class="dashboard-stats">
     <div class="stat-card stat-blue">
       <div class="stat-value">{{ stats.tickets }}</div>
-      <div class="stat-label">TICKETS</div>
+      <div class="stat-label">{{ 'clientDashboard.stats.tickets' | translate }}</div>
     </div>
     <div class="stat-card stat-cyan">
       <div class="stat-value">{{ stats.open }}</div>
-      <div class="stat-label">EN COURS</div>
+      <div class="stat-label">{{ 'clientDashboard.stats.open' | translate }}</div>
     </div>
     <div class="stat-card stat-green">
       <div class="stat-value">{{ stats.closed }}</div>
-      <div class="stat-label">RÉSOLUS / FERMÉS</div>
+      <div class="stat-label">{{ 'clientDashboard.stats.closed' | translate }}</div>
     </div>
   </div>
 </main>

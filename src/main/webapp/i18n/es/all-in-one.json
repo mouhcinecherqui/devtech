@@ -1,0 +1,324 @@
+{
+  "adminAuthority": {
+    "devtechApp": {
+      "adminAuthority": {
+        "home": {
+          "title": "Autoridades",
+          "refreshListLabel": "Actualizar lista",
+          "createLabel": "Crear una nueva Autoridad",
+          "createOrEditLabel": "Crear o editar una Autoridad",
+          "notFound": "No se encontró ninguna Autoridad"
+        },
+        "created": "Se ha creado una nueva Autoridad con el identificador {{ param }}",
+        "updated": "La Autoridad con el identificador {{ param }} ha sido actualizada",
+        "deleted": "La Autoridad con el identificador {{ param }} ha sido eliminada",
+        "delete": { "question": "¿Está seguro de que desea eliminar la Autoridad {{ id }}?" },
+        "detail": { "title": "Autoridad" },
+        "name": "Nombre"
+      }
+    }
+  },
+  "health": {
+    "health": {
+      "title": "Diagnóstico",
+      "refresh.button": "Actualizar",
+      "stacktrace": "Stacktrace",
+      "details": { "details": "Detalles", "properties": "Propiedades", "name": "Nombre", "value": "Valor", "error": "Error" },
+      "indicator": {
+        "diskSpace": "Espacio en disco",
+        "mail": "Correo electrónico",
+        "livenessState": "Estado de vida",
+        "readinessState": "Estado de preparación",
+        "ping": "Aplicación",
+        "db": "Base de datos"
+      },
+      "table": { "service": "Nombre del servicio", "status": "Estado" },
+      "status": { "UNKNOWN": "DESCONOCIDO", "UP": "ACTIVO", "OUT_OF_SERVICE": "FUERA DE SERVICIO", "DOWN": "INACTIVO" }
+    }
+  },
+  "home": {
+    "home": {
+      "title": "¡Bienvenido, Java Hipster!",
+      "subtitle": "Esta es tu página de inicio",
+      "logged": { "message": "Has iniciado sesión como \"{{username}}\"." },
+      "question": "Si tienes preguntas sobre JHipster:",
+      "link": {
+        "homepage": "Página principal de JHipster",
+        "stackoverflow": "JHipster en Stack Overflow",
+        "bugtracker": "JHipster bug tracker",
+        "chat": "Sala de chat pública de JHipster",
+        "follow": "Sigue a @jhipster en Twitter"
+      },
+      "like": "Si te gusta JHipster, danos una estrella en",
+      "github": "GitHub "
+    }
+  },
+  "reset": {
+    "reset": {
+      "request": {
+        "title": "Restablecer su contraseña",
+        "form": { "button": "Restablecer contraseña" },
+        "messages": {
+          "info": "Por favor, introduzca la dirección de correo electrónico que utilizó para registrarse",
+          "success": "Por favor, revise sus nuevos correos electrónicos y siga las instrucciones para restablecer su contraseña."
+        }
+      },
+      "finish": {
+        "title": "Restablecimiento de contraseña",
+        "form": { "button": "Restablecer contraseña" },
+        "messages": {
+          "info": "Elija una nueva contraseña",
+          "success": "<strong>Su contraseña ha sido restablecida.</strong> Gracias por ",
+          "keymissing": "Falta la clave de restablecimiento",
+          "error": "No se pudo restablecer su contraseña. La solicitud de restablecimiento solo es válida durante 24 horas."
+        }
+      }
+    }
+  },
+  "user-management": {
+    "userManagement": {
+      "home": {
+        "title": "Usuarios",
+        "refreshListLabel": "Actualizar lista",
+        "createLabel": "Crear un nuevo usuario",
+        "createOrEditLabel": "Crear o editar un usuario"
+      },
+      "created": "El usuario {{ param }} ha sido creado.",
+      "updated": "El usuario {{ param }} ha sido actualizado.",
+      "deleted": "El usuario {{ param }} ha sido eliminado.",
+      "delete": { "question": "¿Está seguro de que desea eliminar al usuario {{ login }}?" },
+      "detail": { "title": "Usuario" },
+      "login": "Usuario",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "activated": "Activado",
+      "deactivated": "Desactivado",
+      "profiles": "Permisos",
+      "langKey": "Idioma",
+      "createdBy": "Creado por",
+      "createdDate": "Creado el",
+      "lastModifiedBy": "Modificado por",
+      "lastModifiedDate": "Modificado el"
+    }
+  },
+  "global": {
+    "global": {
+      "home": {
+        "title": "Bienvenido a DevTech",
+        "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
+        "servicesTitle": "Nuestros servicios",
+        "service1": {
+          "title": "Desarrollo de aplicaciones web a medida",
+          "desc": "Aplicaciones web escalables, seguras y de alto rendimiento para cualquier necesidad empresarial."
+        },
+        "service2": {
+          "title": "Desarrollo de sitios web de comercio electrónico",
+          "desc": "Tiendas online con integración CMS, pasarelas de pago y gestión de inventario."
+        },
+        "service3": {
+          "title": "Sistemas de gestión de contenidos (CMS)",
+          "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
+        },
+        "whyChooseTitle": "¿Por qué elegir DevTech?",
+        "why1": "Equipo experimentado de desarrolladores y diseñadores web",
+        "why2": "Enfoque centrado en el cliente y comunicación transparente",
+        "why3": "Proceso ágil de desarrollo para una entrega más rápida",
+        "why4": "Últimas tecnologías web y mejores prácticas",
+        "why5": "Soporte integral después del lanzamiento",
+        "ctaTitle": "¿Listo para comenzar su proyecto web?",
+        "ctaDesc": "¡Contáctenos hoy para hablar de sus necesidades y obtener una consulta gratuita!",
+        "ctaBtn": "Comenzar"
+      }
+    }
+  },
+  "activate": {
+    "activate": {
+      "title": "Activación",
+      "messages": {
+        "success": "<strong>Su cuenta de usuario ha sido activada.</strong> Gracias por iniciar sesión.",
+        "error": "<strong>No se pudo activar su cuenta de usuario.</strong> Utilice el formulario de registro para crear una nueva."
+      }
+    }
+  },
+  "configuration": {
+    "configuration": {
+      "title": "Configuración",
+      "filter": "Filtrar (por prefijo)",
+      "table": { "prefix": "Prefijo", "properties": "Propiedades" }
+    }
+  },
+  "logs": {
+    "logs": {
+      "title": "Registros",
+      "nbloggers": "Total de {{ total }} \"registros\".",
+      "filter": "Filtrar",
+      "table": { "name": "Nombre", "level": "Nivel" }
+    }
+  },
+  "metrics": {
+    "metrics": {
+      "health": {
+        "title": "Diagnóstico",
+        "refresh.button": "Actualizar",
+        "stacktrace": "Stacktrace",
+        "details": { "details": "Detalles", "properties": "Propiedades", "name": "Nombre", "value": "Valor", "error": "Error" },
+        "indicator": {
+          "diskSpace": "Espacio en disco",
+          "mail": "Correo electrónico",
+          "livenessState": "Estado de vida",
+          "readinessState": "Estado de preparación",
+          "ping": "Aplicación",
+          "db": "Base de datos"
+        },
+        "table": { "service": "Nombre del servicio", "status": "Estado" },
+        "status": { "UNKNOWN": "DESCONOCIDO", "UP": "ACTIVO", "OUT_OF_SERVICE": "FUERA DE SERVICIO", "DOWN": "INACTIVO" }
+      }
+    }
+  },
+  "register": {
+    "register": {
+      "title": "Creación de cuenta de usuario",
+      "form": { "button": "Registrar" },
+      "messages": {
+        "validate": {
+          "login": {
+            "required": "Su nombre de usuario es obligatorio.",
+            "minlength": "Su nombre de usuario debe tener más de un carácter.",
+            "maxlength": "Su nombre de usuario no puede tener más de 50 caracteres.",
+            "pattern": "Su nombre de usuario no es válido."
+          }
+        },
+        "success": "<strong>¡Cuenta registrada!</strong> Por favor, revise su correo de confirmación.",
+        "error": {
+          "fail": "<strong>¡Cuenta no creada!</strong> Por favor, inténtelo de nuevo más tarde.",
+          "userexists": "<strong>¡Esta cuenta de usuario ya existe!</strong> Por favor, elija otra.",
+          "emailexists": "<strong>Este correo electrónico ya está en uso!</strong> Por favor, elija otro."
+        }
+      }
+    }
+  },
+  "sessions": {
+    "sessions": {
+      "title": "Sesiones activas de [<strong>{{username}}</strong>]",
+      "table": { "ipaddress": "Dirección IP", "useragent": "User Agent", "date": "Fecha", "button": "Invalidar" },
+      "messages": {
+        "success": "<strong>¡La sesión ha sido invalidada!</strong>",
+        "error": "<strong>¡Ocurrió un error!</strong> La sesión no puede ser invalidada."
+      }
+    }
+  },
+  "settings": {
+    "settings": {
+      "title": "Perfil de usuario [<strong>{{username}}</strong>]",
+      "form": {
+        "firstname": "Nombre",
+        "firstname.placeholder": "Su nombre",
+        "lastname": "Apellido",
+        "lastname.placeholder": "Su apellido",
+        "language": "Idioma",
+        "button": "Guardar"
+      },
+      "messages": {
+        "error": {
+          "fail": "<strong>¡Ocurrió un error!</strong> Su perfil no fue guardado.",
+          "emailexists": "<strong>Este correo electrónico ya está en uso!</strong> Por favor, elija otro."
+        },
+        "success": "<strong>¡Su perfil ha sido guardado!</strong>",
+        "validate": {
+          "firstname": {
+            "required": "Su nombre es obligatorio.",
+            "minlength": "Su nombre debe tener al menos un carácter.",
+            "maxlength": "Su nombre no puede tener más de 50 caracteres."
+          },
+          "lastname": {
+            "required": "Su apellido es obligatorio.",
+            "minlength": "Su apellido debe tener al menos un carácter.",
+            "maxlength": "Su apellido no puede tener más de 50 caracteres."
+          }
+        }
+      }
+    }
+  },
+  "password": {
+    "password": {
+      "title": "Cambiar la contraseña para [<strong>{{username}}</strong>]",
+      "form": { "button": "Guardar" },
+      "messages": {
+        "error": "<strong>¡Ocurrió un error!</strong> No se pudo cambiar la contraseña.",
+        "success": "<strong>¡La contraseña ha sido cambiada!</strong>"
+      }
+    }
+  },
+  "error": {
+    "error": {
+      "title": "¡Página de error!",
+      "http": {
+        "400": "Solicitud incorrecta.",
+        "403": "No tiene permiso para acceder a esta página.",
+        "404": "La página no existe.",
+        "405": "El verbo HTTP que utilizó no es reconocido por esta URL.",
+        "500": "Error interno del servidor."
+      },
+      "concurrencyFailure": "Otro usuario modificó estos datos al mismo tiempo que usted. Sus cambios no fueron guardados.",
+      "validation": "Error de validación del lado del servidor."
+    }
+  },
+  "login": {
+    "login": {
+      "title": "Autenticación",
+      "form": {
+        "password": "Contraseña",
+        "password.placeholder": "Su contraseña",
+        "rememberme": "Mantener la sesión abierta",
+        "button": "Iniciar sesión"
+      },
+      "messages": {
+        "error": { "authentication": "<strong>¡Error de autenticación!</strong> Por favor, verifique sus credenciales de acceso." }
+      },
+      "password": { "forgot": "¿Olvidó su contraseña?" }
+    }
+  },
+  "userDashboard": {
+    "header": "Usuario",
+    "title": "Panel de control",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "closed": "RESUELTOS / CERRADOS"
+    },
+    "table": {
+      "title": "Mis últimas solicitudes",
+      "id": "ID",
+      "type": "Tipo",
+      "description": "Descripción",
+      "status": "Estado",
+      "date": "Fecha",
+      "notFound": "No se encontraron tickets."
+    },
+    "loading": "Cargando...",
+    "error": "Error"
+  },
+  "managerDashboard": {
+    "header": "Manager",
+    "title": "Panel de control",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "resolved": "RESUELTOS",
+      "urgent": "URGENTE"
+    },
+    "table": {
+      "title": "Últimas solicitudes",
+      "titleCol": "Título",
+      "client": "Cliente",
+      "status": "Estado",
+      "date": "Fecha"
+    },
+    "status": {
+      "inProgress": "En curso",
+      "resolved": "Resuelto",
+      "urgent": "Urgente"
+    }
+  }
+}

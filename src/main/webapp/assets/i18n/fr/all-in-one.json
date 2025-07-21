@@ -1,0 +1,368 @@
+{
+  "userDashboard": {
+    "header": "Utilisateur",
+    "title": "Tableau de bord",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN COURS",
+      "closed": "RÉSOLUS / FERMÉS"
+    },
+    "table": {
+      "title": "Mes dernières demandes",
+      "id": "ID",
+      "type": "Type",
+      "description": "Description",
+      "status": "Statut",
+      "date": "Date",
+      "notFound": "Aucun ticket trouvé."
+    },
+    "loading": "Chargement...",
+    "error": "Erreur"
+  },
+  "managerDashboard": {
+    "header": "Manager",
+    "title": "Tableau de bord",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN COURS",
+      "resolved": "RÉSOLUS",
+      "urgent": "URGENT"
+    },
+    "table": {
+      "title": "Dernières demandes",
+      "titleCol": "Titre",
+      "client": "Client",
+      "status": "Statut",
+      "date": "Date"
+    },
+    "status": {
+      "inProgress": "En cours",
+      "resolved": "Résolu",
+      "urgent": "Urgent"
+    }
+  },
+  "global": {
+    "title": "Devtech",
+    "menu": {
+      "home": "Accueil",
+      "login": "S'authentifier",
+      "register": "Créer un compte",
+      "account": {
+        "main": "Compte",
+        "settings": "Profil",
+        "password": "Mot de passe",
+        "logout": "Déconnexion"
+      }
+    },
+    "form": {
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "email": "Email"
+    },
+    "messages": {
+      "error": {
+        "dontmatch": "Le mot de passe et sa confirmation ne correspondent pas !"
+      }
+    },
+    "field": {
+      "id": "ID"
+    },
+    "item-count": "Nombre d'éléments : {{count}}",
+    "home": {
+      "title": "Bienvenue sur DevTech !",
+      "subtitle": "Gérez vos tickets de support et les services de la plateforme facilement.",
+      "servicesTitle": "Nos services",
+      "service1": {
+        "title": "Gestion des tickets",
+        "desc": "Créez, suivez et résolvez vos tickets de support efficacement."
+      },
+      "service2": {
+        "title": "Espace client",
+        "desc": "Accédez à votre tableau de bord client et gérez vos informations."
+      },
+      "service3": {
+        "title": "Outils d'administration",
+        "desc": "Outils avancés pour les administrateurs et managers."
+      }
+    }
+  },
+  "adminDashboard": {
+    "title": "Tableau de bord",
+    "welcome": "Bienvenue,",
+    "role": "Administrateur",
+    "status": { "online": "En ligne" },
+    "recentActivity": "Activité récente",
+    "quickAccess": "Accès rapide",
+    "createTicket": "Créer un nouveau ticket",
+    "addClient": "Ajouter un client",
+    "managePayments": "Gérer les paiements",
+    "editSettings": "Modifier",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN COURS",
+      "resolved": "RÉSOLUS",
+      "urgent": "URGENT"
+    },
+    "table": {
+      "title": "Dernières demandes",
+      "id": "ID",
+      "type": "Type",
+      "description": "Description",
+      "status": "Statut",
+      "date": "Date",
+      "notFound": "Aucun ticket trouvé."
+    },
+    "loading": "Chargement...",
+    "error": "Erreur"
+  },
+  "navbar": {
+    "home": "Accueil",
+    "userDashboard": "Tableau utilisateur",
+    "adminDashboard": "Tableau admin",
+    "managerDashboard": "Tableau manager",
+    "clientDashboard": "Tableau client",
+    "notifications": "Notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "noNotifications": "Aucune notification",
+    "login": "Connexion",
+    "register": "Créer un compte",
+    "logout": "Déconnexion"
+  },
+  "sidebar": {
+    "myTickets": "Mes tickets",
+    "tickets": "Tickets",
+    "clients": "Clients",
+    "payments": "Paiements",
+    "settings": "Paramètres",
+    "users": "Utilisateurs"
+  },
+  "login": {
+    "title": "Authentification",
+    "messages": {
+      "error": {
+        "authentication": "Erreur d'authentification ! Veuillez vérifier vos identifiants de connexion."
+      }
+    },
+    "form": {
+      "password": "Mot de passe",
+      "password.placeholder": "Votre mot de passe",
+      "rememberme": "Garder la session ouverte",
+      "button": "Connexion"
+    },
+    "password": {
+      "forgot": "Avez-vous oublié votre mot de passe ?"
+    }
+  },
+  "register": {
+    "title": "Création de compte utilisateur",
+    "messages": {
+      "success": "Compte enregistré ! Merci de vérifier votre email de confirmation.",
+      "error": {
+        "fail": "Compte non créé ! Merci d'essayer à nouveau plus tard.",
+        "userexists": "Ce compte utilisateur existe déjà ! Veuillez en choisir un autre.",
+        "emailexists": "Cet email est déjà utilisé ! Veuillez en choisir un autre."
+      },
+      "validate": {
+        "login": {
+          "required": "Votre nom d'utilisateur est obligatoire.",
+          "minlength": "Votre nom d'utilisateur doit contenir plus d'un caractère.",
+          "maxlength": "Votre nom d'utilisateur ne peut pas contenir plus de 50 caractères.",
+          "pattern": "Votre nom d'utilisateur est invalide."
+        }
+      }
+    },
+    "form": {
+      "button": "Enregistrement"
+    }
+  },
+  "appUserRegister": {
+    "title": "Inscription nouvel utilisateur",
+    "google": "S'inscrire avec Google",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "submit": "S'inscrire",
+    "firstNameRequired": "Le prénom est requis.",
+    "lastNameRequired": "Le nom est requis.",
+    "emailRequired": "Un email valide est requis.",
+    "phoneRequired": "Le numéro de téléphone est requis.",
+    "success": "Inscription réussie !",
+    "error": "Échec de l'inscription. Veuillez réessayer."
+  },
+  "clientDashboard": {
+    "header": "Bienvenue, client !",
+    "title": "Mes tickets",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN COURS",
+      "closed": "RÉSOLUS / FERMÉS"
+    }
+  },
+  "ticketsUser": {
+    "title": "Mes tickets",
+    "create": "Créer un ticket",
+    "type": "Type de ticket",
+    "selectType": "Sélectionner un type",
+    "description": "Description du problème",
+    "backofficeUrl": "Lien du backoffice",
+    "backofficeLogin": "Identifiant backoffice",
+    "backofficePassword": "Mot de passe backoffice",
+    "hostingUrl": "URL d'hébergement",
+    "cancel": "Annuler",
+    "detail": "Détail du ticket",
+    "info": "Informations du ticket",
+    "status": "Statut",
+    "date": "Date",
+    "history": "Historique de mes tickets",
+    "loading": "Chargement...",
+    "backoffice": "Backoffice",
+    "hosting": "Hébergement",
+    "noTickets": "Aucun ticket pour le moment."
+  },
+  "ticketsAdmin": {
+    "title": "Tickets",
+    "subtitle": "Gérez les tickets de support et suivez leur statut en temps réel.",
+    "loading": "Chargement...",
+    "id": "ID",
+    "type": "Type",
+    "description": "Description",
+    "status": "Statut",
+    "created": "Créé le",
+    "actions": "Actions",
+    "detail": "Détail",
+    "noTickets": "Aucun ticket trouvé.",
+    "statusNew": "Nouveau",
+    "statusInProgress": "En cours",
+    "statusResolved": "Résolu",
+    "statusClosed": "Fermé",
+    "messages": "Messages au client :",
+    "addMessage": "Ajouter un message...",
+    "save": "Enregistrer"
+  },
+  "ticketsClient": {
+    "title": "Mes tickets",
+    "create": "Créer un ticket",
+    "type": "Type de ticket",
+    "selectType": "Sélectionner un type",
+    "description": "Description du problème",
+    "backofficeUrl": "Lien du backoffice",
+    "backofficeLogin": "Identifiant backoffice",
+    "backofficePassword": "Mot de passe backoffice",
+    "hostingUrl": "URL d'hébergement",
+    "cancel": "Annuler",
+    "detail": "Détail du ticket",
+    "info": "Informations du ticket",
+    "status": "Statut",
+    "date": "Date",
+    "history": "Historique de mes tickets",
+    "loading": "Chargement...",
+    "backoffice": "Backoffice",
+    "hosting": "Hébergement",
+    "noTickets": "Aucun ticket pour le moment."
+  },
+  "clientsAdmin": {
+    "title": "Clients",
+    "subtitle": "Liste et gestion des clients enregistrés sur la plateforme.",
+    "add": "Ajouter un client",
+    "total": "Total",
+    "search": "Rechercher un client...",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "actions": "Actions",
+    "noClients": "Aucun client trouvé."
+  },
+  "paiementsAdmin": {
+    "title": "Paiements",
+    "add": "Ajouter un paiement",
+    "subtitle": "Consultez l’historique des paiements et gérez les transactions des clients.",
+    "total": "Total",
+    "completed": "Complétés",
+    "pending": "En attente",
+    "failed": "Échoués",
+    "search": "Rechercher un paiement...",
+    "user": "Utilisateur",
+    "amount": "Montant",
+    "date": "Date",
+    "status": "Statut",
+    "actions": "Actions",
+    "invoice": "Facture PDF"
+  },
+  "userManagement": {
+    "home": {
+      "title": "Utilisateurs",
+      "refreshListLabel": "Actualiser la liste",
+      "createLabel": "Créer un nouvel utilisateur"
+    },
+    "login": "Login",
+    "email": "Email",
+    "langKey": "Langue",
+    "profiles": "Rôles",
+    "createdDate": "Créé le",
+    "lastModifiedBy": "Modifié par",
+    "lastModifiedDate": "Modifié le",
+    "activated": "Activé",
+    "deactivated": "Désactivé"
+  },
+  "parameters": {
+    "title": "Paramètres",
+    "subtitle": "Gérez les paramètres globaux de la plateforme et configurez les options système.",
+    "key": "Clé",
+    "value": "Valeur",
+    "description": "Description",
+    "type": "Type",
+    "actions": "Actions",
+    "add": "Ajouter",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "ticketStatus": {
+      "title": "Statuts de tickets",
+      "add": "Ajouter un statut"
+    },
+    "ticketType": {
+      "title": "Types de tickets",
+      "add": "Ajouter un type"
+    },
+    "ticketPriority": {
+      "title": "Priorités de tickets",
+      "add": "Ajouter une priorité"
+    },
+    "other": {
+      "title": "Autres paramètres",
+      "add": "Ajouter un paramètre"
+    },
+    "interface": {
+      "ticket": "Ticket",
+      "tickets": "Tickets",
+      "type": "Type",
+      "ticketType": "Type de ticket",
+      "ticketTypes": "Types de tickets",
+      "status": "Statut",
+      "statuses": "Statuts",
+      "priority": "Priorité",
+      "priorities": "Priorités",
+      "parameter": "Paramètre",
+      "parameters": "Paramètres",
+      "interface": "Interface",
+      "Bug": "Bug",
+      "Demande": "Demande",
+      "Support": "Support",
+      "Autre": "Autre",
+      "Nouveau": "Nouveau",
+      "En cours": "En cours",
+      "Résolu": "Résolu",
+      "Fermé": "Fermé",
+      "Urgent": "Urgent",
+      "Request": "Demande",
+      "Support": "Support"
+    }
+  },
+  "entity": {
+    "action": {
+      "view": "Voir",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    }
+  }
+}

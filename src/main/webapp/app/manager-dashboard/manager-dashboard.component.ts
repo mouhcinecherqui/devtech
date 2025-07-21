@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { SidebarComponent } from '../layouts/main/sidebar.component';
+import SharedModule from '../shared/shared.module';
 
 @Component({
   selector: 'app-manager-dashboard',
   templateUrl: './manager-dashboard.component.html',
   styleUrls: ['./manager-dashboard.component.scss'],
   standalone: true,
-  imports: [CommonModule, SidebarComponent],
+  imports: [CommonModule, SidebarComponent, SharedModule],
 })
 export class ManagerDashboardComponent {
   stats = {

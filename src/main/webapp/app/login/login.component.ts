@@ -57,13 +57,18 @@ export default class LoginComponent implements OnInit {
       .subscribe(result => {
         if (result) {
           this.authenticationError.set(false);
-          // Si c'est un compte admin, rediriger vers home, sinon vers dashboard client
-          if ((result as any).authorities) {
-            if (!this.router.getCurrentNavigation()) {
-              this.router.navigate(['/home']);
-            }
-          } else {
+          // Rediriger selon le rôle
+          const authorities = (result as any).authorities || [];
+          if (authorities.includes('ROLE_ADMIN')) {
+            this.router.navigate(['/admin-dashboard']);
+          } else if (authorities.includes('ROLE_MANAGER')) {
+            this.router.navigate(['/manager-dashboard']);
+          } else if (authorities.includes('ROLE_CLIENT')) {
+            this.router.navigate(['/client-dashboard']);
+          } else if (authorities.includes('ROLE_USER')) {
             this.router.navigate(['/user-dashboard']);
+          } else {
+            this.router.navigate(['/home']);
           }
         }
       });

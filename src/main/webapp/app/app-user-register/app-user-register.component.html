@@ -1,43 +1,47 @@
 <div class="app-user-register-container">
-  <h2>Register New User</h2>
+  <h2>{{ 'appUserRegister.title' | translate }}</h2>
   <div class="social-login mb-4 text-center">
     <button class="btn btn-outline-primary me-2" (click)="loginWithProvider('google')">
-      <i class="fab fa-google"></i> S'inscrire avec Google
+      <i class="fab fa-google"></i> {{ 'appUserRegister.google' | translate }}
     </button>
   </div>
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-group">
-      <label for="firstName">First Name</label>
+      <label for="firstName">{{ 'appUserRegister.firstName' | translate }}</label>
       <input
         id="firstName"
         formControlName="firstName"
         class="form-control"
         [class.is-invalid]="submitted && form.get('firstName')?.invalid"
       />
-      <div *ngIf="submitted && form.get('firstName')?.invalid" class="invalid-feedback">First name is required.</div>
+      <div *ngIf="submitted && form.get('firstName')?.invalid" class="invalid-feedback">
+        {{ 'appUserRegister.firstNameRequired' | translate }}
+      </div>
     </div>
     <div class="form-group">
-      <label for="lastName">Last Name</label>
+      <label for="lastName">{{ 'appUserRegister.lastName' | translate }}</label>
       <input
         id="lastName"
         formControlName="lastName"
         class="form-control"
         [class.is-invalid]="submitted && form.get('lastName')?.invalid"
       />
-      <div *ngIf="submitted && form.get('lastName')?.invalid" class="invalid-feedback">Last name is required.</div>
+      <div *ngIf="submitted && form.get('lastName')?.invalid" class="invalid-feedback">
+        {{ 'appUserRegister.lastNameRequired' | translate }}
+      </div>
     </div>
     <div class="form-group">
-      <label for="email">Email</label>
+      <label for="email">{{ 'appUserRegister.email' | translate }}</label>
       <input id="email" formControlName="email" class="form-control" [class.is-invalid]="submitted && form.get('email')?.invalid" />
-      <div *ngIf="submitted && form.get('email')?.invalid" class="invalid-feedback">Valid email is required.</div>
+      <div *ngIf="submitted && form.get('email')?.invalid" class="invalid-feedback">{{ 'appUserRegister.emailRequired' | translate }}</div>
     </div>
     <div class="form-group">
-      <label for="phone">Phone</label>
+      <label for="phone">{{ 'appUserRegister.phone' | translate }}</label>
       <input id="phone" formControlName="phone" class="form-control" [class.is-invalid]="submitted && form.get('phone')?.invalid" />
-      <div *ngIf="submitted && form.get('phone')?.invalid" class="invalid-feedback">Phone number is required.</div>
+      <div *ngIf="submitted && form.get('phone')?.invalid" class="invalid-feedback">{{ 'appUserRegister.phoneRequired' | translate }}</div>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
+    <button type="submit" class="btn btn-primary">{{ 'appUserRegister.submit' | translate }}</button>
   </form>
-  <div *ngIf="success" class="alert alert-success mt-3">Registration successful!</div>
-  <div *ngIf="error" class="alert alert-danger mt-3">Registration failed. Please try again.</div>
+  <div *ngIf="success" class="alert alert-success mt-3">{{ 'appUserRegister.success' | translate }}</div>
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ 'appUserRegister.error' | translate }}</div>
 </div>

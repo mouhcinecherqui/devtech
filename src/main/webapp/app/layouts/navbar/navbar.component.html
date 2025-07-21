@@ -9,7 +9,7 @@
     </a>
   </div>
   <nav class="header-nav">
-    <a *ngIf="!account()" routerLink="/home" routerLinkActive="active">Home</a>
+    <a *ngIf="!account()" routerLink="/home" routerLinkActive="active">{{ 'navbar.home' | translate }}</a>
     <a
       *ngIf="
         account() &&
@@ -19,16 +19,18 @@
       "
       routerLink="/user-dashboard"
       routerLinkActive="active"
-      >User Dashboard</a
+      >{{ 'navbar.userDashboard' | translate }}</a
     >
     <ng-container *ngIf="account() && account()?.authorities?.includes('ROLE_ADMIN')">
-      <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/admin-dashboard" routerLinkActive="active"> Admin Dashboard </a>
+      <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/admin-dashboard" routerLinkActive="active">{{
+        'navbar.adminDashboard' | translate
+      }}</a>
     </ng-container>
-    <a *ngIf="account() && account()?.authorities?.includes('ROLE_MANAGER')" routerLink="/manager-dashboard" routerLinkActive="active"
-      >Manager Dashboard</a
-    >
+    <a *ngIf="account() && account()?.authorities?.includes('ROLE_MANAGER')" routerLink="/manager-dashboard" routerLinkActive="active">{{
+      'navbar.managerDashboard' | translate
+    }}</a>
     <a *ngIf="account() && account()?.authorities?.includes('ROLE_CLIENT')" routerLink="/client-dashboard" routerLinkActive="active">
-      Client Dashboard
+      {{ 'navbar.clientDashboard' | translate }}
     </a>
     <div *ngIf="account()" class="notification-bell" (click)="toggleNotificationsDropdown()">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
@@ -43,8 +45,8 @@
     </div>
     <div class="notification-dropdown" *ngIf="showNotificationsDropdown()">
       <div class="dropdown-header">
-        Notifications
-        <button class="mark-all-btn" (click)="markAllAsRead($event)">Tout marquer comme lu</button>
+        {{ 'navbar.notifications' | translate }}
+        <button class="mark-all-btn" (click)="markAllAsRead($event)">{{ 'navbar.markAllRead' | translate }}</button>
       </div>
       <ul>
         <li *ngFor="let notif of notifications().slice(0, 5)" [class.unread]="!notif.isRead" (click)="markAsRead(notif, $event)">
@@ -57,11 +59,26 @@
           <span class="notif-message">{{ notif.message }}</span>
           <span class="notif-date">{{ notif.createdDate | date: 'short' }}</span>
         </li>
-        <li *ngIf="!notifications().length">Aucune notification</li>
+        <li *ngIf="!notifications().length">{{ 'navbar.noNotifications' | translate }}</li>
       </ul>
     </div>
-    <a *ngIf="!account()" (click)="login()">Login</a>
-    <a *ngIf="!account()" routerLink="/app-user-register" routerLinkActive="active">Register</a>
-    <a *ngIf="account()" (click)="logout()">Logout</a>
+    <div class="language-switcher dropdown">
+      <button class="lang-btn" type="button">
+        <span *ngIf="translateService.currentLang === 'fr'">🇫🇷 Français</span>
+        <span *ngIf="translateService.currentLang === 'en'">🇬🇧 English</span>
+        <span *ngIf="translateService.currentLang === 'es'">🇪🇸 Español</span>
+        <svg style="margin-left: 6px; vertical-align: middle" width="12" height="12" viewBox="0 0 20 20">
+          <path d="M5.5 8l4.5 4.5L14.5 8" stroke="#333" stroke-width="2" fill="none" />
+        </svg>
+      </button>
+      <ul class="lang-dropdown">
+        <li (click)="changeLanguage('fr')"><span>🇫🇷</span> Français</li>
+        <li (click)="changeLanguage('en')"><span>🇬🇧</span> English</li>
+        <li (click)="changeLanguage('es')"><span>🇪🇸</span> Español</li>
+      </ul>
+    </div>
+    <a *ngIf="!account()" (click)="login()">{{ 'navbar.login' | translate }}</a>
+    <a *ngIf="!account()" routerLink="/app-user-register" routerLinkActive="active">{{ 'navbar.register' | translate }}</a>
+    <a *ngIf="account()" (click)="logout()">{{ 'navbar.logout' | translate }}</a>
   </nav>
 </header>

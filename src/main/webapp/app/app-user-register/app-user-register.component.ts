@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import SharedModule from '../shared/shared.module';
 
 @Component({
   selector: 'app-user-register',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule],
   templateUrl: './app-user-register.component.html',
   styleUrls: ['./app-user-register.component.scss'],
 })
