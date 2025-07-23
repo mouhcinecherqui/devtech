@@ -1,107 +1,145 @@
-<div>
-  <h2>
-    <span id="user-management-page-heading" data-cy="userManagementPageHeading" jhiTranslate="userManagement.home.title">Utilisateurs</span>
+<div class="admin-users-container">
+  <!-- Header Section -->
+  <div class="admin-users-header">
+    <h2>{{ 'userManagement.home.title' | translate }}</h2>
+    <p>Gérez les utilisateurs de la plateforme et leurs permissions</p>
+  </div>
 
-    <div class="d-flex justify-content-end">
-      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading()">
-        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined"></fa-icon>
-        <span jhiTranslate="userManagement.home.refreshListLabel">Actualiser la liste</span>
+  <!-- Stats and Actions Section -->
+  <div class="admin-users-stats">
+    <div class="stats-card">
+      <div class="stats-icon">👥</div>
+      <div class="stats-content">
+        <h3>{{ totalItems() }}</h3>
+        <p>Utilisateurs</p>
+      </div>
+    </div>
+    <div class="actions-group">
+      <button class="btn btn-refresh" (click)="loadAll()" [disabled]="isLoading()">
+        <span class="btn-icon">🔄</span>
+        <span class="btn-text">{{ 'userManagement.home.refreshListLabel' | translate }}</span>
       </button>
-      <button class="btn btn-primary jh-create-entity" [routerLink]="['./new']">
-        <fa-icon icon="plus"></fa-icon> <span jhiTranslate="userManagement.home.createLabel">Créer un nouvel utilisateur</span>
+      <button class="btn btn-primary add-user-btn" [routerLink]="['./new']">
+        <span class="btn-icon">+</span>
+        <span class="btn-text">{{ 'userManagement.home.createLabel' | translate }}</span>
       </button>
     </div>
-  </h2>
+  </div>
 
+  <!-- Alerts -->
   <jhi-alert-error />
-
   <jhi-alert />
 
+  <!-- Users Table -->
   @if (users()) {
-    <div class="table-responsive">
-      <table class="table table-striped" aria-describedby="user-management-page-heading">
+    <div class="users-table-container">
+      <table class="users-table" aria-describedby="user-management-page-heading">
         <thead>
           <tr jhiSort [(sortState)]="sortState" (sortChange)="transition($event)">
-            <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-            <th scope="col" jhiSortBy="login"><span jhiTranslate="userManagement.login">Login</span> <fa-icon icon="sort"></fa-icon></th>
-            <th scope="col" jhiSortBy="email"><span jhiTranslate="userManagement.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
-            <th scope="col"></th>
-            <th scope="col" jhiSortBy="langKey">
-              <span jhiTranslate="userManagement.langKey">Langue</span> <fa-icon icon="sort"></fa-icon>
+            <th scope="col" jhiSortBy="id">
+              {{ 'global.field.id' | translate }}
+              <span class="sort-icon">↕️</span>
             </th>
-            <th scope="col"><span jhiTranslate="userManagement.profiles">Droits</span></th>
+            <th scope="col" jhiSortBy="login">
+              {{ 'userManagement.login' | translate }}
+              <span class="sort-icon">↕️</span>
+            </th>
+            <th scope="col" jhiSortBy="email">
+              {{ 'userManagement.email' | translate }}
+              <span class="sort-icon">↕️</span>
+            </th>
+            <th scope="col">Statut</th>
+            <th scope="col" jhiSortBy="langKey">
+              {{ 'userManagement.langKey' | translate }}
+              <span class="sort-icon">↕️</span>
+            </th>
+            <th scope="col">
+              {{ 'userManagement.profiles' | translate }}
+            </th>
             <th scope="col" jhiSortBy="createdDate">
-              <span jhiTranslate="userManagement.createdDate">Créé le</span> <fa-icon icon="sort"></fa-icon>
+              {{ 'userManagement.createdDate' | translate }}
+              <span class="sort-icon">↕️</span>
             </th>
             <th scope="col" jhiSortBy="lastModifiedBy">
-              <span jhiTranslate="userManagement.lastModifiedBy">Modifié par</span> <fa-icon icon="sort"></fa-icon>
+              {{ 'userManagement.lastModifiedBy' | translate }}
+              <span class="sort-icon">↕️</span>
             </th>
             <th scope="col" jhiSortBy="lastModifiedDate">
-              <span jhiTranslate="userManagement.lastModifiedDate">Modifié le</span> <fa-icon icon="sort"></fa-icon>
+              {{ 'userManagement.lastModifiedDate' | translate }}
+              <span class="sort-icon">↕️</span>
             </th>
-            <th scope="col"></th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
           @for (user of users(); track trackIdentity(user)) {
-            <tr>
-              <td>
+            <tr class="user-row">
+              <td class="user-id">
                 <a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
               </td>
-              <td>{{ user.login }}</td>
-              <td>{{ user.email }}</td>
-              <td>
+              <td class="user-login">
+                <div class="user-avatar">
+                  {{ user.login?.charAt(0)?.toUpperCase() || 'U' }}
+                </div>
+                <div class="user-info">
+                  <strong>{{ user.login }}</strong>
+                </div>
+              </td>
+              <td class="user-email">
+                <a href="mailto:{{ user.email }}" class="email-link">{{ user.email }}</a>
+              </td>
+              <td class="user-status">
                 @if (!user.activated) {
-                  <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" jhiTranslate="userManagement.deactivated">
-                    Désactivé
-                  </button>
+                  <button class="status-badge status-inactive" (click)="setActive(user, true)">Désactivé</button>
                 } @else {
                   <button
-                    class="btn btn-success btn-sm"
+                    class="status-badge status-active"
                     (click)="setActive(user, false)"
                     [disabled]="!currentAccount() || currentAccount()?.login === user.login"
-                    jhiTranslate="userManagement.activated"
                   >
                     Activé
                   </button>
                 }
               </td>
-              <td>{{ user.langKey }}</td>
-              <td>
+              <td class="user-language">
+                <span class="language-badge">{{ user.langKey }}</span>
+              </td>
+              <td class="user-roles">
                 @for (authority of user.authorities; track $index) {
-                  <div>
-                    <span class="badge bg-info">{{ authority }}</span>
-                  </div>
+                  <span class="role-badge">{{ authority }}</span>
                 }
               </td>
-              <td>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
-              <td>{{ user.lastModifiedBy }}</td>
-              <td>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-info btn-sm">
-                    <fa-icon icon="eye"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Voir</span>
+              <td class="user-created">
+                {{ user.createdDate | date: 'dd/MM/yy HH:mm' }}
+              </td>
+              <td class="user-modified-by">
+                {{ user.lastModifiedBy }}
+              </td>
+              <td class="user-modified-date">
+                {{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}
+              </td>
+              <td class="user-actions">
+                <div class="actions-group">
+                  <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-view" title="Voir">
+                    <span class="action-icon">👁️</span>
                   </button>
-
                   <button
                     type="submit"
                     [routerLink]="['./', user.login, 'edit']"
                     queryParamsHandling="merge"
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-edit"
+                    title="Modifier"
                   >
-                    <fa-icon icon="pencil-alt"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editer</span>
+                    <span class="action-icon">✏️</span>
                   </button>
-
                   <button
                     type="button"
                     (click)="deleteUser(user)"
-                    class="btn btn-danger btn-sm"
+                    class="btn btn-delete"
                     [disabled]="!currentAccount() || currentAccount()?.login === user.login"
+                    title="Supprimer"
                   >
-                    <fa-icon icon="times"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Supprimer</span>
+                    <span class="action-icon">🗑️</span>
                   </button>
                 </div>
               </td>
@@ -111,12 +149,12 @@
       </table>
     </div>
 
-    <div>
-      <div class="d-flex justify-content-center">
+    <!-- Pagination Section -->
+    <div class="pagination-section">
+      <div class="pagination-info">
         <jhi-item-count [params]="{ page, totalItems: totalItems(), itemsPerPage }" />
       </div>
-
-      <div class="d-flex justify-content-center">
+      <div class="pagination-controls">
         <ngb-pagination
           [collectionSize]="totalItems()"
           [(page)]="page"
@@ -125,6 +163,7 @@
           [rotate]="true"
           [boundaryLinks]="true"
           (pageChange)="transition()"
+          class="modern-pagination"
         ></ngb-pagination>
       </div>
     </div>

@@ -14,6 +14,9 @@ interface Ticket {
   hostingUrl?: string;
   createdDate?: string;
   status?: string;
+  imageUrl?: string;
+  messages?: string[];
+  messageStrings?: string[];
 }
 
 @Component({
@@ -27,6 +30,7 @@ export class UserTicketsComponent implements OnInit {
   tickets = signal<Ticket[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
+  success = signal<string | null>(null);
   ticketForm: FormGroup;
   ticketTypes = ['parameters.interface.bug', 'parameters.interface.request', 'parameters.interface.support', 'parameters.interface.other'];
   showModal = signal(false);
@@ -80,8 +84,24 @@ export class UserTicketsComponent implements OnInit {
       error: () => {
         this.error.set('Erreur lors du chargement des tickets');
         this.loading.set(false);
+        this.clearErrorAfterDelay();
       },
     });
+  }
+
+  // Méthode pour effacer automatiquement les messages d'erreur
+  private clearErrorAfterDelay(delay: number = 5000): void {
+    setTimeout(() => {
+      this.error.set(null);
+    }, delay);
+  }
+
+  // Méthode pour afficher un message de succès
+  private showSuccessMessage(message: string): void {
+    this.success.set(message);
+    setTimeout(() => {
+      this.success.set(null);
+    }, 3000);
   }
 
   openModal(): void {
@@ -101,15 +121,22 @@ export class UserTicketsComponent implements OnInit {
   submit(): void {
     if (this.ticketForm.invalid) return;
     this.loading.set(true);
+    // Effacer les messages d'erreur précédents
+    this.error.set(null);
+
     this.http.post<Ticket>('/api/tickets', this.ticketForm.value).subscribe({
       next: ticket => {
         this.tickets.set([ticket, ...this.tickets()]);
         this.closeModal();
         this.loading.set(false);
+
+        // Afficher un message de succès
+        this.showSuccessMessage('Ticket créé avec succès !');
       },
       error: () => {
         this.error.set('Erreur lors de la création du ticket');
         this.loading.set(false);
+        this.clearErrorAfterDelay();
       },
     });
   }

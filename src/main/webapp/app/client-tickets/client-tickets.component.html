@@ -1,190 +1,552 @@
 <div class="client-tickets-container">
-  <h2>{{ 'ticketsClient.title' | translate }}</h2>
+  <!-- Success Message -->
+  <div *ngIf="success()" class="success-message">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    {{ success() }}
+  </div>
 
-  <button class="btn btn-primary" (click)="openModal()">{{ 'ticketsClient.create' | translate }}</button>
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">{{ 'ticketsClient.title' | translate }}</h1>
+      <p class="page-subtitle">Gérez vos demandes de support et suivez leur progression</p>
+    </div>
+    <button class="create-ticket-btn" (click)="openModal()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      {{ 'ticketsClient.create' | translate }}
+    </button>
+  </div>
 
-  <div
-    *ngIf="showModal()"
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    "
-  >
-    <div
-      style="
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-        padding: 2rem;
-        min-width: 350px;
-        max-width: 95vw;
-        position: relative;
-      "
-    >
-      <h3>{{ 'ticketsClient.create' | translate }}</h3>
+  <!-- Stats Cards -->
+  <div class="stats-section">
+    <div class="stat-card">
+      <div class="stat-icon">📋</div>
+      <div class="stat-content">
+        <div class="stat-number">{{ tickets().length }}</div>
+        <div class="stat-label">Total tickets</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">⏳</div>
+      <div class="stat-content">
+        <div class="stat-number">{{ getOpenTickets() }}</div>
+        <div class="stat-label">En cours</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">✅</div>
+      <div class="stat-content">
+        <div class="stat-number">{{ getResolvedTickets() }}</div>
+        <div class="stat-label">Résolus</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tickets List -->
+  <div class="tickets-section">
+    <div class="section-header">
+      <h2>{{ 'ticketsClient.history' | translate }}</h2>
+      <div class="filters">
+        <select class="filter-select" [(ngModel)]="statusFilter" (change)="filterTickets()">
+          <option value="">Tous les statuts</option>
+          <option value="Nouveau">Nouveau</option>
+          <option value="En cours">En cours</option>
+          <option value="Résolu">Résolu</option>
+          <option value="Fermé">Fermé</option>
+          <option value="Urgent">Urgent</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="loading()" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>{{ 'ticketsClient.loading' | translate }}</p>
+    </div>
+
+    <!-- Tickets Grid -->
+    <div *ngIf="!loading() && filteredTickets().length" class="tickets-grid">
+      <div *ngFor="let ticket of filteredTickets()" class="ticket-card" (click)="openDetailModal(ticket)">
+        <div class="ticket-header">
+          <div class="ticket-type-badge" [ngClass]="'type-' + (ticket.type?.toLowerCase() || 'autre')">
+            {{ getTicketTypeTranslation(ticket.type) }}
+          </div>
+          <div class="ticket-status-badge" [ngClass]="'status-' + (ticket.status?.toLowerCase() || 'nouveau')">
+            {{ getTicketStatusTranslation(ticket.status) }}
+          </div>
+        </div>
+
+        <div class="ticket-content">
+          <h3 class="ticket-description">{{ ticket.description }}</h3>
+
+          <!-- Indicateur de messages de l'admin -->
+          <div *ngIf="ticket.messageStrings && ticket.messageStrings.length > 0" class="admin-messages-indicator">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M8 12h8m-8 4h4m-4-8h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>{{ ticket.messageStrings.length }} message{{ ticket.messageStrings.length > 1 ? 's' : '' }} de l'équipe</span>
+          </div>
+
+          <div class="ticket-meta">
+            <div class="meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              <span>{{ ticket.createdDate | date: 'short' }}</span>
+            </div>
+
+            <div *ngIf="ticket.backofficeUrl" class="meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span>Backoffice</span>
+            </div>
+
+            <div *ngIf="ticket.hostingUrl" class="meta-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span>Hébergement</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ticket-footer">
+          <span class="view-details">Voir les détails →</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading() && !filteredTickets().length" class="empty-state">
+      <div class="empty-icon">📝</div>
+      <h3>Aucun ticket trouvé</h3>
+      <p>{{ 'ticketsClient.noTickets' | translate }}</p>
+      <button class="create-first-ticket-btn" (click)="openModal()">Créer votre premier ticket</button>
+    </div>
+  </div>
+
+  <!-- Create Ticket Modal -->
+  <div *ngIf="showModal()" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ 'ticketsClient.create' | translate }}</h3>
+        <button class="modal-close-btn" (click)="closeModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
       <form [formGroup]="ticketForm" (ngSubmit)="submit()" class="ticket-form">
-        <div>
-          <label for="type">{{ 'ticketsClient.type' | translate }} *</label>
-          <select id="type" formControlName="type" required #typeInput>
-            <option value="" disabled>{{ 'ticketsClient.selectType' | translate }}</option>
-            <option *ngFor="let t of ticketTypes" [value]="t">{{ t | translate }}</option>
-          </select>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="type">{{ 'ticketsClient.type' | translate }} *</label>
+            <select id="type" formControlName="type" required class="form-select">
+              <option value="" disabled>{{ 'ticketsClient.selectType' | translate }}</option>
+              <option value="Bug">Bug</option>
+              <option value="Demande">Demande</option>
+              <option value="Support">Support</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
         </div>
-        <div>
+
+        <div class="form-group">
           <label for="description">{{ 'ticketsClient.description' | translate }} *</label>
-          <textarea id="description" formControlName="description" required rows="3"></textarea>
+          <textarea
+            id="description"
+            formControlName="description"
+            required
+            rows="4"
+            class="form-textarea"
+            placeholder="Décrivez votre problème en détail..."
+          ></textarea>
         </div>
-        <div>
-          <label for="backofficeUrl">{{ 'ticketsClient.backofficeUrl' | translate }}</label>
-          <input id="backofficeUrl" formControlName="backofficeUrl" type="text" />
+
+        <div class="form-group">
+          <label for="imageUpload">Image (optionnel)</label>
+          <div class="image-upload-container">
+            <input
+              type="file"
+              id="imageUpload"
+              formControlName="image"
+              accept="image/*"
+              class="file-input"
+              (change)="onImageSelected($event)"
+              #fileInput
+            />
+            <div class="upload-area" (click)="fileInput.click()" [class.has-image]="selectedImagePreview()">
+              <div *ngIf="!selectedImagePreview()" class="upload-placeholder">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <p>Cliquez pour ajouter une image</p>
+                <span class="upload-hint">PNG, JPG jusqu'à 5MB</span>
+              </div>
+              <div *ngIf="selectedImagePreview()" class="image-preview">
+                <img [src]="selectedImagePreview()" alt="Aperçu de l'image" class="preview-image" />
+                <button type="button" class="remove-image-btn" (click)="removeImage($event)">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div *ngIf="uploadProgress() > 0 && uploadProgress() < 100" class="upload-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="uploadProgress()"></div>
+              </div>
+              <span class="progress-text">{{ uploadProgress() }}%</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <label for="backofficeLogin">{{ 'ticketsClient.backofficeLogin' | translate }}</label>
-          <input id="backofficeLogin" formControlName="backofficeLogin" type="text" />
+
+        <div class="form-section">
+          <h4>Informations Backoffice (optionnel)</h4>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="backofficeUrl">{{ 'ticketsClient.backofficeUrl' | translate }}</label>
+              <input
+                id="backofficeUrl"
+                formControlName="backofficeUrl"
+                type="url"
+                class="form-input"
+                placeholder="https://votre-backoffice.com"
+              />
+            </div>
+            <div class="form-group">
+              <label for="backofficeLogin">{{ 'ticketsClient.backofficeLogin' | translate }}</label>
+              <input
+                id="backofficeLogin"
+                formControlName="backofficeLogin"
+                type="text"
+                class="form-input"
+                placeholder="Votre identifiant"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="backofficePassword">{{ 'ticketsClient.backofficePassword' | translate }}</label>
+            <input
+              id="backofficePassword"
+              formControlName="backofficePassword"
+              type="password"
+              class="form-input"
+              placeholder="Votre mot de passe"
+            />
+          </div>
         </div>
-        <div>
-          <label for="backofficePassword">{{ 'ticketsClient.backofficePassword' | translate }}</label>
-          <input id="backofficePassword" formControlName="backofficePassword" type="text" />
-        </div>
-        <div>
+
+        <div class="form-group">
           <label for="hostingUrl">{{ 'ticketsClient.hostingUrl' | translate }}</label>
-          <input id="hostingUrl" formControlName="hostingUrl" type="text" />
+          <input id="hostingUrl" formControlName="hostingUrl" type="url" class="form-input" placeholder="https://votre-hebergement.com" />
         </div>
-        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">{{ 'ticketsClient.cancel' | translate }}</button>
-          <button type="submit" class="btn btn-primary" [disabled]="ticketForm.invalid || loading()">
-            {{ 'ticketsClient.create' | translate }}
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" (click)="closeModal()">
+            {{ 'ticketsClient.cancel' | translate }}
+          </button>
+          <button type="submit" class="btn-primary" [disabled]="ticketForm.invalid || loading()">
+            <span *ngIf="!loading()">{{ 'ticketsClient.create' | translate }}</span>
+            <span *ngIf="loading()">Création...</span>
           </button>
         </div>
-        <div *ngIf="error()" class="error">{{ error() }}</div>
+
+        <div *ngIf="error()" class="error-message">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          {{ error() }}
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- Modale de détails du ticket -->
-  <div
-    *ngIf="showDetailModal()"
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    "
-  >
-    <div
-      style="
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-        padding: 2rem;
-        min-width: 350px;
-        max-width: 95vw;
-        position: relative;
-      "
-    >
-      <button
-        (click)="closeDetailModal()"
-        style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer"
-      >
-        &times;
-      </button>
-      <h3>{{ 'ticketsClient.detail' | translate }}</h3>
-      <div *ngIf="selectedTicket">
-        <div class="workflow-bar">
-          <ng-container *ngFor="let step of workflowSteps; let i = index">
-            <div
-              class="workflow-step"
-              [ngClass]="{
-                'active-step': i <= getStepIndex(selectedTicket.status || 'Nouveau'),
-                'inactive-step': i > getStepIndex(selectedTicket.status || 'Nouveau'),
-              }"
-            >
-              <div class="step-circle">{{ i + 1 }}</div>
-              <div class="step-label">{{ step }}</div>
-            </div>
-            <span *ngIf="i < workflowSteps.length - 1" class="workflow-sep">→</span>
-          </ng-container>
+  <!-- Ticket Detail Modal -->
+  <div *ngIf="showDetailModal()" class="modal-overlay" (click)="closeDetailModal()">
+    <div class="modal-container detail-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ 'ticketsClient.detail' | translate }}</h3>
+        <button class="modal-close-btn" (click)="closeDetailModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+
+      <div *ngIf="selectedTicket" class="ticket-detail-content">
+        <!-- Workflow Progress -->
+        <div class="workflow-progress">
+          <div class="workflow-steps">
+            <ng-container *ngFor="let step of workflowSteps; let i = index">
+              <div
+                class="workflow-step"
+                [ngClass]="{
+                  active: i <= getStepIndex(selectedTicket.status || 'Nouveau'),
+                  completed: i < getStepIndex(selectedTicket.status || 'Nouveau'),
+                }"
+              >
+                <div class="step-indicator">
+                  <svg *ngIf="i < getStepIndex(selectedTicket.status || 'Nouveau')" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <span *ngIf="i >= getStepIndex(selectedTicket.status || 'Nouveau')">{{ i + 1 }}</span>
+                </div>
+                <span class="step-label">{{ step }}</span>
+              </div>
+              <div
+                *ngIf="i < workflowSteps.length - 1"
+                class="step-connector"
+                [ngClass]="{ active: i < getStepIndex(selectedTicket.status || 'Nouveau') }"
+              ></div>
+            </ng-container>
+          </div>
         </div>
-        <div class="ticket-detail-card">
-          <div class="ticket-detail-title">{{ 'ticketsClient.info' | translate }}</div>
-          <div class="ticket-detail-row">
-            <div class="ticket-detail-label">{{ 'ticketsClient.status' | translate }} :</div>
-            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket?.status | translate }}</div>
+
+        <!-- Ticket Information -->
+        <div class="ticket-info-grid">
+          <div class="info-card">
+            <div class="info-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              <h4>Informations du ticket</h4>
+            </div>
+            <div class="info-content">
+              <div class="info-row">
+                <span class="info-label">Statut</span>
+                <span class="info-value status-badge" [ngClass]="'status-' + (selectedTicket?.status?.toLowerCase() || 'nouveau')">
+                  {{ getTicketStatusTranslation(selectedTicket?.status) }}
+                </span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Type</span>
+                <span class="info-value type-badge" [ngClass]="'type-' + (selectedTicket?.type?.toLowerCase() || 'autre')">
+                  {{ getTicketTypeTranslation(selectedTicket?.type) }}
+                </span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Date de création</span>
+                <span class="info-value">{{ selectedTicket.createdDate | date: 'full' }}</span>
+              </div>
+            </div>
           </div>
-          <div class="ticket-detail-row">
-            <div class="ticket-detail-label">{{ 'ticketsClient.type' | translate }} :</div>
-            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket?.type | translate }}</div>
+
+          <div class="info-card">
+            <div class="info-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h4>Description</h4>
+            </div>
+            <div class="info-content">
+              <p class="description-text">{{ selectedTicket.description }}</p>
+            </div>
           </div>
-          <div class="ticket-detail-row">
-            <div class="ticket-detail-label">{{ 'ticketsClient.description' | translate }} :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.description }}</div>
+
+          <div *ngIf="selectedTicket.imageUrl" class="info-card">
+            <div class="info-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <h4>Image jointe</h4>
+            </div>
+            <div class="info-content">
+              <div class="ticket-image-container">
+                <img
+                  [src]="selectedTicket.imageUrl"
+                  alt="Image du ticket"
+                  class="ticket-image"
+                  (click)="openImageModal(selectedTicket.imageUrl)"
+                />
+              </div>
+            </div>
           </div>
-          <div class="ticket-detail-row" *ngIf="selectedTicket.backofficeUrl">
-            <div class="ticket-detail-label">{{ 'ticketsClient.backofficeUrl' | translate }} :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.backofficeUrl }}</div>
+
+          <!-- Section Backoffice -->
+          <div
+            *ngIf="selectedTicket.backofficeUrl || selectedTicket.backofficeLogin || selectedTicket.backofficePassword"
+            class="info-card backoffice-card"
+          >
+            <div class="info-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h4>Backoffice</h4>
+            </div>
+            <div class="info-content">
+              <div *ngIf="selectedTicket.backofficeUrl" class="info-row">
+                <span class="info-label">URL</span>
+                <span class="info-value">{{ selectedTicket.backofficeUrl }}</span>
+              </div>
+              <div *ngIf="selectedTicket.backofficeLogin" class="info-row">
+                <span class="info-label">Login</span>
+                <span class="info-value">{{ selectedTicket.backofficeLogin }}</span>
+              </div>
+              <div *ngIf="selectedTicket.backofficePassword" class="info-row">
+                <span class="info-label">Mot de passe</span>
+                <span class="info-value">{{ selectedTicket.backofficePassword }}</span>
+              </div>
+            </div>
           </div>
-          <div class="ticket-detail-row" *ngIf="selectedTicket.backofficeLogin">
-            <div class="ticket-detail-label">{{ 'ticketsClient.backofficeLogin' | translate }} :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.backofficeLogin }}</div>
+
+          <div *ngIf="selectedTicket.hostingUrl" class="info-card">
+            <div class="info-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h4>Hébergement</h4>
+            </div>
+            <div class="info-content">
+              <div class="info-row">
+                <span class="info-label">URL</span>
+                <span class="info-value">{{ selectedTicket.hostingUrl }}</span>
+              </div>
+            </div>
           </div>
-          <div class="ticket-detail-row" *ngIf="selectedTicket.backofficePassword">
-            <div class="ticket-detail-label">{{ 'ticketsClient.backofficePassword' | translate }} :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.backofficePassword }}</div>
-          </div>
-          <div class="ticket-detail-row" *ngIf="selectedTicket.hostingUrl">
-            <div class="ticket-detail-label">{{ 'ticketsClient.hostingUrl' | translate }} :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.hostingUrl }}</div>
-          </div>
-          <div class="ticket-detail-row">
-            <div class="ticket-detail-label">{{ 'ticketsClient.date' | translate }} :</div>
-            <div class="ticket-detail-value">{{ selectedTicket.createdDate | date: 'short' }}</div>
+
+          <!-- Messages de l'admin -->
+          <div *ngIf="selectedTicket.messageStrings && selectedTicket.messageStrings.length > 0" class="info-card">
+            <div class="info-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M8 12h8m-8 4h4m-4-8h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h4>{{ 'ticketsClient.adminMessages' | translate }}</h4>
+            </div>
+            <div class="info-content">
+              <div class="admin-messages-container">
+                <div
+                  *ngFor="let message of selectedTicket.messageStrings; let i = index"
+                  class="admin-message"
+                  [ngClass]="{ 'client-message': message.startsWith('[CLIENT]'), 'admin-message': !message.startsWith('[CLIENT]') }"
+                >
+                  <div class="message-header">
+                    <span class="message-author" *ngIf="!message.startsWith('[CLIENT]')">Équipe DevTech</span>
+                    <span class="message-author client-author" *ngIf="message.startsWith('[CLIENT]')">Vous</span>
+                    <span class="message-number">#{{ i + 1 }}</span>
+                  </div>
+                  <div class="message-content">
+                    {{ message.startsWith('[CLIENT]') ? message.substring(8) : message }}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zone de réponse du client -->
+              <div class="client-reply-section">
+                <div class="reply-header">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M10 9H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2v-6a2 2 0 00-2-2h-4m0 0V5a2 2 0 114 0v4m-4 0h4"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>{{ 'ticketsClient.yourReply' | translate }}</span>
+                </div>
+                <div class="reply-form">
+                  <textarea
+                    [(ngModel)]="clientReply"
+                    (keydown.enter)="$event.preventDefault(); sendReply()"
+                    [placeholder]="'ticketsClient.replyPlaceholder' | translate"
+                    rows="3"
+                    class="reply-textarea"
+                    maxlength="500"
+                  >
+                  </textarea>
+                  <div class="reply-actions">
+                    <span class="char-count">{{ clientReply.length }}/500</span>
+                    <button type="button" class="reply-btn" [disabled]="!clientReply.trim() || sendingReply()" (click)="sendReply()">
+                      <span *ngIf="!sendingReply()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </svg>
+                        {{ 'ticketsClient.send' | translate }}
+                      </span>
+                      <span *ngIf="sendingReply()">
+                        <svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                          <path d="M21 12a9 9 0 11-6.219-8.56" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        {{ 'ticketsClient.sending' | translate }}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <h3>{{ 'ticketsClient.history' | translate }}</h3>
-  <div *ngIf="loading()">{{ 'ticketsClient.loading' | translate }}</div>
-  <table *ngIf="tickets().length">
-    <thead>
-      <tr>
-        <th>{{ 'ticketsClient.type' | translate }}</th>
-        <th>{{ 'ticketsClient.description' | translate }}</th>
-        <th>{{ 'ticketsClient.backoffice' | translate }}</th>
-        <th>{{ 'ticketsClient.hosting' | translate }}</th>
-        <th>{{ 'ticketsClient.date' | translate }}</th>
-        <th>{{ 'ticketsClient.status' | translate }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ticket of tickets()" (click)="openDetailModal(ticket)" style="cursor: pointer">
-        <td>{{ 'parameters.interface.' + ticket.type | translate }}</td>
-        <td>{{ ticket.description }}</td>
-        <td>
-          <div *ngIf="ticket.backofficeUrl">URL: {{ ticket.backofficeUrl }}</div>
-          <div *ngIf="ticket.backofficeLogin">Login: {{ ticket.backofficeLogin }}</div>
-          <div *ngIf="ticket.backofficePassword">{{ 'ticketsClient.backofficePassword' | translate }}: {{ ticket.backofficePassword }}</div>
-        </td>
-        <td>{{ ticket.hostingUrl }}</td>
-        <td>{{ ticket.createdDate | date: 'short' }}</td>
-        <td>{{ 'parameters.interface.' + ticket.status | translate }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="!tickets().length && !loading()">{{ 'ticketsClient.noTickets' | translate }}</div>
+  <!-- Image Modal -->
+  <div *ngIf="showImageModal()" class="modal-overlay" (click)="closeImageModal()">
+    <div class="image-modal-container" (click)="$event.stopPropagation()">
+      <button class="image-modal-close-btn" (click)="closeImageModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <img [src]="selectedImageUrl()" alt="Image du ticket" class="full-size-image" />
+    </div>
+  </div>
 </div>

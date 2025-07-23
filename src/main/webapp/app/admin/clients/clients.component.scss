@@ -1,13 +1,481 @@
-table {
+// Modern Design Variables
+$primary-color: #6366f1;
+$primary-light: #818cf8;
+$primary-dark: #4f46e5;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$danger-color: #ef4444;
+$info-color: #06b6d4;
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+
+// Modern Mixins
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+@mixin modern-shadow {
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+@mixin modern-shadow-hover {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin gradient-bg($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+}
+
+// Main Container
+.admin-clients-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f4f8 0%, #d1e7dd 100%);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(0,0,0,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+// Header Section
+.admin-clients-header {
+  @include glassmorphism;
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  @include modern-shadow;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, $gray-900, $primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: 1.125rem;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+// Stats and Actions Section
+.admin-clients-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.stats-card {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  @include modern-shadow;
+  @include smooth-transition;
+
+  &:hover {
+    @include modern-shadow-hover;
+    transform: translateY(-2px);
+  }
+
+  .stats-icon {
+    font-size: 2rem;
+    opacity: 0.8;
+  }
+
+  .stats-content {
+    h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: $primary-color;
+      margin: 0;
+      line-height: 1;
+    }
+
+    p {
+      color: $gray-600;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+.add-client-btn {
+  @include gradient-bg($primary-color, $primary-light);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  @include smooth-transition;
+  @include modern-shadow;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  }
+
+  .btn-icon {
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+}
+
+// Search Section
+.search-section {
+  margin-bottom: 2rem;
+}
+
+.search-container {
+  position: relative;
+  max-width: 400px;
+}
+
+.search-input {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+  color: $gray-700;
+  font-weight: 500;
+  @include smooth-transition;
+
+  &:focus {
+    outline: none;
+    border: 2px solid $primary-color;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
+
+  &::placeholder {
+    color: $gray-400;
+  }
 }
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  opacity: 0.6;
+  pointer-events: none;
 }
-th {
-  background: #f4f4f4;
+
+// Table Container
+.clients-table-container {
+  @include glassmorphism;
+  border-radius: 20px;
+  overflow: hidden;
+  @include modern-shadow;
+}
+
+// Modern Table Styles
+.clients-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th,
+  td {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  th {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: $gray-900;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  td {
+    color: $gray-700;
+    font-weight: 500;
+    font-size: 0.95rem;
+    @include smooth-transition;
+  }
+
+  tbody tr {
+    @include smooth-transition;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+// Client Row Specific Styles
+.client-id {
+  font-weight: 700;
+  color: $primary-color;
+  font-size: 1.1rem;
+}
+
+.client-name {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .client-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, $primary-color, $primary-light);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .client-info {
+    strong {
+      color: $gray-900;
+      font-size: 1rem;
+    }
+  }
+}
+
+.client-email,
+.client-phone {
+  .email-link,
+  .phone-link {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+    @include smooth-transition;
+
+    &:hover {
+      color: $primary-dark;
+      text-decoration: underline;
+    }
+  }
+}
+
+.client-actions {
+  display: flex;
+  gap: 0.5rem;
+
+  .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include smooth-transition;
+    @include modern-shadow;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &.btn-edit {
+      background: linear-gradient(135deg, $warning-color, #fbbf24);
+      color: white;
+
+      &:hover {
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+      }
+    }
+
+    &.btn-delete {
+      background: linear-gradient(135deg, $danger-color, #f87171);
+      color: white;
+
+      &:hover {
+        box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+      }
+    }
+
+    .action-icon {
+      font-size: 1rem;
+    }
+  }
+}
+
+// Empty State
+.empty-state {
+  td {
+    padding: 4rem 2rem;
+  }
+}
+
+.empty-state-content {
+  text-align: center;
+  color: $gray-500;
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .admin-clients-container {
+    padding: 1rem;
+  }
+
+  .admin-clients-header {
+    padding: 2rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .admin-clients-stats {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .stats-card {
+    justify-content: center;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .clients-table {
+    th,
+    td {
+      padding: 1rem 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .client-name {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    .client-avatar {
+      width: 35px;
+      height: 35px;
+      font-size: 0.8rem;
+    }
+  }
+
+  .client-actions {
+    flex-direction: column;
+    gap: 0.25rem;
+
+    .btn {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .clients-table {
+    th,
+    td {
+      padding: 0.75rem 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  .client-name {
+    .client-info strong {
+      font-size: 0.9rem;
+    }
+  }
 }

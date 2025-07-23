@@ -34,6 +34,7 @@ export default class NavbarComponent implements OnInit {
   notifications = this.notificationService.notifications;
   unreadCount = this.notificationService.unreadCount;
   showNotificationsDropdown = signal(false);
+  isRTL = signal(false);
 
   public translateService = inject(TranslateService);
   private readonly loginService = inject(LoginService);
@@ -58,11 +59,31 @@ export default class NavbarComponent implements OnInit {
     if (this.account()) {
       this.notificationService.fetchNotifications();
     }
+
+    // Initialiser la direction RTL basée sur la langue actuelle
+    this.updateRTLLayout(this.translateService.currentLang || 'fr');
   }
 
   changeLanguage(languageKey: string): void {
     this.stateStorageService.storeLocale(languageKey);
     this.translateService.use(languageKey);
+    this.updateRTLLayout(languageKey);
+  }
+
+  private updateRTLLayout(langCode: string): void {
+    const isRTL = langCode === 'ar';
+    this.isRTL.set(isRTL);
+
+    // Appliquer la direction RTL au document
+    if (isRTL) {
+      document.documentElement.dir = 'rtl';
+      document.documentElement.lang = 'ar';
+      document.body.classList.add('rtl');
+    } else {
+      document.documentElement.dir = 'ltr';
+      document.documentElement.lang = langCode;
+      document.body.classList.remove('rtl');
+    }
   }
 
   collapseNavbar(): void {

@@ -1,0 +1,390 @@
+{
+  "userDashboard": {
+    "header": "المستخدم",
+    "title": "لوحة التحكم",
+    "stats": {
+      "tickets": "التذاكر",
+      "open": "قيد التنفيذ",
+      "closed": "محلولة / مغلقة"
+    },
+    "table": {
+      "title": "آخر طلباتي",
+      "id": "الرقم",
+      "type": "النوع",
+      "description": "الوصف",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "notFound": "لم يتم العثور على تذكرة."
+    },
+    "loading": "جاري التحميل...",
+    "error": "خطأ"
+  },
+  "managerDashboard": {
+    "header": "المشرف",
+    "title": "لوحة التحكم",
+    "stats": {
+      "tickets": "التذاكر",
+      "open": "قيد التنفيذ",
+      "resolved": "محلولة",
+      "urgent": "عاجلة"
+    },
+    "table": {
+      "title": "آخر الطلبات",
+      "titleCol": "العنوان",
+      "client": "العميل",
+      "status": "الحالة",
+      "date": "التاريخ"
+    },
+    "status": {
+      "inProgress": "قيد التنفيذ",
+      "resolved": "محلولة",
+      "urgent": "عاجلة"
+    }
+  },
+  "global": {
+    "title": "Devtech",
+    "menu": {
+      "home": "الرئيسية",
+      "login": "تسجيل الدخول",
+      "register": "تسجيل",
+      "account": {
+        "main": "الحساب",
+        "settings": "الملف الشخصي",
+        "password": "كلمة المرور",
+        "logout": "تسجيل الخروج"
+      }
+    },
+    "form": {
+      "username": "اسم المستخدم",
+      "password": "كلمة المرور",
+      "email": "البريد الإلكتروني"
+    },
+    "messages": {
+      "error": {
+        "dontmatch": "كلمة المرور وتأكيدها لا تتطابقان!"
+      },
+      "info": {
+        "register": {
+          "noaccount": "ليس لديك حساب بعد؟",
+          "link": "إنشاء حساب"
+        }
+      }
+    },
+    "field": {
+      "id": "الرقم"
+    },
+    "item-count": "عدد العناصر: {{count}}",
+    "home": {
+      "title": "مرحباً بكم في DevTech!",
+      "subtitle": "إدارة تذاكر الدعم وخدمات المنصة بسهولة.",
+      "servicesTitle": "خدماتنا",
+      "service1": {
+        "title": "إدارة التذاكر",
+        "desc": "إنشاء ومتابعة وحل تذاكر الدعم بكفاءة."
+      },
+      "service2": {
+        "title": "منطقة العملاء",
+        "desc": "الوصول إلى لوحة تحكم العميل وإدارة معلوماتك."
+      },
+      "service3": {
+        "title": "أدوات الإدارة",
+        "desc": "أدوات متقدمة للمديرين والمشرفين."
+      },
+      "whyChooseTitle": "لماذا تختار DevTech؟",
+      "why1": "دعم تقني 24/7",
+      "why2": "حل سريع للمشاكل",
+      "why3": "واجهة بديهية",
+      "why4": "أمان مضمون",
+      "why5": "تقارير مفصلة",
+      "ctaTitle": "ابدأ الآن مع DevTech",
+      "ctaDesc": "انضم إلى آلاف المستخدمين الراضين واكتشف الفرق مع DevTech",
+      "ctaBtn": "ابدأ الآن"
+    }
+  },
+  "adminDashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً،",
+    "role": "المدير",
+    "status": { "online": "متصل" },
+    "recentActivity": "النشاط الأخير",
+    "quickAccess": "الوصول السريع",
+    "createTicket": "إنشاء تذكرة جديدة",
+    "addClient": "إضافة عميل",
+    "managePayments": "إدارة المدفوعات",
+    "editSettings": "تعديل الإعدادات",
+    "stats": {
+      "tickets": "التذاكر",
+      "open": "قيد التنفيذ",
+      "resolved": "محلولة",
+      "urgent": "عاجلة"
+    },
+    "table": {
+      "title": "آخر الطلبات",
+      "id": "الرقم",
+      "type": "النوع",
+      "description": "الوصف",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "notFound": "لم يتم العثور على تذكرة."
+    },
+    "loading": "جاري التحميل...",
+    "error": "خطأ"
+  },
+  "navbar": {
+    "home": "الرئيسية",
+    "userDashboard": "لوحة تحكم المستخدم",
+    "adminDashboard": "لوحة تحكم المدير",
+    "managerDashboard": "لوحة تحكم المشرف",
+    "clientDashboard": "لوحة تحكم العميل",
+    "notifications": "الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء",
+    "noNotifications": "لا توجد إشعارات",
+    "login": "تسجيل الدخول",
+    "register": "تسجيل",
+    "logout": "تسجيل الخروج"
+  },
+  "sidebar": {
+    "myTickets": "تذاكري",
+    "tickets": "التذاكر",
+    "clients": "العملاء",
+    "payments": "المدفوعات",
+    "settings": "الإعدادات",
+    "users": "المستخدمون"
+  },
+  "login": {
+    "title": "تسجيل الدخول",
+    "messages": {
+      "error": {
+        "authentication": "خطأ في المصادقة! يرجى التحقق من بيانات تسجيل الدخول."
+      }
+    },
+    "form": {
+      "password": "كلمة المرور",
+      "password.placeholder": "كلمة المرور الخاصة بك",
+      "rememberme": "البقاء متصلاً",
+      "button": "تسجيل الدخول"
+    },
+    "password": {
+      "forgot": "هل نسيت كلمة المرور؟"
+    }
+  },
+  "register": {
+    "title": "إنشاء حساب المستخدم",
+    "messages": {
+      "success": "تم تسجيل الحساب! يرجى التحقق من بريد التأكيد.",
+      "error": {
+        "fail": "لم يتم إنشاء الحساب! يرجى المحاولة مرة أخرى لاحقاً.",
+        "userexists": "هذا الحساب موجود بالفعل! يرجى اختيار آخر.",
+        "emailexists": "هذا البريد الإلكتروني مستخدم بالفعل! يرجى اختيار آخر."
+      },
+      "validate": {
+        "login": {
+          "required": "اسم المستخدم مطلوب.",
+          "minlength": "اسم المستخدم يجب أن يكون أطول من حرف واحد.",
+          "maxlength": "اسم المستخدم لا يمكن أن يكون أطول من 50 حرفاً.",
+          "pattern": "اسم المستخدم غير صالح."
+        }
+      }
+    },
+    "form": {
+      "button": "تسجيل"
+    }
+  },
+  "appUserRegister": {
+    "title": "تسجيل مستخدم جديد",
+    "google": "التسجيل مع Google",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "submit": "تسجيل",
+    "firstNameRequired": "الاسم الأول مطلوب.",
+    "lastNameRequired": "اسم العائلة مطلوب.",
+    "emailRequired": "بريد إلكتروني صالح مطلوب.",
+    "phoneRequired": "رقم الهاتف مطلوب.",
+    "success": "التسجيل ناجح!",
+    "error": "فشل التسجيل. يرجى المحاولة مرة أخرى."
+  },
+  "clientDashboard": {
+    "header": "مرحباً، عميل!",
+    "title": "تذاكري",
+    "stats": {
+      "tickets": "التذاكر",
+      "open": "قيد التنفيذ",
+      "closed": "محلولة / مغلقة"
+    }
+  },
+  "ticketsUser": {
+    "title": "تذاكري",
+    "create": "إنشاء تذكرة",
+    "type": "نوع التذكرة",
+    "selectType": "اختر نوعاً",
+    "description": "وصف المشكلة",
+    "backofficeUrl": "رابط المكتب الخلفي",
+    "backofficeLogin": "تسجيل المكتب الخلفي",
+    "backofficePassword": "كلمة مرور المكتب الخلفي",
+    "hostingUrl": "رابط الاستضافة",
+    "cancel": "إلغاء",
+    "detail": "تفاصيل التذكرة",
+    "info": "معلومات التذكرة",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "history": "سجل تذاكري",
+    "loading": "جاري التحميل...",
+    "backoffice": "المكتب الخلفي",
+    "hosting": "الاستضافة",
+    "noTickets": "لا توجد تذاكر بعد."
+  },
+  "ticketsAdmin": {
+    "title": "التذاكر",
+    "subtitle": "إدارة تذاكر الدعم ومتابعة حالتها في الوقت الفعلي.",
+    "loading": "جاري التحميل...",
+    "id": "الرقم",
+    "type": "النوع",
+    "description": "الوصف",
+    "status": "الحالة",
+    "created": "تم الإنشاء في",
+    "actions": "الإجراءات",
+    "detail": "التفاصيل",
+    "noTickets": "لم يتم العثور على تذكرة.",
+    "statusNew": "جديد",
+    "statusInProgress": "قيد التنفيذ",
+    "statusResolved": "محلولة",
+    "statusClosed": "مغلقة",
+    "messages": "رسائل للعميل:",
+    "addMessage": "إضافة رسالة...",
+    "save": "حفظ"
+  },
+  "ticketsClient": {
+    "title": "تذاكري",
+    "create": "إنشاء تذكرة",
+    "type": "نوع التذكرة",
+    "selectType": "اختر نوعاً",
+    "description": "وصف المشكلة",
+    "backofficeUrl": "رابط المكتب الخلفي",
+    "backofficeLogin": "تسجيل المكتب الخلفي",
+    "backofficePassword": "كلمة مرور المكتب الخلفي",
+    "hostingUrl": "رابط الاستضافة",
+    "cancel": "إلغاء",
+    "detail": "تفاصيل التذكرة",
+    "info": "معلومات التذكرة",
+    "status": "الحالة",
+    "date": "التاريخ",
+    "history": "سجل تذاكري",
+    "loading": "جاري التحميل...",
+    "backoffice": "المكتب الخلفي",
+    "hosting": "الاستضافة",
+    "noTickets": "لا توجد تذاكر بعد."
+  },
+  "clientsAdmin": {
+    "title": "العملاء",
+    "subtitle": "قائمة وإدارة العملاء المسجلين في المنصة.",
+    "add": "إضافة عميل",
+    "total": "المجموع",
+    "search": "البحث عن عميل...",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف",
+    "actions": "الإجراءات",
+    "noClients": "لم يتم العثور على عميل."
+  },
+  "paiementsAdmin": {
+    "title": "المدفوعات",
+    "add": "إضافة دفعة",
+    "subtitle": "عرض سجل المدفوعات وإدارة معاملات العملاء.",
+    "total": "المجموع",
+    "completed": "مكتملة",
+    "pending": "معلقة",
+    "failed": "فاشلة",
+    "search": "البحث عن دفعة...",
+    "user": "المستخدم",
+    "amount": "المبلغ",
+    "date": "التاريخ",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "invoice": "فاتورة PDF"
+  },
+  "userManagement": {
+    "home": {
+      "title": "المستخدمون",
+      "refreshListLabel": "تحديث القائمة",
+      "createLabel": "إنشاء مستخدم جديد"
+    },
+    "login": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "langKey": "اللغة",
+    "profiles": "الأدوار",
+    "createdDate": "تم الإنشاء في",
+    "lastModifiedBy": "تم التعديل بواسطة",
+    "lastModifiedDate": "تم التعديل في",
+    "activated": "مفعل",
+    "deactivated": "معطل"
+  },
+  "parameters": {
+    "title": "المعاملات",
+    "subtitle": "إدارة إعدادات المنصة العامة وتكوين خيارات النظام.",
+    "key": "المفتاح",
+    "value": "القيمة",
+    "description": "الوصف",
+    "type": "النوع",
+    "actions": "الإجراءات",
+    "add": "إضافة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "ticketStatus": {
+      "title": "حالات التذاكر",
+      "add": "إضافة حالة"
+    },
+    "ticketType": {
+      "title": "أنواع التذاكر",
+      "add": "إضافة نوع"
+    },
+    "ticketPriority": {
+      "title": "أولويات التذاكر",
+      "add": "إضافة أولوية"
+    },
+    "other": {
+      "title": "معاملات أخرى",
+      "add": "إضافة معامل"
+    },
+    "interface": {
+      "ticket": "التذكرة",
+      "tickets": "التذاكر",
+      "type": "النوع",
+      "ticketType": "نوع التذكرة",
+      "ticketTypes": "أنواع التذاكر",
+      "status": "الحالة",
+      "statuses": "الحالات",
+      "priority": "الأولوية",
+      "priorities": "الأولويات",
+      "parameter": "المعامل",
+      "parameters": "المعاملات",
+      "interface": "الواجهة",
+      "Bug": "خطأ",
+      "Demande": "طلب",
+      "Support": "دعم",
+      "Autre": "آخر",
+      "Nouveau": "جديد",
+      "En cours": "قيد التنفيذ",
+      "Résolu": "محلولة",
+      "Fermé": "مغلقة",
+      "Urgent": "عاجلة",
+      "Request": "طلب",
+      "Support": "دعم"
+    }
+  },
+  "entity": {
+    "action": {
+      "view": "عرض",
+      "edit": "تعديل",
+      "delete": "حذف"
+    }
+  },
+  "error": {
+    "title": "صفحة خطأ!",
+    "http": {
+      "403": "ليس لديك صلاحيات الوصول لهذه الصفحة.",
+      "404": "الصفحة المطلوبة غير موجودة."
+    }
+  }
+}

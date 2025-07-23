@@ -19,3 +19,13 @@ export function translatePartialLoader(http: HttpClient): TranslateLoader {
 export function missingTranslationHandler(): MissingTranslationHandler {
   return new MissingTranslationHandlerImpl();
 }
+
+// Langues supportées incluant l'arabe
+export const SUPPORTED_LANGUAGES = [
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+];
+
+export const DEFAULT_LANGUAGE = 'fr';

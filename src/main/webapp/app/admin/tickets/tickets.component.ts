@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import SharedModule from '../../shared/shared.module';
 
 interface Ticket {
-  id: number;
+  id?: number;
   type: string;
   description: string;
   backofficeUrl?: string;
@@ -14,7 +14,9 @@ interface Ticket {
   hostingUrl?: string;
   createdDate?: string;
   status?: string;
+  imageUrl?: string;
   messages?: string[];
+  messageStrings?: string[];
 }
 
 @Component({
@@ -32,6 +34,10 @@ export class TicketsComponent implements OnInit {
   showDetailModal = false;
   selectedTicket: Ticket | null = null;
   newMessage: string = '';
+
+  // Propriétés pour la modal d'image
+  showImageModal = false;
+  selectedImageUrl: string | null = null;
 
   constructor(private http: HttpClient) {}
 
@@ -54,7 +60,7 @@ export class TicketsComponent implements OnInit {
   }
 
   openDetailModal(ticket: Ticket): void {
-    this.selectedTicket = { ...ticket, messages: ticket.messages || [] };
+    this.selectedTicket = { ...ticket, messageStrings: ticket.messageStrings || [] };
     this.showDetailModal = true;
   }
 
@@ -64,23 +70,84 @@ export class TicketsComponent implements OnInit {
     this.newMessage = '';
   }
 
+  // Méthodes pour la modal d'image
+  openImageModal(imageUrl: string): void {
+    this.selectedImageUrl = imageUrl;
+    this.showImageModal = true;
+  }
+
+  closeImageModal(): void {
+    this.showImageModal = false;
+    this.selectedImageUrl = null;
+  }
+
   saveTicket(): void {
     if (!this.selectedTicket) return;
-    // Ajoute le message si présent
-    if (this.newMessage && this.newMessage.trim()) {
-      this.selectedTicket.messages = this.selectedTicket.messages || [];
-      this.selectedTicket.messages.push(this.newMessage.trim());
-    }
+
+    // Mettre à jour le statut du ticket
     this.http.put<Ticket>(`/api/tickets/${this.selectedTicket.id}`, this.selectedTicket).subscribe({
       next: updated => {
         const idx = this.tickets.findIndex(t => t.id === updated.id);
         if (idx !== -1) this.tickets[idx] = updated;
         this.selectedTicket = { ...updated };
+
+        // Ajouter le message si présent via l'endpoint dédié
+        if (this.newMessage && this.newMessage.trim() && this.selectedTicket) {
+          this.http
+            .post<any>(`/api/tickets/${this.selectedTicket.id}/messages`, {
+              content: this.newMessage.trim(),
+            })
+            .subscribe({
+              next: () => {
+                // Recharger les messages du ticket
+                if (this.selectedTicket) {
+                  this.http.get<string[]>(`/api/tickets/${this.selectedTicket.id}/messages`).subscribe({
+                    next: messages => {
+                      if (this.selectedTicket) {
+                        this.selectedTicket.messageStrings = messages;
+                        // Mettre à jour le ticket dans la liste
+                        if (idx !== -1) {
+                          this.tickets[idx].messageStrings = messages;
+                        }
+                      }
+                    },
+                  });
+                }
+              },
+              error: () => {
+                alert("Erreur lors de l'ajout du message");
+              },
+            });
+        }
+
         this.newMessage = '';
         alert('Ticket mis à jour avec succès');
       },
       error: () => {
         alert('Erreur lors de la mise à jour du ticket');
+      },
+    });
+  }
+
+  addTestMessage(): void {
+    if (!this.selectedTicket || !this.selectedTicket.id) return;
+
+    this.http.post<string>(`/api/tickets/${this.selectedTicket.id}/add-test-message`, {}).subscribe({
+      next: () => {
+        // Recharger les messages
+        if (this.selectedTicket && this.selectedTicket.id) {
+          this.http.get<string[]>(`/api/tickets/${this.selectedTicket.id}/messages`).subscribe({
+            next: messages => {
+              if (this.selectedTicket) {
+                this.selectedTicket.messageStrings = messages;
+              }
+              alert('Message de test ajouté !');
+            },
+          });
+        }
+      },
+      error: () => {
+        alert("Erreur lors de l'ajout du message de test");
       },
     });
   }

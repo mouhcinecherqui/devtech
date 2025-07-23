@@ -1,4 +1,4 @@
-<header class="main-header">
+<header class="main-header" [class.rtl]="isRTL()">
   <div class="header-left">
     <a class="site-title" routerLink="/home">
       <img
@@ -67,6 +67,7 @@
         <span *ngIf="translateService.currentLang === 'fr'">🇫🇷 Français</span>
         <span *ngIf="translateService.currentLang === 'en'">🇬🇧 English</span>
         <span *ngIf="translateService.currentLang === 'es'">🇪🇸 Español</span>
+        <span *ngIf="translateService.currentLang === 'ar'">🇸🇦 العربية</span>
         <svg style="margin-left: 6px; vertical-align: middle" width="12" height="12" viewBox="0 0 20 20">
           <path d="M5.5 8l4.5 4.5L14.5 8" stroke="#333" stroke-width="2" fill="none" />
         </svg>
@@ -75,6 +76,7 @@
         <li (click)="changeLanguage('fr')"><span>🇫🇷</span> Français</li>
         <li (click)="changeLanguage('en')"><span>🇬🇧</span> English</li>
         <li (click)="changeLanguage('es')"><span>🇪🇸</span> Español</li>
+        <li (click)="changeLanguage('ar')"><span>🇸🇦</span> العربية</li>
       </ul>
     </div>
     <a *ngIf="!account()" (click)="login()">{{ 'navbar.login' | translate }}</a>
