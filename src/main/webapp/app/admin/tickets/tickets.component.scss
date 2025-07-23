@@ -1,127 +1,737 @@
+// Modern Design Variables
+$primary-color: #6366f1;
+$primary-light: #818cf8;
+$primary-dark: #4f46e5;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$danger-color: #ef4444;
+$info-color: #06b6d4;
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+
+// Modern Mixins
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+@mixin modern-shadow {
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+@mixin modern-shadow-hover {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin gradient-bg($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+}
+
+// Main Container
+.admin-tickets-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e8f4f8 0%, #d1e7dd 100%);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(0,0,0,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+// Header Section
+.admin-tickets-header {
+  @include glassmorphism;
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  @include modern-shadow;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, $gray-900, $primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: 1.125rem;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+// Modern Table Styles
 table {
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 2rem;
+  @include glassmorphism;
+  border-radius: 20px;
+  overflow: hidden;
+  @include modern-shadow;
+
+  th,
+  td {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  th {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: $gray-900;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+    &:first-child {
+      border-top-left-radius: 20px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 20px;
+    }
+  }
+
+  td {
+    color: $gray-700;
+    font-weight: 500;
+    font-size: 0.95rem;
+    @include smooth-transition;
+
+    &:first-child {
+      font-weight: 700;
+      color: $primary-color;
+    }
+  }
+
+  tbody tr {
+    @include smooth-transition;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    &:last-child td {
+      border-bottom: none;
+
+      &:first-child {
+        border-bottom-left-radius: 20px;
+      }
+
+      &:last-child {
+        border-bottom-right-radius: 20px;
+      }
+    }
+  }
 }
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
+
+// Status Badges
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &.status-nouveau {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    color: $info-color;
+    border: 1px solid rgba(6, 182, 212, 0.2);
+  }
+
+  &.status-en-cours {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    color: $warning-color;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+
+  &.status-résolu {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    color: $success-color;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+
+  &.status-fermé {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    color: $gray-600;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+  }
+
+  &.status-urgent {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    color: $danger-color;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
 }
-th {
-  background: #f4f4f4;
+
+// Type Badges
+.type-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &.type-bug {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    color: $danger-color;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+
+  &.type-demande {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    color: $primary-color;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+  }
+
+  &.type-support {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    color: $success-color;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+
+  &.type-autre {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    color: $gray-600;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+  }
 }
+
+// Modern Button Styles
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  @include smooth-transition;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &.btn-primary {
+    @include gradient-bg($primary-color, $primary-light);
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+  }
+
+  &.btn-success {
+    @include gradient-bg($success-color, #059669);
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    }
+  }
+
+  &.btn-info {
+    @include gradient-bg($info-color, #0891b2);
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+    }
+  }
+
+  &.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+// Loading and Error States
+.loading-state {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  margin: 2rem 0;
+  @include modern-shadow;
+
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.error-state {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 2rem 0;
+  @include modern-shadow;
+  border-left: 4px solid $danger-color;
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+
+  .error {
+    color: $danger-color;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+.empty-state {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin: 2rem 0;
+  @include modern-shadow;
+
+  .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+// Modern Modal Styles
 .admin-ticket-modal {
-  background: #f8fafd;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-  padding: 2.5rem 2rem 2rem 2rem;
-  min-width: 350px;
-  max-width: 95vw;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  @include modern-shadow-hover;
+  padding: 3rem;
+  min-width: 500px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
   position: relative;
   margin: 0 auto;
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes modalSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
 }
-.admin-ticket-modal h3 {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #2563eb;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
+
 .admin-ticket-row {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 1.1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 12px;
+  @include smooth-transition;
+  border: 1px solid rgba(226, 232, 240, 0.5);
+
+  &:hover {
+    background: rgba(241, 245, 249, 0.9);
+    transform: translateX(5px);
+  }
 }
+
 .admin-ticket-label {
-  min-width: 110px;
-  color: #4f8cff;
-  font-weight: 600;
-  font-size: 1rem;
-  margin-right: 0.5rem;
+  min-width: 140px;
+  color: $primary-color;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-right: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
+
 .admin-ticket-value {
-  color: #222;
+  color: $gray-900;
   font-size: 1rem;
+  font-weight: 500;
   word-break: break-word;
+  flex: 1;
 }
-.admin-ticket-actions {
-  display: flex;
-  gap: 0.7rem;
-  margin-top: 1.2rem;
-  justify-content: flex-end;
+
+// Enhanced Image Styles
+.admin-ticket-image-container {
+  position: relative;
+  display: inline-block;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  @include smooth-transition;
+  @include modern-shadow;
+
+  &:hover {
+    transform: scale(1.05);
+    @include modern-shadow-hover;
+  }
 }
+
+.admin-ticket-image {
+  max-width: 250px;
+  max-height: 180px;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.admin-ticket-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 1rem;
+  font-size: 0.9rem;
+  text-align: center;
+  opacity: 0;
+  @include smooth-transition;
+  font-weight: 600;
+}
+
+.admin-ticket-image-container:hover .admin-ticket-image-overlay {
+  opacity: 1;
+}
+
+// Enhanced Form Elements
 .admin-ticket-modal select,
 .admin-ticket-modal textarea {
-  border-radius: 8px;
-  border: 1px solid #d0d7e2;
-  padding: 0.4rem 0.7rem;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1rem;
   font-size: 1rem;
-  margin-top: 0.2rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
   width: 100%;
-  background: #f4f8fb;
-  transition: border 0.2s;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: $gray-700;
+  font-weight: 500;
+  @include smooth-transition;
+
+  &:focus {
+    border: 2px solid $primary-color;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &::placeholder {
+    color: $gray-400;
+  }
 }
-.admin-ticket-modal select:focus,
-.admin-ticket-modal textarea:focus {
-  border: 1.5px solid #4f8cff;
-  outline: none;
-}
-.admin-ticket-modal button {
-  border-radius: 8px;
-  font-size: 0.98rem;
-  padding: 0.35rem 1.1rem;
-  border: none;
-  background: #4f8cff;
-  color: #fff;
+
+.status-select {
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid $primary-color !important;
+  color: $primary-color;
   font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
+
+  &:focus {
+    border: 2px solid $primary-dark !important;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
 }
-.admin-ticket-modal button.btn-secondary {
-  background: #e0e7ef;
-  color: #2563eb;
-}
-.admin-ticket-modal button.btn-success {
-  background: #22c55e;
-}
-.admin-ticket-modal button:hover {
-  background: #2563eb;
-  color: #fff;
-}
+
+// Enhanced Messages Section
 .admin-ticket-messages {
-  background: #f4f8fb;
-  border-radius: 8px;
-  padding: 0.7rem 1rem;
-  margin-bottom: 0.7rem;
-  max-height: 120px;
+  background: rgba(248, 250, 252, 0.9);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  max-height: 150px;
   overflow-y: auto;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  backdrop-filter: blur(10px);
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary-color;
+    border-radius: 3px;
+  }
+
+  li {
+    margin-bottom: 0.75rem;
+    color: $gray-800;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    border-left: 3px solid $primary-color;
+  }
 }
-.admin-ticket-messages li {
-  margin-bottom: 0.4rem;
-  color: #333;
-  font-size: 0.97rem;
+
+// Enhanced Actions Section
+.admin-ticket-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+// Enhanced Close Button
 .close-modal-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
-  padding: 0;
+  padding: 0.75rem;
   cursor: pointer;
-  transition: background 0.2s;
+  @include smooth-transition;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: $gray-700;
+  }
+}
+
+// Enhanced Image Modal
+.image-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+.image-modal-container {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.close-modal-btn:hover svg circle {
-  fill: #2563eb;
+
+.image-modal-close-btn {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  @include smooth-transition;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
 }
-.close-modal-btn:hover svg path {
-  stroke: #fff;
+
+.full-size-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .admin-tickets-container {
+    padding: 1rem;
+  }
+
+  .admin-tickets-header {
+    padding: 2rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  table {
+    th,
+    td {
+      padding: 1rem 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .admin-ticket-modal {
+    margin: 1rem;
+    padding: 2rem;
+    min-width: calc(100vw - 2rem);
+  }
+
+  .admin-ticket-row {
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .admin-ticket-label {
+      min-width: auto;
+      margin-right: 0;
+    }
+  }
+
+  .admin-ticket-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
 }

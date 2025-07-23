@@ -16,6 +16,7 @@ import SharedModule from '../../shared/shared.module';
 })
 export class ClientsComponent implements OnInit {
   clients: AppUser[] = [];
+  searchTerm: string = '';
   private readonly clientsService = inject(ClientsService);
   private readonly modalService = inject(NgbModal);
 
@@ -64,5 +65,21 @@ export class ClientsComponent implements OnInit {
     if (confirm(`Supprimer le client ${client.firstName} ${client.lastName} ?`)) {
       this.clientsService.delete(client.id).subscribe(() => this.loadClients());
     }
+  }
+
+  get filteredClients(): AppUser[] {
+    if (!this.searchTerm.trim()) {
+      return this.clients;
+    }
+
+    const search = this.searchTerm.toLowerCase().trim();
+    return this.clients.filter(
+      client =>
+        client.firstName?.toLowerCase().includes(search) ||
+        client.lastName?.toLowerCase().includes(search) ||
+        client.email?.toLowerCase().includes(search) ||
+        client.phone?.toLowerCase().includes(search) ||
+        `${client.firstName} ${client.lastName}`.toLowerCase().includes(search),
+    );
   }
 }

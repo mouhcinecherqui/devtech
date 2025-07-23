@@ -1,9 +1,10 @@
 package devtech.domain;
 
-import devtech.domain.util.StringListConverter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,6 +33,9 @@ public class Ticket implements Serializable {
     @Column(name = "hosting_url")
     private String hostingUrl;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "status", nullable = false)
     private String status = "Nouveau";
 
@@ -41,9 +45,19 @@ public class Ticket implements Serializable {
     @Column(name = "created_date", nullable = false)
     private Instant createdDate = Instant.now();
 
-    @Column(name = "messages", columnDefinition = "json")
-    @Convert(converter = StringListConverter.class)
-    private List<String> messages;
+    @JsonIgnore
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<TicketMessage> messages = new ArrayList<>();
+
+    // Champ temporaire pour la compatibilité avec le frontend
+    @Transient
+    private List<String> messageStrings = new ArrayList<>();
+
+    // Méthode pour éviter l'accès aux messages lazy-loaded lors de la sérialisation
+    @JsonIgnore
+    public List<TicketMessage> getMessagesForSerialization() {
+        return null; // Retourne null pour éviter la sérialisation
+    }
 
     // Getters et setters
     public Long getId() {
@@ -102,6 +116,14 @@ public class Ticket implements Serializable {
         this.hostingUrl = hostingUrl;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -126,11 +148,43 @@ public class Ticket implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public List<String> getMessages() {
+    @JsonIgnore
+    public List<TicketMessage> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<String> messages) {
+    public void setMessages(List<TicketMessage> messages) {
         this.messages = messages;
+    }
+
+    // Méthode pour accéder aux messages de manière sécurisée
+    public List<TicketMessage> getMessagesSafely() {
+        return messages;
+    }
+
+    public List<String> getMessageStrings() {
+        return messageStrings;
+    }
+
+    public void setMessageStrings(List<String> messageStrings) {
+        this.messageStrings = messageStrings;
+    }
+
+    // Méthodes utilitaires
+    public void addMessage(TicketMessage message) {
+        this.messages.add(message);
+        message.setTicket(this);
+    }
+
+    public List<TicketMessage> getPublicMessages() {
+        return this.messages.stream().filter(message -> !message.isInternal()).toList();
+    }
+
+    public long getMessageCount() {
+        return this.messages.size();
+    }
+
+    public long getPublicMessageCount() {
+        return this.messages.stream().filter(message -> !message.isInternal()).count();
     }
 }

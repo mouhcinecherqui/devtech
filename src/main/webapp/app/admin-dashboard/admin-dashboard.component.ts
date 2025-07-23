@@ -15,11 +15,18 @@ import { ClientsService } from 'app/admin/clients/clients.service';
 import SharedModule from '../shared/shared.module';
 
 interface Ticket {
-  id: number;
+  id?: number;
   type: string;
   description: string;
+  backofficeUrl?: string;
+  backofficeLogin?: string;
+  backofficePassword?: string;
+  hostingUrl?: string;
   createdDate?: string;
   status?: string;
+  imageUrl?: string;
+  messages?: string[];
+  messageStrings?: string[];
 }
 
 @Component({

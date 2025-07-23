@@ -13,6 +13,9 @@ interface Ticket {
   hostingUrl?: string;
   createdDate?: string;
   status?: string;
+  imageUrl?: string;
+  messages?: string[];
+  messageStrings?: string[];
 }
 
 @Component({

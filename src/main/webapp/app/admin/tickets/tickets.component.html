@@ -1,84 +1,176 @@
-<h2>{{ 'ticketsAdmin.title' | translate }}</h2>
-<p>{{ 'ticketsAdmin.subtitle' | translate }}</p>
-<div *ngIf="loading">{{ 'ticketsAdmin.loading' | translate }}</div>
-<div *ngIf="error" class="error">{{ error }}</div>
-<table *ngIf="tickets.length && !loading">
-  <thead>
-    <tr>
-      <th>{{ 'ticketsAdmin.id' | translate }}</th>
-      <th>{{ 'ticketsAdmin.type' | translate }}</th>
-      <th>{{ 'ticketsAdmin.description' | translate }}</th>
-      <th>{{ 'ticketsAdmin.status' | translate }}</th>
-      <th>{{ 'ticketsAdmin.created' | translate }}</th>
-      <th>{{ 'ticketsAdmin.actions' | translate }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let ticket of tickets">
-      <td>{{ ticket.id }}</td>
-      <td>{{ 'parameters.interface.' + ticket.type | translate }}</td>
-      <td>{{ ticket.description }}</td>
-      <td>{{ 'parameters.interface.' + ticket.status | translate }}</td>
-      <td>{{ ticket.createdDate | date: 'short' }}</td>
-      <td>
-        <button class="btn btn-primary btn-sm" (click)="openDetailModal(ticket)">{{ 'ticketsAdmin.detail' | translate }}</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<div *ngIf="!tickets.length && !loading && !error">{{ 'ticketsAdmin.noTickets' | translate }}</div>
+<div class="admin-tickets-container">
+  <!-- Header Section -->
+  <div class="admin-tickets-header">
+    <h2>{{ 'ticketsAdmin.title' | translate }}</h2>
+    <p>{{ 'ticketsAdmin.subtitle' | translate }}</p>
+  </div>
 
-<!-- Modale de détail/modification du ticket -->
-<div
-  *ngIf="showDetailModal"
-  style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  "
->
-  <div class="admin-ticket-modal">
-    <button (click)="closeDetailModal()" class="close-modal-btn" aria-label="Fermer">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="12" cy="12" r="12" fill="#e0e7ef" />
-        <path d="M8 8L16 16M16 8L8 16" stroke="#2563eb" stroke-width="2" stroke-linecap="round" />
-      </svg>
-    </button>
-    <h3>{{ 'ticketsAdmin.detail' | translate }}</h3>
-    <div *ngIf="selectedTicket">
-      <div class="admin-ticket-row">
-        <div class="admin-ticket-label">{{ 'ticketsAdmin.type' | translate }} :</div>
-        <div class="admin-ticket-value">{{ 'parameters.interface.' + selectedTicket?.type | translate }}</div>
-      </div>
-      <div class="admin-ticket-row">
-        <div class="admin-ticket-label">{{ 'ticketsAdmin.description' | translate }} :</div>
-        <div class="admin-ticket-value">{{ selectedTicket.description }}</div>
-      </div>
-      <div class="admin-ticket-row">
-        <div class="admin-ticket-label">{{ 'ticketsAdmin.status' | translate }} :</div>
-        <div class="admin-ticket-value">
-          {{ 'parameters.interface.' + selectedTicket?.status | translate }}
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>{{ 'ticketsAdmin.loading' | translate }}</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="error-state">
+    <div class="error">{{ error }}</div>
+  </div>
+
+  <!-- Tickets Table -->
+  <table *ngIf="tickets.length && !loading">
+    <thead>
+      <tr>
+        <th>{{ 'ticketsAdmin.id' | translate }}</th>
+        <th>{{ 'ticketsAdmin.type' | translate }}</th>
+        <th>{{ 'ticketsAdmin.description' | translate }}</th>
+        <th>{{ 'ticketsAdmin.status' | translate }}</th>
+        <th>{{ 'ticketsAdmin.created' | translate }}</th>
+        <th>{{ 'ticketsAdmin.actions' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets">
+        <td>{{ ticket.id }}</td>
+        <td>
+          <span class="type-badge" [ngClass]="'type-' + (ticket.type?.toLowerCase() || 'autre')">
+            {{ 'parameters.interface.' + ticket.type | translate }}
+          </span>
+        </td>
+        <td>{{ ticket.description }}</td>
+        <td>
+          <span class="status-badge" [ngClass]="'status-' + (ticket.status?.toLowerCase() || 'nouveau')">
+            {{ 'parameters.interface.' + ticket.status | translate }}
+          </span>
+        </td>
+        <td>{{ ticket.createdDate | date: 'short' }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="openDetailModal(ticket)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke="currentColor" stroke-width="2" />
+              <path
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            {{ 'ticketsAdmin.detail' | translate }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Empty State -->
+  <div *ngIf="!tickets.length && !loading && !error" class="empty-state">
+    <div class="empty-icon">📋</div>
+    <h3>Aucun ticket trouvé</h3>
+    <p>{{ 'ticketsAdmin.noTickets' | translate }}</p>
+  </div>
+
+  <!-- Modale de détail/modification du ticket -->
+  <div
+    *ngIf="showDetailModal"
+    style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    "
+  >
+    <div class="admin-ticket-modal">
+      <button (click)="closeDetailModal()" class="close-modal-btn" aria-label="Fermer">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <h3>{{ 'ticketsAdmin.detail' | translate }}</h3>
+      <div *ngIf="selectedTicket">
+        <div class="admin-ticket-row">
+          <div class="admin-ticket-label">{{ 'ticketsAdmin.type' | translate }} :</div>
+          <div class="admin-ticket-value">
+            <span class="type-badge" [ngClass]="'type-' + (selectedTicket?.type?.toLowerCase() || 'autre')">
+              {{ 'parameters.interface.' + selectedTicket?.type | translate }}
+            </span>
+          </div>
+        </div>
+        <div class="admin-ticket-row">
+          <div class="admin-ticket-label">{{ 'ticketsAdmin.description' | translate }} :</div>
+          <div class="admin-ticket-value">{{ selectedTicket.description }}</div>
+        </div>
+
+        <!-- Affichage de l'image si elle existe -->
+        <div *ngIf="selectedTicket.imageUrl" class="admin-ticket-row">
+          <div class="admin-ticket-label">{{ 'ticketsAdmin.image' | translate }} :</div>
+          <div class="admin-ticket-value">
+            <div class="admin-ticket-image-container">
+              <img
+                [src]="selectedTicket.imageUrl"
+                alt="Image du ticket"
+                class="admin-ticket-image"
+                (click)="openImageModal(selectedTicket.imageUrl)"
+              />
+              <div class="admin-ticket-image-overlay">
+                <span>Cliquez pour agrandir</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-ticket-row">
+          <div class="admin-ticket-label">{{ 'ticketsAdmin.status' | translate }} :</div>
+          <div class="admin-ticket-value">
+            <select [(ngModel)]="selectedTicket.status" class="status-select">
+              <option value="Nouveau">{{ 'parameters.interface.Nouveau' | translate }}</option>
+              <option value="En cours">{{ 'parameters.interface.En cours' | translate }}</option>
+              <option value="Résolu">{{ 'parameters.interface.Résolu' | translate }}</option>
+              <option value="Fermé">{{ 'parameters.interface.Fermé' | translate }}</option>
+              <option value="Urgent">{{ 'parameters.interface.Urgent' | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-ticket-row">
+          <div class="admin-ticket-label" style="align-self: flex-start">{{ 'ticketsAdmin.messages' | translate }}</div>
+          <div class="admin-ticket-value" style="width: 100%">
+            <ul class="admin-ticket-messages">
+              <li *ngFor="let msg of selectedTicket.messageStrings">{{ msg }}</li>
+            </ul>
+            <textarea [(ngModel)]="newMessage" rows="3" placeholder="{{ 'ticketsAdmin.addMessage' | translate }}"></textarea>
+            <button class="btn btn-info btn-sm" (click)="addTestMessage()" style="margin-top: 0.5rem">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              Ajouter message test
+            </button>
+          </div>
+        </div>
+        <div class="admin-ticket-actions">
+          <button class="btn btn-success btn-sm" (click)="saveTicket()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ 'ticketsAdmin.save' | translate }}
+          </button>
         </div>
       </div>
-      <div class="admin-ticket-row">
-        <div class="admin-ticket-label" style="align-self: flex-start">{{ 'ticketsAdmin.messages' | translate }}</div>
-        <div class="admin-ticket-value" style="width: 100%">
-          <ul class="admin-ticket-messages">
-            <li *ngFor="let msg of selectedTicket.messages">{{ msg }}</li>
-          </ul>
-          <textarea [(ngModel)]="newMessage" rows="2" placeholder="{{ 'ticketsAdmin.addMessage' | translate }}"></textarea>
-        </div>
-      </div>
-      <div class="admin-ticket-actions">
-        <button class="btn btn-success btn-sm" (click)="saveTicket()">{{ 'ticketsAdmin.save' | translate }}</button>
-      </div>
+    </div>
+  </div>
+
+  <!-- Modal pour afficher l'image en plein écran -->
+  <div *ngIf="showImageModal" class="image-modal-overlay" (click)="closeImageModal()">
+    <div class="image-modal-container" (click)="$event.stopPropagation()">
+      <button class="image-modal-close-btn" (click)="closeImageModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <img [src]="selectedImageUrl" alt="Image du ticket" class="full-size-image" />
     </div>
   </div>
 </div>

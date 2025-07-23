@@ -62,6 +62,12 @@
     "messages": {
       "error": {
         "dontmatch": "¡La contraseña y su confirmación no coinciden!"
+      },
+      "info": {
+        "register": {
+          "noaccount": "¿Aún no tienes una cuenta?",
+          "link": "Crear una cuenta"
+        }
       }
     },
     "field": {
@@ -83,7 +89,16 @@
       "service3": {
         "title": "Herramientas de administración",
         "desc": "Herramientas avanzadas para administradores y managers."
-      }
+      },
+      "whyChooseTitle": "¿Por qué elegir DevTech?",
+      "why1": "Soporte técnico 24/7",
+      "why2": "Resolución rápida de problemas",
+      "why3": "Interfaz intuitiva",
+      "why4": "Seguridad garantizada",
+      "why5": "Reportes detallados",
+      "ctaTitle": "Comienza ahora con DevTech",
+      "ctaDesc": "Únete a miles de usuarios satisfechos y descubre la diferencia DevTech",
+      "ctaBtn": "Comenzar Ahora"
     }
   },
   "adminDashboard": {
@@ -363,6 +378,13 @@
       "view": "Ver",
       "edit": "Editar",
       "delete": "Eliminar"
+    }
+  },
+  "error": {
+    "title": "¡Página de error!",
+    "http": {
+      "403": "No tienes derechos de acceso a esta página.",
+      "404": "La página solicitada no existe."
     }
   }
 }

@@ -62,6 +62,12 @@
     "messages": {
       "error": {
         "dontmatch": "Le mot de passe et sa confirmation ne correspondent pas !"
+      },
+      "info": {
+        "register": {
+          "noaccount": "Vous n'avez pas encore de compte ?",
+          "link": "Créer un compte"
+        }
       }
     },
     "field": {
@@ -83,7 +89,16 @@
       "service3": {
         "title": "Outils d'administration",
         "desc": "Outils avancés pour les administrateurs et managers."
-      }
+      },
+      "whyChooseTitle": "Pourquoi choisir DevTech ?",
+      "why1": "Support technique 24/7",
+      "why2": "Résolution rapide des problèmes",
+      "why3": "Interface intuitive",
+      "why4": "Sécurité garantie",
+      "why5": "Rapports détaillés",
+      "ctaTitle": "Commencez dès maintenant avec DevTech",
+      "ctaDesc": "Rejoignez des milliers d'utilisateurs satisfaits et découvrez la différence DevTech",
+      "ctaBtn": "Commencer maintenant"
     }
   },
   "adminDashboard": {
@@ -238,7 +253,8 @@
     "statusClosed": "Fermé",
     "messages": "Messages au client :",
     "addMessage": "Ajouter un message...",
-    "save": "Enregistrer"
+    "save": "Enregistrer",
+    "image": "Image"
   },
   "ticketsClient": {
     "title": "Mes tickets",
@@ -259,7 +275,14 @@
     "loading": "Chargement...",
     "backoffice": "Backoffice",
     "hosting": "Hébergement",
-    "noTickets": "Aucun ticket pour le moment."
+    "noTickets": "Aucun ticket pour le moment.",
+    "adminMessages": "Messages de l'équipe support",
+    "yourReply": "Votre réponse",
+    "replyPlaceholder": "Tapez votre réponse ici...",
+    "send": "Envoyer",
+    "sending": "Envoi...",
+    "replySent": "Votre réponse a été envoyée avec succès !",
+    "replyError": "Erreur lors de l'envoi de votre réponse. Veuillez réessayer."
   },
   "clientsAdmin": {
     "title": "Clients",
@@ -276,7 +299,7 @@
   "paiementsAdmin": {
     "title": "Paiements",
     "add": "Ajouter un paiement",
-    "subtitle": "Consultez l’historique des paiements et gérez les transactions des clients.",
+    "subtitle": "Consultez l'historique des paiements et gérez les transactions des clients.",
     "total": "Total",
     "completed": "Complétés",
     "pending": "En attente",
@@ -363,6 +386,13 @@
       "view": "Voir",
       "edit": "Modifier",
       "delete": "Supprimer"
+    }
+  },
+  "error": {
+    "title": "Page d'erreur !",
+    "http": {
+      "403": "Vous n'avez pas les droits d'accès à cette page.",
+      "404": "La page demandée n'existe pas."
     }
   }
 }
