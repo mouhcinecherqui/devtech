@@ -1,88 +1,167 @@
-<div class="admin-home">
-  <main class="dashboard-main-area">
-    <h1>{{ 'adminDashboard.title' | translate }}</h1>
-
-    <!-- Section infos admin -->
-    <mat-card class="admin-info-card mat-elevation-z2">
-      <div class="admin-info-header">
-        <mat-icon class="admin-avatar">admin_panel_settings</mat-icon>
-        <div>
-          <div class="admin-welcome">
-            {{ 'adminDashboard.welcome' | translate }} <span class="admin-name">{{ account?.firstName || account?.login }}</span>
-          </div>
-          <div class="admin-role-badge">{{ 'adminDashboard.role' | translate }}</div>
-        </div>
+<div class="admin-dashboard">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <div class="header-title">
+        <h1>{{ 'adminDashboard.title' | translate }}</h1>
+        <p class="header-subtitle">Tableau de bord administratif - Gestion de la plateforme</p>
       </div>
-      <div class="admin-info-details">
-        <div class="admin-info-item">
-          <mat-icon>email</mat-icon>
-          <span>{{ account?.email }}</span>
-        </div>
-        <div class="admin-info-item">
-          <mat-icon>security</mat-icon>
-          <span>{{ account?.authorities?.join(', ') }}</span>
-        </div>
-        <div class="admin-info-item">
-          <mat-icon>check_circle</mat-icon>
-          <span class="admin-status online">{{ 'adminDashboard.status.online' | translate }}</span>
-        </div>
+      <div class="header-actions">
+        <div class="current-time">{{ currentTime | date: 'HH:mm' }}</div>
+        <div class="date-display">{{ currentTime | date: 'EEEE, d MMMM yyyy' }}</div>
       </div>
-    </mat-card>
-
-    <!-- Section dashboard résumé -->
-    <!-- (cartes supprimées) -->
-
-    <div style="display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 2rem">
-      <mat-card class="mat-elevation-z1 recent-activity" style="flex: 1 1 350px; min-width: 300px">
-        <mat-card-title>{{ 'adminDashboard.recentActivity' | translate }}</mat-card-title>
-        <mat-list>
-          <mat-list-item *ngFor="let activity of recentActivities">
-            <mat-icon matListIcon>fiber_manual_record</mat-icon>
-            {{ activity.text }} <span style="margin-left: auto; color: #888; font-size: 0.9em">{{ activity.time }}</span>
-          </mat-list-item>
-        </mat-list>
-      </mat-card>
-      <mat-card class="mat-elevation-z1 quick-access" style="flex: 1 1 350px; min-width: 300px">
-        <mat-card-title>{{ 'adminDashboard.quickAccess' | translate }}</mat-card-title>
-        <mat-action-list>
-          <button mat-list-item color="primary" routerLink="/admin/tickets">
-            <mat-icon>add_circle</mat-icon>{{ 'adminDashboard.createTicket' | translate }}
-          </button>
-          <button mat-list-item color="primary" routerLink="/admin/clients">
-            <mat-icon>person_add</mat-icon>{{ 'adminDashboard.addClient' | translate }}
-          </button>
-          <button mat-list-item color="primary" routerLink="/admin/paiements">
-            <mat-icon>payment</mat-icon>{{ 'adminDashboard.managePayments' | translate }}
-          </button>
-          <button mat-list-item color="primary" routerLink="/admin/parameters">
-            <mat-icon>settings</mat-icon>{{ 'adminDashboard.editSettings' | translate }}
-          </button>
-        </mat-action-list>
-      </mat-card>
     </div>
+  </div>
 
-    <!-- Stats et tableau des tickets existants -->
-    <div class="dashboard-stats">
-      <div class="stat-card stat-blue">
+  <!-- Admin Info Card -->
+  <div class="admin-info-section">
+    <div class="admin-info-card">
+      <div class="admin-avatar-section">
+        <div class="admin-avatar">
+          <span class="avatar-icon">👨‍💼</span>
+          <div class="status-indicator online"></div>
+        </div>
+        <div class="admin-details">
+          <h2 class="admin-name">{{ account?.firstName || account?.login }}</h2>
+          <div class="admin-role">
+            <span class="role-badge">{{ 'adminDashboard.role' | translate }}</span>
+          </div>
+          <div class="admin-email">{{ account?.email }}</div>
+        </div>
+      </div>
+      <div class="admin-stats">
+        <div class="stat-item">
+          <div class="stat-icon">🔐</div>
+          <div class="stat-info">
+            <span class="stat-label">Permissions</span>
+            <span class="stat-value">{{ account?.authorities?.length || 0 }}</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">📊</div>
+          <div class="stat-info">
+            <span class="stat-label">Sessions</span>
+            <span class="stat-value">Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card stat-primary">
+      <div class="stat-icon">🎫</div>
+      <div class="stat-content">
         <div class="stat-value">{{ stats.tickets }}</div>
         <div class="stat-label">{{ 'adminDashboard.stats.tickets' | translate }}</div>
       </div>
-      <div class="stat-card stat-cyan">
-        <div class="stat-value">{{ stats.open }}</div>
-        <div class="stat-label">{{ 'adminDashboard.stats.open' | translate }}</div>
-      </div>
-      <div class="stat-card stat-green">
+      <div class="stat-trend positive">+12%</div>
+    </div>
+
+    <div class="stat-card stat-success">
+      <div class="stat-icon">✅</div>
+      <div class="stat-content">
         <div class="stat-value">{{ stats.closed }}</div>
         <div class="stat-label">{{ 'adminDashboard.stats.resolved' | translate }}</div>
       </div>
-      <div class="stat-card stat-red">
+      <div class="stat-trend positive">+8%</div>
+    </div>
+
+    <div class="stat-card stat-warning">
+      <div class="stat-icon">⏳</div>
+      <div class="stat-content">
+        <div class="stat-value">{{ stats.open }}</div>
+        <div class="stat-label">{{ 'adminDashboard.stats.open' | translate }}</div>
+      </div>
+      <div class="stat-trend negative">-3%</div>
+    </div>
+
+    <div class="stat-card stat-danger">
+      <div class="stat-icon">🚨</div>
+      <div class="stat-content">
         <div class="stat-value">{{ stats.urgent }}</div>
         <div class="stat-label">{{ 'adminDashboard.stats.urgent' | translate }}</div>
       </div>
+      <div class="stat-trend neutral">0%</div>
     </div>
-    <section class="dashboard-table-section">
-      <h2>{{ 'adminDashboard.table.title' | translate }}</h2>
-      <table class="dashboard-table">
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="dashboard-content">
+    <!-- Quick Actions -->
+    <div class="content-card quick-actions-card">
+      <div class="card-header">
+        <h3>{{ 'adminDashboard.quickAccess' | translate }}</h3>
+        <div class="card-subtitle">Actions rapides pour la gestion</div>
+      </div>
+      <div class="quick-actions-grid">
+        <button class="action-btn primary" routerLink="/admin/tickets">
+          <div class="action-icon">➕</div>
+          <div class="action-content">
+            <span class="action-title">{{ 'adminDashboard.createTicket' | translate }}</span>
+            <span class="action-desc">Créer un nouveau ticket</span>
+          </div>
+        </button>
+
+        <button class="action-btn secondary" routerLink="/admin/clients">
+          <div class="action-icon">👥</div>
+          <div class="action-content">
+            <span class="action-title">{{ 'adminDashboard.addClient' | translate }}</span>
+            <span class="action-desc">Gérer les clients</span>
+          </div>
+        </button>
+
+        <button class="action-btn tertiary" routerLink="/admin/paiements">
+          <div class="action-icon">💳</div>
+          <div class="action-content">
+            <span class="action-title">{{ 'adminDashboard.managePayments' | translate }}</span>
+            <span class="action-desc">Gérer les paiements</span>
+          </div>
+        </button>
+
+        <button class="action-btn quaternary" routerLink="/admin/parameters">
+          <div class="action-icon">⚙️</div>
+          <div class="action-content">
+            <span class="action-title">{{ 'adminDashboard.editSettings' | translate }}</span>
+            <span class="action-desc">Paramètres système</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="content-card activity-card">
+      <div class="card-header">
+        <h3>{{ 'adminDashboard.recentActivity' | translate }}</h3>
+        <div class="card-subtitle">Activités récentes sur la plateforme</div>
+      </div>
+      <div class="activity-list">
+        <div class="activity-item" *ngFor="let activity of recentActivities; let i = index">
+          <div class="activity-indicator" [ngClass]="'indicator-' + ((i % 4) + 1)"></div>
+          <div class="activity-content">
+            <div class="activity-text">{{ activity.text }}</div>
+            <div class="activity-time">{{ activity.time }}</div>
+          </div>
+        </div>
+        <div class="activity-item empty" *ngIf="!recentActivities?.length">
+          <div class="activity-content">
+            <div class="activity-text">Aucune activité récente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tickets Table Section -->
+  <div class="content-card table-card">
+    <div class="card-header">
+      <h3>{{ 'adminDashboard.table.title' | translate }}</h3>
+      <div class="card-subtitle">Vue d'ensemble des tickets</div>
+    </div>
+
+    <div class="table-container">
+      <table class="modern-table">
         <thead>
           <tr>
             <th>{{ 'adminDashboard.table.id' | translate }}</th>
@@ -93,30 +172,46 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let ticket of tickets">
-            <td>{{ ticket.id }}</td>
-            <td>{{ ticket.type }}</td>
-            <td>{{ ticket.description }}</td>
+          <tr *ngFor="let ticket of tickets" class="table-row">
+            <td class="ticket-id">#{{ ticket.id }}</td>
+            <td class="ticket-type">{{ ticket.type }}</td>
+            <td class="ticket-description">{{ ticket.description }}</td>
             <td>
               <span
-                class="badge"
+                class="status-badge"
                 [ngClass]="{
-                  'badge-cyan': ticket.status === 'En cours' || ticket.status === 'Nouveau',
-                  'badge-green': ticket.status === 'Résolu',
-                  'badge-red': ticket.status === 'Urgent' || ticket.status === 'Fermé',
+                  'status-new': ticket.status === 'Nouveau',
+                  'status-open': ticket.status === 'En cours',
+                  'status-resolved': ticket.status === 'Résolu',
+                  'status-urgent': ticket.status === 'Urgent',
+                  'status-closed': ticket.status === 'Fermé',
                 }"
-                >{{ ticket.status }}</span
               >
+                {{ ticket.status }}
+              </span>
             </td>
-            <td>{{ ticket.createdDate | date: 'short' }}</td>
+            <td class="ticket-date">{{ ticket.createdDate | date: 'dd/MM/yyyy HH:mm' }}</td>
           </tr>
-          <tr *ngIf="!tickets.length && !loading && !error">
-            <td colspan="5">{{ 'adminDashboard.table.notFound' | translate }}</td>
+          <tr *ngIf="!tickets.length && !loading && !error" class="empty-row">
+            <td colspan="5">
+              <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <div class="empty-text">{{ 'adminDashboard.table.notFound' | translate }}</div>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
-      <div *ngIf="loading">{{ 'adminDashboard.loading' | translate }}</div>
-      <div *ngIf="error" class="error">{{ 'adminDashboard.error' | translate }}</div>
-    </section>
-  </main>
+
+      <div *ngIf="loading" class="loading-state">
+        <div class="loading-spinner"></div>
+        <span>{{ 'adminDashboard.loading' | translate }}</span>
+      </div>
+
+      <div *ngIf="error" class="error-state">
+        <div class="error-icon">⚠️</div>
+        <span>{{ 'adminDashboard.error' | translate }}</span>
+      </div>
+    </div>
+  </div>
 </div>

@@ -150,6 +150,20 @@
             </button>
           </div>
         </div>
+
+        <!-- Section Paiement -->
+        <div class="admin-ticket-row">
+          <div class="admin-ticket-label">Paiement :</div>
+          <div class="admin-ticket-value">
+            <jhi-ticket-payment
+              [ticketId]="selectedTicket.id"
+              [ticketType]="selectedTicket.type"
+              (paymentCompleted)="onPaymentCompleted($event)"
+            >
+            </jhi-ticket-payment>
+          </div>
+        </div>
+
         <div class="admin-ticket-actions">
           <button class="btn btn-success btn-sm" (click)="saveTicket()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

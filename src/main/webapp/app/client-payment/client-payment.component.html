@@ -1,0 +1,144 @@
+<div class="client-payment-container">
+  <!-- Header Section -->
+  <div class="payment-header">
+    <h2>💳 Paiement Sécurisé</h2>
+    <p>Effectuez votre paiement en toute sécurité via CMI</p>
+  </div>
+
+  <!-- Alerts -->
+  <div class="alerts-section">
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert"><strong>Erreur :</strong> {{ errorMessage }}</div>
+    <div *ngIf="successMessage" class="alert alert-success" role="alert"><strong>Succès :</strong> {{ successMessage }}</div>
+  </div>
+
+  <!-- Payment Form -->
+  <div class="payment-form-container">
+    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+      <!-- Amount Section -->
+      <div class="form-section">
+        <h3>💰 Montant du Paiement</h3>
+        <div class="form-group">
+          <label for="amount" class="form-label">
+            <span class="label-icon">💵</span>
+            Montant (MAD)
+          </label>
+          <div class="input-container">
+            <input
+              id="amount"
+              type="number"
+              class="form-input"
+              formControlName="amount"
+              placeholder="Entrez le montant"
+              min="1"
+              max="100000"
+              step="0.01"
+            />
+            <div class="input-border"></div>
+          </div>
+          <div *ngIf="paymentForm.get('amount')?.invalid && paymentForm.get('amount')?.touched" class="error-message">
+            {{ getErrorMessage('amount') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Currency Section -->
+      <div class="form-section">
+        <h3>🌍 Devise</h3>
+        <div class="form-group">
+          <label for="currency" class="form-label">
+            <span class="label-icon">🏦</span>
+            Devise
+          </label>
+          <div class="input-container">
+            <select id="currency" class="form-input" formControlName="currency">
+              <option value="MAD">MAD - Dirham Marocain</option>
+              <option value="EUR">EUR - Euro</option>
+              <option value="USD">USD - Dollar US</option>
+            </select>
+            <div class="input-border"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description Section -->
+      <div class="form-section">
+        <h3>📝 Description</h3>
+        <div class="form-group">
+          <label for="description" class="form-label">
+            <span class="label-icon">📋</span>
+            Description du Paiement
+          </label>
+          <div class="input-container">
+            <textarea
+              id="description"
+              class="form-input"
+              formControlName="description"
+              placeholder="Décrivez la raison de ce paiement"
+              rows="3"
+            ></textarea>
+            <div class="input-border"></div>
+          </div>
+          <div *ngIf="paymentForm.get('description')?.invalid && paymentForm.get('description')?.touched" class="error-message">
+            {{ getErrorMessage('description') }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Date Section -->
+      <div class="form-section">
+        <h3>📅 Date de Paiement</h3>
+        <div class="form-group">
+          <label for="date" class="form-label">
+            <span class="label-icon">📆</span>
+            Date
+          </label>
+          <div class="input-container">
+            <input id="date" type="date" class="form-input" formControlName="date" />
+            <div class="input-border"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="security-notice">
+        <div class="security-icon">🔒</div>
+        <div class="security-content">
+          <h4>Paiement Sécurisé</h4>
+          <p>
+            Votre paiement sera traité de manière sécurisée via la passerelle CMI. Vos informations bancaires ne sont jamais stockées sur
+            nos serveurs.
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-cancel" (click)="onCancel()" [disabled]="isLoading">
+          <span class="btn-icon">✕</span>
+          Annuler
+        </button>
+        <button type="submit" class="btn btn-submit" [disabled]="paymentForm.invalid || isLoading">
+          <span class="btn-icon" *ngIf="!isLoading">💳</span>
+          <span class="btn-icon loading" *ngIf="isLoading">⏳</span>
+          {{ isLoading ? 'Traitement...' : 'Procéder au Paiement' }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Payment Info -->
+  <div class="payment-info">
+    <div class="info-card">
+      <div class="info-icon">ℹ️</div>
+      <div class="info-content">
+        <h4>Informations Importantes</h4>
+        <ul>
+          <li>Le paiement sera traité en temps réel</li>
+          <li>Vous recevrez une confirmation par email</li>
+          <li>Une facture sera générée automatiquement</li>
+          <li>Support disponible 24/7 en cas de problème</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

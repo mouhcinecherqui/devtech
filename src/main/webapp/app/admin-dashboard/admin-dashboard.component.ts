@@ -1,14 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { SidebarComponent } from '../layouts/main/sidebar.component';
+import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatButtonModule } from '@angular/material/button';
-import { MatActionList } from '@angular/material/list';
 import { AccountService } from 'app/core/auth/account.service';
 import { PaiementsService } from 'app/admin/paiements/paiements.service';
 import { ClientsService } from 'app/admin/clients/clients.service';
@@ -34,34 +27,18 @@ interface Ticket {
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    SidebarComponent,
-    MatCardModule,
-    MatGridListModule,
-    MatListModule,
-    MatIconModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatActionList,
-    SharedModule,
-  ],
+  imports: [CommonModule, RouterModule, SharedModule],
 })
 export class AdminDashboardComponent implements OnInit {
   account: any = null;
+  currentTime = new Date();
 
-  // Dashboard résumé (propriétés supprimées)
-  // ticketsCount = 0;
-  // ticketsToday = 0;
-  // ticketsPending = 0;
-  // clientsCount = 0;
-  // clientsToday = 0;
-  // paiementsCount = 0;
-  // paiementsToday = 0;
   recentActivities: { text: string; time: string }[] = [
     { text: 'Ticket #204 fermé par admin', time: 'il y a 1 h' },
     { text: 'Nouveau paiement en attente', time: 'il y a 30 min' },
     { text: 'Nouveau client ajouté : SARL WebExpress', time: 'il y a 3 h' },
+    { text: 'Mise à jour des paramètres système', time: 'il y a 2 h' },
+    { text: 'Nouveau ticket urgent créé', time: 'il y a 45 min' },
   ];
 
   // Pour le tableau des tickets
@@ -80,8 +57,12 @@ export class AdminDashboardComponent implements OnInit {
       this.account = account;
     });
     this.loadTickets();
-    // this.loadClients();
-    // this.loadPaiements();
+    this.loadPaiements();
+
+    // Mettre à jour l'heure en temps réel
+    setInterval(() => {
+      this.currentTime = new Date();
+    }, 1000);
   }
 
   loadTickets(): void {
@@ -115,11 +96,17 @@ export class AdminDashboardComponent implements OnInit {
   //   });
   // }
 
-  // loadPaiements(): void {
-  //   this.paiementsService.getPaiements().subscribe(paiements => {
-  //     this.paiementsCount = paiements.length;
-  //     const today = new Date().toISOString().slice(0, 10);
-  //     this.paiementsToday = paiements.filter(p => p.date && p.date.startsWith(today)).length;
-  //   });
-  // }
+  loadPaiements(): void {
+    this.paiementsService.query().subscribe({
+      next: (response: any) => {
+        const paiements: any[] = response.body || [];
+        // this.paiementsCount = paiements.length;
+        // const today = new Date().toISOString().slice(0, 10);
+        // this.paiementsToday = paiements.filter((p: any) => p.date && p.date.startsWith(today)).length;
+      },
+      error: (error: any) => {
+        console.error('Erreur lors du chargement des paiements:', error);
+      },
+    });
+  }
 }

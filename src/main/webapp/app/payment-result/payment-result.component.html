@@ -1,0 +1,193 @@
+<div class="payment-result-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="loading-spinner"></div>
+    <h3>Vérification du statut de paiement...</h3>
+    <p>Veuillez patienter pendant que nous vérifions votre transaction.</p>
+  </div>
+
+  <!-- Success State -->
+  <div *ngIf="!isLoading && paymentStatus === 'success'" class="result-state success">
+    <div class="result-icon">✅</div>
+    <h2>Paiement Réussi !</h2>
+    <p class="result-message">Votre paiement a été traité avec succès.</p>
+
+    <!-- Payment Details -->
+    <div *ngIf="paymentDetails" class="payment-details">
+      <div class="detail-card">
+        <h3>Détails de la Transaction</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">ID Transaction:</span>
+            <span class="detail-value">{{ paymentDetails.cmiTransactionId || 'N/A' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Montant:</span>
+            <span class="detail-value">{{ paymentDetails.amount }} {{ paymentDetails.currency }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Date:</span>
+            <span class="detail-value">{{ paymentDetails.date | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Statut:</span>
+            <span class="detail-value status-success">Complété</span>
+          </div>
+          <div *ngIf="paymentDetails.cmiApprovalCode" class="detail-item">
+            <span class="detail-label">Code d'approbation:</span>
+            <span class="detail-value">{{ paymentDetails.cmiApprovalCode }}</span>
+          </div>
+          <div *ngIf="paymentDetails.description" class="detail-item">
+            <span class="detail-label">Description:</span>
+            <span class="detail-value">{{ paymentDetails.description }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Actions -->
+    <div class="result-actions">
+      <button class="btn btn-primary" (click)="onDownloadInvoice()">
+        <span class="btn-icon">📄</span>
+        Télécharger la Facture
+      </button>
+      <button class="btn btn-secondary" (click)="onGoToDashboard()">
+        <span class="btn-icon">🏠</span>
+        Retour au Dashboard
+      </button>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-notice">
+      <div class="notice-icon">📧</div>
+      <div class="notice-content">
+        <h4>Confirmation par Email</h4>
+        <p>Une confirmation de paiement vous a été envoyée par email. Vérifiez votre boîte de réception.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Failed State -->
+  <div *ngIf="!isLoading && paymentStatus === 'failed'" class="result-state failed">
+    <div class="result-icon">❌</div>
+    <h2>Paiement Échoué</h2>
+    <p class="result-message">Votre paiement n'a pas pu être traité.</p>
+
+    <!-- Error Details -->
+    <div *ngIf="errorMessage" class="error-details">
+      <div class="error-card">
+        <h3>Détails de l'Erreur</h3>
+        <p class="error-message">{{ errorMessage }}</p>
+      </div>
+    </div>
+
+    <!-- Payment Details (if available) -->
+    <div *ngIf="paymentDetails" class="payment-details">
+      <div class="detail-card">
+        <h3>Détails de la Transaction</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">ID Commande:</span>
+            <span class="detail-value">{{ paymentDetails.cmiOrderId || 'N/A' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Montant:</span>
+            <span class="detail-value">{{ paymentDetails.amount }} {{ paymentDetails.currency }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Date:</span>
+            <span class="detail-value">{{ paymentDetails.date | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Statut:</span>
+            <span class="detail-value status-failed">Échoué</span>
+          </div>
+          <div *ngIf="paymentDetails.cmiResponseMessage" class="detail-item">
+            <span class="detail-label">Message d'erreur:</span>
+            <span class="detail-value">{{ paymentDetails.cmiResponseMessage }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Failed Actions -->
+    <div class="result-actions">
+      <button class="btn btn-primary" (click)="onTryAgain()">
+        <span class="btn-icon">🔄</span>
+        Réessayer
+      </button>
+      <button class="btn btn-secondary" (click)="onGoToDashboard()">
+        <span class="btn-icon">🏠</span>
+        Retour au Dashboard
+      </button>
+      <button class="btn btn-danger" (click)="onContactSupport()">
+        <span class="btn-icon">📞</span>
+        Contacter le Support
+      </button>
+    </div>
+
+    <!-- Help Notice -->
+    <div class="help-notice">
+      <div class="notice-icon">💡</div>
+      <div class="notice-content">
+        <h4>Besoin d'Aide ?</h4>
+        <p>Si vous rencontrez des problèmes, n'hésitez pas à contacter notre équipe de support. Nous sommes là pour vous aider.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pending State -->
+  <div *ngIf="!isLoading && paymentStatus === 'pending'" class="result-state pending">
+    <div class="result-icon">⏳</div>
+    <h2>Paiement en Cours</h2>
+    <p class="result-message">Votre paiement est en cours de traitement.</p>
+
+    <!-- Payment Details -->
+    <div *ngIf="paymentDetails" class="payment-details">
+      <div class="detail-card">
+        <h3>Détails de la Transaction</h3>
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">ID Commande:</span>
+            <span class="detail-value">{{ paymentDetails.cmiOrderId || 'N/A' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Montant:</span>
+            <span class="detail-value">{{ paymentDetails.amount }} {{ paymentDetails.currency }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Date:</span>
+            <span class="detail-value">{{ paymentDetails.date | date: 'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Statut:</span>
+            <span class="detail-value status-pending">En Attente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pending Actions -->
+    <div class="result-actions">
+      <button class="btn btn-primary" (click)="checkPaymentStatus()">
+        <span class="btn-icon">🔄</span>
+        Vérifier le Statut
+      </button>
+      <button class="btn btn-secondary" (click)="onGoToDashboard()">
+        <span class="btn-icon">🏠</span>
+        Retour au Dashboard
+      </button>
+    </div>
+
+    <!-- Pending Notice -->
+    <div class="pending-notice">
+      <div class="notice-icon">⏰</div>
+      <div class="notice-content">
+        <h4>Traitement en Cours</h4>
+        <p>
+          Le traitement de votre paiement peut prendre quelques minutes. Vous recevrez une notification dès que le statut sera mis à jour.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

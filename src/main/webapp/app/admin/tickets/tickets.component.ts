@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import SharedModule from '../../shared/shared.module';
+import { TicketPaymentComponent } from '../../ticket-payment/ticket-payment.component';
 
 interface Ticket {
   id?: number;
@@ -24,7 +25,7 @@ interface Ticket {
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, SharedModule],
+  imports: [CommonModule, FormsModule, SharedModule, TicketPaymentComponent],
 })
 export class TicketsComponent implements OnInit {
   tickets: Ticket[] = [];
@@ -130,25 +131,34 @@ export class TicketsComponent implements OnInit {
   }
 
   addTestMessage(): void {
-    if (!this.selectedTicket || !this.selectedTicket.id) return;
+    if (!this.selectedTicket || !this.newMessage.trim()) return;
 
-    this.http.post<string>(`/api/tickets/${this.selectedTicket.id}/add-test-message`, {}).subscribe({
-      next: () => {
-        // Recharger les messages
-        if (this.selectedTicket && this.selectedTicket.id) {
-          this.http.get<string[]>(`/api/tickets/${this.selectedTicket.id}/messages`).subscribe({
-            next: messages => {
-              if (this.selectedTicket) {
-                this.selectedTicket.messageStrings = messages;
-              }
-              alert('Message de test ajouté !');
-            },
-          });
-        }
-      },
-      error: () => {
-        alert("Erreur lors de l'ajout du message de test");
-      },
-    });
+    this.http
+      .post<any>(`/api/tickets/${this.selectedTicket.id}/messages`, {
+        content: this.newMessage.trim(),
+      })
+      .subscribe({
+        next: () => {
+          if (this.selectedTicket) {
+            this.selectedTicket.messageStrings = this.selectedTicket.messageStrings || [];
+            this.selectedTicket.messageStrings.push(this.newMessage.trim());
+            this.newMessage = '';
+          }
+        },
+        error: () => {
+          this.error = "Erreur lors de l'ajout du message";
+        },
+      });
+  }
+
+  onPaymentCompleted(success: boolean): void {
+    if (success) {
+      // Recharger les tickets pour mettre à jour les statuts
+      this.fetchTickets();
+      // Fermer la modal de détail
+      this.closeDetailModal();
+    } else {
+      this.error = 'Erreur lors du paiement. Veuillez réessayer.';
+    }
   }
 }

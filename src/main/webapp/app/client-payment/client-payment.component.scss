@@ -1,0 +1,417 @@
+// Modern Design Variables
+$primary-color: #6366f1;
+$primary-light: #818cf8;
+$primary-dark: #4f46e5;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$danger-color: #ef4444;
+$info-color: #06b6d4;
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+
+// Modern Mixins
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin modern-shadow {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin gradient-bg($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+}
+
+// Main Container
+.client-payment-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #e8f4f8 0%, #d1e7dd 100%);
+  border-radius: 12px;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+}
+
+// Header Section
+.payment-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  @include glassmorphism;
+  border-radius: 20px;
+  @include modern-shadow;
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, $gray-900, $primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: 1.125rem;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+// Alerts Section
+.alerts-section {
+  margin-bottom: 2rem;
+
+  .alert {
+    border-radius: 12px;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    @include smooth-transition;
+
+    &.alert-danger {
+      background: linear-gradient(135deg, #fef2f2, #fee2e2);
+      color: $danger-color;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    &.alert-success {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      color: $success-color;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+  }
+}
+
+// Payment Form Container
+.payment-form-container {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 2rem;
+  @include modern-shadow;
+  margin-bottom: 2rem;
+}
+
+// Form Sections
+.form-section {
+  margin-bottom: 2rem;
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+// Form Groups
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: $gray-700;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+
+  .label-icon {
+    font-size: 1.1rem;
+  }
+}
+
+// Input Container
+.input-container {
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid $gray-200;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: $gray-900;
+  background: rgba(255, 255, 255, 0.8);
+  @include smooth-transition;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  &::placeholder {
+    color: $gray-400;
+  }
+
+  &.ng-invalid.ng-touched {
+    border-color: $danger-color;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+}
+
+// Textarea specific styles
+textarea.form-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+// Error Messages
+.error-message {
+  color: $danger-color;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(239, 68, 68, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid $danger-color;
+}
+
+// Security Notice
+.security-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 16px;
+  margin: 2rem 0;
+
+  .security-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .security-content {
+    h4 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: $primary-color;
+      margin: 0 0 0.5rem 0;
+    }
+
+    p {
+      color: $gray-600;
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+}
+
+// Form Actions
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+// Buttons
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  @include smooth-transition;
+  @include modern-shadow;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .btn-icon {
+    font-size: 1.1rem;
+    font-weight: 800;
+
+    &.loading {
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  &.btn-cancel {
+    background: linear-gradient(135deg, $gray-200, $gray-300);
+    color: $gray-700;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, $gray-300, $gray-400);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &.btn-submit {
+    @include gradient-bg($primary-color, $primary-light);
+    color: white;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+    }
+  }
+}
+
+// Payment Info
+.payment-info {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 2rem;
+  @include modern-shadow;
+}
+
+.info-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  .info-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .info-content {
+    h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $gray-900;
+      margin: 0 0 1rem 0;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        color: $gray-600;
+        margin-bottom: 0.75rem;
+        padding-left: 1.5rem;
+        position: relative;
+        line-height: 1.6;
+
+        &::before {
+          content: '✓';
+          position: absolute;
+          left: 0;
+          color: $success-color;
+          font-weight: 700;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .client-payment-container {
+    padding: 1rem;
+  }
+
+  .payment-header {
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .payment-form-container {
+    padding: 1.5rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .security-notice,
+  .info-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-header {
+    h2 {
+      font-size: 1.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .form-input {
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  .btn {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,118 @@
+# Configuration CMI (Crédit Mutuel International)
+cmi:
+  # ID du marchand CMI (à remplacer par votre vrai ID)
+  merchant:
+    id: '12345678'
+
+  # Clé secrète du magasin (à remplacer par votre vraie clé)
+  store:
+    key: 'your-secret-store-key-here'
+    name: 'DevTech Store'
+
+  # URLs de la passerelle CMI
+  gateway:
+    # URL de test
+    url: 'https://testpayment.cmi.co.ma/fim/est3Dgate'
+    # URL de production (à utiliser en production)
+    # url: "https://payment.cmi.co.ma/fim/est3Dgate"
+
+  # URLs de callback
+  callback:
+    url: 'http://localhost:8080/api/paiements/cmi-callback'
+    # URL de production (à utiliser en production)
+    # url: "https://yourdomain.com/api/paiements/cmi-callback"
+
+  # URLs de redirection
+  ok:
+    url: 'http://localhost:4200/payment-success'
+    # URL de production (à utiliser en production)
+    # url: "https://yourdomain.com/payment-success"
+
+  fail:
+    url: 'http://localhost:4200/payment-failed'
+    # URL de production (à utiliser en production)
+    # url: "https://yourdomain.com/payment-failed"
+
+  # Configuration du magasin
+  storetype: '3D_PAY'
+  lang: 'fr'
+
+  # Configuration de sécurité
+  security:
+    # Activer la vérification du hash
+    verify-hash: true
+    # Activer la journalisation des transactions
+    log-transactions: true
+    # Activer la validation des montants
+    validate-amounts: true
+    # Montant minimum (en MAD)
+    min-amount: 1.0
+    # Montant maximum (en MAD)
+    max-amount: 100000.0
+
+  # Configuration des devises supportées
+  currencies:
+    - code: 'MAD'
+      name: 'Dirham Marocain'
+      enabled: true
+    - code: 'EUR'
+      name: 'Euro'
+      enabled: true
+    - code: 'USD'
+      name: 'Dollar US'
+      enabled: true
+
+  # Configuration des méthodes de paiement
+  payment-methods:
+    - code: 'CC'
+      name: 'Carte de Crédit'
+      enabled: true
+    - code: 'DC'
+      name: 'Carte de Débit'
+      enabled: true
+    - code: 'BANK'
+      name: 'Virement Bancaire'
+      enabled: false
+
+  # Configuration des notifications
+  notifications:
+    # Activer les notifications par email
+    email:
+      enabled: true
+      template:
+        success: 'payment-success-email'
+        failure: 'payment-failure-email'
+
+    # Activer les notifications SMS (si disponible)
+    sms:
+      enabled: false
+      provider: 'twilio'
+
+  # Configuration de la journalisation
+  logging:
+    # Niveau de journalisation
+    level: 'INFO'
+    # Journaliser les transactions réussies
+    log-success: true
+    # Journaliser les transactions échouées
+    log-failures: true
+    # Journaliser les tentatives de paiement
+    log-attempts: true
+
+  # Configuration des timeouts
+  timeouts:
+    # Timeout de la requête de paiement (en secondes)
+    payment-request: 30
+    # Timeout de la réponse de paiement (en secondes)
+    payment-response: 60
+    # Timeout de la vérification de statut (en secondes)
+    status-check: 10
+
+  # Configuration des retry
+  retry:
+    # Nombre maximum de tentatives
+    max-attempts: 3
+    # Délai entre les tentatives (en secondes)
+    delay-between-attempts: 5
+    # Backoff exponentiel
+    exponential-backoff: true

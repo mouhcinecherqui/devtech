@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Correction et amélioration de la table ticket_message -->
+    <changeSet id="20240724_fix_ticket_messages_table" author="devtech">
+        <!-- Vérifier si la table existe -->
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ticket_message"/>
+        </preConditions>
+        
+        <!-- Ajouter des contraintes manquantes si nécessaire -->
+        <addNotNullConstraint tableName="ticket_message" columnName="content" columnDataType="text"/>
+        <addNotNullConstraint tableName="ticket_message" columnName="author_type" columnDataType="varchar(20)"/>
+        <addNotNullConstraint tableName="ticket_message" columnName="author_login" columnDataType="varchar(100)"/>
+        <addNotNullConstraint tableName="ticket_message" columnName="created_date" columnDataType="datetime(6)"/>
+        
+        <!-- Ajouter une valeur par défaut pour is_internal si elle n'existe pas -->
+        <addDefaultValue tableName="ticket_message" columnName="is_internal" defaultValueBoolean="false"/>
+    </changeSet>
+
+    <!-- Ajouter des index manquants si nécessaire -->
+    <changeSet id="20240724_add_missing_indexes" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ticket_message"/>
+            <not>
+                <indexExists tableName="ticket_message" indexName="idx_ticket_message_ticket_id"/>
+            </not>
+        </preConditions>
+        
+        <!-- Index pour ticket_id -->
+        <createIndex tableName="ticket_message" indexName="idx_ticket_message_ticket_id">
+            <column name="ticket_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20240724_add_created_date_index" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ticket_message"/>
+            <not>
+                <indexExists tableName="ticket_message" indexName="idx_ticket_message_created_date"/>
+            </not>
+        </preConditions>
+        
+        <!-- Index pour created_date -->
+        <createIndex tableName="ticket_message" indexName="idx_ticket_message_created_date">
+            <column name="created_date"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20240724_add_author_index" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ticket_message"/>
+            <not>
+                <indexExists tableName="ticket_message" indexName="idx_ticket_message_author"/>
+            </not>
+        </preConditions>
+        
+        <!-- Index pour author_login -->
+        <createIndex tableName="ticket_message" indexName="idx_ticket_message_author">
+            <column name="author_login"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog> 
