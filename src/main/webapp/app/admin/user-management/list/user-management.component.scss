@@ -46,51 +46,14 @@ $gray-900: #0f172a;
   background: linear-gradient(135deg, $start 0%, $end 100%);
 }
 
-// CSS Resets and Overrides
-.admin-users-container {
-  * {
-    box-sizing: border-box;
-  }
-
-  // Override any existing table styles
-  table {
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-  }
-
-  th,
-  td {
-    border: none !important;
-    background: none !important;
-  }
-
-  // Override Bootstrap table classes
-  .table {
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-
-    th,
-    td {
-      border: none !important;
-      background: none !important;
-    }
-  }
-
-  .table-striped {
-    tbody tr:nth-of-type(odd) {
-      background: none !important;
-    }
-  }
-}
-
 // Main Container
 .admin-users-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
-  min-height: 100vh;
   background: linear-gradient(135deg, #e8f4f8 0%, #d1e7dd 100%);
   position: relative;
+  border-radius: 12px;
 
   &::before {
     content: '';
@@ -102,6 +65,7 @@ $gray-900: #0f172a;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(0,0,0,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
     opacity: 0.3;
     pointer-events: none;
+    border-radius: 12px;
   }
 }
 
@@ -253,17 +217,12 @@ $gray-900: #0f172a;
 
 // Table Container
 .users-table-container {
-  @include glassmorphism;
   border-radius: 20px;
   overflow: hidden;
   @include modern-shadow;
   margin-bottom: 2rem;
-
-  // Ensure the table takes full width
-  .users-table {
-    width: 100% !important;
-    margin: 0 !important;
-  }
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 // Modern Table Styles
@@ -271,6 +230,8 @@ $gray-900: #0f172a;
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 
   th,
   td {
@@ -281,8 +242,7 @@ $gray-900: #0f172a;
   }
 
   th {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.2);
     color: $gray-900;
     font-weight: 700;
     font-size: 0.9rem;
@@ -291,6 +251,9 @@ $gray-900: #0f172a;
     position: sticky;
     top: 0;
     z-index: 10;
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
 
     .sort-icon {
       font-size: 0.8rem;
@@ -304,18 +267,23 @@ $gray-900: #0f172a;
     font-weight: 500;
     font-size: 0.95rem;
     @include smooth-transition;
+    background: rgba(255, 255, 255, 0.05);
   }
 
   tbody tr {
     @include smooth-transition;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15);
       transform: translateY(-1px);
     }
 
     &:last-child td {
       border-bottom: none;
+    }
+
+    &:nth-child(even) td {
+      background: rgba(255, 255, 255, 0.08);
     }
   }
 }
@@ -392,6 +360,8 @@ $gray-900: #0f172a;
   cursor: pointer;
   @include smooth-transition;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 80px;
+  text-align: center;
 
   &.status-active {
     background: linear-gradient(135deg, #f0fdf4, #dcfce7);
@@ -440,6 +410,7 @@ $gray-900: #0f172a;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-width: 120px;
 }
 
 .role-badge {
@@ -452,10 +423,15 @@ $gray-900: #0f172a;
   border: 1px solid rgba(6, 182, 212, 0.2);
   display: inline-block;
   text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 // User Actions
 .user-actions {
+  min-width: 120px;
+
   .actions-group {
     display: flex;
     gap: 0.5rem;

@@ -1,0 +1,136 @@
+<div class="modal-overlay">
+  <div class="modal-container">
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <div class="header-content">
+        <div class="header-icon">✏️</div>
+        <div class="header-text">
+          <h3 class="modal-title">Modifier le client</h3>
+          <p class="modal-subtitle">Modifiez les informations du client</p>
+        </div>
+      </div>
+      <button type="button" class="close-btn" (click)="activeModal.dismiss()">
+        <span class="close-icon">×</span>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <form (ngSubmit)="submit()" class="modal-form">
+      <div class="modal-body">
+        <div class="form-grid">
+          <!-- Prénom -->
+          <div class="form-group">
+            <label for="firstName" class="form-label">
+              <span class="label-icon">👤</span>
+              Prénom
+            </label>
+            <div class="input-container">
+              <input
+                id="firstName"
+                class="form-input"
+                [(ngModel)]="client.firstName"
+                name="firstName"
+                required
+                placeholder="Entrez le prénom"
+                type="text"
+              />
+              <div class="input-border"></div>
+            </div>
+          </div>
+
+          <!-- Nom -->
+          <div class="form-group">
+            <label for="lastName" class="form-label">
+              <span class="label-icon">📝</span>
+              Nom
+            </label>
+            <div class="input-container">
+              <input
+                id="lastName"
+                class="form-input"
+                [(ngModel)]="client.lastName"
+                name="lastName"
+                required
+                placeholder="Entrez le nom"
+                type="text"
+              />
+              <div class="input-border"></div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" class="form-label">
+              <span class="label-icon">📧</span>
+              Email
+            </label>
+            <div class="input-container">
+              <input
+                id="email"
+                class="form-input"
+                [(ngModel)]="client.email"
+                name="email"
+                required
+                placeholder="exemple@email.com"
+                type="email"
+              />
+              <div class="input-border"></div>
+            </div>
+          </div>
+
+          <!-- Téléphone -->
+          <div class="form-group">
+            <label for="phone" class="form-label">
+              <span class="label-icon">📱</span>
+              Téléphone
+            </label>
+            <div class="input-container">
+              <input
+                id="phone"
+                class="form-input"
+                [(ngModel)]="client.phone"
+                name="phone"
+                required
+                placeholder="06 12 34 56 78"
+                type="tel"
+              />
+              <div class="input-border"></div>
+            </div>
+          </div>
+
+          <!-- Mot de passe -->
+          <div class="form-group">
+            <label for="password" class="form-label">
+              <span class="label-icon">🔒</span>
+              Mot de passe
+            </label>
+            <div class="input-container">
+              <input
+                id="password"
+                class="form-input"
+                [(ngModel)]="client.password"
+                name="password"
+                required
+                placeholder="Entrez le mot de passe"
+                type="password"
+              />
+              <div class="input-border"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" (click)="activeModal.dismiss()">
+          <span class="btn-icon">✕</span>
+          Annuler
+        </button>
+        <button type="submit" class="btn btn-submit">
+          <span class="btn-icon">💾</span>
+          Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <header class="main-header" [class.rtl]="isRTL()">
   <div class="header-left">
-    <a class="site-title" routerLink="/home">
+    <a class="site-title" [routerLink]="getLogoLink()">
       <img
         src="/content/images/devtech-logo.png"
         alt="DevTech Logo"

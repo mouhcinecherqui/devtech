@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import SharedModule from '../shared/shared.module';
+import { TicketPaymentComponent } from '../ticket-payment/ticket-payment.component';
 
 interface Ticket {
   id?: number;
@@ -25,7 +26,7 @@ interface Ticket {
   templateUrl: './client-tickets.component.html',
   styleUrls: ['./client-tickets.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, TicketPaymentComponent],
 })
 export class ClientTicketsComponent implements OnInit {
   tickets = signal<Ticket[]>([]);
@@ -253,6 +254,20 @@ export class ClientTicketsComponent implements OnInit {
   closeImageModal(): void {
     this.showImageModal.set(false);
     this.selectedImageUrl.set(null);
+  }
+
+  onPaymentCompleted(success: boolean): void {
+    if (success) {
+      this.showSuccessMessage('Paiement effectué avec succès !');
+      // Recharger les tickets pour mettre à jour les statuts
+      this.fetchTickets();
+      // Fermer la modal de détail si elle est ouverte
+      if (this.showDetailModal()) {
+        this.closeDetailModal();
+      }
+    } else {
+      this.showErrorMessage('Erreur lors du paiement. Veuillez réessayer.');
+    }
   }
 
   // Helper methods for translations

@@ -79,10 +79,16 @@ export default class HomeComponent implements OnInit, OnDestroy {
   }
 
   loadPaiements(): void {
-    this.paiementsService.getPaiements().subscribe(paiements => {
-      this.paiementsCount = paiements.length;
-      const today = new Date().toISOString().slice(0, 10);
-      this.paiementsToday = paiements.filter(p => p.date && p.date.startsWith(today)).length;
+    this.paiementsService.query().subscribe({
+      next: (response: any) => {
+        const paiements: any[] = response.body || [];
+        this.paiementsCount = paiements.length;
+        const today = new Date().toISOString().slice(0, 10);
+        this.paiementsToday = paiements.filter((p: any) => p.date && p.date.startsWith(today)).length;
+      },
+      error: (error: any) => {
+        console.error('Erreur lors du chargement des paiements:', error);
+      },
     });
   }
 

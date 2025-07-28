@@ -130,4 +130,29 @@ export default class NavbarComponent implements OnInit {
       this.showNotificationsDropdown.set(false);
     }
   }
+
+  getLogoLink(): string {
+    const currentAccount = this.account();
+
+    // Si l'utilisateur n'est pas authentifié, rediriger vers home
+    if (!currentAccount) {
+      return '/home';
+    }
+
+    // Rediriger vers le dashboard approprié selon le rôle
+    const authorities = currentAccount.authorities || [];
+
+    if (authorities.includes('ROLE_ADMIN')) {
+      return '/admin-dashboard';
+    } else if (authorities.includes('ROLE_MANAGER')) {
+      return '/manager-dashboard';
+    } else if (authorities.includes('ROLE_CLIENT')) {
+      return '/client-dashboard';
+    } else if (authorities.includes('ROLE_USER')) {
+      return '/user-dashboard';
+    }
+
+    // Par défaut, rediriger vers home si aucun rôle spécifique
+    return '/home';
+  }
 }

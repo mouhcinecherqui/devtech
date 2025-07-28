@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Ajouter les champs de paiement à la table ticket -->
+    <changeSet id="20240724_add_ticket_payment_fields" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ticket"/>
+        </preConditions>
+        
+        <!-- Champ pour indiquer si un paiement est requis -->
+        <addColumn tableName="ticket">
+            <column name="payment_required" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        
+        <!-- Champ pour le montant du paiement -->
+        <addColumn tableName="ticket">
+            <column name="payment_amount" type="decimal(10,2)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        
+        <!-- Champ pour la devise du paiement -->
+        <addColumn tableName="ticket">
+            <column name="payment_currency" type="varchar(3)" defaultValue="MAD">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        
+        <!-- Champ pour le statut du paiement -->
+        <addColumn tableName="ticket">
+            <column name="payment_status" type="varchar(20)" defaultValue="PENDING">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        
+        <!-- Champ pour le type de paiement -->
+        <addColumn tableName="ticket">
+            <column name="payment_type" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        
+        <!-- Champ pour l'ID du paiement associé -->
+        <addColumn tableName="ticket">
+            <column name="paiement_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <!-- Ajouter des index pour les performances -->
+    <changeSet id="20240724_add_ticket_payment_indexes" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ticket"/>
+        </preConditions>
+        
+        <!-- Index pour les tickets nécessitant un paiement -->
+        <createIndex tableName="ticket" indexName="idx_ticket_payment_required">
+            <column name="payment_required"/>
+        </createIndex>
+        
+        <!-- Index pour le statut de paiement -->
+        <createIndex tableName="ticket" indexName="idx_ticket_payment_status">
+            <column name="payment_status"/>
+        </createIndex>
+        
+        <!-- Index pour l'ID de paiement -->
+        <createIndex tableName="ticket" indexName="idx_ticket_paiement_id">
+            <column name="paiement_id"/>
+        </createIndex>
+        
+        <!-- Index pour le type de paiement -->
+        <createIndex tableName="ticket" indexName="idx_ticket_payment_type">
+            <column name="payment_type"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- Ajouter une contrainte de clé étrangère pour paiement_id -->
+    <changeSet id="20240724_add_ticket_paiement_fk" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="ticket"/>
+            <tableExists tableName="paiement"/>
+        </preConditions>
+        
+        <addForeignKeyConstraint 
+            baseTableName="ticket" 
+            baseColumnNames="paiement_id" 
+            constraintName="fk_ticket_paiement" 
+            referencedTableName="paiement" 
+            referencedColumnNames="id"
+            onDelete="SET NULL"/>
+    </changeSet>
+
+</databaseChangeLog> 

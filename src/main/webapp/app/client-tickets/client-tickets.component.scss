@@ -834,7 +834,7 @@ $gray-900: #111827;
   .ticket-info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    gap: 0.75rem;
 
     .info-card {
       background: $gray-50;

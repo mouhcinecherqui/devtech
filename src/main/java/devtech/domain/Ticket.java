@@ -45,6 +45,25 @@ public class Ticket implements Serializable {
     @Column(name = "created_date", nullable = false)
     private Instant createdDate = Instant.now();
 
+    // Champs de paiement
+    @Column(name = "payment_required")
+    private Boolean paymentRequired = false;
+
+    @Column(name = "payment_amount")
+    private Double paymentAmount;
+
+    @Column(name = "payment_currency", length = 3)
+    private String paymentCurrency = "MAD";
+
+    @Column(name = "payment_status", length = 20)
+    private String paymentStatus = "PENDING";
+
+    @Column(name = "payment_type", length = 50)
+    private String paymentType; // "TICKET_CREATION", "TICKET_UPGRADE", "PRIORITY_ACCESS"
+
+    @Column(name = "paiement_id")
+    private Long paiementId;
+
     @JsonIgnore
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TicketMessage> messages = new ArrayList<>();
@@ -146,6 +165,55 @@ public class Ticket implements Serializable {
 
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
+    }
+
+    // Getters et setters pour les champs de paiement
+    public Boolean getPaymentRequired() {
+        return paymentRequired;
+    }
+
+    public void setPaymentRequired(Boolean paymentRequired) {
+        this.paymentRequired = paymentRequired;
+    }
+
+    public Double getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(Double paymentAmount) {
+        this.paymentAmount = paymentAmount;
+    }
+
+    public String getPaymentCurrency() {
+        return paymentCurrency;
+    }
+
+    public void setPaymentCurrency(String paymentCurrency) {
+        this.paymentCurrency = paymentCurrency;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public Long getPaiementId() {
+        return paiementId;
+    }
+
+    public void setPaiementId(Long paiementId) {
+        this.paiementId = paiementId;
     }
 
     @JsonIgnore

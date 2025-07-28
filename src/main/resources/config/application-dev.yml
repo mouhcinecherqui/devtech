@@ -121,3 +121,19 @@ jhipster:
 
 admin:
   mail: mouhcinecherqui@gmail.com
+
+# Configuration CMI pour le développement
+cmi:
+  merchant:
+    id: '12345678'
+  store:
+    key: 'your-secret-store-key-here'
+    name: 'DevTech Store'
+  gateway:
+    url: 'https://testpayment.cmi.co.ma/fim/est3Dgate'
+  callback:
+    url: 'http://localhost:8080/api/paiements/cmi-callback'
+  ok:
+    url: 'http://localhost:4200/payment-success'
+  fail:
+    url: 'http://localhost:4200/payment-failed'

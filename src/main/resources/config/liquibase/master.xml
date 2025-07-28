@@ -29,7 +29,8 @@
     <include file="config/liquibase/changelog/20240719_add_paiement_table.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240719_add_app_user_created_date.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240719_add_ticket_image_url.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20240719_add_ticket_messages_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240724_fix_ticket_messages_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240724_add_ticket_payment_fields.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

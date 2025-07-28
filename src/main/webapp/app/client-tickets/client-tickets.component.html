@@ -268,6 +268,13 @@
           <input id="hostingUrl" formControlName="hostingUrl" type="url" class="form-input" placeholder="https://votre-hebergement.com" />
         </div>
 
+        <!-- Section Paiement pour nouveau ticket -->
+        <div class="form-section payment-section">
+          <h4>Options de paiement</h4>
+          <jhi-ticket-payment [ticketType]="ticketForm.get('type')?.value || ''" (paymentCompleted)="onPaymentCompleted($event)">
+          </jhi-ticket-payment>
+        </div>
+
         <div class="form-actions">
           <button type="button" class="btn-secondary" (click)="closeModal()">
             {{ 'ticketsClient.cancel' | translate }}
@@ -452,8 +459,35 @@
             </div>
           </div>
 
+          <!-- Section Paiement -->
+          <div class="info-card payment-card">
+            <div class="info-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <h4>Paiement</h4>
+            </div>
+            <div class="info-content">
+              <jhi-ticket-payment
+                [ticketId]="selectedTicket.id"
+                [ticketType]="selectedTicket.type"
+                (paymentCompleted)="onPaymentCompleted($event)"
+              >
+              </jhi-ticket-payment>
+            </div>
+          </div>
+
           <!-- Messages de l'admin -->
-          <div *ngIf="selectedTicket.messageStrings && selectedTicket.messageStrings.length > 0" class="info-card">
+          <div
+            *ngIf="selectedTicket.messageStrings && selectedTicket.messageStrings.length > 0"
+            class="info-card"
+            style="position: relative; bottom: 21rem !important"
+          >
             <div class="info-header">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                 <path
