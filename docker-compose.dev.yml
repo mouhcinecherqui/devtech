@@ -1,0 +1,58 @@
+name: devtech-dev
+services:
+  devtech-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - maven_cache:/root/.m2
+      - node_modules:/app/node_modules # Évite les conflits de permissions avec node_modules
+    ports:
+      - '8080:8080'
+      - '9000:9000'
+      - '3000:3000'
+      - '4200:4200'
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=devtech
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - JHIPSTER_SLEEP=0
+    command: npm run watch
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - devtech-network
+  mysql:
+    image: mysql:8.0.32
+    volumes:
+      - ./src/main/docker/config/mysql:/etc/mysql/conf.d
+      - mysql_data:/var/lib/mysql # Persiste les données MySQL
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=devtech
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=devtech
+    ports:
+      - '127.0.0.1:3307:3306' # Port externe 3307 pour éviter les conflits avec MySQL local
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h localhost -uroot -proot --silent']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - devtech-network
+
+networks:
+  devtech-network:
+    driver: bridge
+
+volumes:
+  maven_cache:
+  mysql_data:
+  node_modules:

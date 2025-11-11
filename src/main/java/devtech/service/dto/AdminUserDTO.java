@@ -36,6 +36,9 @@ public class AdminUserDTO implements Serializable {
     @Size(max = 256)
     private String imageUrl;
 
+    @Size(max = 20)
+    private String phone;
+
     private boolean activated = false;
 
     @Size(min = 2, max = 10)
@@ -119,6 +122,14 @@ public class AdminUserDTO implements Serializable {
         this.imageUrl = imageUrl;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public boolean isActivated() {
         return activated;
     }
@@ -184,6 +195,7 @@ public class AdminUserDTO implements Serializable {
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
+            ", phone='" + phone + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
             ", createdBy=" + createdBy +

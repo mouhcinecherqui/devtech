@@ -24,12 +24,12 @@ cmi:
 
   # URLs de redirection
   ok:
-    url: 'http://localhost:4200/payment-success'
+    url: 'http://localhost:3000/payment-success'
     # URL de production (à utiliser en production)
     # url: "https://yourdomain.com/payment-success"
 
   fail:
-    url: 'http://localhost:4200/payment-failed'
+    url: 'http://localhost:3000/payment-failed'
     # URL de production (à utiliser en production)
     # url: "https://yourdomain.com/payment-failed"
 

@@ -94,7 +94,7 @@ export class AlertErrorComponent implements OnDestroy {
       this.addErrorAlert(errorHeader, errorHeader, alertData);
     } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.fieldErrors) {
       this.handleFieldsError(httpErrorResponse);
-    } else if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
+    } else if (httpErrorResponse.error !== '' && httpErrorResponse.error?.message) {
       this.addErrorAlert(
         httpErrorResponse.error.detail ?? httpErrorResponse.error.message,
         httpErrorResponse.error.message,
@@ -106,7 +106,7 @@ export class AlertErrorComponent implements OnDestroy {
   }
 
   private handleDefaultError(httpErrorResponse: HttpErrorResponse): void {
-    if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
+    if (httpErrorResponse.error !== '' && httpErrorResponse.error?.message) {
       this.addErrorAlert(
         httpErrorResponse.error.detail ?? httpErrorResponse.error.message,
         httpErrorResponse.error.message,

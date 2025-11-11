@@ -1,11 +1,17 @@
 {
   "login": {
     "title": "Authentification",
+    "subtitle": "Connectez-vous à votre espace personnel",
+    "badge": "Connexion Sécurisée",
     "form": {
+      "usernameOrEmail": "Nom d'utilisateur ou Email",
+      "usernameOrEmail.placeholder": "Entrez votre nom d'utilisateur ou email",
       "password": "Mot de passe",
-      "password.placeholder": "Votre mot de passe",
+      "password.placeholder": "Entrez votre mot de passe",
       "rememberme": "Garder la session ouverte",
-      "button": "Connexion"
+      "button": "Connexion",
+      "google": "Continuer avec Google",
+      "divider": "ou"
     },
     "messages": {
       "error": {

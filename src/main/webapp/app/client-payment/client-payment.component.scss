@@ -232,6 +232,130 @@ textarea.form-input {
   }
 }
 
+// Payment Methods
+.saved-payment-methods {
+  margin-bottom: 2rem;
+
+  h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+}
+
+.payment-methods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.payment-method-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(102, 126, 234, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+
+  &:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+  }
+
+  &.selected {
+    border-color: $primary-color;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(135deg, $primary-color, $primary-dark);
+      border-radius: 0 2px 2px 0;
+    }
+  }
+
+  &.new-method {
+    border-style: dashed;
+    background: rgba(102, 126, 234, 0.05);
+  }
+}
+
+.payment-method-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.payment-method-info {
+  flex: 1;
+
+  .payment-method-name {
+    font-weight: 600;
+    color: $gray-800;
+    margin-bottom: 0.25rem;
+  }
+
+  .payment-method-holder {
+    font-size: 0.875rem;
+    color: $gray-600;
+    margin-bottom: 0.25rem;
+  }
+
+  .default-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, $primary-color, $primary-dark);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+  }
+}
+
+.payment-method-radio {
+  flex-shrink: 0;
+
+  input[type='radio'] {
+    width: 1.25rem;
+    height: 1.25rem;
+    accent-color: $primary-color;
+  }
+}
+
+.payment-method-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.new-payment-form {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+
+  .row {
+    display: flex;
+    gap: 1rem;
+
+    .col-md-6 {
+      flex: 1;
+    }
+  }
+}
+
 // Form Actions
 .form-actions {
   display: flex;

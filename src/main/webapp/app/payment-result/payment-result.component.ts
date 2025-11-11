@@ -8,7 +8,7 @@ import { PaiementsService } from 'app/admin/paiements/paiements.service';
 import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
-  selector: 'app-payment-result',
+  selector: 'jhi-payment-result',
   templateUrl: './payment-result.component.html',
   styleUrls: ['./payment-result.component.scss'],
   standalone: true,
@@ -47,7 +47,7 @@ export class PaymentResultComponent implements OnInit {
             this.isLoading = false;
           },
           error: error => {
-            this.errorMessage = 'Erreur lors de la vérification du statut de paiement: ' + error.message;
+            this.errorMessage = 'Erreur lors de la vérification du statut de paiement: ' + (error.message || 'Erreur inconnue');
             this.isLoading = false;
             this.paymentStatus = 'failed';
           },
@@ -83,7 +83,7 @@ export class PaymentResultComponent implements OnInit {
           window.URL.revokeObjectURL(url);
         },
         error: error => {
-          this.errorMessage = 'Erreur lors du téléchargement de la facture: ' + error.message;
+          this.errorMessage = 'Erreur lors du téléchargement de la facture: ' + (error.message || 'Erreur inconnue');
         },
       });
     }

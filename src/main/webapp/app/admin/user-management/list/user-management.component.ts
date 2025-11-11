@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { combineLatest } from 'rxjs';
@@ -13,12 +13,23 @@ import { AccountService } from 'app/core/auth/account.service';
 import { UserManagementService } from '../service/user-management.service';
 import { User } from '../user-management.model';
 import UserManagementDeleteDialogComponent from '../delete/user-management-delete-dialog.component';
+import { UserManagementRoleDialogComponent } from '../role-dialog/user-management-role-dialog.component';
+import { AutoRefreshService } from '../../../core/services/auto-refresh.service';
+import { RefreshButtonComponent } from '../../../shared/components/refresh-button/refresh-button.component';
 
 @Component({
   selector: 'jhi-user-mgmt',
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.scss'],
-  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent],
+  imports: [
+    RouterModule,
+    SharedModule,
+    SortDirective,
+    SortByDirective,
+    ItemCountComponent,
+    UserManagementRoleDialogComponent,
+    RefreshButtonComponent,
+  ],
 })
 export default class UserManagementComponent implements OnInit {
   currentAccount = inject(AccountService).trackCurrentAccount();
@@ -34,9 +45,17 @@ export default class UserManagementComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly sortService = inject(SortService);
   private readonly modalService = inject(NgbModal);
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly autoRefreshService = inject(AutoRefreshService);
 
   ngOnInit(): void {
     this.handleNavigation();
+
+    // Configurer l'actualisation automatique toutes les 30 secondes
+    this.autoRefreshService.setRefreshInterval(30000);
+    this.autoRefreshService.refreshTrigger$.subscribe(() => {
+      this.handleNavigation();
+    });
   }
 
   setActive(user: User, isActivated: boolean): void {
@@ -70,8 +89,12 @@ export default class UserManagementComponent implements OnInit {
         next: (res: HttpResponse<User[]>) => {
           this.isLoading.set(false);
           this.onSuccess(res.body, res.headers);
+          this.cdr.detectChanges();
         },
-        error: () => this.isLoading.set(false),
+        error: () => {
+          this.isLoading.set(false);
+          this.cdr.detectChanges();
+        },
       });
   }
 
@@ -97,5 +120,36 @@ export default class UserManagementComponent implements OnInit {
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems.set(Number(headers.get('X-Total-Count')));
     this.users.set(users);
+  }
+
+  openRoleModal(user: User): void {
+    // Récupérer les autorités disponibles
+    this.userService.authorities().subscribe(authorities => {
+      const modalRef = this.modalService.open(UserManagementRoleDialogComponent, { size: 'lg' });
+      modalRef.componentInstance.user = user;
+      modalRef.componentInstance.availableAuthorities = authorities;
+
+      modalRef.componentInstance.rolesChanged.subscribe((data: { user: User; newRoles: string[] }) => {
+        this.updateUserRoles(data.user, data.newRoles);
+      });
+    });
+  }
+
+  updateUserRoles(user: User, newRoles: string[]): void {
+    if (!user.login) {
+      console.error('Login utilisateur manquant');
+      return;
+    }
+
+    this.userService.updateRoles(user.login, newRoles).subscribe({
+      next: () => {
+        this.loadAll();
+        console.log(`Rôles de ${user.login} mis à jour vers: ${newRoles.join(', ')}`);
+      },
+      error: error => {
+        console.error('Erreur lors de la mise à jour des rôles:', error);
+        alert('Erreur lors de la mise à jour des rôles');
+      },
+    });
   }
 }

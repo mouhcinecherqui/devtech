@@ -1,9 +1,12 @@
 package devtech.web.rest;
 
 import devtech.domain.AppUser;
+import devtech.domain.Authority;
 import devtech.domain.User;
 import devtech.repository.AppUserRepository;
+import devtech.repository.AuthorityRepository;
 import devtech.repository.UserRepository;
+import devtech.security.AuthoritiesConstants;
 import devtech.security.SecurityUtils;
 import devtech.service.MailService;
 import devtech.service.UserService;
@@ -18,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +48,7 @@ public class AccountResource {
     private final MailService mailService;
 
     private final AppUserRepository appUserRepository;
+    private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
 
     public AccountResource(
@@ -51,12 +56,14 @@ public class AccountResource {
         UserService userService,
         MailService mailService,
         AppUserRepository appUserRepository,
+        AuthorityRepository authorityRepository,
         PasswordEncoder passwordEncoder
     ) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
         this.appUserRepository = appUserRepository;
+        this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -111,7 +118,40 @@ public class AccountResource {
      */
     @GetMapping("/account")
     public AdminUserDTO getAccount() {
-        return userService.getUserWithAuthorities().map(AdminUserDTO::new).orElse(null); // Return null for unauthenticated users
+        // If authenticated via classic JHipster user, keep default behavior
+        return userService
+            .getUserWithAuthorities()
+            .map(AdminUserDTO::new)
+            .orElseGet(() -> {
+                // Otherwise, try to build an account from OAuth2 JWT claims stored by OAuth2JwtService
+                return SecurityUtils.getCurrentUserLogin()
+                    .flatMap(loginOrEmail -> appUserRepository.findByEmail(loginOrEmail))
+                    .map(appUser -> {
+                        AdminUserDTO dto = new AdminUserDTO();
+                        dto.setId(appUser.getId());
+                        dto.setLogin(appUser.getEmail());
+                        dto.setFirstName(appUser.getFirstName());
+                        dto.setLastName(appUser.getLastName());
+                        dto.setEmail(appUser.getEmail());
+                        dto.setPhone(appUser.getPhone());
+                        // Provide a default language key to avoid frontend requesting /i18n/null
+                        dto.setLangKey("en");
+                        java.util.Set<String> authorities = new java.util.HashSet<>();
+                        // Assign roles based on user type
+                        if ("ADMIN".equalsIgnoreCase(appUser.getType())) {
+                            authorities.add(AuthoritiesConstants.ADMIN);
+                        } else if ("MANAGER".equalsIgnoreCase(appUser.getType())) {
+                            authorities.add(AuthoritiesConstants.MANAGER);
+                        } else if ("CLIENT".equalsIgnoreCase(appUser.getType())) {
+                            authorities.add(AuthoritiesConstants.CLIENT);
+                        } else {
+                            authorities.add(AuthoritiesConstants.USER);
+                        }
+                        dto.setAuthorities(authorities);
+                        return dto;
+                    })
+                    .orElse(null);
+            });
     }
 
     /**
@@ -129,17 +169,33 @@ public class AccountResource {
         if (existingUser.isPresent() && (!existingUser.orElseThrow().getLogin().equalsIgnoreCase(userLogin))) {
             throw new EmailAlreadyUsedException();
         }
+        // Update JHipster user if exists, otherwise update AppUser
         Optional<User> user = userRepository.findOneByLogin(userLogin);
-        if (!user.isPresent()) {
-            throw new AccountResourceException("User could not be found");
+        if (user.isPresent()) {
+            userService.updateUser(
+                userDTO.getFirstName(),
+                userDTO.getLastName(),
+                userDTO.getEmail(),
+                userDTO.getLangKey(),
+                userDTO.getImageUrl()
+            );
+        } else {
+            // For OAuth2 users, persist changes into AppUser as well
+            Optional<AppUser> appUserOpt = appUserRepository.findByEmail(userLogin);
+            if (appUserOpt.isPresent()) {
+                AppUser appUser = appUserOpt.get();
+                appUser.setFirstName(userDTO.getFirstName());
+                appUser.setLastName(userDTO.getLastName());
+                appUser.setEmail(userDTO.getEmail());
+                // Set phone if provided in the DTO
+                if (userDTO.getPhone() != null) {
+                    appUser.setPhone(userDTO.getPhone());
+                }
+                appUserRepository.save(appUser);
+            } else {
+                throw new AccountResourceException("User could not be found");
+            }
         }
-        userService.updateUser(
-            userDTO.getFirstName(),
-            userDTO.getLastName(),
-            userDTO.getEmail(),
-            userDTO.getLangKey(),
-            userDTO.getImageUrl()
-        );
     }
 
     /**
@@ -154,6 +210,66 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+    }
+
+    /**
+     * {@code POST  /account/set-password} : sets a password for OAuth2 users (Google, etc.).
+     *
+     * @param passwordDto new password.
+     * @throws InvalidPasswordException {@code 400 (Bad Request)} if the new password is incorrect.
+     */
+    @PostMapping(path = "/account/set-password")
+    public void setPassword(@RequestBody PasswordChangeDTO passwordDto) {
+        if (isPasswordLengthInvalid(passwordDto.getNewPassword())) {
+            throw new InvalidPasswordException();
+        }
+
+        String userLogin = SecurityUtils.getCurrentUserLogin()
+            .orElseThrow(() -> new AccountResourceException("Current user login not found"));
+
+        // Check if user is OAuth2 (AppUser)
+        Optional<AppUser> appUserOpt = appUserRepository.findByEmail(userLogin);
+        if (appUserOpt.isPresent()) {
+            // For OAuth2 users, we need to create a JHipster User with the password
+            AppUser appUser = appUserOpt.get();
+
+            // Check if a JHipster User already exists for this email
+            Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(appUser.getEmail());
+            if (existingUser.isPresent()) {
+                // Update existing user's password
+                userService.changePassword(null, passwordDto.getNewPassword());
+            } else {
+                // Create new JHipster User for OAuth2 user
+                User newUser = new User();
+                newUser.setLogin(appUser.getEmail());
+                newUser.setEmail(appUser.getEmail());
+                newUser.setFirstName(appUser.getFirstName());
+                newUser.setLastName(appUser.getLastName());
+                newUser.setActivated(true);
+                newUser.setLangKey("en");
+
+                // Set authorities based on AppUser type
+                Set<Authority> authorities = new HashSet<>();
+                if ("ADMIN".equalsIgnoreCase(appUser.getType())) {
+                    authorities.add(authorityRepository.findById(AuthoritiesConstants.ADMIN).orElseThrow());
+                } else if ("MANAGER".equalsIgnoreCase(appUser.getType())) {
+                    authorities.add(authorityRepository.findById(AuthoritiesConstants.MANAGER).orElseThrow());
+                } else if ("CLIENT".equalsIgnoreCase(appUser.getType())) {
+                    authorities.add(authorityRepository.findById(AuthoritiesConstants.CLIENT).orElseThrow());
+                } else {
+                    authorities.add(authorityRepository.findById(AuthoritiesConstants.USER).orElseThrow());
+                }
+                newUser.setAuthorities(authorities);
+
+                // Set password
+                String encryptedPassword = passwordEncoder.encode(passwordDto.getNewPassword());
+                newUser.setPassword(encryptedPassword);
+
+                userRepository.save(newUser);
+            }
+        } else {
+            throw new AccountResourceException("OAuth2 user not found");
+        }
     }
 
     /**
@@ -190,6 +306,17 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new AccountResourceException("No user was found for this reset key");
         }
+    }
+
+    /**
+     * {@code POST /account/logout} : Force logout and clear authentication.
+     */
+    @PostMapping("/account/logout")
+    public ResponseEntity<Map<String, String>> logout() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Logout successful");
+        response.put("redirect", "/login");
+        return ResponseEntity.ok(response);
     }
 
     private static boolean isPasswordLengthInvalid(String password) {

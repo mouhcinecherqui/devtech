@@ -65,6 +65,8 @@ public class SecurityConfiguration {
                 // prettier-ignore
                 authz
                     .requestMatchers(mvc.pattern("/"), mvc.pattern("/home"), mvc.pattern("/login"), mvc.pattern("/account/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/oauth2/**"), mvc.pattern("/login/oauth2/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/oauth2/**")).permitAll()
                     .requestMatchers(mvc.pattern("/index.html"), mvc.pattern("/*.js"), mvc.pattern("/*.txt"), mvc.pattern("/*.json"), mvc.pattern("/*.map"), mvc.pattern("/*.css")).permitAll()
                     .requestMatchers(mvc.pattern("/*.ico"), mvc.pattern("/*.png"), mvc.pattern("/*.svg"), mvc.pattern("/*.webapp")).permitAll()
                     .requestMatchers(mvc.pattern("/app/**")).permitAll()
@@ -77,7 +79,11 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/api/activate")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/init")).permitAll()
                     .requestMatchers(mvc.pattern("/api/account/reset-password/finish")).permitAll()
+                    .requestMatchers(mvc.pattern(HttpMethod.GET, "/api/client-reviews/**")).permitAll()
+                    .requestMatchers(mvc.pattern("/api/client-reviews/**")).authenticated()
                     .requestMatchers(mvc.pattern("/api/admin/**")).hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.MANAGER)
+                    .requestMatchers(mvc.pattern("/api/tickets/devis")).hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.MANAGER)
+                    .requestMatchers(mvc.pattern("/api/tickets/**")).authenticated()
                     .requestMatchers(mvc.pattern("/api/**")).authenticated()
                     .requestMatchers(mvc.pattern("/v3/api-docs/**")).hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.MANAGER)
                     .requestMatchers(mvc.pattern("/management/health")).permitAll()
@@ -86,14 +92,14 @@ public class SecurityConfiguration {
                     .requestMatchers(mvc.pattern("/management/prometheus")).permitAll()
                     .requestMatchers(mvc.pattern("/management/**")).hasAnyAuthority(AuthoritiesConstants.ADMIN, AuthoritiesConstants.MANAGER)
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .exceptionHandling(exceptions ->
                 exceptions
                     .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
                     .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
             )
             .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
-            .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("/oauth2/success", true).failureUrl("/login?error"));
+            .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("/api/oauth2/success", true).failureUrl("/login?error").loginPage("/login"));
         if (env.acceptsProfiles(Profiles.of(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT))) {
             http.authorizeHttpRequests(authz -> authz.requestMatchers(antMatcher("/h2-console/**")).permitAll());
         }

@@ -11,32 +11,8 @@
 
   <button class="btn btn-primary" (click)="openModal()">{{ 'ticketsUser.create' | translate }}</button>
 
-  <div
-    *ngIf="showModal()"
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    "
-  >
-    <div
-      style="
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-        padding: 2rem;
-        min-width: 350px;
-        max-width: 95vw;
-        position: relative;
-      "
-    >
+  <div *ngIf="showModal()" class="modal-backdrop">
+    <div class="modal">
       <h3>{{ 'ticketsUser.create' | translate }}</h3>
       <form [formGroup]="ticketForm" (ngSubmit)="submit()" class="ticket-form">
         <div>
@@ -66,7 +42,7 @@
           <label for="hostingUrl">{{ 'ticketsUser.hostingUrl' | translate }}</label>
           <input id="hostingUrl" formControlName="hostingUrl" type="text" />
         </div>
-        <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem">
+        <div class="modal-actions">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">{{ 'ticketsUser.cancel' | translate }}</button>
           <button type="submit" class="btn btn-primary" [disabled]="ticketForm.invalid || loading()">
             {{ 'ticketsUser.create' | translate }}
@@ -83,38 +59,9 @@
   </div>
 
   <!-- Modale de détails du ticket -->
-  <div
-    *ngIf="showDetailModal()"
-    style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    "
-  >
-    <div
-      style="
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-        padding: 2rem;
-        min-width: 350px;
-        max-width: 95vw;
-        position: relative;
-      "
-    >
-      <button
-        (click)="closeDetailModal()"
-        style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer"
-      >
-        &times;
-      </button>
+  <div *ngIf="showDetailModal()" class="modal-backdrop">
+    <div class="modal modal-detail">
+      <button (click)="closeDetailModal()" class="modal-close-btn">&times;</button>
       <h3>{{ 'ticketsUser.detail' | translate }}</h3>
       <div *ngIf="selectedTicket">
         <div class="workflow-bar">
@@ -136,11 +83,11 @@
           <div class="ticket-detail-title">{{ 'ticketsUser.info' | translate }}</div>
           <div class="ticket-detail-row">
             <div class="ticket-detail-label">{{ 'ticketsUser.status' | translate }} :</div>
-            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket?.status | translate }}</div>
+            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket.status | translate }}</div>
           </div>
           <div class="ticket-detail-row">
             <div class="ticket-detail-label">{{ 'ticketsUser.type' | translate }} :</div>
-            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket?.type | translate }}</div>
+            <div class="ticket-detail-value">{{ 'parameters.interface.' + selectedTicket.type | translate }}</div>
           </div>
           <div class="ticket-detail-row">
             <div class="ticket-detail-label">{{ 'ticketsUser.description' | translate }} :</div>

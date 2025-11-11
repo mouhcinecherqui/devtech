@@ -1,0 +1,54 @@
+<svg width="300" height="90" viewBox="0 0 300 90" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&amp;display=swap');
+    </style>
+
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8E2DE2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#007BFF;stop-opacity:1" />
+    </linearGradient>
+
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0" result="shadow"/>
+      <feOffset in="shadow" dx="1" dy="1" result="offsetShadow"/>
+      <feMerge>
+        <feMergeNode in="offsetShadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Mask for the wipe effect with a SINGLE rectangle to prevent seams -->
+    <mask id="wipeMask">
+      <rect x="0" y="0" width="300" height="90" fill="white">
+        <animate attributeName="x" dur="7s" repeatCount="indefinite" values="0; 0; 150; 0" keyTimes="0; 0.2; 0.7; 1" />
+        <animate attributeName="width" dur="7s" repeatCount="indefinite" values="300; 0; 0; 300" keyTimes="0; 0.2; 0.7; 1" />
+      </rect>
+    </mask>
+
+  </defs>
+
+  <g filter="url(#softShadow)" transform="translate(0, 10)">
+    <!-- Animated Brackets -->
+    <g font-family="monospace" font-weight="bold">
+      <path stroke="#8E2DE2" stroke-width="7" fill="none" stroke-linecap="round">
+        <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M 70 20 L 55 35 L 70 50; M 135 20 L 120 35 L 135 50; M 135 20 L 120 35 L 135 50; M 70 20 L 55 35 L 70 50; M 70 20 L 55 35 L 70 50" keyTimes="0; 0.2; 0.5; 0.7; 1" />
+      </path>
+      <path stroke="#007BFF" stroke-width="7" fill="none" stroke-linecap="round">
+        <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M 230 20 L 245 35 L 230 50; M 165 20 L 180 35 L 165 50; M 165 20 L 180 35 L 165 50; M 230 20 L 245 35 L 230 50; M 230 20 L 245 35 L 230 50" keyTimes="0; 0.2; 0.5; 0.7; 1" />
+      </path>
+    </g>
+
+    <!-- Wordmark with wipe effect -->
+    <text x="150" y="48" font-family="'Rajdhani', sans-serif" font-size="32" fill="url(#textGradient)" text-anchor="middle" mask="url(#wipeMask)">
+      <tspan font-weight="700">Dev</tspan><tspan font-weight="500">Techly</tspan>
+    </text>
+
+    <!-- Slash symbol / -->
+    <text x="150" y="48" font-family="monospace" font-size="36" fill="#8E2DE2" text-anchor="middle" font-weight="bold">
+      /
+      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" values="0; 0; 1; 1; 0; 0" keyTimes="0; 0.2; 0.3; 0.4; 0.5; 1" />
+    </text>
+  </g>
+</svg>

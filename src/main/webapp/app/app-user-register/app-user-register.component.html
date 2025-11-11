@@ -1,47 +1,326 @@
-<div class="app-user-register-container">
-  <h2>{{ 'appUserRegister.title' | translate }}</h2>
-  <div class="social-login mb-4 text-center">
-    <button class="btn btn-outline-primary me-2" (click)="loginWithProvider('google')">
-      <i class="fab fa-google"></i> {{ 'appUserRegister.google' | translate }}
-    </button>
+<div class="register-container">
+  <!-- Background Elements -->
+  <div class="register-background">
+    <div class="register-overlay"></div>
+    <div class="register-pattern"></div>
+    <div class="floating-elements">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
   </div>
-  <form [formGroup]="form" (ngSubmit)="submit()">
-    <div class="form-group">
-      <label for="firstName">{{ 'appUserRegister.firstName' | translate }}</label>
-      <input
-        id="firstName"
-        formControlName="firstName"
-        class="form-control"
-        [class.is-invalid]="submitted && form.get('firstName')?.invalid"
-      />
-      <div *ngIf="submitted && form.get('firstName')?.invalid" class="invalid-feedback">
-        {{ 'appUserRegister.firstNameRequired' | translate }}
+
+  <!-- Register Content -->
+  <div class="register-content">
+    <div class="register-card">
+      <!-- Header -->
+      <div class="register-header">
+        <div class="register-badge">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M16 21V19A4 4 0 0 0 12 15H8A4 4 0 0 0 4 19V21"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9 14L12 11L15 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="badge-text">Création de Compte</span>
+        </div>
+        <h1 class="register-title">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" class="title-icon">
+            <path
+              d="M16 21V19A4 4 0 0 0 12 15H8A4 4 0 0 0 4 19V21"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          {{ 'appUserRegister.title' | translate }}
+        </h1>
+        <p class="register-subtitle">Rejoignez notre communauté et commencez votre aventure digitale</p>
+      </div>
+
+      <!-- Social Login -->
+      <div class="social-login">
+        <button class="social-btn google" (click)="loginWithProvider('google')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+              fill="#4285F4"
+            />
+            <path
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+              fill="#34A853"
+            />
+            <path
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+              fill="#FBBC05"
+            />
+            <path
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+              fill="#EA4335"
+            />
+          </svg>
+          {{ 'appUserRegister.google' | translate }}
+        </button>
+        <div class="divider">
+          <span>ou</span>
+        </div>
+      </div>
+
+      <!-- Register Form -->
+      <form class="register-form" [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+          <label class="form-label" for="firstName">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ 'appUserRegister.firstName' | translate }}
+          </label>
+          <div class="input-wrapper">
+            <input
+              id="firstName"
+              formControlName="firstName"
+              class="form-input"
+              [class.is-invalid]="submitted && form.get('firstName')?.invalid"
+              placeholder="Entrez votre prénom"
+            />
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+          <div *ngIf="submitted && form.get('firstName')?.invalid" class="error-message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+              <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+              <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+            </svg>
+            {{ 'appUserRegister.firstNameRequired' | translate }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="lastName">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ 'appUserRegister.lastName' | translate }}
+          </label>
+          <div class="input-wrapper">
+            <input
+              id="lastName"
+              formControlName="lastName"
+              class="form-input"
+              [class.is-invalid]="submitted && form.get('lastName')?.invalid"
+              placeholder="Entrez votre nom"
+            />
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+          <div *ngIf="submitted && form.get('lastName')?.invalid" class="error-message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+              <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+              <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+            </svg>
+            {{ 'appUserRegister.lastNameRequired' | translate }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ 'appUserRegister.email' | translate }}
+          </label>
+          <div class="input-wrapper">
+            <input
+              id="email"
+              formControlName="email"
+              class="form-input"
+              [class.is-invalid]="submitted && form.get('email')?.invalid"
+              placeholder="Entrez votre email"
+              type="email"
+            />
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+          </div>
+          <div *ngIf="submitted && form.get('email')?.invalid" class="error-message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+              <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+              <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+            </svg>
+            {{ 'appUserRegister.emailRequired' | translate }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="phone">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7294C21.7209 20.9846 21.5573 21.2136 21.3521 21.4019C21.1469 21.5902 20.9046 21.7335 20.6407 21.8227C20.3768 21.9119 20.0974 21.9454 19.82 21.92C16.7428 21.5856 13.787 20.5341 11.19 18.85C8.77382 17.3146 6.72533 15.2661 5.18999 12.85C3.49997 10.2412 2.44824 7.27099 2.11999 4.18C2.09456 3.90347 2.12787 3.62476 2.21649 3.36152C2.30512 3.09828 2.44706 2.85646 2.63421 2.65169C2.82136 2.44692 3.04921 2.28362 3.30343 2.17192C3.55765 2.06022 3.83251 2.00269 4.10999 2.003H7.10999C7.59522 1.99522 8.06577 2.16708 8.43373 2.48353C8.80169 2.79999 9.04201 3.23945 9.10999 3.72C9.23662 4.68007 9.47144 5.62273 9.80999 6.53C9.94454 6.88792 9.9736 7.27675 9.89431 7.64958C9.81502 8.02241 9.63074 8.36811 9.35999 8.65L8.08999 9.92C9.51355 12.4135 11.5865 14.4865 14.08 15.91L15.35 14.64C15.6319 14.3692 15.9776 14.1849 16.3504 14.1056C16.7233 14.0264 17.1121 14.0554 17.47 14.19C18.3773 14.5286 19.3199 14.7634 20.28 14.89C20.7658 14.9585 21.2094 15.2032 21.5265 15.5775C21.8437 15.9518 22.0122 16.4296 22 16.92Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            {{ 'appUserRegister.phone' | translate }}
+          </label>
+          <div class="input-wrapper">
+            <input
+              id="phone"
+              formControlName="phone"
+              class="form-input"
+              [class.is-invalid]="submitted && form.get('phone')?.invalid"
+              placeholder="Entrez votre numéro de téléphone"
+              type="tel"
+            />
+            <div class="input-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7294C21.7209 20.9846 21.5573 21.2136 21.3521 21.4019C21.1469 21.5902 20.9046 21.7335 20.6407 21.8227C20.3768 21.9119 20.0974 21.9454 19.82 21.92C16.7428 21.5856 13.787 20.5341 11.19 18.85C8.77382 17.3146 6.72533 15.2661 5.18999 12.85C3.49997 10.2412 2.44824 7.27099 2.11999 4.18C2.09456 3.90347 2.12787 3.62476 2.21649 3.36152C2.30512 3.09828 2.44706 2.85646 2.63421 2.65169C2.82136 2.44692 3.04921 2.28362 3.30343 2.17192C3.55765 2.06022 3.83251 2.00269 4.10999 2.003H7.10999C7.59522 1.99522 8.06577 2.16708 8.43373 2.48353C8.80169 2.79999 9.04201 3.23945 9.10999 3.72C9.23662 4.68007 9.47144 5.62273 9.80999 6.53C9.94454 6.88792 9.9736 7.27675 9.89431 7.64958C9.81502 8.02241 9.63074 8.36811 9.35999 8.65L8.08999 9.92C9.51355 12.4135 11.5865 14.4865 14.08 15.91L15.35 14.64C15.6319 14.3692 15.9776 14.1849 16.3504 14.1056C16.7233 14.0264 17.1121 14.0554 17.47 14.19C18.3773 14.5286 19.3199 14.7634 20.28 14.89C20.7658 14.9585 21.2094 15.2032 21.5265 15.5775C21.8437 15.9518 22.0122 16.4296 22 16.92Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div *ngIf="submitted && form.get('phone')?.invalid" class="error-message">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+              <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+              <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+            </svg>
+            {{ 'appUserRegister.phoneRequired' | translate }}
+          </div>
+        </div>
+
+        <button type="submit" class="register-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M16 21V19A4 4 0 0 0 12 15H8A4 4 0 0 0 4 19V21"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9 14L12 11L15 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          {{ 'appUserRegister.submit' | translate }}
+        </button>
+      </form>
+
+      <!-- Success/Error Messages -->
+      <div *ngIf="success" class="register-alert success">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div class="alert-content">
+          <strong>Succès !</strong>
+          <span>{{ 'appUserRegister.success' | translate }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="error" class="register-alert error">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+          <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+          <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+        </svg>
+        <div class="alert-content">
+          <strong>Erreur !</strong>
+          <span>{{ 'appUserRegister.error' | translate }}</span>
+        </div>
+      </div>
+
+      <!-- Login Link -->
+      <div class="register-links">
+        <a class="link-item" routerLink="/login">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M15 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H15"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M10 17L15 12L10 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15 12H3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Déjà un compte ? Se connecter
+        </a>
       </div>
     </div>
-    <div class="form-group">
-      <label for="lastName">{{ 'appUserRegister.lastName' | translate }}</label>
-      <input
-        id="lastName"
-        formControlName="lastName"
-        class="form-control"
-        [class.is-invalid]="submitted && form.get('lastName')?.invalid"
-      />
-      <div *ngIf="submitted && form.get('lastName')?.invalid" class="invalid-feedback">
-        {{ 'appUserRegister.lastNameRequired' | translate }}
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="email">{{ 'appUserRegister.email' | translate }}</label>
-      <input id="email" formControlName="email" class="form-control" [class.is-invalid]="submitted && form.get('email')?.invalid" />
-      <div *ngIf="submitted && form.get('email')?.invalid" class="invalid-feedback">{{ 'appUserRegister.emailRequired' | translate }}</div>
-    </div>
-    <div class="form-group">
-      <label for="phone">{{ 'appUserRegister.phone' | translate }}</label>
-      <input id="phone" formControlName="phone" class="form-control" [class.is-invalid]="submitted && form.get('phone')?.invalid" />
-      <div *ngIf="submitted && form.get('phone')?.invalid" class="invalid-feedback">{{ 'appUserRegister.phoneRequired' | translate }}</div>
-    </div>
-    <button type="submit" class="btn btn-primary">{{ 'appUserRegister.submit' | translate }}</button>
-  </form>
-  <div *ngIf="success" class="alert alert-success mt-3">{{ 'appUserRegister.success' | translate }}</div>
-  <div *ngIf="error" class="alert alert-danger mt-3">{{ 'appUserRegister.error' | translate }}</div>
+  </div>
 </div>

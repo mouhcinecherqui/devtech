@@ -13,32 +13,63 @@
       <h1 class="page-title">{{ 'ticketsClient.title' | translate }}</h1>
       <p class="page-subtitle">Gérez vos demandes de support et suivez leur progression</p>
     </div>
-    <button class="create-ticket-btn" (click)="openModal()">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-      </svg>
-      {{ 'ticketsClient.create' | translate }}
-    </button>
+    <div class="header-actions">
+      <button class="create-ticket-btn" (click)="openModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        {{ 'ticketsClient.create' | translate }}
+      </button>
+    </div>
   </div>
 
   <!-- Stats Cards -->
   <div class="stats-section">
     <div class="stat-card">
-      <div class="stat-icon">📋</div>
+      <div class="stat-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+        </svg>
+      </div>
       <div class="stat-content">
         <div class="stat-number">{{ tickets().length }}</div>
         <div class="stat-label">Total tickets</div>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">⏳</div>
+      <div class="stat-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
       <div class="stat-content">
         <div class="stat-number">{{ getOpenTickets() }}</div>
         <div class="stat-label">En cours</div>
       </div>
     </div>
     <div class="stat-card">
-      <div class="stat-icon">✅</div>
+      <div class="stat-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
       <div class="stat-content">
         <div class="stat-number">{{ getResolvedTickets() }}</div>
         <div class="stat-label">Résolus</div>
@@ -70,9 +101,9 @@
 
     <!-- Tickets Grid -->
     <div *ngIf="!loading() && filteredTickets().length" class="tickets-grid">
-      <div *ngFor="let ticket of filteredTickets()" class="ticket-card" (click)="openDetailModal(ticket)">
+      <div *ngFor="let ticket of filteredTickets()" class="ticket-card" (click)="openTicketDetail(ticket)">
         <div class="ticket-header">
-          <div class="ticket-type-badge" [ngClass]="'type-' + (ticket.type?.toLowerCase() || 'autre')">
+          <div class="ticket-type-badge" [ngClass]="'type-' + (ticket.type.toLowerCase() || 'autre')">
             {{ getTicketTypeTranslation(ticket.type) }}
           </div>
           <div class="ticket-status-badge" [ngClass]="'status-' + (ticket.status?.toLowerCase() || 'nouveau')">
@@ -138,7 +169,21 @@
 
     <!-- Empty State -->
     <div *ngIf="!loading() && !filteredTickets().length" class="empty-state">
-      <div class="empty-icon">📝</div>
+      <div class="empty-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V8L14 2Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
       <h3>Aucun ticket trouvé</h3>
       <p>{{ 'ticketsClient.noTickets' | translate }}</p>
       <button class="create-first-ticket-btn" (click)="openModal()">Créer votre premier ticket</button>
@@ -268,13 +313,6 @@
           <input id="hostingUrl" formControlName="hostingUrl" type="url" class="form-input" placeholder="https://votre-hebergement.com" />
         </div>
 
-        <!-- Section Paiement pour nouveau ticket -->
-        <div class="form-section payment-section">
-          <h4>Options de paiement</h4>
-          <jhi-ticket-payment [ticketType]="ticketForm.get('type')?.value || ''" (paymentCompleted)="onPaymentCompleted($event)">
-          </jhi-ticket-payment>
-        </div>
-
         <div class="form-actions">
           <button type="button" class="btn-secondary" (click)="closeModal()">
             {{ 'ticketsClient.cancel' | translate }}
@@ -295,278 +333,69 @@
     </div>
   </div>
 
-  <!-- Ticket Detail Modal -->
-  <div *ngIf="showDetailModal()" class="modal-overlay" (click)="closeDetailModal()">
-    <div class="modal-container detail-modal" (click)="$event.stopPropagation()">
+  <!-- Modal pour créer un devis -->
+  <div *ngIf="showDevisModal()" class="modal-overlay" (click)="closeDevisModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
       <div class="modal-header">
-        <h3>{{ 'ticketsClient.detail' | translate }}</h3>
-        <button class="modal-close-btn" (click)="closeDetailModal()">
+        <h3>{{ 'ticketsClient.devis.title' | translate }}</h3>
+        <button class="modal-close-btn" (click)="closeDevisModal()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
           </svg>
         </button>
       </div>
+      <div class="modal-content">
+        <div class="form-group">
+          <label for="devisAmount">{{ 'ticketsClient.devis.amount' | translate }}</label>
+          <input type="number" id="devisAmount" [(ngModel)]="devisAmount" class="form-control" placeholder="0.00" min="0" step="0.01" />
+        </div>
+        <div class="form-group">
+          <label for="devisDescription">{{ 'ticketsClient.devis.description' | translate }}</label>
+          <textarea
+            id="devisDescription"
+            [(ngModel)]="devisDescription"
+            class="form-control"
+            rows="4"
+            placeholder="Détails du devis..."
+          ></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" (click)="closeDevisModal()">
+            {{ 'ticketsClient.devis.cancel' | translate }}
+          </button>
+          <button type="button" class="btn btn-primary" (click)="submitDevis()">{{ 'ticketsClient.devis.submit' | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <div *ngIf="selectedTicket" class="ticket-detail-content">
-        <!-- Workflow Progress -->
-        <div class="workflow-progress">
-          <div class="workflow-steps">
-            <ng-container *ngFor="let step of workflowSteps; let i = index">
-              <div
-                class="workflow-step"
-                [ngClass]="{
-                  active: i <= getStepIndex(selectedTicket.status || 'Nouveau'),
-                  completed: i < getStepIndex(selectedTicket.status || 'Nouveau'),
-                }"
-              >
-                <div class="step-indicator">
-                  <svg *ngIf="i < getStepIndex(selectedTicket.status || 'Nouveau')" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <span *ngIf="i >= getStepIndex(selectedTicket.status || 'Nouveau')">{{ i + 1 }}</span>
-                </div>
-                <span class="step-label">{{ step }}</span>
-              </div>
-              <div
-                *ngIf="i < workflowSteps.length - 1"
-                class="step-connector"
-                [ngClass]="{ active: i < getStepIndex(selectedTicket.status || 'Nouveau') }"
-              ></div>
-            </ng-container>
+  <!-- Modal pour valider le paiement -->
+  <div *ngIf="showPaymentValidationModal()" class="modal-overlay" (click)="closePaymentValidationModal()">
+    <div class="modal-container" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ 'ticketsClient.payment.title' | translate }}</h3>
+        <button class="modal-close-btn" (click)="closePaymentValidationModal()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+      <div class="modal-content">
+        <div class="payment-validation-info">
+          <p>{{ 'ticketsClient.payment.confirm' | translate }}</p>
+          <div class="ticket-info">
+            <strong>Ticket #{{ selectedTicketForPayment?.id }}</strong
+            ><br />
+            <span>{{ selectedTicketForPayment?.type }} - {{ selectedTicketForPayment?.description }}</span>
           </div>
         </div>
-
-        <!-- Ticket Information -->
-        <div class="ticket-info-grid">
-          <div class="info-card">
-            <div class="info-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-              <h4>Informations du ticket</h4>
-            </div>
-            <div class="info-content">
-              <div class="info-row">
-                <span class="info-label">Statut</span>
-                <span class="info-value status-badge" [ngClass]="'status-' + (selectedTicket?.status?.toLowerCase() || 'nouveau')">
-                  {{ getTicketStatusTranslation(selectedTicket?.status) }}
-                </span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Type</span>
-                <span class="info-value type-badge" [ngClass]="'type-' + (selectedTicket?.type?.toLowerCase() || 'autre')">
-                  {{ getTicketTypeTranslation(selectedTicket?.type) }}
-                </span>
-              </div>
-              <div class="info-row">
-                <span class="info-label">Date de création</span>
-                <span class="info-value">{{ selectedTicket.createdDate | date: 'full' }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="info-card">
-            <div class="info-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <h4>Description</h4>
-            </div>
-            <div class="info-content">
-              <p class="description-text">{{ selectedTicket.description }}</p>
-            </div>
-          </div>
-
-          <div *ngIf="selectedTicket.imageUrl" class="info-card">
-            <div class="info-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <h4>Image jointe</h4>
-            </div>
-            <div class="info-content">
-              <div class="ticket-image-container">
-                <img
-                  [src]="selectedTicket.imageUrl"
-                  alt="Image du ticket"
-                  class="ticket-image"
-                  (click)="openImageModal(selectedTicket.imageUrl)"
-                />
-              </div>
-            </div>
-          </div>
-
-          <!-- Section Backoffice -->
-          <div
-            *ngIf="selectedTicket.backofficeUrl || selectedTicket.backofficeLogin || selectedTicket.backofficePassword"
-            class="info-card backoffice-card"
-          >
-            <div class="info-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <h4>Backoffice</h4>
-            </div>
-            <div class="info-content">
-              <div *ngIf="selectedTicket.backofficeUrl" class="info-row">
-                <span class="info-label">URL</span>
-                <span class="info-value">{{ selectedTicket.backofficeUrl }}</span>
-              </div>
-              <div *ngIf="selectedTicket.backofficeLogin" class="info-row">
-                <span class="info-label">Login</span>
-                <span class="info-value">{{ selectedTicket.backofficeLogin }}</span>
-              </div>
-              <div *ngIf="selectedTicket.backofficePassword" class="info-row">
-                <span class="info-label">Mot de passe</span>
-                <span class="info-value">{{ selectedTicket.backofficePassword }}</span>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="selectedTicket.hostingUrl" class="info-card">
-            <div class="info-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <h4>Hébergement</h4>
-            </div>
-            <div class="info-content">
-              <div class="info-row">
-                <span class="info-label">URL</span>
-                <span class="info-value">{{ selectedTicket.hostingUrl }}</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section Paiement -->
-          <div class="info-card payment-card">
-            <div class="info-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <h4>Paiement</h4>
-            </div>
-            <div class="info-content">
-              <jhi-ticket-payment
-                [ticketId]="selectedTicket.id"
-                [ticketType]="selectedTicket.type"
-                (paymentCompleted)="onPaymentCompleted($event)"
-              >
-              </jhi-ticket-payment>
-            </div>
-          </div>
-
-          <!-- Messages de l'admin -->
-          <div
-            *ngIf="selectedTicket.messageStrings && selectedTicket.messageStrings.length > 0"
-            class="info-card"
-            style="position: relative; bottom: 21rem !important"
-          >
-            <div class="info-header">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M8 12h8m-8 4h4m-4-8h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
-              <h4>{{ 'ticketsClient.adminMessages' | translate }}</h4>
-            </div>
-            <div class="info-content">
-              <div class="admin-messages-container">
-                <div
-                  *ngFor="let message of selectedTicket.messageStrings; let i = index"
-                  class="admin-message"
-                  [ngClass]="{ 'client-message': message.startsWith('[CLIENT]'), 'admin-message': !message.startsWith('[CLIENT]') }"
-                >
-                  <div class="message-header">
-                    <span class="message-author" *ngIf="!message.startsWith('[CLIENT]')">Équipe DevTech</span>
-                    <span class="message-author client-author" *ngIf="message.startsWith('[CLIENT]')">Vous</span>
-                    <span class="message-number">#{{ i + 1 }}</span>
-                  </div>
-                  <div class="message-content">
-                    {{ message.startsWith('[CLIENT]') ? message.substring(8) : message }}
-                  </div>
-                </div>
-              </div>
-
-              <!-- Zone de réponse du client -->
-              <div class="client-reply-section">
-                <div class="reply-header">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M10 9H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2v-6a2 2 0 00-2-2h-4m0 0V5a2 2 0 114 0v4m-4 0h4"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                    />
-                  </svg>
-                  <span>{{ 'ticketsClient.yourReply' | translate }}</span>
-                </div>
-                <div class="reply-form">
-                  <textarea
-                    [(ngModel)]="clientReply"
-                    (keydown.enter)="$event.preventDefault(); sendReply()"
-                    [placeholder]="'ticketsClient.replyPlaceholder' | translate"
-                    rows="3"
-                    class="reply-textarea"
-                    maxlength="500"
-                  >
-                  </textarea>
-                  <div class="reply-actions">
-                    <span class="char-count">{{ clientReply.length }}/500</span>
-                    <button type="button" class="reply-btn" [disabled]="!clientReply.trim() || sendingReply()" (click)="sendReply()">
-                      <span *ngIf="!sendingReply()">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                          <path
-                            d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          />
-                        </svg>
-                        {{ 'ticketsClient.send' | translate }}
-                      </span>
-                      <span *ngIf="sendingReply()">
-                        <svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none">
-                          <path d="M21 12a9 9 0 11-6.219-8.56" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                        {{ 'ticketsClient.sending' | translate }}
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" (click)="closePaymentValidationModal()">
+            {{ 'ticketsClient.payment.cancel' | translate }}
+          </button>
+          <button type="button" class="btn btn-success" (click)="validatePayment(selectedTicketForPayment!.id!)">
+            {{ 'ticketsClient.payment.validate' | translate }}
+          </button>
         </div>
       </div>
     </div>

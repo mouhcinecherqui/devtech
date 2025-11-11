@@ -1,0 +1,255 @@
+@if (embedded) {
+  <div class="modal-review">
+    <div class="modal-review-header">
+      <h3 class="mb-0">
+        <i class="fas fa-star text-warning me-2"></i>
+        Donnez votre avis
+      </h3>
+    </div>
+    <div class="modal-review-body">
+      <!-- Messages d'erreur et de succès -->
+      <div *ngIf="error()" class="alert alert-danger" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        {{ error() }}
+      </div>
+
+      <div *ngIf="success()" class="alert alert-success" role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        {{ success() }}
+      </div>
+
+      <!-- Formulaire d'avis -->
+      <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+        <!-- Nom du client -->
+        <div class="mb-3">
+          <label for="clientName" class="form-label">
+            <i class="fas fa-user me-2"></i>
+            Votre nom *
+          </label>
+          <input
+            type="text"
+            class="form-control"
+            id="clientName"
+            name="clientName"
+            [ngModel]="clientName()"
+            (ngModelChange)="clientName.set($event)"
+            required
+            placeholder="Entrez votre nom"
+            [disabled]="isSubmitting()"
+          />
+        </div>
+
+        <!-- Système d'étoiles -->
+        <div class="mb-3">
+          <label class="form-label">
+            <i class="fas fa-star me-2"></i>
+            Votre note *
+          </label>
+          <div class="rating-container">
+            <div class="stars">
+              <span
+                *ngFor="let star of stars"
+                class="star"
+                [class.active]="isStarActive(star)"
+                [class.hover]="star <= hoveredStar"
+                (click)="onStarClick(star)"
+                (mouseenter)="onStarHover(star)"
+                (mouseleave)="onStarLeave()"
+                aria-label="star"
+              >
+                &#9733;
+              </span>
+            </div>
+            <div class="rating-text mt-2">
+              <span class="badge bg-primary">{{ getRatingText() }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Commentaire -->
+        <div class="mb-3">
+          <label for="comment" class="form-label">
+            <i class="fas fa-comment me-2"></i>
+            Votre commentaire *
+          </label>
+          <textarea
+            class="form-control"
+            id="comment"
+            name="comment"
+            rows="4"
+            [ngModel]="comment()"
+            (ngModelChange)="comment.set($event)"
+            required
+            minlength="10"
+            placeholder="Partagez votre expérience avec nous (minimum 10 caractères)..."
+            [disabled]="isSubmitting()"
+          ></textarea>
+          <div class="form-text">
+            <small class="text-muted"> {{ comment().length }}/10 caractères minimum </small>
+          </div>
+        </div>
+
+        <!-- Boutons d'action -->
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" (click)="goBack()" [disabled]="isSubmitting()">
+            <i class="fas fa-arrow-left me-2"></i>
+            Retour
+          </button>
+
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting() || !canSubmit()">
+            <span *ngIf="!isSubmitting()">
+              <i class="fas fa-paper-plane me-2"></i>
+              Soumettre l'avis
+            </span>
+            <span *ngIf="isSubmitting()">
+              <i class="fas fa-spinner fa-spin me-2"></i>
+              Envoi en cours...
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+} @else {
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="mb-0">
+              <i class="fas fa-star text-warning me-2"></i>
+              Donnez votre avis
+            </h3>
+          </div>
+          <div class="card-body">
+            <!-- Messages d'erreur et de succès -->
+            <div *ngIf="error()" class="alert alert-danger" role="alert">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              {{ error() }}
+            </div>
+
+            <div *ngIf="success()" class="alert alert-success" role="alert">
+              <i class="fas fa-check-circle me-2"></i>
+              {{ success() }}
+            </div>
+
+            <!-- Formulaire d'avis -->
+            <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+              <!-- Nom du client -->
+              <div class="mb-3">
+                <label for="clientName" class="form-label">
+                  <i class="fas fa-user me-2"></i>
+                  Votre nom *
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="clientName"
+                  name="clientName"
+                  [ngModel]="clientName()"
+                  (ngModelChange)="clientName.set($event)"
+                  required
+                  placeholder="Entrez votre nom"
+                  [disabled]="isSubmitting()"
+                />
+              </div>
+
+              <!-- Système d'étoiles -->
+              <div class="mb-3">
+                <label class="form-label">
+                  <i class="fas fa-star me-2"></i>
+                  Votre note *
+                </label>
+                <div class="rating-container">
+                  <div class="stars">
+                    <span
+                      *ngFor="let star of stars"
+                      class="star"
+                      [class.active]="isStarActive(star)"
+                      [class.hover]="star <= hoveredStar"
+                      (click)="onStarClick(star)"
+                      (mouseenter)="onStarHover(star)"
+                      (mouseleave)="onStarLeave()"
+                      aria-label="star"
+                    >
+                      &#9733;
+                    </span>
+                  </div>
+                  <div class="rating-text mt-2">
+                    <span class="badge bg-primary">{{ getRatingText() }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Commentaire -->
+              <div class="mb-3">
+                <label for="comment" class="form-label">
+                  <i class="fas fa-comment me-2"></i>
+                  Votre commentaire *
+                </label>
+                <textarea
+                  class="form-control"
+                  id="comment"
+                  name="comment"
+                  rows="4"
+                  [ngModel]="comment()"
+                  (ngModelChange)="comment.set($event)"
+                  required
+                  minlength="10"
+                  placeholder="Partagez votre expérience avec nous (minimum 10 caractères)..."
+                  [disabled]="isSubmitting()"
+                ></textarea>
+                <div class="form-text">
+                  <small class="text-muted"> {{ comment().length }}/10 caractères minimum </small>
+                </div>
+              </div>
+
+              <!-- Boutons d'action -->
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-secondary" (click)="goBack()" [disabled]="isSubmitting()">
+                  <i class="fas fa-arrow-left me-2"></i>
+                  Retour
+                </button>
+
+                <button type="submit" class="btn btn-primary" [disabled]="isSubmitting() || !canSubmit()">
+                  <span *ngIf="!isSubmitting()">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Soumettre l'avis
+                  </span>
+                  <span *ngIf="isSubmitting()">
+                    <i class="fas fa-spinner fa-spin me-2"></i>
+                    Envoi en cours...
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Informations supplémentaires -->
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">
+              <i class="fas fa-info-circle me-2"></i>
+              Informations
+            </h5>
+            <ul class="list-unstyled mb-0">
+              <li>
+                <i class="fas fa-check text-success me-2"></i>
+                Votre avis sera visible publiquement après validation
+              </li>
+              <li>
+                <i class="fas fa-shield-alt text-info me-2"></i>
+                Vos données personnelles sont protégées
+              </li>
+              <li>
+                <i class="fas fa-clock text-warning me-2"></i>
+                La validation peut prendre jusqu'à 24h
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

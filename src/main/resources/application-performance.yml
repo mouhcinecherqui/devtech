@@ -1,0 +1,83 @@
+# Configuration d'optimisation des performances pour DevTech
+
+server:
+  tomcat:
+    # Optimiser le serveur Tomcat
+    max-threads: 50
+    min-spare-threads: 5
+    accept-count: 100
+    connection-timeout: 20000
+    max-connections: 8192
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+spring:
+  # Optimiser Hibernate/JPA
+  jpa:
+    hibernate:
+      ddl-auto: none # Éviter les vérifications automatiques
+    properties:
+      hibernate:
+        # Optimiser les performances Hibernate
+        jdbc:
+          batch_size: 25
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+        batch_fetch_style: dynamic
+        # Cache de second niveau
+        cache:
+          use_second_level_cache: true
+          use_query_cache: true
+        # Optimiser les requêtes
+        query:
+          plan_cache_max_size: 2048
+          plan_parameter_metadata_max_size: 128
+        # Logs SQL optimisés
+        show_sql: false
+        format_sql: false
+        use_sql_comments: false
+
+  # Optimiser la base de données
+  datasource:
+    hikari:
+      # Pool de connexions optimisé
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      connection-timeout: 30000
+      # Optimisations spécifiques
+      leak-detection-threshold: 60000
+      pool-name: DevTechHikariCP
+
+  # Cache
+  cache:
+    type: simple
+    cache-names:
+      - parameters
+      - users
+      - tickets
+
+# Optimiser les logs pour réduire l'I/O
+logging:
+  level:
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    org.springframework.web: WARN
+    org.springframework.security: WARN
+    devtech: INFO
+  pattern:
+    console: '%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
+
+# Optimiser la gestion des fichiers
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never

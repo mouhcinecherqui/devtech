@@ -1,62 +1,248 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
+<div class="admin-user-detail-container">
+  <div class="admin-user-detail-content">
     @if (user(); as userRef) {
-      <div>
-        <h2>
-          <span jhiTranslate="userManagement.detail.title">Utilisateur</span> [<strong>{{ userRef.login }}</strong
-          >]
-        </h2>
-
-        <dl class="row-md jh-entity-details">
-          <dt><span jhiTranslate="userManagement.login">Login</span></dt>
-          <dd>
-            <span>{{ userRef.login }}</span>
+      <div class="user-detail-card">
+        <!-- Header Section -->
+        <div class="user-detail-header">
+          <div class="user-avatar-large">
+            {{ userRef.login?.charAt(0)?.toUpperCase() || 'U' }}
+          </div>
+          <div class="user-info-header">
+            <h2>
+              <span jhiTranslate="userManagement.detail.title">Utilisateur</span>
+              <strong>{{ userRef.login }}</strong>
+            </h2>
             @if (userRef.activated) {
-              <span class="badge bg-success" jhiTranslate="userManagement.activated">Activé</span>
+              <span class="status-badge status-active" jhiTranslate="userManagement.activated">Activé</span>
             } @else {
-              <span class="badge bg-danger" jhiTranslate="userManagement.deactivated">Désactivé</span>
+              <span class="status-badge status-inactive" jhiTranslate="userManagement.deactivated">Désactivé</span>
             }
-          </dd>
+          </div>
+        </div>
 
-          <dt><span jhiTranslate="userManagement.firstName">Prénom</span></dt>
-          <dd>{{ userRef.firstName }}</dd>
+        <!-- User Details -->
+        <div class="user-details-grid">
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.login">Login</label>
+              <span>{{ userRef.login }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.lastName">Nom</span></dt>
-          <dd>{{ userRef.lastName }}</dd>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.firstName">Prénom</label>
+              <span>{{ userRef.firstName }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.email">Email</span></dt>
-          <dd>{{ userRef.email }}</dd>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.lastName">Nom</label>
+              <span>{{ userRef.lastName }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.langKey">Langue</span></dt>
-          <dd>{{ userRef.langKey }}</dd>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.email">Email</label>
+              <span>{{ userRef.email }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.createdBy">Créé par</span></dt>
-          <dd>{{ userRef.createdBy }}</dd>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M12 2A15.3 15.3 0 0 1 22 12A15.3 15.3 0 0 1 12 22A15.3 15.3 0 0 1 2 12A15.3 15.3 0 0 1 12 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.langKey">Langue</label>
+              <span>{{ userRef.langKey }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.createdDate">Créé le</span></dt>
-          <dd>{{ userRef.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2L2 7L12 12L22 7L12 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.createdBy">Créé par</label>
+              <span>{{ userRef.createdBy }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.lastModifiedBy">Modifié par</span></dt>
-          <dd>{{ userRef.lastModifiedBy }}</dd>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.createdDate">Créé le</label>
+              <span>{{ userRef.createdDate | date: 'dd/MM/yy HH:mm' }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.lastModifiedDate">Modifié le</span></dt>
-          <dd>{{ userRef.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M18.5 2.50023C18.8978 2.1025 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1025 21.5 2.50023C21.8978 2.89795 22.1214 3.43757 22.1214 4.00023C22.1214 4.56288 21.8978 5.1025 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.lastModifiedBy">Modifié par</label>
+              <span>{{ userRef.lastModifiedBy }}</span>
+            </div>
+          </div>
 
-          <dt><span jhiTranslate="userManagement.profiles">Droits</span></dt>
-          <dd>
-            <ul class="list-unstyled">
-              @for (authority of userRef.authorities; track $index) {
-                <li>
-                  <span class="badge bg-info">{{ authority }}</span>
-                </li>
-              }
-            </ul>
-          </dd>
-        </dl>
+          <div class="detail-item">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.lastModifiedDate">Modifié le</label>
+              <span>{{ userRef.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</span>
+            </div>
+          </div>
 
-        <button type="submit" routerLink="../../" class="btn btn-info">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Retour</span>
-        </button>
+          <div class="detail-item full-width">
+            <div class="detail-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M23 21V19C23 17.9391 22.5786 16.9217 21.8284 16.1716C21.0783 15.4214 20.0609 15 19 15H16"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 11C17.6569 11 19 9.65685 19 8C19 6.34315 17.6569 5 16 5C14.3431 5 13 6.34315 13 8C13 9.65685 14.3431 11 16 11Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="detail-content">
+              <label jhiTranslate="userManagement.profiles">Droits</label>
+              <div class="authorities-list">
+                @for (authority of userRef.authorities; track $index) {
+                  <span class="authority-badge">{{ authority }}</span>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="user-detail-actions">
+          <button type="submit" routerLink="../../" class="btn btn-back">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span jhiTranslate="entity.action.back">Retour</span>
+          </button>
+        </div>
       </div>
     }
   </div>

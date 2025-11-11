@@ -1,7 +1,11 @@
 jest.mock('app/core/auth/account.service');
 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
+import { provideRouter } from '@angular/router';
+import { OAuth2Service } from 'app/core/auth/oauth2.service';
 import { Subject, of } from 'rxjs';
 
 import { AccountService } from 'app/core/auth/account.service';
@@ -28,7 +32,13 @@ describe('Home Component', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [HomeComponent],
-      providers: [AccountService],
+      providers: [
+        AccountService,
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([]),
+        { provide: OAuth2Service, useValue: { checkOAuth2Success: jest.fn() } },
+      ],
     })
       .overrideTemplate(HomeComponent, '')
       .compileComponents();

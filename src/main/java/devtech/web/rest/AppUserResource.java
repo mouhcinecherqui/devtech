@@ -6,15 +6,22 @@ import devtech.domain.User;
 import devtech.repository.AppUserRepository;
 import devtech.repository.AuthorityRepository;
 import devtech.repository.UserRepository;
+import devtech.service.ClientEmailService;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import tech.jhipster.web.util.PaginationUtil;
 
 @RestController
 @RequestMapping("/api/app-users")
@@ -25,17 +32,20 @@ public class AppUserResource {
     private final UserRepository userRepository;
     private final AuthorityRepository authorityRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ClientEmailService clientEmailService;
 
     public AppUserResource(
         AppUserRepository appUserRepository,
         UserRepository userRepository,
         AuthorityRepository authorityRepository,
-        PasswordEncoder passwordEncoder
+        PasswordEncoder passwordEncoder,
+        ClientEmailService clientEmailService
     ) {
         this.appUserRepository = appUserRepository;
         this.userRepository = userRepository;
         this.authorityRepository = authorityRepository;
         this.passwordEncoder = passwordEncoder;
+        this.clientEmailService = clientEmailService;
     }
 
     @PostMapping
@@ -70,12 +80,24 @@ public class AppUserResource {
             userRepository.save(user);
             log.info("Created User for client {} with authorities: {}", appUser.getEmail(), authorities);
         }
+
+        // Send welcome email to the client
+        try {
+            clientEmailService.sendWelcomeEmail(result);
+            log.info("Welcome email sent to client: {}", result.getEmail());
+        } catch (Exception e) {
+            log.error("Failed to send welcome email to client {}: {}", result.getEmail(), e.getMessage());
+        }
+
         return ResponseEntity.created(URI.create("/api/app-users/" + result.getId())).body(result);
     }
 
     @GetMapping
-    public List<AppUser> getAll() {
-        return appUserRepository.findAll();
+    public ResponseEntity<List<AppUser>> getAll(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
+        log.debug("REST request to get all AppUsers with pagination");
+        final Page<AppUser> page = appUserRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -95,6 +117,53 @@ public class AppUserResource {
         }
         appUserRepository.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/role")
+    public ResponseEntity<AppUser> updateRole(@PathVariable Long id, @RequestBody RoleUpdateRequest request) {
+        Optional<AppUser> userOpt = appUserRepository.findById(id);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        AppUser user = userOpt.get();
+        String newRole = request.getType();
+
+        // Valider le rôle
+        if (!isValidRole(newRole)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Mettre à jour le rôle dans AppUser
+        user.setType(newRole);
+        AppUser updatedUser = appUserRepository.save(user);
+
+        // Mettre à jour le rôle dans User (pour l'authentification)
+        Optional<User> systemUserOpt = userRepository.findOneByLogin(user.getEmail().toLowerCase());
+        if (systemUserOpt.isPresent()) {
+            User systemUser = systemUserOpt.get();
+            HashSet<Authority> authorities = new HashSet<>();
+
+            // Créer ou récupérer l'autorité correspondante
+            String authorityName = "ROLE_" + newRole;
+            Authority authority = authorityRepository.findById(authorityName).orElse(null);
+            if (authority == null) {
+                authority = new Authority();
+                authority.setName(authorityName);
+                authorityRepository.save(authority);
+                log.info("Created missing {} authority in database.", authorityName);
+            }
+            authorities.add(authority);
+            systemUser.setAuthorities(authorities);
+            userRepository.save(systemUser);
+            log.info("Updated role for user {} to {}", user.getEmail(), newRole);
+        }
+
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    private boolean isValidRole(String role) {
+        return role != null && (role.equals("ADMIN") || role.equals("MANAGER") || role.equals("CLIENT"));
     }
 
     @PostMapping("/login")
@@ -126,6 +195,19 @@ public class AppUserResource {
 
         public void setPassword(String password) {
             this.password = password;
+        }
+    }
+
+    public static class RoleUpdateRequest {
+
+        private String type;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
     }
 }

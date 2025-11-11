@@ -7,9 +7,9 @@ public class PaiementDTO {
 
     public Long id;
     public String user;
-    public Double amount;
+    public Object amount; // Peut être Double, String ou Number
     public String currency = "MAD";
-    public LocalDate date;
+    public Object date; // Peut être LocalDate ou String
     public String status;
 
     // Champs CMI
@@ -35,4 +35,36 @@ public class PaiementDTO {
     public String clientIp;
     public LocalDateTime createdAt;
     public LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return (
+            "PaiementDTO{" +
+            "id=" +
+            id +
+            ", user='" +
+            user +
+            '\'' +
+            ", amount=" +
+            amount +
+            " (type: " +
+            (amount != null ? amount.getClass().getSimpleName() : "null") +
+            ")" +
+            ", currency='" +
+            currency +
+            '\'' +
+            ", date=" +
+            date +
+            " (type: " +
+            (date != null ? date.getClass().getSimpleName() : "null") +
+            ")" +
+            ", status='" +
+            status +
+            '\'' +
+            ", description='" +
+            description +
+            '\'' +
+            '}'
+        );
+    }
 }

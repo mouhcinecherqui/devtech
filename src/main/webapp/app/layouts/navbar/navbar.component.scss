@@ -1,13 +1,10 @@
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
-
 /* ==========================================================================
 Navbar
 ========================================================================== */
 
 .navbar-version {
   font-size: 0.65em;
-  color: $navbar-dark-color;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .profile-image {
@@ -31,7 +28,7 @@ Logo styles
   width: 45px;
   display: inline-block;
   vertical-align: middle;
-  background: url('/content/images/logo-jhipster.png') no-repeat center center;
+  background: url('/content/images/devtechly.svg') no-repeat center center;
   background-size: contain;
 }
 
@@ -40,20 +37,28 @@ Logo styles
   top: 0;
   left: 0;
   width: 100vw;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  height: 64px;
+  height: 70px;
   z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+  }
 }
 
 .header-left {
   background: transparent;
   border-right: none;
-  height: 64px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,27 +66,56 @@ Logo styles
 }
 
 .header-left .site-title img {
-  height: 48px;
+  height: 50px;
   max-height: 100%;
   width: auto;
   display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
+
 .header-nav {
   display: flex;
   gap: 1.5rem;
+  align-items: center;
 }
+
 .header-nav a {
-  color: #222;
+  color: #1e293b;
   text-decoration: none;
-  font-size: 1.1rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 5px;
-  transition: background 0.2s;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    transition: left 0.3s ease;
+  }
+
+  &:hover::before {
+    left: 0;
+  }
+
+  &:hover {
+    color: #667eea;
+    transform: translateY(-1px);
+  }
 }
-.header-nav a.active,
-.header-nav a:hover {
-  background: #e0f7fa;
-  color: #008080;
+
+.header-nav a.active {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  color: #667eea;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
 }
 
 .notification-bell {
@@ -89,73 +123,98 @@ Logo styles
   display: inline-block;
   margin-left: 1.5rem;
   cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+
   svg {
     vertical-align: middle;
-    transition: filter 0.2s;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(37, 99, 235, 0.2));
   }
-  &:hover svg {
-    filter: brightness(0.85);
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+
+    svg {
+      filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.3));
+    }
   }
 }
+
 .notification-badge {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  background: #ff3b3b;
+  top: -2px;
+  right: -2px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: #fff;
   border-radius: 50%;
-  font-size: 0.9rem;
-  padding: 2px 8px;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
   border: 2px solid #fff;
   z-index: 2;
+  min-width: 18px;
+  text-align: center;
 }
+
 .notification-dropdown {
   position: absolute;
   right: 0;
-  top: 2.5rem;
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-  min-width: 300px;
+  top: 3rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  min-width: 320px;
   z-index: 10000;
-  padding: 0.7rem 0.5rem 0.5rem 0.5rem;
-  animation: fadeInNotif 0.18s;
-  border: 1px solid #e0e7ef;
+  padding: 1rem;
+  animation: fadeInNotif 0.3s ease-out;
 }
+
 @keyframes fadeInNotif {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-10px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
+
 .notification-dropdown .dropdown-header {
   font-weight: 700;
-  color: #2563eb;
+  color: #1e293b;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
-  font-size: 1.08rem;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
 }
+
 .mark-all-btn {
   background: none;
   border: none;
-  color: #4f8cff;
-  font-size: 0.97rem;
+  color: #667eea;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  padding: 0;
-  text-decoration: underline;
-  transition: color 0.2s;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #1d4ed8;
+  }
 }
-.mark-all-btn:hover {
-  color: #2563eb;
-}
+
 .notification-dropdown ul {
   list-style: none;
   margin: 0;
@@ -163,41 +222,61 @@ Logo styles
   max-height: 240px;
   overflow-y: auto;
 }
+
 .notification-dropdown li {
-  padding: 0.6rem 0.2rem 0.6rem 0.7rem;
-  border-bottom: 1px solid #f0f2f5;
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.05);
   cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 0.7rem;
-  border-radius: 8px;
-  transition: background 0.18s;
+  gap: 0.75rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-bottom: 0.25rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
+
 .notification-dropdown li.unread {
-  background: #eaf3ff;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
   font-weight: 600;
+  border-left: 3px solid #667eea;
 }
+
 .notification-dropdown li:hover {
-  background: #f4f8fb;
+  background: rgba(102, 126, 234, 0.05);
+  transform: translateX(2px);
 }
+
 .notif-icon {
-  color: #2563eb;
+  color: #667eea;
   font-size: 1.2rem;
   margin-top: 2px;
+  flex-shrink: 0;
+
+  svg {
+    filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.2));
+  }
 }
+
 .notif-message {
-  color: #222;
-  font-size: 1.01rem;
+  color: #1e293b;
+  font-size: 0.95rem;
   flex: 1;
+  line-height: 1.4;
 }
+
 .notif-date {
-  color: #888;
-  font-size: 0.85rem;
+  color: #64748b;
+  font-size: 0.8rem;
   margin-top: 2px;
   align-self: flex-end;
   min-width: 70px;
   text-align: right;
+  font-weight: 500;
 }
 
 .language-switcher.dropdown {
@@ -205,52 +284,76 @@ Logo styles
   display: inline-block;
   margin-left: 1.5rem;
 }
+
 .lang-btn {
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  padding: 6px 16px;
-  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: box-shadow 0.2s;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: #667eea;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    transform: translateY(-1px);
+  }
+
+  svg {
+    margin-left: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover svg {
+    transform: rotate(180deg);
+  }
 }
-.lang-btn:hover,
-.lang-btn:focus {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+
 .lang-dropdown {
   display: none;
   position: absolute;
   top: 110%;
   left: 0;
-  min-width: 150px;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   z-index: 1000;
-  padding: 0.5rem 0;
+  padding: 0.5rem;
+  animation: fadeInNotif 0.3s ease-out;
 }
+
 .language-switcher.dropdown:hover .lang-dropdown,
 .language-switcher.dropdown:focus-within .lang-dropdown {
   display: block;
 }
+
 .lang-dropdown li {
-  padding: 8px 18px;
+  padding: 0.75rem 1rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.95rem;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: background 0.15s;
-}
-.lang-dropdown li:hover {
-  background: #f0f4fa;
-}
-.lang-dropdown span {
-  font-size: 1.2em;
-  margin-right: 8px;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  color: #1e293b;
+  font-weight: 500;
+
+  &:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    transform: translateX(2px);
+  }
+
+  // Styles pour les drapeaux supprimés
 }

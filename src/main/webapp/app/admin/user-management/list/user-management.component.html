@@ -1,14 +1,36 @@
 <div class="admin-users-container">
   <!-- Header Section -->
   <div class="admin-users-header">
-    <h2>{{ 'userManagement.home.title' | translate }}</h2>
-    <p>Gérez les utilisateurs de la plateforme et leurs permissions</p>
+    <div class="header-content">
+      <div class="header-text">
+        <h2>{{ 'userManagement.home.title' | translate }}</h2>
+        <p>Gérez les utilisateurs de la plateforme et leurs permissions</p>
+      </div>
+      <jhi-refresh-button [loading]="isLoading()" (refresh)="loadAll()"></jhi-refresh-button>
+    </div>
   </div>
 
   <!-- Stats and Actions Section -->
   <div class="admin-users-stats">
     <div class="stats-card">
-      <div class="stats-icon">👥</div>
+      <div class="stats-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
       <div class="stats-content">
         <h3>{{ totalItems() }}</h3>
         <p>Utilisateurs</p>
@@ -16,11 +38,35 @@
     </div>
     <div class="actions-group">
       <button class="btn btn-refresh" (click)="loadAll()" [disabled]="isLoading()">
-        <span class="btn-icon">🔄</span>
+        <span class="btn-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 4V10H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M23 20V14H17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M20.49 9C19.2214 7.33125 17.4597 6.00181 15.4188 5.21578C13.3778 4.42975 11.1381 4.22439 8.97631 4.62276C6.81453 5.02113 4.80975 6.00792 3.18386 7.48538C1.55797 8.96285 0.374027 10.8736 0.000999999 12.9599"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M23.999 11.0401C23.626 13.1264 22.442 15.0371 20.8161 16.5146C19.1902 17.9921 17.1855 18.9789 15.0237 19.3772C12.8619 19.7756 10.6222 19.5703 8.58124 18.7842C6.54026 17.9982 4.77856 16.6688 3.51 15"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </span>
         <span class="btn-text">{{ 'userManagement.home.refreshListLabel' | translate }}</span>
       </button>
       <button class="btn btn-primary add-user-btn" [routerLink]="['./new']">
-        <span class="btn-icon">+</span>
+        <span class="btn-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
         <span class="btn-text">{{ 'userManagement.home.createLabel' | translate }}</span>
       </button>
     </div>
@@ -36,37 +82,57 @@
       <table class="users-table" aria-describedby="user-management-page-heading">
         <thead>
           <tr jhiSort [(sortState)]="sortState" (sortChange)="transition($event)">
-            <th scope="col" jhiSortBy="id">
-              {{ 'global.field.id' | translate }}
-              <span class="sort-icon">↕️</span>
-            </th>
             <th scope="col" jhiSortBy="login">
               {{ 'userManagement.login' | translate }}
-              <span class="sort-icon">↕️</span>
+              <span class="sort-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 15L12 10L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </th>
             <th scope="col" jhiSortBy="email">
               {{ 'userManagement.email' | translate }}
-              <span class="sort-icon">↕️</span>
+              <span class="sort-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 15L12 10L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </th>
             <th scope="col">Statut</th>
             <th scope="col" jhiSortBy="langKey">
               {{ 'userManagement.langKey' | translate }}
-              <span class="sort-icon">↕️</span>
+              <span class="sort-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 15L12 10L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </th>
             <th scope="col">
               {{ 'userManagement.profiles' | translate }}
             </th>
             <th scope="col" jhiSortBy="createdDate">
               {{ 'userManagement.createdDate' | translate }}
-              <span class="sort-icon">↕️</span>
+              <span class="sort-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 15L12 10L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </th>
             <th scope="col" jhiSortBy="lastModifiedBy">
               {{ 'userManagement.lastModifiedBy' | translate }}
-              <span class="sort-icon">↕️</span>
+              <span class="sort-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 15L12 10L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </th>
             <th scope="col" jhiSortBy="lastModifiedDate">
               {{ 'userManagement.lastModifiedDate' | translate }}
-              <span class="sort-icon">↕️</span>
+              <span class="sort-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 15L12 10L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </span>
             </th>
             <th scope="col">Actions</th>
           </tr>
@@ -74,19 +140,16 @@
         <tbody>
           @for (user of users(); track trackIdentity(user)) {
             <tr class="user-row">
-              <td class="user-id">
-                <a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
-              </td>
               <td class="user-login">
                 <div class="user-avatar">
                   {{ user.login?.charAt(0)?.toUpperCase() || 'U' }}
                 </div>
                 <div class="user-info">
-                  <strong>{{ user.login }}</strong>
+                  <strong [title]="user.login">{{ user.login }}</strong>
                 </div>
               </td>
               <td class="user-email">
-                <a href="mailto:{{ user.email }}" class="email-link">{{ user.email }}</a>
+                <a href="mailto:{{ user.email }}" class="email-link" [title]="user.email">{{ user.email }}</a>
               </td>
               <td class="user-status">
                 @if (!user.activated) {
@@ -105,23 +168,40 @@
                 <span class="language-badge">{{ user.langKey }}</span>
               </td>
               <td class="user-roles">
-                @for (authority of user.authorities; track $index) {
-                  <span class="role-badge">{{ authority }}</span>
+                @for (authority of user.authorities || []; track $index) {
+                  <span class="role-badge" [title]="authority">{{ authority }}</span>
                 }
               </td>
-              <td class="user-created">
+              <td class="user-created" [title]="user.createdDate | date: 'dd/MM/yyyy HH:mm'">
                 {{ user.createdDate | date: 'dd/MM/yy HH:mm' }}
               </td>
-              <td class="user-modified-by">
+              <td class="user-modified-by" [title]="user.lastModifiedBy">
                 {{ user.lastModifiedBy }}
               </td>
-              <td class="user-modified-date">
+              <td class="user-modified-date" [title]="user.lastModifiedDate | date: 'dd/MM/yyyy HH:mm'">
                 {{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}
               </td>
               <td class="user-actions">
                 <div class="actions-group">
                   <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-view" title="Voir">
-                    <span class="action-icon">👁️</span>
+                    <span class="action-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M1 12S5 4 12 4S23 12 23 12S19 20 12 20S1 12 1 12Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
                   </button>
                   <button
                     type="submit"
@@ -130,7 +210,39 @@
                     class="btn btn-edit"
                     title="Modifier"
                   >
-                    <span class="action-icon">✏️</span>
+                    <span class="action-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M18.5 2.50023C18.8978 2.1025 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1025 21.5 2.50023C21.8978 2.89795 22.1214 3.43757 22.1214 4.00023C22.1214 4.56288 21.8978 5.1025 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                  <button type="button" (click)="openRoleModal(user)" class="btn btn-role" title="Modifier les rôles">
+                    <span class="action-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 2L2 7L12 12L22 7L12 2Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </span>
                   </button>
                   <button
                     type="button"
@@ -139,7 +251,20 @@
                     [disabled]="!currentAccount() || currentAccount()?.login === user.login"
                     title="Supprimer"
                   >
-                    <span class="action-icon">🗑️</span>
+                    <span class="action-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                          d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </span>
                   </button>
                 </div>
               </td>

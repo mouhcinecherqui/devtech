@@ -12,16 +12,14 @@ import { LoginService } from 'app/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { environment } from 'environments/environment';
-import ActiveMenuDirective from './active-menu.directive';
 import NavbarItem from './navbar-item.model';
-import { NotificationService, Notification } from 'app/core/interceptor/notification.interceptor';
-import { computed } from '@angular/core';
+import { NotificationBellComponent } from 'app/core/components/notification-bell/notification-bell.component';
 
 @Component({
   selector: 'jhi-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, ActiveMenuDirective, FormsModule],
+  imports: [RouterModule, SharedModule, HasAnyAuthorityDirective, FormsModule, NotificationBellComponent],
 })
 export default class NavbarComponent implements OnInit {
   inProduction?: boolean;
@@ -31,10 +29,8 @@ export default class NavbarComponent implements OnInit {
   version = '';
   account = inject(AccountService).trackCurrentAccount();
   entitiesNavbarItems: NavbarItem[] = [];
-  notifications = this.notificationService.notifications;
-  unreadCount = this.notificationService.unreadCount;
-  showNotificationsDropdown = signal(false);
   isRTL = signal(false);
+  toggleUserMenu = false;
 
   public translateService = inject(TranslateService);
   private readonly loginService = inject(LoginService);
@@ -42,7 +38,7 @@ export default class NavbarComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
 
-  constructor(private notificationService: NotificationService) {
+  constructor() {
     const { VERSION } = environment;
     if (VERSION) {
       this.version = VERSION.toLowerCase().startsWith('v') ? VERSION : `v${VERSION}`;
@@ -55,10 +51,6 @@ export default class NavbarComponent implements OnInit {
       this.inProduction = profileInfo.inProduction;
       this.openAPIEnabled = profileInfo.openAPIEnabled;
     });
-    // Appeler fetchNotifications uniquement si l'utilisateur est authentifié
-    if (this.account()) {
-      this.notificationService.fetchNotifications();
-    }
 
     // Initialiser la direction RTL basée sur la langue actuelle
     this.updateRTLLayout(this.translateService.currentLang || 'fr');
@@ -104,33 +96,6 @@ export default class NavbarComponent implements OnInit {
     this.isNavbarCollapsed.update(isNavbarCollapsed => !isNavbarCollapsed);
   }
 
-  toggleNotificationsDropdown(): void {
-    this.showNotificationsDropdown.set(!this.showNotificationsDropdown());
-    if (this.showNotificationsDropdown()) {
-      this.notificationService.fetchNotifications();
-    }
-  }
-
-  markAsRead(notif: Notification, event: Event): void {
-    event.stopPropagation();
-    if (!notif.isRead) {
-      this.notificationService.markAsRead(notif.id);
-    }
-  }
-
-  markAllAsRead(event: Event): void {
-    event.stopPropagation();
-    this.notificationService.markAllAsRead();
-  }
-
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.notification-bell') && !target.closest('.notification-dropdown')) {
-      this.showNotificationsDropdown.set(false);
-    }
-  }
-
   getLogoLink(): string {
     const currentAccount = this.account();
 
@@ -140,7 +105,7 @@ export default class NavbarComponent implements OnInit {
     }
 
     // Rediriger vers le dashboard approprié selon le rôle
-    const authorities = currentAccount.authorities || [];
+    const authorities = currentAccount.authorities ?? [];
 
     if (authorities.includes('ROLE_ADMIN')) {
       return '/admin-dashboard';
@@ -154,5 +119,9 @@ export default class NavbarComponent implements OnInit {
 
     // Par défaut, rediriger vers home si aucun rôle spécifique
     return '/home';
+  }
+
+  goToAccount(): void {
+    this.router.navigate(['/account/settings']);
   }
 }

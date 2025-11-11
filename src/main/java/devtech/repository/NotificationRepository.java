@@ -2,11 +2,56 @@ package devtech.repository;
 
 import devtech.domain.Notification;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Spring Data JPA repository for the Notification entity.
+ */
+@SuppressWarnings("unused")
 @Repository
-public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    List<Notification> findByUserLoginAndIsReadFalseOrderByCreatedDateDesc(String userLogin);
-    List<Notification> findByUserLoginOrderByCreatedDateDesc(String userLogin);
+public interface NotificationRepository extends JpaRepository<Notification, Long>, JpaSpecificationExecutor<Notification> {
+    /**
+     * Find all notifications by user ID
+     */
+    List<Notification> findByUserId(Long userId);
+
+    /**
+     * Find all unread notifications
+     */
+    List<Notification> findByReadFalse();
+
+    /**
+     * Find all unread notifications by user ID
+     */
+    List<Notification> findByUserIdAndReadFalse(Long userId);
+
+    /**
+     * Count unread notifications by user ID
+     */
+    long countByUserIdAndReadFalse(Long userId);
+
+    /**
+     * Find notifications by ticket ID
+     */
+    List<Notification> findByTicketId(Long ticketId);
+
+    /**
+     * Find notifications by payment ID
+     */
+    List<Notification> findByPaymentId(Long paymentId);
+
+    /**
+     * Find notifications by type
+     */
+    List<Notification> findByType(String type);
+
+    /**
+     * Find notifications by type and user ID
+     */
+    List<Notification> findByTypeAndUserId(String type, Long userId);
 }

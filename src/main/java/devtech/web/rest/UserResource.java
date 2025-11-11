@@ -205,4 +205,69 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName, "userManagement.deleted", login)).build();
     }
+
+    /**
+     * {@code PUT /admin/users/{login}/roles} : Updates user roles.
+     *
+     * @param login the login of the user to update.
+     * @param rolesRequest the roles to assign to the user.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated user.
+     */
+    @PutMapping("/users/{login}/roles")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    public ResponseEntity<AdminUserDTO> updateUserRoles(
+        @PathVariable("login") @Pattern(regexp = Constants.LOGIN_REGEX) String login,
+        @RequestBody RolesUpdateRequest rolesRequest
+    ) {
+        LOG.debug("REST request to update roles for User: {}", login);
+
+        Optional<User> userOpt = userRepository.findOneByLogin(login);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User user = userOpt.get();
+        Set<String> newAuthorities = new HashSet<>(rolesRequest.getAuthorities());
+
+        // Valider les autorités
+        if (!isValidAuthorities(newAuthorities)) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        // Mettre à jour les autorités
+        user.setAuthorities(
+            newAuthorities
+                .stream()
+                .map(authority -> {
+                    devtech.domain.Authority auth = new devtech.domain.Authority();
+                    auth.setName(authority);
+                    return auth;
+                })
+                .collect(java.util.stream.Collectors.toSet())
+        );
+
+        userRepository.save(user);
+
+        Optional<AdminUserDTO> updatedUser = userService.getUserWithAuthoritiesByLogin(login).map(AdminUserDTO::new);
+
+        return ResponseUtil.wrapOrNotFound(updatedUser, HeaderUtil.createAlert(applicationName, "userManagement.rolesUpdated", login));
+    }
+
+    private boolean isValidAuthorities(Set<String> authorities) {
+        Set<String> validAuthorities = Set.of("ROLE_USER", "ROLE_CLIENT", "ROLE_MANAGER", "ROLE_ADMIN");
+        return authorities.stream().allMatch(validAuthorities::contains);
+    }
+
+    public static class RolesUpdateRequest {
+
+        private List<String> authorities;
+
+        public List<String> getAuthorities() {
+            return authorities;
+        }
+
+        public void setAuthorities(List<String> authorities) {
+            this.authorities = authorities;
+        }
+    }
 }

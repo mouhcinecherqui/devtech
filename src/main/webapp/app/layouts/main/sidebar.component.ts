@@ -5,7 +5,7 @@ import { JsonPipe, CommonModule } from '@angular/common';
 import SharedModule from '../../shared/shared.module';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'jhi-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,

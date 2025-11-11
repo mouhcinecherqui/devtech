@@ -1,5 +1,5 @@
 // Modern Design Variables
-$primary-color: #6366f1;
+$primary-color: #667eea;
 $primary-light: #818cf8;
 $primary-dark: #4f46e5;
 $success-color: #10b981;
@@ -19,23 +19,23 @@ $gray-900: #0f172a;
 
 // Modern Mixins
 @mixin glassmorphism {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
 }
 
 @mixin modern-shadow {
   box-shadow:
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
-    0 1px 2px 0 rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 @mixin modern-shadow-hover {
   box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 @mixin smooth-transition {
@@ -52,7 +52,7 @@ $gray-900: #0f172a;
   margin: 0 auto;
   padding: 2rem;
   min-height: 100vh;
-  background: linear-gradient(135deg, #e8f4f8 0%, #d1e7dd 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   position: relative;
 
   &::before {
@@ -62,7 +62,7 @@ $gray-900: #0f172a;
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(0,0,0,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
     opacity: 0.3;
     pointer-events: none;
   }
@@ -132,8 +132,12 @@ $gray-900: #0f172a;
   }
 
   .stats-icon {
-    font-size: 2rem;
-    opacity: 0.8;
+    svg {
+      width: 32px;
+      height: 32px;
+      color: $primary-color;
+      filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.2));
+    }
   }
 
   .stats-content {
@@ -177,15 +181,30 @@ $gray-900: #0f172a;
     box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
   }
 
-  .btn-icon {
-    font-size: 1.2rem;
-    font-weight: 800;
+  svg {
+    width: 20px;
+    height: 20px;
+    color: currentColor;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
   }
 }
 
 // Search Section
 .search-section {
+  margin-bottom: 0;
+}
+
+// Search + Action Row alignment
+.search-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   margin-bottom: 2rem;
+}
+
+.search-action-row .search-section {
+  flex: 1;
 }
 
 .search-container {
@@ -222,9 +241,14 @@ $gray-900: #0f172a;
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.1rem;
   opacity: 0.6;
   pointer-events: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: $gray-500;
+  }
 }
 
 // Table Container
@@ -332,6 +356,41 @@ $gray-900: #0f172a;
   }
 }
 
+.client-role {
+  text-align: center;
+  min-width: 120px;
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  border: 1px solid transparent;
+  @include smooth-transition;
+
+  &.role-admin {
+    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%);
+    color: #c2185b;
+    border-color: #f8bbd9;
+  }
+
+  &.role-manager {
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    color: #ef6c00;
+    border-color: #ffe0b2;
+  }
+
+  &.role-client {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    color: #1565c0;
+    border-color: #bbdefb;
+  }
+}
+
 .client-actions {
   display: flex;
   gap: 0.5rem;
@@ -360,6 +419,15 @@ $gray-900: #0f172a;
       }
     }
 
+    &.btn-role {
+      background: linear-gradient(135deg, $info-color, #22d3ee);
+      color: white;
+
+      &:hover {
+        box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
+      }
+    }
+
     &.btn-delete {
       background: linear-gradient(135deg, $danger-color, #f87171);
       color: white;
@@ -369,8 +437,11 @@ $gray-900: #0f172a;
       }
     }
 
-    .action-icon {
-      font-size: 1rem;
+    svg {
+      width: 16px;
+      height: 16px;
+      color: currentColor;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
     }
   }
 }
@@ -387,9 +458,15 @@ $gray-900: #0f172a;
   color: $gray-500;
 
   .empty-icon {
-    font-size: 4rem;
     margin-bottom: 1.5rem;
     opacity: 0.5;
+
+    svg {
+      width: 64px;
+      height: 64px;
+      color: $gray-400;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
   }
 
   h3 {
@@ -477,5 +554,70 @@ $gray-900: #0f172a;
     .client-info strong {
       font-size: 0.9rem;
     }
+  }
+}
+
+// Pagination Section
+.pagination-section {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 2rem;
+  @include modern-shadow;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.pagination-info {
+  color: $gray-600;
+  font-weight: 500;
+}
+
+.pagination-controls {
+  .modern-pagination {
+    ::ng-deep {
+      .page-link {
+        border: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: $gray-700;
+        border-radius: 12px;
+        margin: 0 0.25rem;
+        padding: 0.75rem 1rem;
+        font-weight: 600;
+        @include smooth-transition;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+          color: $primary-color;
+          transform: translateY(-1px);
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+      }
+
+      .page-item.active .page-link {
+        background: linear-gradient(135deg, $primary-color, $primary-light);
+        color: white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+      }
+
+      .page-item.disabled .page-link {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+// Responsive pagination
+@media (max-width: 768px) {
+  .pagination-section {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
   }
 }

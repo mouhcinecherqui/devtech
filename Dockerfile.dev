@@ -1,0 +1,39 @@
+FROM openjdk:17-jdk-slim
+
+# Install Node.js et nettoyer le cache apt (optimisé pour le cache Docker)
+# Utilise Node.js 22.x pour correspondre aux exigences du package.json
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl ca-certificates && \
+    curl -sL https://deb.nodesource.com/setup_22.x | bash - && \
+    apt-get install -y --no-install-recommends nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy Maven wrapper and pom.xml d'abord (pour optimiser le cache)
+COPY mvnw .
+RUN chmod +x mvnw
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Download Maven dependencies (cette couche sera mise en cache si pom.xml ne change pas)
+RUN ./mvnw dependency:go-offline -B
+
+# Copy package.json and package-lock.json (pour optimiser le cache npm)
+COPY package.json package-lock.json* ./
+
+# Install npm dependencies (cette couche sera mise en cache si package.json ne change pas)
+RUN npm install && \
+    npm cache clean --force
+
+# Copy rest of the application (pour le contexte de build complet)
+# Note: En dev, le volume mount dans docker-compose remplacera ceci
+COPY . .
+
+# Expose ports
+EXPOSE 8080 9000 3000 4200
+
+# Commande par défaut (peut être surchargée par docker-compose)
+CMD ["npm", "run", "watch"]

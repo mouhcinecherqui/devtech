@@ -20,13 +20,15 @@ interface Ticket {
 }
 
 @Component({
-  selector: 'app-user-tickets',
+  selector: 'jhi-user-tickets',
   templateUrl: './user-tickets.component.html',
   styleUrls: ['./user-tickets.component.scss'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule],
 })
 export class UserTicketsComponent implements OnInit {
+  @ViewChild('typeInput') typeInput?: ElementRef;
+
   tickets = signal<Ticket[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
@@ -38,22 +40,6 @@ export class UserTicketsComponent implements OnInit {
 
   selectedTicket: Ticket | null = null;
   showDetailModal = signal(false);
-
-  getStepIndex(status: string): number {
-    return this.workflowSteps.indexOf(status);
-  }
-
-  openDetailModal(ticket: Ticket): void {
-    this.selectedTicket = ticket;
-    this.showDetailModal.set(true);
-  }
-
-  closeDetailModal(): void {
-    this.showDetailModal.set(false);
-    this.selectedTicket = null;
-  }
-
-  @ViewChild('typeInput') typeInput?: ElementRef;
 
   constructor(
     private http: HttpClient,
@@ -74,6 +60,20 @@ export class UserTicketsComponent implements OnInit {
     this.fetchTickets();
   }
 
+  getStepIndex(status: string): number {
+    return this.workflowSteps.indexOf(status);
+  }
+
+  openDetailModal(ticket: Ticket): void {
+    this.selectedTicket = ticket;
+    this.showDetailModal.set(true);
+  }
+
+  closeDetailModal(): void {
+    this.showDetailModal.set(false);
+    this.selectedTicket = null;
+  }
+
   fetchTickets(): void {
     this.loading.set(true);
     this.http.get<Ticket[]>('/api/tickets').subscribe({
@@ -87,21 +87,6 @@ export class UserTicketsComponent implements OnInit {
         this.clearErrorAfterDelay();
       },
     });
-  }
-
-  // Méthode pour effacer automatiquement les messages d'erreur
-  private clearErrorAfterDelay(delay: number = 5000): void {
-    setTimeout(() => {
-      this.error.set(null);
-    }, delay);
-  }
-
-  // Méthode pour afficher un message de succès
-  private showSuccessMessage(message: string): void {
-    this.success.set(message);
-    setTimeout(() => {
-      this.success.set(null);
-    }, 3000);
   }
 
   openModal(): void {
@@ -139,5 +124,20 @@ export class UserTicketsComponent implements OnInit {
         this.clearErrorAfterDelay();
       },
     });
+  }
+
+  // Méthode pour effacer automatiquement les messages d'erreur
+  private clearErrorAfterDelay(delay = 5000): void {
+    setTimeout(() => {
+      this.error.set(null);
+    }, delay);
+  }
+
+  // Méthode pour afficher un message de succès
+  private showSuccessMessage(message: string): void {
+    this.success.set(message);
+    setTimeout(() => {
+      this.success.set(null);
+    }, 3000);
   }
 }

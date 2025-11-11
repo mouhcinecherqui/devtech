@@ -1,0 +1,136 @@
+<div class="client-contact-container">
+  <!-- Background Elements -->
+  <div class="contact-background">
+    <div class="contact-overlay"></div>
+    <div class="contact-pattern"></div>
+    <div class="floating-elements">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <div class="contact-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <span class="title-icon">📞</span>
+        {{ 'contact.title' | translate }}
+      </h1>
+      <p class="page-description">
+        {{ 'contact.description' | translate }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="contact-content">
+    <!-- Company Information Card -->
+    <div class="company-info-card">
+      <h2 class="card-title">
+        <span class="card-icon">🏢</span>
+        {{ 'contact.companyInfo.title' | translate }}
+      </h2>
+
+      <div class="company-details">
+        <div class="company-name">{{ companyInfo.name }}</div>
+
+        <div class="contact-methods">
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div class="contact-info">
+              <div class="contact-label">{{ 'contact.companyInfo.phone' | translate }}</div>
+              <div class="contact-value">
+                <a href="tel:{{ companyInfo.phone }}" class="contact-link">
+                  {{ companyInfo.phone }}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div class="contact-info">
+              <div class="contact-label">{{ 'contact.companyInfo.email' | translate }}</div>
+              <div class="contact-value">
+                <a href="mailto:{{ companyInfo.email }}" class="contact-link">
+                  {{ companyInfo.email }}
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">🕒</div>
+            <div class="contact-info">
+              <div class="contact-label">{{ 'contact.companyInfo.workingHours' | translate }}</div>
+              <div class="contact-value">{{ companyInfo.workingHours }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form Card -->
+    <div class="contact-form-card">
+      <h2 class="card-title">
+        <span class="card-icon">✍️</span>
+        {{ 'contact.form.title' | translate }}
+      </h2>
+
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+        <div class="form-group">
+          <label for="subject" class="form-label">{{ 'contact.form.subject' | translate }} *</label>
+          <input
+            type="text"
+            id="subject"
+            formControlName="subject"
+            class="form-control"
+            [class.is-invalid]="getFieldError('subject')"
+            [placeholder]="'contact.form.subjectPlaceholder' | translate"
+          />
+          <div class="invalid-feedback" *ngIf="getFieldError('subject')">
+            {{ getFieldError('subject') }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="priority" class="form-label">{{ 'contact.form.priority' | translate }}</label>
+          <select id="priority" formControlName="priority" class="form-control">
+            <option value="low">{{ 'contact.priorities.low' | translate }}</option>
+            <option value="normal">{{ 'contact.priorities.normal' | translate }}</option>
+            <option value="high">{{ 'contact.priorities.high' | translate }}</option>
+            <option value="urgent">{{ 'contact.priorities.urgent' | translate }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="message" class="form-label">{{ 'contact.form.message' | translate }} *</label>
+          <textarea
+            id="message"
+            formControlName="message"
+            class="form-control"
+            [class.is-invalid]="getFieldError('message')"
+            rows="6"
+            [placeholder]="'contact.form.messagePlaceholder' | translate"
+          ></textarea>
+          <div class="invalid-feedback" *ngIf="getFieldError('message')">
+            {{ getFieldError('message') }}
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="isSubmitting || contactForm.invalid">
+            <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+            {{ isSubmitting ? ('contact.form.sending' | translate) : ('contact.form.send' | translate) }}
+          </button>
+
+          <button type="button" class="btn btn-secondary" (click)="contactForm.reset()" [disabled]="isSubmitting">
+            {{ 'contact.form.clear' | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

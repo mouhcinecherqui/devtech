@@ -1,11 +1,7 @@
 <header class="main-header" [class.rtl]="isRTL()">
   <div class="header-left">
     <a class="site-title" [routerLink]="getLogoLink()">
-      <img
-        src="/content/images/devtech-logo.png"
-        alt="DevTech Logo"
-        style="height: 160px; vertical-align: middle; background: transparent"
-      />
+      <img src="/content/images/devtechly.svg" alt="DevTech Logo" />
     </a>
   </div>
   <nav class="header-nav">
@@ -32,55 +28,37 @@
     <a *ngIf="account() && account()?.authorities?.includes('ROLE_CLIENT')" routerLink="/client-dashboard" routerLinkActive="active">
       {{ 'navbar.clientDashboard' | translate }}
     </a>
-    <div *ngIf="account()" class="notification-bell" (click)="toggleNotificationsDropdown()">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6V11c0-3.07-1.63-5.64-5-6.32V4a1 1 0 1 0-2 0v.68C7.63 5.36 6 7.92 6 11v5l-1.29 1.29A1 1 0 0 0 6 19h12a1 1 0 0 0 .71-1.71L18 16z"
-          stroke="#2563eb"
-          stroke-width="1.5"
-          fill="#f8fafd"
-        />
-      </svg>
-      <span class="notification-badge" *ngIf="unreadCount() > 0">{{ unreadCount() }}</span>
-    </div>
-    <div class="notification-dropdown" *ngIf="showNotificationsDropdown()">
-      <div class="dropdown-header">
-        {{ 'navbar.notifications' | translate }}
-        <button class="mark-all-btn" (click)="markAllAsRead($event)">{{ 'navbar.markAllRead' | translate }}</button>
-      </div>
-      <ul>
-        <li *ngFor="let notif of notifications().slice(0, 5)" [class.unread]="!notif.isRead" (click)="markAsRead(notif, $event)">
-          <span class="notif-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="11" fill="#e0e7ef" />
-              <path d="M12 7v5l3 3" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-          <span class="notif-message">{{ notif.message }}</span>
-          <span class="notif-date">{{ notif.createdDate | date: 'short' }}</span>
-        </li>
-        <li *ngIf="!notifications().length">{{ 'navbar.noNotifications' | translate }}</li>
-      </ul>
-    </div>
+    <jhi-notification-bell *ngIf="account()"></jhi-notification-bell>
     <div class="language-switcher dropdown">
       <button class="lang-btn" type="button">
-        <span *ngIf="translateService.currentLang === 'fr'">🇫🇷 Français</span>
-        <span *ngIf="translateService.currentLang === 'en'">🇬🇧 English</span>
-        <span *ngIf="translateService.currentLang === 'es'">🇪🇸 Español</span>
-        <span *ngIf="translateService.currentLang === 'ar'">🇸🇦 العربية</span>
+        <span *ngIf="translateService.currentLang === 'fr'">Français</span>
+        <span *ngIf="translateService.currentLang === 'en'">English</span>
+        <span *ngIf="translateService.currentLang === 'es'">Español</span>
+        <span *ngIf="translateService.currentLang === 'ar'">العربية</span>
         <svg style="margin-left: 6px; vertical-align: middle" width="12" height="12" viewBox="0 0 20 20">
           <path d="M5.5 8l4.5 4.5L14.5 8" stroke="#333" stroke-width="2" fill="none" />
         </svg>
       </button>
       <ul class="lang-dropdown">
-        <li (click)="changeLanguage('fr')"><span>🇫🇷</span> Français</li>
-        <li (click)="changeLanguage('en')"><span>🇬🇧</span> English</li>
-        <li (click)="changeLanguage('es')"><span>🇪🇸</span> Español</li>
-        <li (click)="changeLanguage('ar')"><span>🇸🇦</span> العربية</li>
+        <li (click)="changeLanguage('fr')">Français</li>
+        <li (click)="changeLanguage('en')">English</li>
+        <li (click)="changeLanguage('es')">Español</li>
+        <li (click)="changeLanguage('ar')">العربية</li>
       </ul>
     </div>
     <a *ngIf="!account()" (click)="login()">{{ 'navbar.login' | translate }}</a>
     <a *ngIf="!account()" routerLink="/app-user-register" routerLinkActive="active">{{ 'navbar.register' | translate }}</a>
-    <a *ngIf="account()" (click)="logout()">{{ 'navbar.logout' | translate }}</a>
+    <div *ngIf="account()" class="language-switcher dropdown" style="margin-left: 1rem">
+      <button class="lang-btn" type="button" (click)="toggleUserMenu = !toggleUserMenu">
+        <span>👤 {{ account()?.firstName || 'Account' }}</span>
+        <svg style="margin-left: 6px; vertical-align: middle" width="12" height="12" viewBox="0 0 20 20">
+          <path d="M5.5 8l4.5 4.5L14.5 8" stroke="#333" stroke-width="2" fill="none" />
+        </svg>
+      </button>
+      <ul class="lang-dropdown" *ngIf="toggleUserMenu">
+        <li (click)="goToAccount()">⚙️ Account</li>
+        <li (click)="logout()">🚪 {{ 'navbar.logout' | translate }}</li>
+      </ul>
+    </div>
   </nav>
 </header>

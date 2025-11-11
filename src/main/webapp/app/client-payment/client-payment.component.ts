@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -7,9 +7,10 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 import SharedModule from 'app/shared/shared.module';
 import { PaiementsService } from 'app/admin/paiements/paiements.service';
 import { AccountService } from 'app/core/auth/account.service';
+import { PaymentMethodService, PaymentMethod } from 'app/payment-methods/payment-method.service';
 
 @Component({
-  selector: 'app-client-payment',
+  selector: 'jhi-client-payment',
   templateUrl: './client-payment.component.html',
   styleUrls: ['./client-payment.component.scss'],
   standalone: true,
@@ -22,14 +23,20 @@ export class ClientPaymentComponent implements OnInit {
   successMessage = '';
   currentAccount = inject(AccountService).trackCurrentAccount();
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private paiementsService: PaiementsService,
-    private router: Router,
-  ) {}
+  // Payment methods
+  private paymentMethodService = inject(PaymentMethodService);
+  private formBuilder = inject(FormBuilder);
+  private paiementsService = inject(PaiementsService);
+  private router = inject(Router);
+
+  savedPaymentMethods = signal<PaymentMethod[]>([]);
+  selectedPaymentMethod: PaymentMethod | null = null;
+  useSavedPayment = false;
+  showNewPaymentForm = false;
 
   ngOnInit(): void {
     this.initForm();
+    this.loadSavedPaymentMethods();
   }
 
   private initForm(): void {
@@ -62,7 +69,7 @@ export class ClientPaymentComponent implements OnInit {
         },
         error: error => {
           this.isLoading = false;
-          this.errorMessage = 'Erreur lors de la création de la demande de paiement: ' + error.message;
+          this.errorMessage = 'Erreur lors de la création de la demande de paiement: ' + (error.message || 'Erreur inconnue');
         },
       });
     }
@@ -110,5 +117,51 @@ export class ClientPaymentComponent implements OnInit {
       }
     }
     return '';
+  }
+
+  // Payment methods management
+  loadSavedPaymentMethods(): void {
+    this.paymentMethodService.list().subscribe({
+      next: methods => {
+        this.savedPaymentMethods.set(methods);
+        // Auto-select default payment method if available
+        const defaultMethod = methods.find(m => m.isDefault);
+        if (defaultMethod) {
+          this.selectSavedPaymentMethod(defaultMethod);
+        }
+      },
+      error: (error: any) => {
+        console.warn('Erreur lors du chargement des moyens de paiement:', error);
+      },
+    });
+  }
+
+  selectSavedPaymentMethod(method: PaymentMethod): void {
+    this.selectedPaymentMethod = method;
+    this.useSavedPayment = true;
+    this.showNewPaymentForm = false;
+  }
+
+  useNewPaymentMethod(): void {
+    this.useSavedPayment = false;
+    this.selectedPaymentMethod = null;
+    this.showNewPaymentForm = true;
+  }
+
+  getPaymentMethodDisplayName(method: PaymentMethod): string {
+    return `${method.brand} •••• ${method.last4} (${method.expMonth}/${method.expYear})`;
+  }
+
+  getPaymentMethodIcon(brand: string): string {
+    switch (brand.toLowerCase()) {
+      case 'visa':
+        return '💳';
+      case 'mastercard':
+        return '💳';
+      case 'amex':
+        return '💳';
+      default:
+        return '💳';
+    }
   }
 }

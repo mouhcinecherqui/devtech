@@ -1,0 +1,39 @@
+name: devtech-prod
+services:
+  devtech-app:
+    image: devtech:latest
+    ports:
+      - '8080:8080'
+    env_file:
+      - .env.prod
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-prod}
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+      - SPRING_LIQUIBASE_URL=${SPRING_LIQUIBASE_URL:-jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+      - JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET=${JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-devtech}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+    depends_on:
+      mysql:
+        condition: service_started
+    restart: unless-stopped
+  mysql:
+    image: mysql:8.0.32
+    volumes:
+      - ./src/main/docker/config/mysql:/etc/mysql/conf.d
+      - prod-db-data:/var/lib/mysql
+    env_file:
+      - .env.prod
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER:-devtech}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-devtech}
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ['CMD-SHELL', 'mysql -e "SHOW DATABASES;" && sleep 5']
+      interval: 5s
+      timeout: 10s
+      retries: 10
+volumes:
+  prod-db-data:

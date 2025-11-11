@@ -2,116 +2,126 @@ package devtech.domain;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
+/**
+ * A Paiement entity for payments.
+ */
 @Entity
 @Table(name = "paiement")
 public class Paiement implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_login")
-    private String user;
-
     @Column(name = "amount")
     private Double amount;
 
-    @Column(name = "currency", length = 3)
-    private String currency = "MAD";
+    @Column(name = "methode_paiement")
+    private String methodePaiement;
+
+    @Column(name = "date_paiement")
+    private Instant datePaiement;
+
+    @Column(name = "ticket_id")
+    private Long ticketId;
+
+    @Column(name = "status")
+    private String status = "PENDING";
+
+    @Column(name = "transaction_id")
+    private String transactionId;
+
+    @Column(name = "user_email")
+    private String user;
 
     @Column(name = "date")
-    private LocalDate date;
+    private java.time.LocalDate date;
 
-    @Column(name = "status", length = 50)
-    private String status;
+    @Column(name = "description")
+    private String description;
 
-    // Champs CMI
-    @Column(name = "cmi_transaction_id", length = 100)
-    private String cmiTransactionId;
+    @Column(name = "client_ip")
+    private String clientIp;
 
-    @Column(name = "cmi_order_id", length = 100)
-    private String cmiOrderId;
+    @Column(name = "currency")
+    private String currency;
 
-    @Column(name = "cmi_response_code", length = 10)
-    private String cmiResponseCode;
-
-    @Column(name = "cmi_response_message", length = 500)
-    private String cmiResponseMessage;
-
-    @Column(name = "cmi_approval_code", length = 50)
-    private String cmiApprovalCode;
-
-    @Column(name = "cmi_merchant_id", length = 50)
+    @Column(name = "cmi_merchant_id")
     private String cmiMerchantId;
 
-    @Column(name = "cmi_payment_method", length = 50)
+    // Champs CMI supplémentaires
+    @Column(name = "cmi_order_id")
+    private String cmiOrderId;
+
+    @Column(name = "cmi_transaction_id")
+    private String cmiTransactionId;
+
+    @Column(name = "cmi_response_code")
+    private String cmiResponseCode;
+
+    @Column(name = "cmi_response_message")
+    private String cmiResponseMessage;
+
+    @Column(name = "cmi_approval_code")
+    private String cmiApprovalCode;
+
+    @Column(name = "cmi_payment_method")
     private String cmiPaymentMethod;
 
-    @Column(name = "cmi_card_type", length = 50)
+    @Column(name = "cmi_card_type")
     private String cmiCardType;
 
-    @Column(name = "cmi_card_number", length = 20)
+    @Column(name = "cmi_card_number")
     private String cmiCardNumber;
 
-    @Column(name = "cmi_card_holder", length = 100)
+    @Column(name = "cmi_card_holder")
     private String cmiCardHolder;
 
-    @Column(name = "cmi_installment", length = 10)
+    @Column(name = "cmi_installment")
     private String cmiInstallment;
 
-    @Column(name = "cmi_3d_secure", length = 10)
+    @Column(name = "cmi_3d_secure")
     private String cmi3DSecure;
 
-    @Column(name = "cmi_ip_address", length = 45)
+    @Column(name = "cmi_ip_address")
     private String cmiIpAddress;
 
-    @Column(name = "cmi_user_agent", length = 500)
+    @Column(name = "cmi_user_agent")
     private String cmiUserAgent;
 
     @Column(name = "cmi_created_at")
-    private LocalDateTime cmiCreatedAt;
+    private java.time.LocalDateTime cmiCreatedAt;
 
     @Column(name = "cmi_updated_at")
-    private LocalDateTime cmiUpdatedAt;
-
-    @Column(name = "description", length = 500)
-    private String description;
-
-    @Column(name = "client_ip", length = 45)
-    private String clientIp;
+    private java.time.LocalDateTime cmiUpdatedAt;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private java.time.LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private java.time.LocalDateTime updatedAt;
 
-    // Constructeurs
-    public Paiement() {
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
-        this.cmiCreatedAt = LocalDateTime.now();
-        this.cmiUpdatedAt = LocalDateTime.now();
+    // Constructors
+    public Paiement() {}
+
+    public Paiement(Long id, Double amount, String methodePaiement, Instant datePaiement) {
+        this.id = id;
+        this.amount = amount;
+        this.methodePaiement = methodePaiement;
+        this.datePaiement = datePaiement;
     }
 
-    // Getters et setters existants
+    // Getters and Setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
     }
 
     public Double getAmount() {
@@ -122,20 +132,28 @@ public class Paiement implements Serializable {
         this.amount = amount;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getMethodePaiement() {
+        return methodePaiement;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setMethodePaiement(String methodePaiement) {
+        this.methodePaiement = methodePaiement;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public Instant getDatePaiement() {
+        return datePaiement;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDatePaiement(Instant datePaiement) {
+        this.datePaiement = datePaiement;
+    }
+
+    public Long getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getStatus() {
@@ -146,13 +164,60 @@ public class Paiement implements Serializable {
         this.status = status;
     }
 
-    // Getters et setters CMI
-    public String getCmiTransactionId() {
-        return cmiTransactionId;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public void setCmiTransactionId(String cmiTransactionId) {
-        this.cmiTransactionId = cmiTransactionId;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public java.time.LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(java.time.LocalDate date) {
+        this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getClientIp() {
+        return clientIp;
+    }
+
+    public void setClientIp(String clientIp) {
+        this.clientIp = clientIp;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getCmiMerchantId() {
+        return cmiMerchantId;
+    }
+
+    public void setCmiMerchantId(String cmiMerchantId) {
+        this.cmiMerchantId = cmiMerchantId;
     }
 
     public String getCmiOrderId() {
@@ -161,6 +226,14 @@ public class Paiement implements Serializable {
 
     public void setCmiOrderId(String cmiOrderId) {
         this.cmiOrderId = cmiOrderId;
+    }
+
+    public String getCmiTransactionId() {
+        return cmiTransactionId;
+    }
+
+    public void setCmiTransactionId(String cmiTransactionId) {
+        this.cmiTransactionId = cmiTransactionId;
     }
 
     public String getCmiResponseCode() {
@@ -185,14 +258,6 @@ public class Paiement implements Serializable {
 
     public void setCmiApprovalCode(String cmiApprovalCode) {
         this.cmiApprovalCode = cmiApprovalCode;
-    }
-
-    public String getCmiMerchantId() {
-        return cmiMerchantId;
-    }
-
-    public void setCmiMerchantId(String cmiMerchantId) {
-        this.cmiMerchantId = cmiMerchantId;
     }
 
     public String getCmiPaymentMethod() {
@@ -259,51 +324,166 @@ public class Paiement implements Serializable {
         this.cmiUserAgent = cmiUserAgent;
     }
 
-    public LocalDateTime getCmiCreatedAt() {
+    public java.time.LocalDateTime getCmiCreatedAt() {
         return cmiCreatedAt;
     }
 
-    public void setCmiCreatedAt(LocalDateTime cmiCreatedAt) {
+    public void setCmiCreatedAt(java.time.LocalDateTime cmiCreatedAt) {
         this.cmiCreatedAt = cmiCreatedAt;
     }
 
-    public LocalDateTime getCmiUpdatedAt() {
+    public java.time.LocalDateTime getCmiUpdatedAt() {
         return cmiUpdatedAt;
     }
 
-    public void setCmiUpdatedAt(LocalDateTime cmiUpdatedAt) {
+    public void setCmiUpdatedAt(java.time.LocalDateTime cmiUpdatedAt) {
         this.cmiUpdatedAt = cmiUpdatedAt;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getClientIp() {
-        return clientIp;
-    }
-
-    public void setClientIp(String clientIp) {
-        this.clientIp = clientIp;
-    }
-
-    public LocalDateTime getCreatedAt() {
+    public java.time.LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(java.time.LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public java.time.LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(java.time.LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Paiement)) return false;
+        Paiement paiement = (Paiement) o;
+        return id != null && id.equals(paiement.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return (
+            "Paiement{" +
+            "id=" +
+            id +
+            "," +
+            "amount=" +
+            amount +
+            "," +
+            "methodePaiement='" +
+            methodePaiement +
+            "'" +
+            "," +
+            "datePaiement=" +
+            datePaiement +
+            "," +
+            "ticketId=" +
+            ticketId +
+            "," +
+            "status='" +
+            status +
+            "'" +
+            "," +
+            "transactionId='" +
+            transactionId +
+            "'" +
+            "," +
+            "user='" +
+            user +
+            "'" +
+            "," +
+            "date=" +
+            date +
+            "," +
+            "description='" +
+            description +
+            "'" +
+            "," +
+            "clientIp='" +
+            clientIp +
+            "'" +
+            "," +
+            "currency='" +
+            currency +
+            "'" +
+            "," +
+            "cmiMerchantId='" +
+            cmiMerchantId +
+            "'" +
+            "," +
+            "cmiOrderId='" +
+            cmiOrderId +
+            "'" +
+            "," +
+            "cmiTransactionId='" +
+            cmiTransactionId +
+            "'" +
+            "," +
+            "cmiResponseCode='" +
+            cmiResponseCode +
+            "'" +
+            "," +
+            "cmiResponseMessage='" +
+            cmiResponseMessage +
+            "'" +
+            "," +
+            "cmiApprovalCode='" +
+            cmiApprovalCode +
+            "'" +
+            "," +
+            "cmiPaymentMethod='" +
+            cmiPaymentMethod +
+            "'" +
+            "," +
+            "cmiCardType='" +
+            cmiCardType +
+            "'" +
+            "," +
+            "cmiCardNumber='" +
+            cmiCardNumber +
+            "'" +
+            "," +
+            "cmiCardHolder='" +
+            cmiCardHolder +
+            "'" +
+            "," +
+            "cmiInstallment='" +
+            cmiInstallment +
+            "'" +
+            "," +
+            "cmi3DSecure='" +
+            cmi3DSecure +
+            "'" +
+            "," +
+            "cmiIpAddress='" +
+            cmiIpAddress +
+            "'" +
+            "," +
+            "cmiUserAgent='" +
+            cmiUserAgent +
+            "'" +
+            "," +
+            "cmiCreatedAt=" +
+            cmiCreatedAt +
+            "," +
+            "cmiUpdatedAt=" +
+            cmiUpdatedAt +
+            "," +
+            "createdAt=" +
+            createdAt +
+            "," +
+            "updatedAt=" +
+            updatedAt +
+            '}'
+        );
     }
 }

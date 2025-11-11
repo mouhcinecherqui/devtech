@@ -22,7 +22,7 @@ export class NotificationService {
 
   constructor(private http: HttpClient) {}
 
-  fetchNotifications() {
+  fetchNotifications(): void {
     this.http
       .get<Notification[]>('/api/notifications')
       .pipe(
@@ -40,18 +40,18 @@ export class NotificationService {
         // Force le signal en créant une nouvelle référence
         this.notifications.set([...list]);
         this.unreadCount.set(list.filter(n => !n.isRead).length);
-        console.log('Notifications rafraîchies:', list);
+        console.warn('Notifications rafraîchies:', list);
       });
   }
 
-  markAsRead(id: number) {
-    return this.http.put(`/api/notifications/${id}/read`, {}).subscribe(() => {
+  markAsRead(id: number): void {
+    this.http.put(`/api/notifications/${id}/read`, {}).subscribe(() => {
       this.fetchNotifications();
     });
   }
 
-  markAllAsRead() {
-    return this.http.put('/api/notifications/read-all', {}).subscribe(() => {
+  markAllAsRead(): void {
+    this.http.put('/api/notifications/read-all', {}).subscribe(() => {
       this.fetchNotifications();
     });
   }

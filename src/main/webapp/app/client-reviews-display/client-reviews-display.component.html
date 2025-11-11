@@ -1,0 +1,123 @@
+<section class="reviews-section py-5">
+  <div class="container">
+    <!-- En-tête de la section -->
+    <div class="row mb-4">
+      <div class="col-12 text-center">
+        <h2 class="section-title">
+          <i class="fas fa-star text-warning me-3"></i>
+          Avis de nos clients
+        </h2>
+        <p class="section-subtitle text-muted">Découvrez ce que nos clients disent de nos services</p>
+      </div>
+    </div>
+
+    <!-- Statistiques globales - cartes compactes -->
+    <div *ngIf="stats()" class="row mb-4 g-3 compact-stats">
+      <div class="col-md-6">
+        <div class="metric-card">
+          <div class="metric-icon icon--star"><i class="fas fa-star"></i></div>
+          <div class="metric-content">
+            <div class="metric-title">Note moyenne</div>
+            <div class="metric-value">{{ formatAverageRating(stats()?.averageRating) }}</div>
+            <div class="metric-extra">
+              <i
+                *ngFor="let star of getStars(Math.round(stats()?.averageRating || 0)); let i = index"
+                class="fas fa-star"
+                [style.color]="getStarColor(i, Math.round(stats()?.averageRating || 0))"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="metric-card">
+          <div class="metric-icon icon--comments"><i class="fas fa-comments"></i></div>
+          <div class="metric-content">
+            <div class="metric-title">Avis clients</div>
+            <div class="metric-value">{{ stats()?.totalReviews }}</div>
+            <div class="metric-extra muted">Validés</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="error()" class="row mb-4">
+      <div class="col-12">
+        <div class="alert alert-warning text-center" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {{ error() }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading spinner -->
+    <div *ngIf="isLoading()" class="row">
+      <div class="col-12 text-center">
+        <div class="loading-spinner">
+          <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+          <p class="mt-3">Chargement des avis...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grille des avis -->
+    <div *ngIf="!isLoading() && reviews().length > 0" class="row">
+      <div *ngFor="let review of reviews()" class="col-lg-4 col-md-6 mb-4">
+        <div class="review-card">
+          <!-- En-tête de l'avis -->
+          <div class="review-header">
+            <div class="client-info">
+              <div class="client-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="client-details">
+                <h5 class="client-name">{{ review.clientName }}</h5>
+                <small class="review-date">{{ formatDate(review.createdDate!) }}</small>
+              </div>
+            </div>
+            <div class="rating-badge">
+              <span class="badge bg-primary">{{ review.rating }}/5</span>
+            </div>
+          </div>
+
+          <!-- Étoiles -->
+          <div class="stars-container mb-3">
+            <div class="stars">
+              <i
+                *ngFor="let star of getStars(review.rating); let i = index"
+                class="fas fa-star"
+                [style.color]="getStarColor(i, review.rating)"
+              ></i>
+            </div>
+            <small class="rating-text text-muted">{{ getRatingText(review.rating) }}</small>
+          </div>
+
+          <!-- Commentaire -->
+          <div class="review-content">
+            <p class="review-comment">"{{ truncateComment(review.comment || '') }}"</p>
+          </div>
+
+          <!-- Ticket associé -->
+          <div *ngIf="review.ticketTitle" class="review-ticket">
+            <small class="text-muted">
+              <i class="fas fa-ticket-alt me-1"></i>
+              Ticket: {{ review.ticketTitle }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message si aucun avis -->
+    <div *ngIf="!isLoading() && reviews().length === 0" class="row">
+      <div class="col-12 text-center">
+        <div class="no-reviews">
+          <i class="fas fa-star-o fa-3x text-muted mb-3"></i>
+          <h4 class="text-muted">Aucun avis pour le moment</h4>
+          <p class="text-muted">Soyez le premier à donner votre avis !</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

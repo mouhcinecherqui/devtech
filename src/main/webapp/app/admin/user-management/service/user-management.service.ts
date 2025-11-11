@@ -40,4 +40,8 @@ export class UserManagementService {
       .get<{ name: string }[]>(this.applicationConfigService.getEndpointFor('api/authorities'))
       .pipe(map(authorities => authorities.map(a => a.name)));
   }
+
+  updateRoles(login: string, roles: string[]): Observable<IUser> {
+    return this.http.put<IUser>(`${this.resourceUrl}/${login}/roles`, { authorities: roles });
+  }
 }

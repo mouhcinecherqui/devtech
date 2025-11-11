@@ -1,0 +1,33 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="20250903-01-add-payment-method" author="ai">
+    <createTable tableName="payment_method">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="user_login" type="VARCHAR(50)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="type" type="VARCHAR(20)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="brand" type="VARCHAR(20)"/>
+      <column name="last4" type="VARCHAR(4)"/>
+      <column name="exp_month" type="INT"/>
+      <column name="exp_year" type="INT"/>
+      <column name="holder_name" type="VARCHAR(100)"/>
+      <column name="is_default" type="BOOLEAN" defaultValueBoolean="false"/>
+      <column name="created_date" type="TIMESTAMP" defaultValueDate="CURRENT_TIMESTAMP"/>
+    </createTable>
+
+    <createIndex indexName="idx_payment_method_user" tableName="payment_method">
+      <column name="user_login"/>
+    </createIndex>
+  </changeSet>
+
+</databaseChangeLog>
+
+

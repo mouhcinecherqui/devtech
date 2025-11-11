@@ -9,6 +9,7 @@ import {
   withComponentInputBinding,
   withDebugTracing,
   withNavigationErrorHandler,
+  withInMemoryScrolling,
 } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -26,6 +27,7 @@ import { AppPageTitleStrategy } from './app-page-title-strategy';
 
 const routerFeatures: RouterFeatures[] = [
   withComponentInputBinding(),
+  withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
   withNavigationErrorHandler((e: NavigationError) => {
     const router = inject(Router);
     if (e.error.status === 403) {
@@ -33,7 +35,13 @@ const routerFeatures: RouterFeatures[] = [
     } else if (e.error.status === 404) {
       router.navigate(['/404']);
     } else if (e.error.status === 401) {
-      router.navigate(['/login']);
+      // Only redirect to login if we're not on a public page
+      const currentUrl = router.routerState.snapshot.url;
+      const publicRoutes = ['/home', '/login', '/register', '/'];
+
+      if (!publicRoutes.includes(currentUrl)) {
+        router.navigate(['/login']);
+      }
     } else {
       router.navigate(['/error']);
     }

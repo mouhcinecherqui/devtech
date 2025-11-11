@@ -45,6 +45,9 @@ public class Ticket implements Serializable {
     @Column(name = "created_date", nullable = false)
     private Instant createdDate = Instant.now();
 
+    @Column(name = "last_modified_date")
+    private Instant lastModifiedDate = Instant.now();
+
     // Champs de paiement
     @Column(name = "payment_required")
     private Boolean paymentRequired = false;
@@ -165,6 +168,14 @@ public class Ticket implements Serializable {
 
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public Instant getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Instant lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
     // Getters et setters pour les champs de paiement

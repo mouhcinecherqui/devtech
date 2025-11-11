@@ -1,0 +1,21 @@
+id,param_key,param_value,param_type,description
+1,open,En cours,ticket-status,Statut par défaut pour les tickets ouverts
+2,resolved,Résolu,ticket-status,Statut pour les tickets résolus
+3,closed,Fermé,ticket-status,Statut pour les tickets fermés
+4,urgent,Urgent,ticket-status,Statut pour les tickets urgents
+5,support,Support,ticket-type,Type de ticket pour le support technique
+6,bug,Bug,ticket-type,Type de ticket pour signaler un bug
+7,feature,Demande de fonctionnalité,ticket-type,Type de ticket pour demander une nouvelle fonctionnalité
+8,question,Question,ticket-type,Type de ticket pour poser une question
+9,low,Faible,ticket-priority,Priorité faible pour les tickets
+10,normal,Normal,ticket-priority,Priorité normale pour les tickets
+11,high,Élevée,ticket-priority,Priorité élevée pour les tickets
+12,critical,Critique,ticket-priority,Priorité critique pour les tickets
+13,default_status,open,other,Statut par défaut pour les nouveaux tickets
+14,default_type,support,other,Type par défaut pour les nouveaux tickets
+15,default_priority,normal,other,Priorité par défaut pour les nouveaux tickets
+16,max_tickets_per_user,10,other,Nombre maximum de tickets par utilisateur
+17,ticket_auto_close_days,30,other,Nombre de jours avant fermeture automatique des tickets résolus
+18,notification_email_enabled,true,other,Activer les notifications par email
+19,support_email,support@devtech.com,other,Email de support
+20,company_name,DevTech,other,Nom de l'entreprise 

@@ -34,47 +34,48 @@ module.exports = async (config, options, targetOptions) => {
     config.devServer.proxy = proxyConfig({ tls });
   }
 
-  if (targetOptions.target === 'serve' || config.watch) {
-    config.plugins.push(
-      new BrowserSyncPlugin(
-        {
-          host: 'localhost',
-          port: 9000,
-          https: tls,
-          proxy: {
-            target: `http${tls ? 's' : ''}://localhost:${targetOptions.target === 'serve' ? '4200' : '8080'}`,
-            ws: true,
-            proxyOptions: {
-              changeOrigin: false, //pass the Host header to the backend unchanged https://github.com/Browsersync/browser-sync/issues/430
-            },
-            proxyReq: [
-              function (proxyReq) {
-                // URI that will be retrieved by the ForwardedHeaderFilter on the server side
-                proxyReq.setHeader('X-Forwarded-Host', 'localhost:9000');
-                proxyReq.setHeader('X-Forwarded-Proto', `http${tls ? 's' : ''}`);
-              },
-            ],
-          },
-          socket: {
-            clients: {
-              heartbeatTimeout: 60000,
-            },
-          },
-          /*
-          ghostMode: { // uncomment this part to disable BrowserSync ghostMode; https://github.com/jhipster/generator-jhipster/issues/11116
-            clicks: false,
-            location: false,
-            forms: false,
-            scroll: false,
-          },
-          */
-        },
-        {
-          reload: targetOptions.target === 'build', // enabled for build --watch
-        },
-      ),
-    );
-  }
+  // BrowserSync disabled - using Angular dev server proxy directly
+  // if (targetOptions.target === 'serve' || config.watch) {
+  //   config.plugins.push(
+  //     new BrowserSyncPlugin(
+  //       {
+  //         host: 'localhost',
+  //         port: 9000,
+  //         https: tls,
+  //         proxy: {
+  //           target: `http${tls ? 's' : ''}://localhost:${targetOptions.target === 'serve' ? '4200' : '8080'}`,
+  //           ws: true,
+  //           proxyOptions: {
+  //             changeOrigin: false, //pass the Host header to the backend unchanged https://github.com/Browsersync/browser-sync/issues/430
+  //           },
+  //           proxyReq: [
+  //             function (proxyReq) {
+  //               // URI that will be retrieved by the ForwardedHeaderFilter on the server side
+  //               proxyReq.setHeader('X-Forwarded-Host', 'localhost:9000');
+  //               proxyReq.setHeader('X-Forwarded-Proto', `http${tls ? 's' : ''}`);
+  //             },
+  //           ],
+  //         },
+  //         socket: {
+  //           clients: {
+  //             heartbeatTimeout: 60000,
+  //           },
+  //         },
+  //         /*
+  //         ghostMode: { // uncomment this part to disable BrowserSync ghostMode; https://github.com/jhipster/generator-jhipster/issues/11116
+  //           clicks: false,
+  //           location: false,
+  //           forms: false,
+  //           scroll: false,
+  //         },
+  //         */
+  //       },
+  //       {
+  //         reload: targetOptions.target === 'build', // enabled for build --watch
+  //       },
+  //     ),
+  //   );
+  // }
 
   if (config.mode === 'production') {
     config.plugins.push(
@@ -93,13 +94,19 @@ module.exports = async (config, options, targetOptions) => {
       context: require('swagger-ui-dist').getAbsoluteFSPath(),
       from: '*.{js,css,html,png}',
       to: 'swagger-ui/',
-      globOptions: { ignore: ['**/index.html'] },
+      globOptions: {
+        ignore: ['**/index.html'],
+      },
     },
     {
       from: path.join(path.dirname(require.resolve('axios/package.json')), 'dist/axios.min.js'),
       to: 'swagger-ui/',
     },
-    { from: './src/main/webapp/swagger-ui/', to: 'swagger-ui/' },
+    {
+      from: './src/main/webapp/swagger-ui/',
+      to: 'swagger-ui/',
+      noErrorOnMissing: true,
+    },
     // jhipster-needle-add-assets-to-webpack - JHipster will add/remove third-party resources in this array
   ];
 
@@ -121,10 +128,17 @@ module.exports = async (config, options, targetOptions) => {
     new MergeJsonWebpackPlugin({
       output: {
         groupBy: [
-          { pattern: './src/main/webapp/i18n/fr/*.json', fileName: './i18n/fr.json' },
+          { pattern: './src/main/webapp/{i18n,assets/i18n}/fr/*.json', fileName: './i18n/fr.json' },
+          { pattern: './src/main/webapp/{i18n,assets/i18n}/en/*.json', fileName: './i18n/en.json' },
+          { pattern: './src/main/webapp/{i18n,assets/i18n}/es/*.json', fileName: './i18n/es.json' },
+          { pattern: './src/main/webapp/{i18n,assets/i18n}/ar/*.json', fileName: './i18n/ar.json' },
           // jhipster-needle-i18n-language-webpack - JHipster will add/remove languages in this array
         ],
       },
+      space: 2,
+      pretty: true,
+      // Force la fusion de tous les fichiers même en cas de conflit de clés
+      mergeArrays: false,
     }),
   );
 

@@ -7,6 +7,7 @@ import SharedModule from 'app/shared/shared.module';
 import { LoginService } from 'app/login/login.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { ClientsService } from 'app/admin/clients/clients.service';
+import { OAuth2Service } from 'app/core/auth/oauth2.service';
 import { catchError, of } from 'rxjs';
 
 @Component({
@@ -31,10 +32,25 @@ export default class LoginComponent implements OnInit {
   private readonly loginService = inject(LoginService);
   private readonly clientsService = inject(ClientsService);
   private readonly router = inject(Router);
+  private readonly oauth2Service = inject(OAuth2Service);
 
   ngOnInit(): void {
-    // Suppression de la redirection automatique vers /home
-    // L'utilisateur peut accéder à /home même s'il est authentifié
+    // Traiter le callback OAuth2 si présent (permet d'écrire le token en Local Storage)
+    this.oauth2Service.checkOAuth2Success();
+
+    // Si déjà authentifié (après OAuth2 ou session), rediriger selon le rôle
+    this.accountService.identity().subscribe(account => {
+      if (account) {
+        const authorities: string[] = (account as any).authorities ?? [];
+        if (authorities.includes('ROLE_CLIENT')) {
+          this.router.navigate(['/client-dashboard']);
+        } else if (authorities.includes('ROLE_ADMIN')) {
+          this.router.navigate(['/admin-dashboard']);
+        } else if (authorities.includes('ROLE_MANAGER')) {
+          this.router.navigate(['/manager-dashboard']);
+        }
+      }
+    });
   }
 
   login(): void {
@@ -44,7 +60,7 @@ export default class LoginComponent implements OnInit {
       .login({ username: usernameOrEmail, password, rememberMe })
       .pipe(
         catchError(() => {
-          console.log('Tentative client');
+          console.warn('Tentative client');
           // Si échec, tenter la connexion client
           return this.clientsService.login(usernameOrEmail, password).pipe(
             catchError(() => {
@@ -58,7 +74,7 @@ export default class LoginComponent implements OnInit {
         if (result) {
           this.authenticationError.set(false);
           // Rediriger selon le rôle
-          const authorities = (result as any).authorities || [];
+          const authorities = (result as any).authorities ?? [];
           if (authorities.includes('ROLE_ADMIN')) {
             this.router.navigate(['/admin-dashboard']);
           } else if (authorities.includes('ROLE_MANAGER')) {
@@ -72,5 +88,13 @@ export default class LoginComponent implements OnInit {
           }
         }
       });
+  }
+
+  loginWithGoogle(): void {
+    // Rediriger vers l'endpoint OAuth2 Google en précisant l'origine et la page de retour
+    const origin = window.location.origin;
+    const redirectPath = '/login';
+    const apiUrl = window.location.hostname === 'localhost' ? 'http://localhost:8080' : window.location.origin;
+    window.location.href = `${apiUrl}/oauth2/authorization/google?redirect_uri=${encodeURIComponent(origin)}&redirect_path=${encodeURIComponent(redirectPath)}`;
   }
 }

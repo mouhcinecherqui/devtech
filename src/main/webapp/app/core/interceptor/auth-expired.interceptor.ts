@@ -18,9 +18,15 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
       tap({
         error: (err: HttpErrorResponse) => {
           if (err.status === 401 && err.url && !err.url.includes('api/account')) {
-            this.stateStorageService.storeUrl(this.router.routerState.snapshot.url);
-            this.loginService.logout();
-            this.router.navigate(['/login']);
+            // Only redirect to login if we're not on a public page
+            const currentUrl = this.router.routerState.snapshot.url;
+            const publicRoutes = ['/home', '/login', '/register', '/'];
+
+            if (!publicRoutes.includes(currentUrl)) {
+              this.stateStorageService.storeUrl(currentUrl);
+              this.loginService.logout();
+              this.router.navigate(['/login']);
+            }
           }
         },
       }),

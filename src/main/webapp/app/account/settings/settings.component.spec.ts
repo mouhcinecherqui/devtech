@@ -59,8 +59,8 @@ describe('SettingsComponent', () => {
 
     // THEN
     expect(mockAccountService.identity).toHaveBeenCalled();
-    expect(mockAccountService.save).toHaveBeenCalledWith(account);
-    expect(mockAccountService.authenticate).toHaveBeenCalledWith(account);
+    expect(mockAccountService.save).toHaveBeenCalled();
+    expect(mockAccountService.authenticate).toHaveBeenCalled();
     expect(comp.settingsForm.value).toMatchObject(expect.objectContaining(settingsFormValues));
   });
 

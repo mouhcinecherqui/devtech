@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20250115-add-activity-table" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="activity"/>
+            </not>
+        </preConditions>
+        <createTable tableName="activity">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="activity_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(1000)"/>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="icon" type="varchar(50)"/>
+            <column name="user_id" type="bigint"/>
+            <column name="ticket_id" type="bigint"/>
+            <column name="entity_type" type="varchar(100)"/>
+            <column name="entity_id" type="bigint"/>
+            <column name="created_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"/>
+        </createTable>
+
+        <createIndex tableName="activity" indexName="idx_activity_user_id">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex tableName="activity" indexName="idx_activity_ticket_id">
+            <column name="ticket_id"/>
+        </createIndex>
+
+        <createIndex tableName="activity" indexName="idx_activity_entity">
+            <column name="entity_type"/>
+            <column name="entity_id"/>
+        </createIndex>
+
+        <createIndex tableName="activity" indexName="idx_activity_timestamp">
+            <column name="timestamp"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20250115-insert-activity-test-data" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="activity"/>
+        </preConditions>
+        <sql>
+            INSERT INTO activity (activity_type, title, description, timestamp, icon, user_id, ticket_id, entity_type, entity_id) VALUES
+            ('SUCCESS', 'Ticket #1234 résolu', 'Problème de connexion résolu par l''équipe technique', NOW() - INTERVAL 2 HOUR, 'check', 1, 1234, 'TICKET', 1234),
+            ('INFO', 'Nouveau ticket créé', 'Demande d''assistance pour l''intégration API', NOW() - INTERVAL 1 DAY, 'info', 1, 1235, 'TICKET', 1235),
+            ('WARNING', 'Mise à jour en cours', 'Maintenance prévue pour le système de paiement', NOW() - INTERVAL 2 DAY, 'warning', 1, NULL, 'SYSTEM', 1),
+            ('SUCCESS', 'Paiement validé', 'Paiement de 1500 MAD validé pour le ticket #1233', NOW() - INTERVAL 3 HOUR, 'check', 1, 1233, 'PAYMENT', 456),
+            ('INFO', 'Devis généré', 'Devis de 2500 MAD généré pour le ticket #1232', NOW() - INTERVAL 6 HOUR, 'info', 1, 1232, 'QUOTE', 789),
+            ('WARNING', 'Ticket urgent', 'Ticket #1231 marqué comme urgent', NOW() - INTERVAL 1 HOUR, 'warning', 1, 1231, 'TICKET', 1231);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
+

@@ -73,32 +73,32 @@
     "field": {
       "id": "ID"
     },
-    "item-count": "Cantidad de elementos: {{count}}",
+    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
     "home": {
-      "title": "¡Bienvenido a DevTech!",
-      "subtitle": "Gestiona tus tickets de soporte y los servicios de la plataforma fácilmente.",
+      "title": "Bienvenido a DevTech",
+      "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
       "servicesTitle": "Nuestros servicios",
       "service1": {
-        "title": "Gestión de tickets",
-        "desc": "Crea, sigue y resuelve tus tickets de soporte de manera eficiente."
+        "title": "Desarrollo de aplicaciones web a medida",
+        "desc": "Aplicaciones web escalables, seguras y de alto rendimiento para cualquier necesidad empresarial."
       },
       "service2": {
-        "title": "Área de clientes",
-        "desc": "Accede a tu panel de cliente y gestiona tu información."
+        "title": "Desarrollo de sitios web de comercio electrónico",
+        "desc": "Tiendas online con integración CMS, pasarelas de pago y gestión de inventario."
       },
       "service3": {
-        "title": "Herramientas de administración",
-        "desc": "Herramientas avanzadas para administradores y managers."
+        "title": "Sistemas de gestión de contenidos (CMS)",
+        "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
       },
       "whyChooseTitle": "¿Por qué elegir DevTech?",
-      "why1": "Soporte técnico 24/7",
-      "why2": "Resolución rápida de problemas",
-      "why3": "Interfaz intuitiva",
-      "why4": "Seguridad garantizada",
-      "why5": "Reportes detallados",
-      "ctaTitle": "Comienza ahora con DevTech",
-      "ctaDesc": "Únete a miles de usuarios satisfechos y descubre la diferencia DevTech",
-      "ctaBtn": "Comenzar Ahora"
+      "why1": "Equipo experimentado de desarrolladores y diseñadores web",
+      "why2": "Enfoque centrado en el cliente y comunicación transparente",
+      "why3": "Proceso ágil de desarrollo para una entrega más rápida",
+      "why4": "Últimas tecnologías web y mejores prácticas",
+      "why5": "Soporte integral después del lanzamiento",
+      "ctaTitle": "¿Listo para comenzar su proyecto web?",
+      "ctaDesc": "¡Contáctenos hoy para hablar de sus necesidades y obtener una consulta gratuita!",
+      "ctaBtn": "Comenzar"
     }
   },
   "adminDashboard": {
@@ -153,16 +153,22 @@
   },
   "login": {
     "title": "Autenticación",
+    "subtitle": "Inicie sesión en su espacio personal",
+    "badge": "Conexión Segura",
     "messages": {
       "error": {
         "authentication": "¡Error de autenticación! Por favor, verifique sus credenciales."
       }
     },
     "form": {
+      "usernameOrEmail": "Nombre de usuario o Email",
+      "usernameOrEmail.placeholder": "Ingrese su nombre de usuario o email",
       "password": "Contraseña",
-      "password.placeholder": "Su contraseña",
+      "password.placeholder": "Ingrese su contraseña",
       "rememberme": "Mantener la sesión abierta",
-      "button": "Iniciar sesión"
+      "button": "Iniciar sesión",
+      "google": "Continuar con Google",
+      "divider": "o"
     },
     "password": {
       "forgot": "¿Olvidó su contraseña?"
@@ -212,7 +218,61 @@
       "tickets": "TICKETS",
       "open": "EN CURSO",
       "closed": "RESUELTOS / CERRADOS"
-    }
+    },
+    "welcome": {
+      "badge": "Espacio Cliente",
+      "title": "Panel de Control del Cliente",
+      "subtitle": "Bienvenido a tu espacio personal. Gestiona tus proyectos y sigue tus tickets.",
+      "userRole": "Usuario Cliente",
+      "logout": "Cerrar Sesión"
+    },
+    "stats": {
+      "totalTickets": "Total de Tickets",
+      "openTickets": "Tickets Abiertos",
+      "closedTickets": "Tickets Cerrados",
+      "responseTime": "Tiempo de Respuesta Promedio"
+    },
+    "activities": {
+      "title": "Actividad Reciente",
+      "viewAll": "Ver todo",
+      "noActivity": "No hay actividad reciente",
+      "noActivityDesc": "Las actividades aparecerán aquí"
+    },
+    "actions": {
+      "title": "Acciones Rápidas",
+      "newTicket": "Nuevo Ticket",
+      "contactSupport": "Contactar Soporte",
+      "documentation": "Documentación",
+      "history": "Historial"
+    },
+    "projects": {
+      "title": "Estado de los Proyectos",
+      "noProjects": "No hay proyectos en curso",
+      "noProjectsDesc": "Los proyectos aparecerán aquí",
+      "noProjectsStatus": "Ninguno",
+      "status": {
+        "active": "En Progreso",
+        "testing": "Pruebas",
+        "completed": "Completado"
+      }
+    },
+    "tickets": {
+      "title": "Tickets Recientes",
+      "viewAll": "Ver todo",
+      "noTickets": "No hay tickets recientes",
+      "noTicketsDesc": "Los tickets aparecerán aquí",
+      "priority": {
+        "urgent": "Urgente",
+        "normal": "Normal",
+        "low": "Baja"
+      }
+    },
+    "errors": {
+      "fetchError": "Error al cargar los tickets",
+      "retry": "Reintentar",
+      "clear": "Cerrar"
+    },
+    "loading": "Cargando..."
   },
   "ticketsUser": {
     "title": "Mis tickets",
@@ -253,7 +313,15 @@
     "statusClosed": "Cerrado",
     "messages": "Mensajes al cliente:",
     "addMessage": "Agregar un mensaje...",
-    "save": "Guardar"
+    "save": "Guardar",
+    "create": "Crear ticket",
+    "selectType": "Seleccionar un tipo",
+    "descriptionPlaceholder": "Describe tu solicitud en detalle...",
+    "sendMessage": "Enviar mensaje",
+    "clientEmail": "Correo del cliente",
+    "clientEmailPlaceholder": "email@ejemplo.com (opcional)",
+    "cancel": "Cancelar",
+    "creating": "Creando..."
   },
   "ticketsClient": {
     "title": "Mis tickets",
@@ -308,7 +376,8 @@
     "home": {
       "title": "Usuarios",
       "refreshListLabel": "Actualizar lista",
-      "createLabel": "Crear un nuevo usuario"
+      "createLabel": "Crear un nuevo usuario",
+      "createOrEditLabel": "Crear o editar usuario"
     },
     "login": "Usuario",
     "email": "Correo electrónico",
@@ -317,6 +386,13 @@
     "createdDate": "Creado el",
     "lastModifiedBy": "Modificado por",
     "lastModifiedDate": "Modificado el",
+    "activated": "Activado",
+    "deactivated": "Desactivado",
+    "detail": {
+      "title": "Usuario"
+    },
+    "firstName": "Nombre",
+    "lastName": "Apellido",
     "activated": "Activado",
     "deactivated": "Desactivado"
   },
@@ -377,7 +453,17 @@
     "action": {
       "view": "Ver",
       "edit": "Editar",
-      "delete": "Eliminar"
+      "delete": "Eliminar",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "back": "Volver"
+    },
+    "validation": {
+      "required": "Este campo es obligatorio.",
+      "maxlength": "Este campo debe tener menos de {{max}} caracteres.",
+      "minlength": "Este campo debe tener al menos {{min}} caracteres.",
+      "email": "Tu email no es válido.",
+      "patternLogin": "Este campo solo puede contener letras, números o direcciones de email."
     }
   },
   "error": {
@@ -385,6 +471,44 @@
     "http": {
       "403": "No tienes derechos de acceso a esta página.",
       "404": "La página solicitada no existe."
+    }
+  },
+  "contact": {
+    "title": "Contactar Administración",
+    "description": "¿Necesitas ayuda? Contacta con nuestro equipo administrativo para cualquier pregunta o asistencia.",
+    "companyInfo": {
+      "title": "Información de Contacto",
+      "phone": "Teléfono",
+      "email": "Email",
+      "address": "Dirección",
+      "workingHours": "Horario de Atención"
+    },
+    "form": {
+      "title": "Enviar Mensaje",
+      "subject": "Asunto",
+      "subjectPlaceholder": "Describe brevemente tu solicitud",
+      "priority": "Prioridad",
+      "message": "Mensaje",
+      "messagePlaceholder": "Describe tu solicitud en detalle...",
+      "send": "Enviar Mensaje",
+      "sending": "Enviando...",
+      "clear": "Limpiar"
+    },
+    "priorities": {
+      "low": "Baja",
+      "normal": "Normal",
+      "high": "Alta",
+      "urgent": "Urgente"
+    },
+    "messages": {
+      "success": "Tu mensaje ha sido enviado con éxito. Te responderemos lo antes posible.",
+      "error": "Ocurrió un error al enviar tu mensaje. Por favor, inténtalo de nuevo."
+    },
+    "validation": {
+      "subjectRequired": "El asunto es obligatorio",
+      "subjectMinLength": "El asunto debe contener al menos 5 caracteres",
+      "messageRequired": "El mensaje es obligatorio",
+      "messageMinLength": "El mensaje debe contener al menos 20 caracteres"
     }
   }
 }

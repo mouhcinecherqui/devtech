@@ -1,0 +1,927 @@
+/* ===========================================================================
+   Ticket detail page — modern client experience
+   ========================================================================= */
+
+$font-family:
+  'Inter',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+$color-bg-start: #eef2ff;
+$color-bg-end: #f5f3ff;
+$color-surface: #ffffff;
+$color-surface-soft: rgba(255, 255, 255, 0.92);
+$color-surface-tint: rgba(248, 250, 252, 0.85);
+$color-border: rgba(15, 23, 42, 0.08);
+$color-primary: #4f46e5;
+$color-primary-light: #818cf8;
+$color-primary-dark: #4338ca;
+$color-success: #10b981;
+$color-warning: #f59e0b;
+$color-danger: #ef4444;
+$color-muted: #64748b;
+$color-strong: #0f172a;
+$shadow-card: 0 22px 45px -28px rgba(15, 23, 42, 0.38);
+$radius-pill: 999px;
+
+@mixin btn-reset {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+@mixin pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@mixin glass-card {
+  background: $color-surface-soft;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(99, 102, 241, 0.16);
+  box-shadow: $shadow-card;
+  backdrop-filter: blur(12px);
+}
+
+.ticket-detail-container {
+  min-height: 100vh;
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3rem) clamp(3rem, 7vw, 4.5rem);
+  background: radial-gradient(circle at 10% 20%, $color-bg-start 0%, $color-bg-end 60%, #ede9fe 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  font-family: $font-family;
+  color: $color-strong;
+}
+
+.ticket-detail-header {
+  @include glass-card;
+  padding: clamp(1.5rem, 3vw, 2.2rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .back-btn {
+    @include btn-reset;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 0.9rem;
+    color: $color-primary;
+    background: rgba(79, 70, 229, 0.12);
+    border: 1px solid rgba(79, 70, 229, 0.2);
+
+    svg {
+      stroke: currentColor;
+    }
+
+    &:hover {
+      background: rgba(79, 70, 229, 0.18);
+      transform: translateY(-1px);
+    }
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.75rem, 3vw, 2.35rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+}
+
+.loading-state,
+.error-state {
+  @include glass-card;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  color: $color-muted;
+
+  .loading-spinner {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 4px solid rgba(79, 70, 229, 0.18);
+    border-top-color: $color-primary;
+    animation: spinner 0.9s linear infinite;
+  }
+
+  .error {
+    color: $color-danger;
+    font-weight: 600;
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ticket-detail-content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 4vw, 3rem);
+}
+
+.workflow-progress {
+  @include glass-card;
+  padding: clamp(1.75rem, 3vw, 2.25rem);
+
+  .workflow-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(0.75rem, 1.5vw, 1.2rem);
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+
+  .workflow-step {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    text-align: center;
+    color: $color-muted;
+    font-weight: 600;
+
+    .step-indicator {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid rgba(79, 70, 229, 0.25);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(79, 70, 229, 0.08);
+      color: $color-primary;
+      transition: all 0.2s ease;
+
+      svg {
+        stroke: $color-surface;
+      }
+    }
+
+    .step-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.015em;
+      white-space: normal;
+    }
+
+    &.active .step-indicator {
+      background: linear-gradient(115deg, $color-primary, $color-primary-light);
+      color: $color-surface;
+      border-color: transparent;
+      box-shadow: 0 12px 20px rgba(79, 70, 229, 0.22);
+    }
+
+    &.completed {
+      color: $color-success;
+
+      .step-indicator {
+        background: linear-gradient(115deg, $color-success, #34d399);
+        border-color: transparent;
+        color: $color-surface;
+      }
+    }
+  }
+
+  .step-connector {
+    flex: 1 1 0;
+    min-width: 24px;
+    height: 2px;
+    border-radius: 999px;
+    background: rgba(79, 70, 229, 0.12);
+    align-self: center;
+
+    &.active {
+      background: linear-gradient(90deg, $color-primary, $color-primary-light);
+      box-shadow: 0 8px 14px rgba(79, 70, 229, 0.18);
+    }
+  }
+}
+
+.ticket-info-grid {
+  display: grid;
+  gap: clamp(1.75rem, 3vw, 2.25rem);
+  grid-template-columns: 1fr;
+
+  @media (min-width: 992px) {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .info-card:first-child {
+    grid-column: 1 / -1;
+
+    @media (min-width: 992px) {
+      grid-column: 1 / 2;
+      grid-row: span 2;
+    }
+  }
+
+  .info-card-message {
+    @media (min-width: 992px) {
+      grid-column: 2 / 3;
+      align-self: stretch;
+    }
+  }
+
+  .review-section,
+  .review-completed {
+    @media (min-width: 992px) {
+      grid-column: 2 / 3;
+    }
+  }
+}
+
+.info-card,
+.info-card-message {
+  @include glass-card;
+  padding: clamp(1.75rem, 3vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: $color-primary;
+
+  h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: $color-strong;
+  }
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-section {
+  background: $color-surface-tint;
+  border: 1px solid $color-border;
+  border-radius: 1rem;
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+
+  h5 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: $color-strong;
+  }
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: $color-muted;
+  font-size: 0.95rem;
+
+  .info-label {
+    font-weight: 600;
+    color: $color-strong;
+  }
+}
+
+.status-badge {
+  @include pill-badge;
+  background: rgba(79, 70, 229, 0.15);
+  color: $color-primary-dark;
+
+  &.status-en\ cours,
+  &.status-nouveau {
+    background: rgba(59, 130, 246, 0.2);
+    color: #2563eb;
+  }
+
+  &.status-résolu,
+  &.status-resolu,
+  &.status-paiement\ validé {
+    background: rgba($color-success, 0.2);
+    color: $color-success;
+  }
+
+  &.status-en\ attente\ de\ paiement {
+    background: rgba($color-warning, 0.22);
+    color: $color-warning;
+  }
+
+  &.status-urgent {
+    background: rgba($color-danger, 0.18);
+    color: $color-danger;
+  }
+}
+
+.type-badge {
+  @include pill-badge;
+  background: rgba(14, 116, 144, 0.18);
+  color: #0f766e;
+}
+
+.description-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+
+  .description-text {
+    margin: 0;
+    line-height: 1.65;
+    color: $color-strong;
+    background: rgba(79, 70, 229, 0.06);
+    border-radius: 0.9rem;
+    padding: 1rem 1.2rem;
+    white-space: pre-line;
+  }
+}
+
+.devis-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .devis-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .devis-item {
+    border-radius: 1rem;
+    border: 1px solid rgba(79, 70, 229, 0.2);
+    background: rgba(79, 70, 229, 0.08);
+    padding: 1.2rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+
+    &.devis-accepted {
+      border-color: rgba($color-success, 0.35);
+      background: rgba($color-success, 0.15);
+    }
+
+    &.devis-rejected {
+      border-color: rgba($color-danger, 0.35);
+      background: rgba($color-danger, 0.12);
+    }
+  }
+
+  .devis-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-weight: 700;
+    color: $color-strong;
+  }
+
+  .devis-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    color: $color-muted;
+
+    .devis-amount {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: $color-strong;
+    }
+  }
+
+  .devis-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+
+    .btn {
+      @include btn-reset;
+      padding: 0.55rem 1.1rem;
+      border-radius: 0.85rem;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      svg {
+        stroke: currentColor;
+      }
+    }
+
+    .btn-success {
+      background: $color-success;
+      color: $color-surface;
+
+      &:hover {
+        background: darken($color-success, 6%);
+      }
+    }
+
+    .btn-danger {
+      background: $color-danger;
+      color: $color-surface;
+
+      &:hover {
+        background: darken($color-danger, 6%);
+      }
+    }
+  }
+
+  .confirmation-message {
+    @include pill-badge;
+
+    &.accepted {
+      background: rgba($color-success, 0.18);
+      color: $color-success;
+    }
+
+    &.rejected {
+      background: rgba($color-danger, 0.18);
+      color: $color-danger;
+    }
+  }
+
+  .no-devis-message {
+    margin: 0;
+    padding: 0.9rem 1.1rem;
+    border-radius: 0.9rem;
+    background: rgba(79, 70, 229, 0.1);
+    color: $color-primary-dark;
+    font-weight: 600;
+  }
+}
+
+.ticket-image-container {
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid rgba(79, 70, 229, 0.2);
+
+  .ticket-image {
+    width: 100%;
+    display: block;
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+  }
+}
+
+.info-card-message {
+  .messages-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .messages-wrapper {
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      background: $color-surface;
+      padding: 1.3rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    h5 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: $color-strong;
+    }
+
+    .messages-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 0.45rem;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: $radius-pill;
+        background: rgba(79, 70, 229, 0.18);
+      }
+    }
+
+    .message-bubble {
+      border-radius: 1rem;
+      padding: 1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      background: rgba(255, 255, 255, 0.94);
+
+      &.admin-message {
+        border-left: 4px solid $color-primary;
+        box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.05);
+      }
+
+      &.client-message {
+        border-left: 4px solid $color-success;
+        background: rgba($color-success, 0.12);
+      }
+
+      .message-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.85rem;
+        font-weight: 600;
+        color: $color-strong;
+
+        .client-author {
+          color: $color-success;
+        }
+
+        .message-time {
+          color: $color-muted;
+          font-size: 0.78rem;
+        }
+      }
+
+      .message-content {
+        color: $color-strong;
+        line-height: 1.55;
+      }
+
+      .message-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        border-radius: 0.9rem;
+        padding: 0.85rem 1rem;
+        background: rgba(79, 70, 229, 0.08);
+
+        .devis-info,
+        .facture-info {
+          font-size: 0.9rem;
+          color: $color-muted;
+
+          strong {
+            color: $color-strong;
+          }
+        }
+      }
+    }
+  }
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.message-bubble {
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  background: rgba(79, 70, 229, 0.06);
+  border: 1px solid rgba(79, 70, 229, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  color: $color-strong;
+
+  &.admin-message {
+    border-left: 4px solid $color-primary;
+  }
+
+  &.client-message {
+    border-left: 4px solid $color-success;
+    background: rgba($color-success, 0.12);
+  }
+
+  .message-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: $color-muted;
+
+    .message-author {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-weight: 600;
+      color: $color-primary-dark;
+    }
+
+    .client-author {
+      color: $color-success;
+    }
+
+    svg {
+      stroke: currentColor;
+    }
+  }
+
+  .message-content {
+    line-height: 1.55;
+    color: $color-strong;
+  }
+
+  .message-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-radius: 0.85rem;
+    background: rgba(79, 70, 229, 0.08);
+
+    .devis-info,
+    .facture-info {
+      font-size: 0.9rem;
+      color: $color-muted;
+
+      strong {
+        color: $color-strong;
+      }
+    }
+  }
+}
+
+.client-reply-section {
+  border-radius: 1rem;
+  border: 1px dashed rgba(79, 70, 229, 0.25);
+  background: rgba(79, 70, 229, 0.08);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .reply-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: $color-primary;
+  }
+
+  .reply-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .reply-textarea {
+    border-radius: 0.9rem;
+    border: 1px solid rgba(79, 70, 229, 0.22);
+    padding: 1rem 1.1rem;
+    font-size: 0.95rem;
+    color: $color-strong;
+    background: $color-surface;
+    resize: vertical;
+    min-height: 120px;
+    transition:
+      border 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.16);
+    }
+  }
+
+  .reply-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    .char-count {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: $color-muted;
+    }
+
+    .reply-btn {
+      @include btn-reset;
+      padding: 0.65rem 1.4rem;
+      border-radius: 0.95rem;
+      background: linear-gradient(120deg, $color-primary, $color-primary-light);
+      color: $color-surface;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+
+      &:hover:not(:disabled) {
+        background: linear-gradient(120deg, $color-primary-dark, $color-primary);
+        box-shadow: 0 18px 26px rgba(79, 70, 229, 0.24);
+      }
+
+      &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      .spinner {
+        animation: spinner 0.9s linear infinite;
+      }
+    }
+  }
+}
+
+.review-section,
+.review-completed {
+  background: $color-surface;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 1rem;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .review-btn {
+    @include btn-reset;
+    padding: 0.65rem 1.3rem;
+    border-radius: 0.9rem;
+    background: rgba(250, 204, 21, 0.2);
+    color: #ca8a04;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    &:hover {
+      background: rgba(250, 204, 21, 0.28);
+    }
+  }
+
+  .review-success {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: $color-success;
+    font-weight: 600;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 2rem);
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-container,
+.image-modal-container {
+  background: $color-surface;
+  border-radius: 1.25rem;
+  border: 1px solid $color-border;
+  box-shadow: 0 28px 46px -32px rgba(15, 23, 42, 0.32);
+  position: relative;
+  max-height: 85vh;
+  overflow-y: auto;
+  width: min(780px, 100%);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.modal-close-btn,
+.image-modal-close-btn {
+  @include btn-reset;
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(79, 70, 229, 0.12);
+  color: $color-primary;
+
+  &:hover {
+    background: rgba(79, 70, 229, 0.2);
+  }
+}
+
+.image-modal-container {
+  width: min(920px, 100%);
+  padding-top: 3rem;
+
+  .full-size-image {
+    width: 100%;
+    border-radius: 1rem;
+    display: block;
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+
+  .btn {
+    @include btn-reset;
+    padding: 0.65rem 1.3rem;
+    border-radius: 0.9rem;
+    background: rgba(79, 70, 229, 0.12);
+    color: $color-primary-dark;
+
+    &.btn-secondary {
+      background: rgba(148, 163, 184, 0.18);
+      color: $color-muted;
+    }
+
+    &.btn-success {
+      background: $color-success;
+      color: $color-surface;
+    }
+  }
+}
+
+.payment-section {
+  background: $color-surface;
+  border: 1px solid rgba(79, 70, 229, 0.16);
+  padding: 1.1rem 1.25rem;
+
+  jhi-ticket-payment {
+    display: block;
+  }
+}
+
+@media (max-width: 900px) {
+  .workflow-progress .workflow-steps {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .ticket-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-card,
+  .info-card-message {
+    padding: 1.5rem;
+  }
+
+  .messages-container {
+    max-height: 320px;
+  }
+
+  .modal-container,
+  .image-modal-container {
+    padding: 1.5rem;
+  }
+}
+
+.info-card {
+  &.workflow-card {
+    padding: clamp(1.5rem, 2.5vw, 2rem);
+  }
+}

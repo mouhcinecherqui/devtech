@@ -38,19 +38,30 @@
   },
   "home": {
     "home": {
-      "title": "¡Bienvenido, Java Hipster!",
-      "subtitle": "Esta es tu página de inicio",
-      "logged": { "message": "Has iniciado sesión como \"{{username}}\"." },
-      "question": "Si tienes preguntas sobre JHipster:",
-      "link": {
-        "homepage": "Página principal de JHipster",
-        "stackoverflow": "JHipster en Stack Overflow",
-        "bugtracker": "JHipster bug tracker",
-        "chat": "Sala de chat pública de JHipster",
-        "follow": "Sigue a @jhipster en Twitter"
+      "title": "Bienvenido a DevTech",
+      "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
+      "servicesTitle": "Nuestros servicios",
+      "service1": {
+        "title": "Desarrollo de aplicaciones web a medida",
+        "desc": "Aplicaciones web escalables, seguras y de alto rendimiento para cualquier necesidad empresarial."
       },
-      "like": "Si te gusta JHipster, danos una estrella en",
-      "github": "GitHub "
+      "service2": {
+        "title": "Desarrollo de sitios web de comercio electrónico",
+        "desc": "Tiendas online con integración CMS, pasarelas de pago y gestión de inventario."
+      },
+      "service3": {
+        "title": "Sistemas de gestión de contenidos (CMS)",
+        "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
+      },
+      "whyChooseTitle": "¿Por qué elegir DevTech?",
+      "why1": "Equipo experimentado de desarrolladores y diseñadores web",
+      "why2": "Enfoque centrado en el cliente y comunicación transparente",
+      "why3": "Proceso ágil de desarrollo para una entrega más rápida",
+      "why4": "Últimas tecnologías web y mejores prácticas",
+      "why5": "Soporte integral después del lanzamiento",
+      "ctaTitle": "¿Listo para comenzar su proyecto web?",
+      "ctaDesc": "¡Contáctenos hoy para hablar de sus necesidades y obtener una consulta gratuita!",
+      "ctaBtn": "Comenzar"
     }
   },
   "reset": {
@@ -103,33 +114,118 @@
     }
   },
   "global": {
-    "global": {
-      "home": {
-        "title": "Bienvenido a DevTech",
-        "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
-        "servicesTitle": "Nuestros servicios",
-        "service1": {
-          "title": "Desarrollo de aplicaciones web a medida",
-          "desc": "Aplicaciones web escalables, seguras y de alto rendimiento para cualquier necesidad empresarial."
+    "title": "Devtech",
+    "browsehappy": "Está usando un navegador <strong>obsoleto</strong>. Por favor <a href=\"http://browsehappy.com/?locale=es\">actualice su navegador</a> para mejorar su experiencia.",
+    "menu": {
+      "home": "Inicio",
+      "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "entities": {
+        "main": "Entidades",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "adminAuthority": "Authority"
+      },
+      "account": {
+        "main": "Cuenta",
+        "settings": "Perfil",
+        "password": "Contraseña",
+        "sessions": "Sesiones",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "register": "Registrarse"
+      },
+      "admin": {
+        "main": "Administración",
+        "userManagement": "Gestión de usuarios",
+        "tracker": "Seguimiento de usuarios",
+        "metrics": "Métricas",
+        "health": "Salud",
+        "configuration": "Configuración",
+        "logs": "Registros",
+        "apidocs": "API",
+        "database": "Base de datos",
+        "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+      },
+      "language": "Idioma"
+    },
+    "form": {
+      "username.label": "Usuario",
+      "username.placeholder": "Su usuario",
+      "currentpassword.label": "Contraseña actual",
+      "currentpassword.placeholder": "Contraseña actual",
+      "newpassword.label": "Nueva contraseña",
+      "newpassword.placeholder": "Nueva contraseña",
+      "confirmpassword.label": "Confirmación de nueva contraseña",
+      "confirmpassword.placeholder": "Confirmación de nueva contraseña",
+      "email.label": "Correo electrónico",
+      "email.placeholder": "Su correo electrónico"
+    },
+    "messages": {
+      "info": {
+        "authenticated": {
+          "prefix": "Si quiere ",
+          "link": "iniciar sesión",
+          "suffix": ", puede probar las cuentas por defecto:<br/>- Administrador (usuario=\"admin\" y contraseña=\"admin\") <br/>- Usuario (usuario=\"user\" y contraseña=\"user\")."
         },
-        "service2": {
-          "title": "Desarrollo de sitios web de comercio electrónico",
-          "desc": "Tiendas online con integración CMS, pasarelas de pago y gestión de inventario."
+        "register": {
+          "noaccount": "¿Aún no tiene una cuenta?",
+          "link": "Registrar una nueva cuenta"
+        }
+      },
+      "error": {
+        "dontmatch": "¡La contraseña y su confirmación no coinciden!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "Su contraseña es obligatoria.",
+          "minlength": "Su contraseña debe tener al menos 4 caracteres.",
+          "maxlength": "Su contraseña no puede tener más de 50 caracteres.",
+          "strength": "Fortaleza de la contraseña:"
         },
-        "service3": {
-          "title": "Sistemas de gestión de contenidos (CMS)",
-          "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
+        "confirmpassword": {
+          "required": "Su confirmación de contraseña es obligatoria.",
+          "minlength": "Su confirmación de contraseña debe tener al menos 4 caracteres.",
+          "maxlength": "Su confirmación de contraseña no puede tener más de 50 caracteres."
         },
-        "whyChooseTitle": "¿Por qué elegir DevTech?",
-        "why1": "Equipo experimentado de desarrolladores y diseñadores web",
-        "why2": "Enfoque centrado en el cliente y comunicación transparente",
-        "why3": "Proceso ágil de desarrollo para una entrega más rápida",
-        "why4": "Últimas tecnologías web y mejores prácticas",
-        "why5": "Soporte integral después del lanzamiento",
-        "ctaTitle": "¿Listo para comenzar su proyecto web?",
-        "ctaDesc": "¡Contáctenos hoy para hablar de sus necesidades y obtener una consulta gratuita!",
-        "ctaBtn": "Comenzar"
+        "email": {
+          "required": "Su correo electrónico es obligatorio.",
+          "minlength": "Su correo electrónico debe tener al menos 5 caracteres.",
+          "maxlength": "Su correo electrónico no puede tener más de 50 caracteres.",
+          "invalid": "Su correo electrónico no es válido."
+        }
       }
+    },
+    "field": {
+      "id": "ID"
+    },
+    "ribbon": {
+      "dev": "Desarrollo"
+    },
+    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
+    "home": {
+      "title": "Bienvenido a DevTech",
+      "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
+      "servicesTitle": "Nuestros servicios",
+      "service1": {
+        "title": "Desarrollo de aplicaciones web a medida",
+        "desc": "Aplicaciones web escalables, seguras y de alto rendimiento para cualquier necesidad empresarial."
+      },
+      "service2": {
+        "title": "Desarrollo de sitios web de comercio electrónico",
+        "desc": "Tiendas online con integración CMS, pasarelas de pago y gestión de inventario."
+      },
+      "service3": {
+        "title": "Sistemas de gestión de contenidos (CMS)",
+        "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
+      },
+      "whyChooseTitle": "¿Por qué elegir DevTech?",
+      "why1": "Equipo experimentado de desarrolladores y diseñadores web",
+      "why2": "Enfoque centrado en el cliente y comunicación transparente",
+      "why3": "Proceso ágil de desarrollo para una entrega más rápida",
+      "why4": "Últimas tecnologías web y mejores prácticas",
+      "why5": "Soporte integral después del lanzamiento",
+      "ctaTitle": "¿Listo para comenzar su proyecto web?",
+      "ctaDesc": "¡Contáctenos hoy para hablar de sus necesidades y obtener una consulta gratuita!",
+      "ctaBtn": "Comenzar"
     }
   },
   "activate": {

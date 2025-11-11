@@ -5,6 +5,7 @@ import devtech.repository.PaiementRepository;
 import devtech.service.dto.PaiementDTO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -20,13 +21,14 @@ public class CmiPaymentService {
 
     private static final Logger log = LoggerFactory.getLogger(CmiPaymentService.class);
 
-    private String merchantId = "12345678";
-    private String storeKey = "your-secret-store-key-here";
+    // Credentials de test CMI officiels
+    private String merchantId = "000000000000001";
+    private String storeKey = "TEST123456789";
     private String storeName = "DevTech Store";
     private String gatewayUrl = "https://testpayment.cmi.co.ma/fim/est3Dgate";
-    private String callbackUrl = "http://localhost:8080/api/paiements/cmi-callback";
-    private String okUrl = "http://localhost:4200/payment-success";
-    private String failUrl = "http://localhost:4200/payment-failed";
+    private String callbackUrl = "http://localhost:8080/api/paiements/cmi/callback";
+    private String okUrl = "http://localhost:3000/payment-result";
+    private String failUrl = "http://localhost:3000/payment-result";
 
     private final PaiementRepository paiementRepository;
 
@@ -45,9 +47,41 @@ public class CmiPaymentService {
             // Créer le paiement en base
             Paiement paiement = new Paiement();
             paiement.setUser(paiementDTO.user);
-            paiement.setAmount(paiementDTO.amount);
+
+            // Gestion du montant - accepter String ou Double
+            if (paiementDTO.amount != null) {
+                if (paiementDTO.amount instanceof Double) {
+                    paiement.setAmount((Double) paiementDTO.amount);
+                } else if (paiementDTO.amount instanceof String) {
+                    try {
+                        paiement.setAmount(Double.parseDouble((String) paiementDTO.amount));
+                    } catch (NumberFormatException e) {
+                        throw new RuntimeException("Le montant doit être un nombre valide");
+                    }
+                } else if (paiementDTO.amount instanceof Number) {
+                    paiement.setAmount(((Number) paiementDTO.amount).doubleValue());
+                } else {
+                    throw new RuntimeException("Type de montant non supporté");
+                }
+            } else {
+                paiement.setAmount(null);
+            }
+
             paiement.setCurrency(paiementDTO.currency);
-            paiement.setDate(paiementDTO.date);
+            // Gestion de la date - accepter string ou LocalDate
+            if (paiementDTO.date != null) {
+                if (paiementDTO.date instanceof LocalDate) {
+                    paiement.setDate((LocalDate) paiementDTO.date);
+                } else if (paiementDTO.date instanceof String) {
+                    try {
+                        paiement.setDate(LocalDate.parse((String) paiementDTO.date));
+                    } catch (Exception e) {
+                        paiement.setDate(LocalDate.now());
+                    }
+                }
+            } else {
+                paiement.setDate(LocalDate.now());
+            }
             paiement.setStatus("PENDING");
             paiement.setDescription(paiementDTO.description);
             paiement.setClientIp(clientIp);
@@ -64,7 +98,24 @@ public class CmiPaymentService {
             params.put("storetype", "3D_PAY");
             params.put("hash", "");
             params.put("random", generateRandomString());
-            params.put("amount", String.format("%.2f", paiementDTO.amount));
+            // Conversion du montant pour CMI
+            double amountValue = 0.0;
+            if (paiementDTO.amount != null) {
+                if (paiementDTO.amount instanceof Double) {
+                    amountValue = (Double) paiementDTO.amount;
+                } else if (paiementDTO.amount instanceof String) {
+                    try {
+                        amountValue = Double.parseDouble((String) paiementDTO.amount);
+                    } catch (NumberFormatException e) {
+                        throw new RuntimeException("Le montant doit être un nombre valide");
+                    }
+                } else if (paiementDTO.amount instanceof Number) {
+                    amountValue = ((Number) paiementDTO.amount).doubleValue();
+                } else {
+                    throw new RuntimeException("Type de montant non supporté");
+                }
+            }
+            params.put("amount", String.format("%.2f", amountValue));
             params.put("currency", paiementDTO.currency);
             params.put("oid", orderId);
             params.put("okUrl", okUrl);

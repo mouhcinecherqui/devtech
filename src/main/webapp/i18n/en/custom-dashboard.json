@@ -1,0 +1,151 @@
+{
+  "adminDashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome,",
+    "headerSubtitle": "Administrative dashboard - Platform management",
+    "role": "Administrator",
+    "status": { "online": "Online" },
+    "recentActivity": "Recent activity",
+    "quickAccess": "Quick access",
+    "quickAccessSubtitle": "Management shortcuts",
+    "createTicket": "Create a new ticket",
+    "createTicketDesc": "Create a new ticket",
+    "addClient": "Add a client",
+    "addClientDesc": "Manage clients",
+    "managePayments": "Manage payments",
+    "managePaymentsDesc": "Manage payments",
+    "editSettings": "Edit settings",
+    "editSettingsDesc": "System settings",
+    "overview": {
+      "permissions": "Permissions",
+      "sessions": "Sessions",
+      "sessionsStatus": "Active"
+    },
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "resolved": "RESOLVED",
+      "urgent": "URGENT"
+    },
+    "table": {
+      "title": "Latest requests",
+      "subtitle": "Ticket overview",
+      "id": "ID",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "date": "Date",
+      "notFound": "No ticket found."
+    },
+    "loading": "Loading...",
+    "error": "Error",
+    "showMore": "Show all ({{count}})",
+    "showLess": "Show less"
+  },
+  "managerDashboard": {
+    "header": "Manager",
+    "title": "Dashboard",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "resolved": "RESOLVED",
+      "urgent": "URGENT"
+    },
+    "table": {
+      "title": "Latest requests",
+      "titleCol": "Title",
+      "client": "Client",
+      "status": "Status",
+      "date": "Date"
+    },
+    "status": {
+      "inProgress": "In progress",
+      "resolved": "Resolved",
+      "urgent": "Urgent"
+    }
+  },
+  "userDashboard": {
+    "header": "User",
+    "title": "Dashboard",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "IN PROGRESS",
+      "closed": "RESOLVED / CLOSED"
+    },
+    "table": {
+      "title": "My latest requests",
+      "id": "ID",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "date": "Date",
+      "notFound": "No ticket found."
+    },
+    "loading": "Loading...",
+    "error": "Error"
+  },
+  "clientDashboard": {
+    "common": {
+      "now": "Now"
+    },
+    "welcome": {
+      "badge": "Client Area",
+      "title": "Client Dashboard",
+      "subtitle": "Welcome to your personal space. Manage your projects and follow up on your tickets."
+    },
+    "stats": {
+      "totalTickets": "Total Tickets",
+      "openTickets": "Open Tickets",
+      "closedTickets": "Closed Tickets",
+      "responseTime": "Average response time"
+    },
+    "activities": {
+      "title": "Recent Activity",
+      "viewAll": "View all",
+      "noActivity": "No recent activity",
+      "noActivityDesc": "Activity will appear here"
+    },
+    "actions": {
+      "title": "Quick Actions",
+      "newTicket": "New Ticket",
+      "contactSupport": "Contact Support",
+      "documentation": "Documentation",
+      "history": "History"
+    },
+    "tickets": {
+      "title": "Recent Tickets",
+      "viewAll": "View all",
+      "view": "View",
+      "create": "Create",
+      "noTickets": "No recent tickets",
+      "noTicketsDesc": "Tickets will appear here",
+      "priority": {
+        "urgent": "Urgent",
+        "normal": "Normal",
+        "low": "Low"
+      }
+    },
+    "projects": {
+      "title": "Project Status",
+      "noProjects": "No active projects",
+      "noProjectsDesc": "Projects will appear here",
+      "noProjectsStatus": "None",
+      "status": {
+        "active": "In progress",
+        "testing": "Testing",
+        "completed": "Completed"
+      }
+    },
+    "errors": {
+      "fetchError": "Error while loading tickets",
+      "retry": "Retry",
+      "clear": "Close"
+    },
+    "loading": "Loading..."
+  },
+  "sidebar": {
+    "myTickets": "My tickets",
+    "managePayments": "Manage my payments",
+    "contactAdmin": "Contact Administration"
+  }
+}

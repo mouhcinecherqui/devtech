@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20241020-fix-notification-table" author="assistant">
+        <!-- Rename is_read -> read if it exists -->
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="notification"/>
+                <columnExists tableName="notification" columnName="is_read"/>
+                <not>
+                    <columnExists tableName="notification" columnName="read"/>
+                </not>
+            </and>
+        </preConditions>
+        <renameColumn tableName="notification" oldColumnName="is_read" newColumnName="read" columnDataType="boolean"/>
+    </changeSet>
+
+    <changeSet id="20241020-add-missing-notification-columns" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="notification"/>
+        </preConditions>
+
+        <!-- Add columns only if they are missing -->
+        <addColumn tableName="notification">
+            <column name="title" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="notification">
+            <column name="timestamp" type="datetime(6)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="notification">
+            <column name="user_id" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="notification">
+            <column name="ticket_id" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="notification">
+            <column name="payment_id" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="notification">
+            <column name="action_url" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
+
+
+
+
+
+
+
+
+

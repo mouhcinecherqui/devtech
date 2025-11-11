@@ -1,0 +1,151 @@
+<div class="notification-bell-container">
+  <!-- Bouton de notification avec badge -->
+  <button
+    class="notification-bell-btn"
+    (click)="toggleDropdown()"
+    [class.has-notifications]="hasUnread()"
+    [attr.aria-label]="'Notifications (' + unreadCount() + ' non lues)'"
+  >
+    <svg class="bell-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+
+    <!-- Badge de notification -->
+    @if (hasUnread()) {
+      <span class="notification-badge">{{ unreadCount() }}</span>
+    }
+  </button>
+
+  <!-- Dropdown des notifications -->
+  @if (isOpen()) {
+    <div class="notification-dropdown">
+      <!-- Header du dropdown -->
+      <div class="notification-header">
+        <h3>Notifications</h3>
+        @if (hasUnread()) {
+          <button class="mark-all-read-btn" (click)="markAllAsRead()" title="Marquer toutes comme lues">Tout marquer comme lu</button>
+        }
+      </div>
+
+      <!-- Liste des notifications -->
+      <div class="notification-list">
+        @if (isLoading()) {
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Chargement des notifications...</p>
+          </div>
+        } @else if (notifications().length === 0) {
+          <div class="empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9965 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <p>Aucune notification</p>
+          </div>
+        } @else {
+          @for (notification of recentNotifications(); track notification.id) {
+            <div class="notification-item" [class.unread]="!notification.read">
+              <!-- Icône de notification -->
+              <div class="notification-icon" [class]="'icon-' + getNotificationColor(notification.type)">
+                @switch (getNotificationIcon(notification.type)) {
+                  @case ('ticket') {
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  }
+                  @case ('message') {
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  }
+                  @case ('payment') {
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2" stroke="currentColor" stroke-width="2" />
+                      <line x1="1" y1="10" x2="23" y2="10" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  }
+                  @case ('edit') {
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M18.5 2.50023C18.8978 2.1025 19.4374 1.87891 20 1.87891C20.5626 1.87891 21.1022 2.1025 21.5 2.50023C21.8978 2.89795 22.1214 3.43757 22.1214 4.00023C22.1214 4.56288 21.8978 5.1025 21.5 5.50023L12 15.0002L8 16.0002L9 12.0002L18.5 2.50023Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  }
+                  @default {
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                      <path d="M12 16V12" stroke="currentColor" stroke-width="2" />
+                      <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  }
+                }
+              </div>
+
+              <!-- Contenu de la notification -->
+              <div class="notification-content">
+                <div class="notification-title">{{ notification.title }}</div>
+                <div class="notification-message">{{ notification.message }}</div>
+                <div class="notification-time">{{ getRelativeTime(notification.timestamp) }}</div>
+              </div>
+
+              <!-- Indicateur de non-lu -->
+              @if (!notification.read) {
+                <div class="unread-indicator"></div>
+              }
+            </div>
+          }
+        }
+      </div>
+
+      <!-- Footer du dropdown supprimé -->
+    </div>
+  }
+</div>
