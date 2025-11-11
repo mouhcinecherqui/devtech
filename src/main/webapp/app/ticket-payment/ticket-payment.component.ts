@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { PaymentMethodService } from '../payment-methods/payment-method.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +36,8 @@ export class TicketPaymentComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   showPaymentForm = false;
+
+  private paymentMethodService = inject(PaymentMethodService);
 
   constructor(private http: HttpClient) {}
 
@@ -85,54 +88,6 @@ export class TicketPaymentComponent implements OnInit {
         this.isLoading = false;
       },
     });
-  }
-
-  /**
-   * Crée une demande de paiement pour un ticket
-   */
-  createPaymentRequest(): void {
-    if (!this.ticketId) return;
-
-    this.isLoading = true;
-    this.http.post<{ [key: string]: string }>(`/api/ticket-payments/create/${this.ticketId}`, {}).subscribe({
-      next: paymentRequest => {
-        // Rediriger vers la passerelle CMI
-        this.redirectToCmiGateway(paymentRequest);
-        this.isLoading = false;
-      },
-      error: error => {
-        console.error('Erreur lors de la création de la demande de paiement:', error);
-        this.errorMessage = 'Erreur lors de la création de la demande de paiement';
-        this.isLoading = false;
-      },
-    });
-  }
-
-  /**
-   * Redirige vers la passerelle CMI
-   */
-  private redirectToCmiGateway(paymentRequest: { [key: string]: string }): void {
-    // Créer un formulaire temporaire pour soumettre les données CMI
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = paymentRequest.gatewayUrl || 'https://testpayment.cmi.co.ma/fim/est3Dgate';
-    form.target = '_blank';
-
-    // Ajouter tous les paramètres CMI
-    Object.keys(paymentRequest).forEach(key => {
-      if (key !== 'gatewayUrl' && paymentRequest[key]) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = paymentRequest[key];
-        form.appendChild(input);
-      }
-    });
-
-    // Soumettre le formulaire
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
   }
 
   /**

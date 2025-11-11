@@ -1,0 +1,33 @@
+# Configuration OAuth2 de test
+# Ce fichier contient une configuration OAuth2 simplifiée pour les tests
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            # Remplacez par vos nouveaux identifiants Google Cloud Console
+            client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
+            client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+            scope: openid,profile,email
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+            # Configuration supplémentaire pour le debug
+            client-name: Google
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user-name-attribute: sub
+            # Configuration supplémentaire pour le debug
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+
+# Configuration de logging pour debug OAuth2
+logging:
+  level:
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.security.oauth2.client: DEBUG
+    org.springframework.security.oauth2.core: DEBUG
+    devtech.web.rest.OAuth2Controller: DEBUG
+    devtech.service.OAuth2JwtService: DEBUG

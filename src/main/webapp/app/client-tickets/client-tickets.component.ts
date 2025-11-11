@@ -1,10 +1,14 @@
-import { Component, OnInit, signal, ViewChild, ElementRef, ChangeDetectorRef, computed } from '@angular/core';
+import { Component, OnInit, signal, ViewChild, ElementRef, ChangeDetectorRef, computed, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject, takeUntil } from 'rxjs';
 import SharedModule from '../shared/shared.module';
-import { TicketPaymentComponent } from '../ticket-payment/ticket-payment.component';
+import { AppParametersService } from 'app/core/services/app-parameters.service';
+import { AppParameter } from 'app/admin/parameters/parameters.model';
+import { NotificationBadgeComponent } from '../shared/components/notification-badge/notification-badge.component';
 
 interface Ticket {
   id?: number;
@@ -22,13 +26,16 @@ interface Ticket {
 }
 
 @Component({
-  selector: 'app-client-tickets',
+  selector: 'jhi-client-tickets',
   templateUrl: './client-tickets.component.html',
   styleUrls: ['./client-tickets.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, TicketPaymentComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, NotificationBadgeComponent],
 })
-export class ClientTicketsComponent implements OnInit {
+export class ClientTicketsComponent implements OnInit, OnDestroy {
+  private readonly destroy$ = new Subject<void>();
+  private readonly appParametersService = inject(AppParametersService);
+
   tickets = signal<Ticket[]>([]);
   loading = signal(false);
   error = signal<string | null>(null);
@@ -36,11 +43,24 @@ export class ClientTicketsComponent implements OnInit {
   ticketForm: FormGroup;
   ticketTypes = ['Bug', 'Demande', 'Support', 'Autre'];
   showModal = signal(false);
-  workflowSteps = ['Nouveau', 'En cours', 'Résolu', 'Fermé'];
+  workflowSteps = ['Nouveau', 'En cours', 'Résolu', 'En attente de paiement', 'Paiement validé', 'Fermé'];
   statusFilter = signal<string>('');
 
-  selectedTicket: Ticket | null = null;
-  showDetailModal = signal(false);
+  // Paramètres de l'application
+  ticketStatuses: AppParameter[] = [];
+  ticketTypesParams: AppParameter[] = [];
+  ticketPriorities: AppParameter[] = [];
+
+  // Valeurs par défaut
+  defaultStatus = 'En cours';
+  defaultType = 'Support';
+  defaultPriority = 'Normal';
+  maxTicketsPerUser = 10;
+  supportEmail = 'support@devtech.com';
+  companyName = 'DevTech';
+
+  // États de chargement
+  loadingParameters = signal(false);
 
   // Image upload signals
   selectedImagePreview = signal<string | null>(null);
@@ -51,9 +71,13 @@ export class ClientTicketsComponent implements OnInit {
   showImageModal = signal<boolean>(false);
   selectedImageUrl = signal<string | null>(null);
 
-  // Client reply - utiliser une propriété normale au lieu d'un signal
-  clientReply: string = '';
-  sendingReply = signal<boolean>(false);
+  // Gestion des devis et validations
+  showDevisModal = signal<boolean>(false);
+  showPaymentValidationModal = signal<boolean>(false);
+  selectedTicketForDevis: Ticket | null = null;
+  selectedTicketForPayment: Ticket | null = null;
+  devisAmount = signal<number>(0);
+  devisDescription = signal<string>('');
 
   // Computed properties for filtered tickets and statistics
   filteredTickets = computed(() => {
@@ -61,6 +85,36 @@ export class ClientTicketsComponent implements OnInit {
     if (!filter) return this.tickets();
     return this.tickets().filter(ticket => ticket.status === filter);
   });
+
+  @ViewChild('typeInput') typeInput?: ElementRef;
+
+  constructor(
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
+    private translateService: TranslateService,
+    private router: Router,
+  ) {
+    this.ticketForm = this.fb.group({
+      type: ['', Validators.required],
+      description: ['', Validators.required],
+      backofficeUrl: [''],
+      backofficeLogin: [''],
+      backofficePassword: [''],
+      hostingUrl: [''],
+      image: [''],
+    });
+  }
+
+  ngOnInit(): void {
+    this.fetchTickets();
+    this.loadApplicationParameters();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   getStepIndex(status: string): number {
     return this.workflowSteps.indexOf(status);
@@ -80,137 +134,10 @@ export class ClientTicketsComponent implements OnInit {
     // The filtering is handled by the computed property
   }
 
-  openDetailModal(ticket: Ticket): void {
-    this.selectedTicket = ticket;
-    this.showDetailModal.set(true);
-
-    // Recharger les messages si ils ne sont pas présents
-    if (!ticket.messageStrings || ticket.messageStrings.length === 0) {
-      this.http.get<string[]>(`/api/tickets/${ticket.id}/messages`).subscribe({
-        next: messages => {
-          if (this.selectedTicket && this.selectedTicket.id === ticket.id) {
-            this.selectedTicket.messageStrings = messages;
-          }
-        },
-        error: error => {
-          console.error('Erreur lors du chargement des messages:', error);
-        },
-      });
-    }
+  openTicketDetail(ticket: Ticket): void {
+    this.router.navigate(['/client-tickets', ticket.id]);
   }
 
-  closeDetailModal(): void {
-    this.showDetailModal.set(false);
-    this.selectedTicket = null;
-    this.clientReply = ''; // Reset reply when closing modal
-  }
-
-  // Méthodes utilitaires pour les notifications
-  private showSuccessMessage(message: string): void {
-    this.success.set(message);
-    setTimeout(() => {
-      this.success.set(null);
-    }, 3000);
-  }
-
-  private showErrorMessage(message: string): void {
-    this.error.set(message);
-    this.clearErrorAfterDelay(3000);
-  }
-
-  // Méthode pour effacer automatiquement les messages d'erreur
-  private clearErrorAfterDelay(delay: number = 5000): void {
-    setTimeout(() => {
-      this.error.set(null);
-    }, delay);
-  }
-
-  // Méthode pour effacer le message de réponse
-  private clearReplyMessage(): void {
-    console.log('Avant effacement:', this.clientReply);
-    this.clientReply = '';
-    console.log('Après effacement:', this.clientReply);
-    this.cdr.detectChanges();
-
-    // Forcer une deuxième détection de changements après un court délai
-    setTimeout(() => {
-      this.cdr.detectChanges();
-    }, 10);
-  }
-
-  // Méthode pour envoyer la réponse du client
-  sendReply(): void {
-    if (!this.selectedTicket || !this.clientReply.trim()) return;
-
-    console.log('Début sendReply, message:', this.clientReply);
-    this.sendingReply.set(true);
-
-    // Sauvegarder le contenu du message avant de l'envoyer
-    const messageContent = this.clientReply.trim();
-
-    // Effacer le message immédiatement pour une meilleure UX
-    this.clearReplyMessage();
-
-    // Utiliser setTimeout avec délai 0 pour forcer la mise à jour de l'interface
-    setTimeout(() => {
-      // Vérifier que le ticket est toujours sélectionné
-      if (!this.selectedTicket) {
-        this.sendingReply.set(false);
-        return;
-      }
-
-      console.log('Envoi du message:', messageContent);
-
-      // Utiliser l'endpoint dédié pour ajouter un message
-      this.http
-        .post<any>(`/api/tickets/${this.selectedTicket.id}/messages`, {
-          content: messageContent,
-        })
-        .subscribe({
-          next: response => {
-            console.log('Message envoyé avec succès:', response);
-
-            // Ajouter le message directement à l'interface
-            if (this.selectedTicket) {
-              this.selectedTicket.messageStrings = this.selectedTicket.messageStrings || [];
-              this.selectedTicket.messageStrings.push(`[CLIENT] ${messageContent}`);
-            }
-
-            // Réinitialiser l'état d'envoi
-            this.sendingReply.set(false);
-
-            // Forcer la détection de changements
-            this.cdr.detectChanges();
-
-            // Notification de succès
-            this.translateService.get('ticketsClient.replySent').subscribe((message: string) => {
-              this.showSuccessMessage(message);
-            });
-
-            // Rafraîchir la page après un délai pour s'assurer que tout est à jour
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000);
-          },
-          error: error => {
-            console.error("Erreur lors de l'envoi de la réponse:", error);
-            this.sendingReply.set(false);
-
-            // Remettre le message dans le champ en cas d'erreur
-            this.clientReply = messageContent;
-
-            // Forcer la mise à jour de l'interface
-            this.cdr.detectChanges();
-
-            this.translateService.get('ticketsClient.replyError').subscribe((message: string) => {
-              this.showErrorMessage(message);
-            });
-          },
-        });
-    }, 0); // Délai 0 pour forcer la mise à jour de l'interface
-  }
-
-  // Image upload methods
   onImageSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
@@ -256,69 +183,180 @@ export class ClientTicketsComponent implements OnInit {
     this.selectedImageUrl.set(null);
   }
 
-  onPaymentCompleted(success: boolean): void {
-    if (success) {
-      this.showSuccessMessage('Paiement effectué avec succès !');
-      // Recharger les tickets pour mettre à jour les statuts
-      this.fetchTickets();
-      // Fermer la modal de détail si elle est ouverte
-      if (this.showDetailModal()) {
-        this.closeDetailModal();
-      }
-    } else {
-      this.showErrorMessage('Erreur lors du paiement. Veuillez réessayer.');
-    }
+  openDevisModal(ticket: Ticket): void {
+    this.selectedTicketForDevis = ticket;
+    this.showDevisModal.set(true);
   }
 
-  // Helper methods for translations
+  closeDevisModal(): void {
+    this.showDevisModal.set(false);
+    this.selectedTicketForDevis = null;
+    this.devisAmount.set(0);
+    this.devisDescription.set('');
+  }
+
+  submitDevis(): void {
+    if (!this.selectedTicketForDevis || this.devisAmount() <= 0) {
+      this.showErrorMessage('Veuillez saisir un montant valide pour le devis.');
+      return;
+    }
+
+    const devisData = {
+      ticketId: this.selectedTicketForDevis.id,
+      amount: this.devisAmount(),
+      description: this.devisDescription(),
+      status: 'PENDING_VALIDATION',
+    };
+
+    this.http.post('/api/tickets/devis', devisData).subscribe({
+      next: () => {
+        this.showSuccessMessage('Devis envoyé avec succès !');
+        this.closeDevisModal();
+        this.fetchTickets();
+      },
+      error: () => {
+        this.showErrorMessage("Erreur lors de l'envoi du devis.");
+      },
+    });
+  }
+
+  // validateDevis method removed - no longer needed in simplified workflow
+
+  openPaymentValidationModal(ticket: Ticket): void {
+    this.selectedTicketForPayment = ticket;
+    this.showPaymentValidationModal.set(true);
+  }
+
+  closePaymentValidationModal(): void {
+    this.showPaymentValidationModal.set(false);
+    this.selectedTicketForPayment = null;
+  }
+
+  validatePayment(ticketId: number): void {
+    this.http.put(`/api/tickets/${ticketId}/validate-payment`, {}).subscribe({
+      next: () => {
+        this.showSuccessMessage('Paiement validé avec succès !');
+        this.fetchTickets();
+      },
+      error: () => {
+        this.showErrorMessage('Erreur lors de la validation du paiement.');
+      },
+    });
+  }
+
+  canValidateDevis(ticket: Ticket): boolean {
+    return ticket.status === 'Nouveau';
+  }
+
+  canValidatePayment(ticket: Ticket): boolean {
+    return ticket.status === 'En attente de paiement';
+  }
+
+  canCloseTicket(ticket: Ticket): boolean {
+    return ticket.status === 'Paiement validé';
+  }
+
+  closeTicket(ticketId: number): void {
+    this.http.put(`/api/tickets/${ticketId}/close`, {}).subscribe({
+      next: () => {
+        this.showSuccessMessage('Ticket fermé avec succès !');
+        this.fetchTickets();
+      },
+      error: () => {
+        this.showErrorMessage('Erreur lors de la fermeture du ticket.');
+      },
+    });
+  }
+
   getTicketTypeTranslation(type: string | undefined): string {
     if (!type) return '';
 
-    const typeMap: { [key: string]: string } = {
+    const typeMap: Record<string, string> = {
       Bug: 'Bug',
       Demande: 'Demande',
       Support: 'Support',
       Autre: 'Autre',
     };
 
-    return typeMap[type] || type;
+    return typeMap[type] ?? type;
   }
 
   getTicketStatusTranslation(status: string | undefined): string {
     if (!status) return '';
 
-    const statusMap: { [key: string]: string } = {
-      Nouveau: 'Nouveau',
-      'En cours': 'En cours',
-      Résolu: 'Résolu',
-      Fermé: 'Fermé',
+    const statusMap: Record<string, string> = {
+      Nouveau: 'ticketsClient.status.nouveau',
+      'En cours': 'ticketsClient.status.enCours',
+      Résolu: 'ticketsClient.status.resolu',
+      'En attente de paiement': 'En attente de paiement',
+      'Paiement validé': 'ticketsClient.status.paiementValide',
+      Fermé: 'ticketsClient.status.ferme',
       Urgent: 'Urgent',
     };
 
-    return statusMap[status] || status;
+    const translationKey = statusMap[status] ?? status;
+    return this.translateService.instant(translationKey);
   }
 
-  @ViewChild('typeInput') typeInput?: ElementRef;
-
-  constructor(
-    private http: HttpClient,
-    private fb: FormBuilder,
-    private cdr: ChangeDetectorRef,
-    private translateService: TranslateService,
-  ) {
-    this.ticketForm = this.fb.group({
-      type: ['', Validators.required],
-      description: ['', Validators.required],
-      backofficeUrl: [''],
-      backofficeLogin: [''],
-      backofficePassword: [''],
-      hostingUrl: [''],
-      image: [''],
-    });
+  getStatusLabel(statusKey: string): string {
+    const status = this.ticketStatuses.find(s => s.key === statusKey);
+    return status?.value ?? statusKey;
   }
 
-  ngOnInit(): void {
-    this.fetchTickets();
+  getTypeLabel(typeKey: string): string {
+    const type = this.ticketTypesParams.find(t => t.key === typeKey);
+    return type?.value ?? typeKey;
+  }
+
+  getPriorityLabel(priorityKey: string): string {
+    const priority = this.ticketPriorities.find(p => p.key === priorityKey);
+    return priority?.value ?? priorityKey;
+  }
+
+  getStatusColor(statusKey: string): string {
+    switch (statusKey) {
+      case 'open':
+        return 'warning';
+      case 'resolved':
+        return 'success';
+      case 'closed':
+        return 'secondary';
+      case 'urgent':
+        return 'danger';
+      default:
+        return 'info';
+    }
+  }
+
+  getPriorityColor(priorityKey: string): string {
+    switch (priorityKey) {
+      case 'low':
+        return 'info';
+      case 'normal':
+        return 'primary';
+      case 'high':
+        return 'warning';
+      case 'critical':
+        return 'danger';
+      default:
+        return 'primary';
+    }
+  }
+
+  canCreateNewTicket(): boolean {
+    return this.tickets().length < this.maxTicketsPerUser;
+  }
+
+  getMaxTicketsErrorMessage(): string {
+    return this.translateService.instant('tickets.maxTicketsReached', {
+      max: this.maxTicketsPerUser,
+      supportEmail: this.supportEmail,
+    }) as string;
+  }
+
+  refreshParameters(): void {
+    this.appParametersService.refreshParameters();
+    this.loadApplicationParameters();
   }
 
   fetchTickets(): void {
@@ -358,23 +396,20 @@ export class ClientTicketsComponent implements OnInit {
 
     this.loading.set(true);
     this.uploadProgress.set(0);
-    // Effacer les messages d'erreur précédents
     this.error.set(null);
 
-    // Create FormData for file upload
     const formData = new FormData();
     formData.append('type', this.ticketForm.value.type);
     formData.append('description', this.ticketForm.value.description);
-    formData.append('backofficeUrl', this.ticketForm.value.backofficeUrl || '');
-    formData.append('backofficeLogin', this.ticketForm.value.backofficeLogin || '');
-    formData.append('backofficePassword', this.ticketForm.value.backofficePassword || '');
-    formData.append('hostingUrl', this.ticketForm.value.hostingUrl || '');
+    formData.append('backofficeUrl', this.ticketForm.value.backofficeUrl ?? '');
+    formData.append('backofficeLogin', this.ticketForm.value.backofficeLogin ?? '');
+    formData.append('backofficePassword', this.ticketForm.value.backofficePassword ?? '');
+    formData.append('hostingUrl', this.ticketForm.value.hostingUrl ?? '');
 
     if (this.selectedFile) {
       formData.append('image', this.selectedFile);
     }
 
-    // Upload with progress tracking
     this.http
       .post<Ticket>('/api/tickets', formData, {
         reportProgress: true,
@@ -383,7 +418,7 @@ export class ClientTicketsComponent implements OnInit {
       .subscribe({
         next: (event: HttpEvent<any>) => {
           if (event.type === HttpEventType.UploadProgress) {
-            const progress = Math.round((100 * event.loaded) / (event.total || 1));
+            const progress = Math.round((100 * event.loaded) / (event.total ?? 1));
             this.uploadProgress.set(progress);
           } else if (event.type === HttpEventType.Response) {
             const ticket = event.body;
@@ -391,8 +426,6 @@ export class ClientTicketsComponent implements OnInit {
             this.closeModal();
             this.loading.set(false);
             this.uploadProgress.set(100);
-
-            // Afficher un message de succès
             this.showSuccessMessage('Ticket créé avec succès !');
           }
         },
@@ -403,5 +436,107 @@ export class ClientTicketsComponent implements OnInit {
           this.clearErrorAfterDelay();
         },
       });
+  }
+
+  private loadApplicationParameters(): void {
+    this.loadingParameters.set(true);
+
+    this.appParametersService
+      .getTicketStatuses()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: statuses => {
+          this.ticketStatuses = statuses;
+        },
+        error: (error: any) => {
+          this.error.set(`Erreur lors du chargement des statuts: ${error.message || 'Erreur inconnue'}`);
+        },
+      });
+
+    this.appParametersService
+      .getTicketTypes()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: types => {
+          this.ticketTypesParams = types;
+        },
+        error: (error: any) => {
+          this.error.set(`Erreur lors du chargement des types: ${error.message || 'Erreur inconnue'}`);
+        },
+      });
+
+    this.appParametersService
+      .getTicketPriorities()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: priorities => {
+          this.ticketPriorities = priorities;
+        },
+        error: (error: any) => {
+          this.error.set(`Erreur lors du chargement des priorités: ${error.message || 'Erreur inconnue'}`);
+        },
+      });
+
+    this.appParametersService
+      .getDefaultTicketStatus()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(status => (this.defaultStatus = status));
+
+    this.appParametersService
+      .getDefaultTicketType()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(type => (this.defaultType = type));
+
+    this.appParametersService
+      .getDefaultTicketPriority()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(priority => (this.defaultPriority = priority));
+
+    this.appParametersService
+      .getParameterValue('max_tickets_per_user')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        if (value) {
+          this.maxTicketsPerUser = parseInt(value, 10);
+        }
+      });
+
+    this.appParametersService
+      .getParameterValue('support_email')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        if (value) {
+          this.supportEmail = value;
+        }
+      });
+
+    this.appParametersService
+      .getParameterValue('company_name')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        if (value) {
+          this.companyName = value;
+        }
+      });
+
+    this.loadingParameters.set(false);
+  }
+
+  private showSuccessMessage(message: string): void {
+    this.success.set(message);
+    setTimeout(() => {
+      this.success.set(null);
+    }, 3000);
+  }
+
+  private showErrorMessage(message: string): void {
+    this.error.set(message);
+    this.clearErrorAfterDelay(3000);
+  }
+
+  private clearErrorAfterDelay(delay = 5000): void {
+    setTimeout(() => {
+      this.error.set(null);
+    }, delay);
   }
 }

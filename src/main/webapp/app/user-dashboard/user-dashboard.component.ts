@@ -19,7 +19,7 @@ interface Ticket {
 }
 
 @Component({
-  selector: 'app-user-dashboard',
+  selector: 'jhi-user-dashboard',
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss'],
   standalone: true,

@@ -12,6 +12,7 @@ import PasswordStrengthBarComponent from './password-strength-bar/password-stren
   selector: 'jhi-password',
   imports: [SharedModule, FormsModule, ReactiveFormsModule, PasswordStrengthBarComponent],
   templateUrl: './password.component.html',
+  styleUrl: './password.component.scss',
 })
 export default class PasswordComponent implements OnInit {
   doNotMatch = signal(false);

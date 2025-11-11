@@ -1,56 +1,171 @@
-<h2 class="mb-4">{{ 'parameters.title' | translate }}</h2>
-<p class="mb-4 text-secondary">{{ 'parameters.subtitle' | translate }}</p>
+<div class="admin-parameters-container">
+  <!-- Header Section -->
+  <div class="admin-parameters-header">
+    <div class="header-content">
+      <div class="header-text">
+        <h2>{{ 'parameters.title' | translate }}</h2>
+        <p>{{ 'parameters.subtitle' | translate }}</p>
+      </div>
+      <jhi-refresh-button [loading]="loading" (refresh)="loadAll()"></jhi-refresh-button>
+    </div>
+  </div>
 
-<div class="row g-4">
-  <!-- Section Statuts de tickets -->
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">{{ 'parameters.ticketStatus.title' | translate }}</h5>
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-state">
+    <div class="loading-spinner">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          opacity="0.25"
+        />
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+    <p>{{ 'parameters.loading' | translate }}</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!loading && parameters.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+        <path
+          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+          stroke="currentColor"
+          stroke-width="2"
+        />
+      </svg>
+    </div>
+    <h3>{{ 'parameters.empty.title' | translate }}</h3>
+    <p>{{ 'parameters.empty.message' | translate }}</p>
+  </div>
+
+  <div *ngIf="!loading && parameters.length > 0" class="parameters-grid">
+    <!-- Section Statuts de tickets -->
+    <div class="parameter-section">
+      <div class="parameter-card">
+        <div class="parameter-card-header">
+          <div class="parameter-card-title">
+            <div class="parameter-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+            <h5>{{ 'parameters.ticketStatus.title' | translate }}</h5>
+          </div>
           <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-status')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
             {{ 'parameters.ticketStatus.add' | translate }}
           </button>
         </div>
-        <div *ngIf="formType === 'ticket-status' && showForm" class="mb-3">
-          <form (ngSubmit)="save()" class="row g-2 align-items-end">
-            <div class="col">
+
+        <div *ngIf="formType === 'ticket-status' && showForm" class="parameter-form">
+          <form (ngSubmit)="save()" class="form-grid" [class.form-error]="hasFormErrors()">
+            <div class="form-group">
               <input
                 class="form-control"
+                [class.error]="getFormError('key')"
                 [(ngModel)]="form.key"
                 name="key"
                 required
                 [readonly]="editMode"
                 [placeholder]="'parameters.key' | translate"
               />
+              <div *ngIf="getFormError('key')" class="error-message">
+                {{ getFormError('key') }}
+              </div>
             </div>
-            <div class="col">
-              <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
-            </div>
-            <div class="col">
+            <div class="form-group">
               <input
                 class="form-control"
+                [class.error]="getFormError('value')"
+                [(ngModel)]="form.value"
+                name="value"
+                required
+                [placeholder]="'parameters.value' | translate"
+              />
+              <div *ngIf="getFormError('value')" class="error-message">
+                {{ getFormError('value') }}
+              </div>
+            </div>
+            <div class="form-group">
+              <input
+                class="form-control"
+                [class.error]="getFormError('description')"
                 [(ngModel)]="form.description"
                 name="description"
                 [placeholder]="'parameters.description' | translate"
               />
+              <div *ngIf="getFormError('description')" class="error-message">
+                {{ getFormError('description') }}
+              </div>
             </div>
-            <div class="col-auto">
-              <button type="submit" class="btn btn-success">
-                {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
+            <div class="form-actions">
+              <button type="submit" class="btn btn-success" [disabled]="!isFormValid() || saving">
+                <svg *ngIf="!saving" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <svg *ngIf="saving" width="16" height="16" viewBox="0 0 24 24" fill="none" class="spinning">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    opacity="0.25"
+                  />
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                {{
+                  saving ? ('parameters.saving' | translate) : editMode ? ('parameters.save' | translate) : ('parameters.add' | translate)
+                }}
               </button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
+              <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="saving">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                {{ 'parameters.cancel' | translate }}
+              </button>
             </div>
           </form>
         </div>
-        <div class="table-responsive">
-          <table class="table table-sm align-middle mb-0">
-            <thead class="table-light">
+
+        <div class="parameter-table-container">
+          <table class="parameter-table">
+            <thead>
               <tr>
                 <th>{{ 'parameters.key' | translate }}</th>
                 <th>{{ 'parameters.value' | translate }}</th>
                 <th>{{ 'parameters.description' | translate }}</th>
-                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
+                <th>{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -58,9 +173,39 @@
                 <td>{{ parameter.key }}</td>
                 <td>{{ parameter.value }}</td>
                 <td>{{ parameter.description }}</td>
-                <td>
-                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
-                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                <td class="actions-cell">
+                  <button class="btn btn-edit" (click)="openEditForm(parameter)" title="Modifier">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V13"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button class="btn btn-delete" (click)="delete(parameter)" title="Supprimer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path
+                        d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -68,19 +213,41 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Section Types de tickets -->
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">{{ 'parameters.ticketType.title' | translate }}</h5>
-          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-type')">{{ 'parameters.ticketType.add' | translate }}</button>
+    <!-- Section Types de tickets -->
+    <div class="parameter-section">
+      <div class="parameter-card">
+        <div class="parameter-card-header">
+          <div class="parameter-card-title">
+            <div class="parameter-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V8L14 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h5>{{ 'parameters.ticketType.title' | translate }}</h5>
+          </div>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-type')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ 'parameters.ticketType.add' | translate }}
+          </button>
         </div>
-        <div *ngIf="formType === 'ticket-type' && showForm" class="mb-3">
-          <form (ngSubmit)="save()" class="row g-2 align-items-end">
-            <div class="col">
+
+        <div *ngIf="formType === 'ticket-type' && showForm" class="parameter-form">
+          <form (ngSubmit)="save()" class="form-grid">
+            <div class="form-group">
               <input
                 class="form-control"
                 [(ngModel)]="form.key"
@@ -90,10 +257,10 @@
                 [placeholder]="'parameters.key' | translate"
               />
             </div>
-            <div class="col">
+            <div class="form-group">
               <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
             </div>
-            <div class="col">
+            <div class="form-group">
               <input
                 class="form-control"
                 [(ngModel)]="form.description"
@@ -101,22 +268,31 @@
                 [placeholder]="'parameters.description' | translate"
               />
             </div>
-            <div class="col-auto">
+            <div class="form-actions">
               <button type="submit" class="btn btn-success">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
                 {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
               </button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
+              <button type="button" class="btn btn-secondary" (click)="cancel()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                {{ 'parameters.cancel' | translate }}
+              </button>
             </div>
           </form>
         </div>
-        <div class="table-responsive">
-          <table class="table table-sm align-middle mb-0">
-            <thead class="table-light">
+
+        <div class="parameter-table-container">
+          <table class="parameter-table">
+            <thead>
               <tr>
                 <th>{{ 'parameters.key' | translate }}</th>
                 <th>{{ 'parameters.value' | translate }}</th>
                 <th>{{ 'parameters.description' | translate }}</th>
-                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
+                <th>{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -124,9 +300,39 @@
                 <td>{{ parameter.key }}</td>
                 <td>{{ parameter.value }}</td>
                 <td>{{ parameter.description }}</td>
-                <td>
-                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
-                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                <td class="actions-cell">
+                  <button class="btn btn-edit" (click)="openEditForm(parameter)" title="Modifier">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V13"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button class="btn btn-delete" (click)="delete(parameter)" title="Supprimer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path
+                        d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -134,21 +340,39 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Section Priorités de tickets -->
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">{{ 'parameters.ticketPriority.title' | translate }}</h5>
+    <!-- Section Priorités de tickets -->
+    <div class="parameter-section">
+      <div class="parameter-card">
+        <div class="parameter-card-header">
+          <div class="parameter-card-title">
+            <div class="parameter-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2L2 7L12 12L22 7L12 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <h5>{{ 'parameters.ticketPriority.title' | translate }}</h5>
+          </div>
           <button class="btn btn-primary btn-sm" (click)="openAddForm('ticket-priority')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
             {{ 'parameters.ticketPriority.add' | translate }}
           </button>
         </div>
-        <div *ngIf="formType === 'ticket-priority' && showForm" class="mb-3">
-          <form (ngSubmit)="save()" class="row g-2 align-items-end">
-            <div class="col">
+
+        <div *ngIf="formType === 'ticket-priority' && showForm" class="parameter-form">
+          <form (ngSubmit)="save()" class="form-grid">
+            <div class="form-group">
               <input
                 class="form-control"
                 [(ngModel)]="form.key"
@@ -158,10 +382,10 @@
                 [placeholder]="'parameters.key' | translate"
               />
             </div>
-            <div class="col">
+            <div class="form-group">
               <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
             </div>
-            <div class="col">
+            <div class="form-group">
               <input
                 class="form-control"
                 [(ngModel)]="form.description"
@@ -169,22 +393,31 @@
                 [placeholder]="'parameters.description' | translate"
               />
             </div>
-            <div class="col-auto">
+            <div class="form-actions">
               <button type="submit" class="btn btn-success">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
                 {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
               </button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
+              <button type="button" class="btn btn-secondary" (click)="cancel()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                {{ 'parameters.cancel' | translate }}
+              </button>
             </div>
           </form>
         </div>
-        <div class="table-responsive">
-          <table class="table table-sm align-middle mb-0">
-            <thead class="table-light">
+
+        <div class="parameter-table-container">
+          <table class="parameter-table">
+            <thead>
               <tr>
                 <th>{{ 'parameters.key' | translate }}</th>
                 <th>{{ 'parameters.value' | translate }}</th>
                 <th>{{ 'parameters.description' | translate }}</th>
-                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
+                <th>{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -192,9 +425,39 @@
                 <td>{{ parameter.key }}</td>
                 <td>{{ parameter.value }}</td>
                 <td>{{ parameter.description }}</td>
-                <td>
-                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
-                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                <td class="actions-cell">
+                  <button class="btn btn-edit" (click)="openEditForm(parameter)" title="Modifier">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V13"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button class="btn btn-delete" (click)="delete(parameter)" title="Supprimer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path
+                        d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -202,19 +465,36 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Section Autres paramètres -->
-  <div class="col-md-6">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h5 class="card-title mb-0">{{ 'parameters.other.title' | translate }}</h5>
-          <button class="btn btn-primary btn-sm" (click)="openAddForm('other')">{{ 'parameters.other.add' | translate }}</button>
+    <!-- Section Autres paramètres -->
+    <div class="parameter-section">
+      <div class="parameter-card">
+        <div class="parameter-card-header">
+          <div class="parameter-card-title">
+            <div class="parameter-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
+                <path
+                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+            <h5>{{ 'parameters.other.title' | translate }}</h5>
+          </div>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm('other')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            {{ 'parameters.other.add' | translate }}
+          </button>
         </div>
-        <div *ngIf="formType === 'other' && showForm" class="mb-3">
-          <form (ngSubmit)="save()" class="row g-2 align-items-end">
-            <div class="col">
+
+        <div *ngIf="formType === 'other' && showForm" class="parameter-form">
+          <form (ngSubmit)="save()" class="form-grid">
+            <div class="form-group">
               <input
                 class="form-control"
                 [(ngModel)]="form.key"
@@ -224,13 +504,13 @@
                 [placeholder]="'parameters.key' | translate"
               />
             </div>
-            <div class="col">
+            <div class="form-group">
               <input class="form-control" [(ngModel)]="form.value" name="value" required [placeholder]="'parameters.value' | translate" />
             </div>
-            <div class="col">
+            <div class="form-group">
               <input class="form-control" [(ngModel)]="form.type" name="type" [placeholder]="'parameters.type' | translate" />
             </div>
-            <div class="col">
+            <div class="form-group">
               <input
                 class="form-control"
                 [(ngModel)]="form.description"
@@ -238,23 +518,32 @@
                 [placeholder]="'parameters.description' | translate"
               />
             </div>
-            <div class="col-auto">
+            <div class="form-actions">
               <button type="submit" class="btn btn-success">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
                 {{ editMode ? ('parameters.save' | translate) : ('parameters.add' | translate) }}
               </button>
-              <button type="button" class="btn btn-outline-secondary ms-1" (click)="cancel()">{{ 'parameters.cancel' | translate }}</button>
+              <button type="button" class="btn btn-secondary" (click)="cancel()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                {{ 'parameters.cancel' | translate }}
+              </button>
             </div>
           </form>
         </div>
-        <div class="table-responsive">
-          <table class="table table-sm align-middle mb-0">
-            <thead class="table-light">
+
+        <div class="parameter-table-container">
+          <table class="parameter-table">
+            <thead>
               <tr>
                 <th>{{ 'parameters.key' | translate }}</th>
                 <th>{{ 'parameters.value' | translate }}</th>
                 <th>{{ 'parameters.type' | translate }}</th>
                 <th>{{ 'parameters.description' | translate }}</th>
-                <th style="width: 110px">{{ 'parameters.actions' | translate }}</th>
+                <th>{{ 'parameters.actions' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -263,9 +552,39 @@
                 <td>{{ parameter.value }}</td>
                 <td>{{ parameter.type }}</td>
                 <td>{{ parameter.description }}</td>
-                <td>
-                  <button class="btn btn-outline-primary btn-sm me-1" (click)="openEditForm(parameter)">✏️</button>
-                  <button class="btn btn-outline-danger btn-sm" (click)="delete(parameter)">🗑️</button>
+                <td class="actions-cell">
+                  <button class="btn btn-edit" (click)="openEditForm(parameter)" title="Modifier">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V13"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                  <button class="btn btn-delete" (click)="delete(parameter)" title="Supprimer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path
+                        d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
                 </td>
               </tr>
             </tbody>

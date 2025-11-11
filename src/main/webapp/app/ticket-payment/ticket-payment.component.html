@@ -5,13 +5,6 @@
       <i class="fas fa-credit-card"></i>
       <span>Ce ticket nécessite un paiement de {{ paymentInfo?.amount }} {{ paymentInfo?.currency }}</span>
     </div>
-
-    <div class="payment-actions">
-      <button type="button" class="btn btn-primary" (click)="showPayment()" [disabled]="isLoading">
-        <i class="fas fa-credit-card"></i>
-        Payer maintenant
-      </button>
-    </div>
   </div>
 
   <!-- Statut de paiement pour un ticket existant -->
@@ -24,77 +17,19 @@
       <div class="status-content">
         <div class="status-item">
           <span class="label">Montant:</span>
-          <span class="value">{{ paymentStatus?.paymentAmount }} {{ paymentStatus?.paymentCurrency }}</span>
+          <span class="value">{{ paymentStatus.paymentAmount }} {{ paymentStatus.paymentCurrency }}</span>
         </div>
 
         <div class="status-item">
           <span class="label">Type:</span>
-          <span class="value">{{ paymentStatus?.paymentType }}</span>
+          <span class="value">{{ paymentStatus.paymentType }}</span>
         </div>
 
         <div class="status-item">
           <span class="label">Statut:</span>
-          <span class="value status-badge" [ngClass]="getPaymentStatusClass(paymentStatus?.paymentStatus)">
-            {{ getPaymentStatusText(paymentStatus?.paymentStatus) }}
+          <span class="value status-badge" [ngClass]="getPaymentStatusClass(paymentStatus.paymentStatus)">
+            {{ getPaymentStatusText(paymentStatus.paymentStatus) }}
           </span>
-        </div>
-      </div>
-
-      <div class="status-actions" *ngIf="paymentStatus?.paymentStatus === 'PENDING'">
-        <button type="button" class="btn btn-primary" (click)="createPaymentRequest()" [disabled]="isLoading">
-          <i class="fas fa-credit-card"></i>
-          Procéder au paiement
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Formulaire de paiement -->
-  <div *ngIf="showPaymentForm" class="payment-form-overlay">
-    <div class="payment-form">
-      <div class="form-header">
-        <h4>Paiement du ticket</h4>
-        <button type="button" class="btn-close" (click)="hidePayment()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-
-      <div class="form-content">
-        <div class="payment-summary">
-          <div class="summary-item">
-            <span class="label">Montant:</span>
-            <span class="value">{{ paymentInfo?.amount }} {{ paymentInfo?.currency }}</span>
-          </div>
-          <div class="summary-item">
-            <span class="label">Type:</span>
-            <span class="value">{{ ticketType }}</span>
-          </div>
-        </div>
-
-        <div class="payment-methods">
-          <h6>Méthodes de paiement acceptées:</h6>
-          <div class="payment-methods-list">
-            <div class="payment-method">
-              <i class="fab fa-cc-visa"></i>
-              <span>Cartes Visa</span>
-            </div>
-            <div class="payment-method">
-              <i class="fab fa-cc-mastercard"></i>
-              <span>Cartes Mastercard</span>
-            </div>
-            <div class="payment-method">
-              <i class="fas fa-university"></i>
-              <span>Virement bancaire</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" (click)="hidePayment()" [disabled]="isLoading">Annuler</button>
-          <button type="button" class="btn btn-primary" (click)="createPaymentRequest()" [disabled]="isLoading">
-            <i class="fas fa-credit-card"></i>
-            Payer maintenant
-          </button>
         </div>
       </div>
     </div>

@@ -37,6 +37,8 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
+    # Utilise le service name 'mysql' pour Docker, 'localhost' pour développement local
+    # Spring Boot mappe automatiquement SPRING_DATASOURCE_URL de docker-compose vers spring.datasource.url
     url: jdbc:mysql://localhost:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: devtech
     password: root
@@ -51,10 +53,10 @@ spring:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: mouhcinecherqui@gmail.com
-    password: Mouhcine12345.
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: 5e8f2040acbe73
+    password: 147a7788ae5be1
     protocol: smtp
     tls: true
     properties:
@@ -64,7 +66,7 @@ spring:
           starttls:
             enable: true
           ssl:
-            trust: smtp.gmail.com
+            trust: sandbox.smtp.mailtrap.io
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
@@ -102,7 +104,7 @@ jhipster:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    from: mouhcinecherqui@gmail.com
+    from: noreply@devtech.com
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
@@ -120,20 +122,45 @@ jhipster:
 # ===================================================================
 
 admin:
-  mail: mouhcinecherqui@gmail.com
+  mail: admin@devtech.com
 
 # Configuration CMI pour le développement
 cmi:
   merchant:
-    id: '12345678'
+    id: '000000000000001'
   store:
-    key: 'your-secret-store-key-here'
+    key: 'TEST123456789'
     name: 'DevTech Store'
   gateway:
     url: 'https://testpayment.cmi.co.ma/fim/est3Dgate'
   callback:
-    url: 'http://localhost:8080/api/paiements/cmi-callback'
+    url: 'http://localhost:8080/api/paiements/cmi/callback'
   ok:
-    url: 'http://localhost:4200/payment-success'
+    url: 'http://localhost:3000/payment-result'
   fail:
-    url: 'http://localhost:4200/payment-failed'
+    url: 'http://localhost:3000/payment-result'
+  test:
+    cards:
+      success:
+        number: '4355084355084358'
+        expiry: '12/26'
+        cvv: '000'
+      failure:
+        number: '4355084355084358'
+        expiry: '12/26'
+        cvv: '999'
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
+            client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+            scope: openid,profile,email
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user-name-attribute: sub

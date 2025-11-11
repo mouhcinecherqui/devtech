@@ -1,5 +1,6 @@
 package devtech.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,6 +13,7 @@ public class TicketMessage implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id", nullable = false)
     private Ticket ticket;
@@ -103,6 +105,11 @@ public class TicketMessage implements Serializable {
 
     public void setInternal(boolean internal) {
         isInternal = internal;
+    }
+
+    // Méthode pour obtenir l'ID du ticket sans causer de lazy loading
+    public Long getTicketId() {
+        return ticket != null ? ticket.getId() : null;
     }
 
     // Méthodes utilitaires

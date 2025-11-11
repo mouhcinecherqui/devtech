@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="20240827-01-add-paiement-missing-columns" author="ai">
+        <!-- Ajout des colonnes manquantes à la table paiement -->
+        
+        <!-- Colonnes de base manquantes -->
+        <addColumn tableName="paiement">
+            <column name="currency" type="varchar(3)" defaultValue="MAD"/>
+            <column name="description" type="varchar(500)"/>
+            <column name="client_ip" type="varchar(45)"/>
+            <column name="created_at" type="datetime"/>
+            <column name="updated_at" type="datetime"/>
+        </addColumn>
+        
+        <!-- Colonnes CMI -->
+        <addColumn tableName="paiement">
+            <column name="cmi_transaction_id" type="varchar(100)"/>
+            <column name="cmi_order_id" type="varchar(100)"/>
+            <column name="cmi_response_code" type="varchar(10)"/>
+            <column name="cmi_response_message" type="varchar(500)"/>
+            <column name="cmi_approval_code" type="varchar(50)"/>
+            <column name="cmi_merchant_id" type="varchar(50)"/>
+            <column name="cmi_payment_method" type="varchar(50)"/>
+            <column name="cmi_card_type" type="varchar(50)"/>
+            <column name="cmi_card_number" type="varchar(20)"/>
+            <column name="cmi_card_holder" type="varchar(100)"/>
+            <column name="cmi_installment" type="varchar(10)"/>
+            <column name="cmi_3d_secure" type="varchar(10)"/>
+            <column name="cmi_ip_address" type="varchar(45)"/>
+            <column name="cmi_user_agent" type="varchar(500)"/>
+            <column name="cmi_created_at" type="datetime"/>
+            <column name="cmi_updated_at" type="datetime"/>
+        </addColumn>
+        
+        <!-- Mise à jour des valeurs par défaut pour les timestamps existants -->
+        <sql>
+            UPDATE paiement SET 
+                created_at = NOW(),
+                updated_at = NOW(),
+                cmi_created_at = NOW(),
+                cmi_updated_at = NOW()
+            WHERE created_at IS NULL;
+        </sql>
+    </changeSet>
+</databaseChangeLog> 

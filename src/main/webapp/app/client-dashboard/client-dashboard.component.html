@@ -1,18 +1,415 @@
-<div class="dashboard-header">{{ 'clientDashboard.header' | translate }}</div>
-<main class="dashboard-main-area">
-  <h1>{{ 'clientDashboard.title' | translate }}</h1>
-  <div class="dashboard-stats">
-    <div class="stat-card stat-blue">
-      <div class="stat-value">{{ stats.tickets }}</div>
-      <div class="stat-label">{{ 'clientDashboard.stats.tickets' | translate }}</div>
-    </div>
-    <div class="stat-card stat-cyan">
-      <div class="stat-value">{{ stats.open }}</div>
-      <div class="stat-label">{{ 'clientDashboard.stats.open' | translate }}</div>
-    </div>
-    <div class="stat-card stat-green">
-      <div class="stat-value">{{ stats.closed }}</div>
-      <div class="stat-label">{{ 'clientDashboard.stats.closed' | translate }}</div>
+<div class="dashboard-container">
+  <!-- Background Elements -->
+  <div class="dashboard-background">
+    <div class="dashboard-overlay"></div>
+    <div class="dashboard-pattern"></div>
+    <div class="floating-elements">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
     </div>
   </div>
-</main>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard-content">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-left">
+        <div class="welcome-section">
+          <div class="welcome-badge">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="badge-text">{{ 'clientDashboard.welcome.badge' | translate }}</span>
+          </div>
+          <h1 class="welcome-title">{{ 'clientDashboard.welcome.title' | translate }}</h1>
+          <p class="welcome-subtitle">{{ 'clientDashboard.welcome.subtitle' | translate }}</p>
+        </div>
+      </div>
+      <div class="header-right"></div>
+    </header>
+
+    <!-- Error Alert -->
+    <div *ngIf="error" class="error-alert">
+      <div class="error-content">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+          <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+          <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+        </svg>
+        <span>{{ error | translate }}</span>
+        <button class="retry-btn" (click)="retryFetch()">{{ 'clientDashboard.errors.retry' | translate }}</button>
+        <button class="close-btn" (click)="clearError()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" />
+            <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="loading-spinner">
+      <div class="spinner"></div>
+      <p>{{ 'clientDashboard.loading' | translate }}</p>
+    </div>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-main" style="position: relative; z-index: 10">
+      <!-- Quick Stats -->
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ stats.tickets }}</h3>
+              <p class="stat-label">{{ 'clientDashboard.stats.totalTickets' | translate }}</p>
+            </div>
+            <div class="stat-trend positive">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>+{{ stats.trends.tickets }}%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2L2 7L12 12L22 7L12 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ stats.open }}</h3>
+              <p class="stat-label">{{ 'clientDashboard.stats.openTickets' | translate }}</p>
+            </div>
+            <div class="stat-trend positive">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>+{{ stats.trends.open }}%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ stats.closed }}</h3>
+              <p class="stat-label">{{ 'clientDashboard.stats.closedTickets' | translate }}</p>
+            </div>
+            <div class="stat-trend positive">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 14L12 9L17 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>+{{ stats.trends.closed }}%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="stat-content">
+              <h3 class="stat-value">{{ stats.responseTime }}</h3>
+              <p class="stat-label">{{ 'clientDashboard.stats.responseTime' | translate }}</p>
+            </div>
+            <div class="stat-trend" [class.positive]="stats.trends.responseTime > 0" [class.negative]="stats.trends.responseTime < 0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M7 14L12 9L17 14"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  *ngIf="stats.trends.responseTime > 0"
+                />
+                <path
+                  d="M17 10L12 15L7 10"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  *ngIf="stats.trends.responseTime < 0"
+                />
+              </svg>
+              <span>{{ stats.trends.responseTime > 0 ? '+' : '' }}{{ stats.trends.responseTime }}%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Grid -->
+      <section class="dashboard-grid">
+        <!-- Recent Activity -->
+        <div class="dashboard-card activity-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {{ 'clientDashboard.activities.title' | translate }}
+            </h2>
+          </div>
+          <div class="activity-list">
+            <div class="activity-item" *ngFor="let activity of activities.slice(0, 3); let i = index">
+              <div class="activity-icon" [class]="getActivityTypeClass(activity.activityType)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    *ngIf="activity.activityType === 'SUCCESS'"
+                  />
+                  <path
+                    d="M22 4L12 14.01L9 11.01"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    *ngIf="activity.activityType === 'SUCCESS'"
+                  />
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" *ngIf="activity.activityType === 'INFO'" />
+                  <path
+                    d="M12 16V12"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    *ngIf="activity.activityType === 'INFO'"
+                  />
+                  <path
+                    d="M12 8H12.01"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    *ngIf="activity.activityType === 'INFO'"
+                  />
+                  <path
+                    d="M10.29 3.86L1.82 18A2 2 0 0 0 3.82 20H20.18A2 2 0 0 0 22.18 18L13.71 3.86A2 2 0 0 0 10.29 3.86Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    *ngIf="activity.activityType === 'WARNING'"
+                  />
+                  <path
+                    d="M12 9V13"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    *ngIf="activity.activityType === 'WARNING'"
+                  />
+                  <path
+                    d="M12 17H12.01"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    *ngIf="activity.activityType === 'WARNING'"
+                  />
+                </svg>
+              </div>
+              <div class="activity-content">
+                <h4>{{ activity.title }}</h4>
+                <p>{{ activity.description }}</p>
+                <span class="activity-time">{{ getTimeAgo(activity.timestamp) }}</span>
+              </div>
+            </div>
+
+            <!-- Fallback content if no activities -->
+            <div class="activity-item" *ngIf="activities.length === 0">
+              <div class="activity-icon info">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                  <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="activity-content">
+                <h4>{{ 'clientDashboard.activities.noActivity' | translate }}</h4>
+                <p>{{ 'clientDashboard.activities.noActivityDesc' | translate }}</p>
+                <span class="activity-time">Maintenant</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="dashboard-card actions-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2L2 7L12 12L22 7L12 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              {{ 'clientDashboard.actions.title' | translate }}
+            </h2>
+          </div>
+          <div class="actions-grid">
+            <button class="action-btn" (click)="createNewTicket()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>{{ 'clientDashboard.actions.newTicket' | translate }}</span>
+            </button>
+            <button class="action-btn" (click)="contactSupport()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <span>{{ 'clientDashboard.actions.contactSupport' | translate }}</span>
+            </button>
+            <button class="action-btn" (click)="viewDocumentation()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V8L14 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>{{ 'clientDashboard.actions.documentation' | translate }}</span>
+            </button>
+            <button class="action-btn" (click)="viewHistory()">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span>{{ 'clientDashboard.actions.history' | translate }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Tickets -->
+        <div class="dashboard-card tickets-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+              </svg>
+              {{ 'clientDashboard.tickets.title' | translate }}
+            </h2>
+            <button class="view-all-btn" (click)="viewAllTickets()">{{ 'clientDashboard.tickets.viewAll' | translate }}</button>
+          </div>
+          <div class="tickets-list">
+            <div class="ticket-item" *ngFor="let ticket of tickets.slice(0, 3)">
+              <div class="ticket-status" [class]="ticket.status?.toLowerCase()"></div>
+              <div class="ticket-content">
+                <h4>#{{ ticket.id }} - {{ ticket.description }}</h4>
+                <p>{{ ticket.type }}</p>
+                <div class="ticket-meta">
+                  <span class="ticket-priority" [class]="ticket.priority">{{
+                    ticket.priority === 'urgent'
+                      ? ('clientDashboard.tickets.priority.urgent' | translate)
+                      : ticket.priority === 'normal'
+                        ? ('clientDashboard.tickets.priority.normal' | translate)
+                        : ('clientDashboard.tickets.priority.low' | translate)
+                  }}</span>
+                  <span class="ticket-time">{{ getTimeAgo(ticket.createdDate || '') }}</span>
+                </div>
+              </div>
+              <div class="ticket-actions">
+                <button class="ticket-btn" (click)="viewTicket(ticket.id || 0)">{{ 'clientDashboard.tickets.view' | translate }}</button>
+              </div>
+            </div>
+
+            <!-- Fallback content if no tickets -->
+            <div class="ticket-item" *ngIf="tickets.length === 0">
+              <div class="ticket-status nouveau"></div>
+              <div class="ticket-content">
+                <h4>{{ 'clientDashboard.tickets.noTickets' | translate }}</h4>
+                <p>{{ 'clientDashboard.tickets.noTicketsDesc' | translate }}</p>
+                <div class="ticket-meta">
+                  <span class="ticket-priority normal">{{ 'clientDashboard.tickets.priority.normal' | translate }}</span>
+                  <span class="ticket-time">{{ 'clientDashboard.common.now' | translate }}</span>
+                </div>
+              </div>
+              <div class="ticket-actions">
+                <button class="ticket-btn" (click)="createNewTicket()">{{ 'clientDashboard.tickets.create' | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>

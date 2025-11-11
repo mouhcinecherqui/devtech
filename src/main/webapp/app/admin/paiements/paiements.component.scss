@@ -1,133 +1,495 @@
-.paiements-header {
+// Modern Design Variables
+$primary-color: #667eea;
+$primary-light: #818cf8;
+$primary-dark: #4f46e5;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$danger-color: #ef4444;
+$info-color: #06b6d4;
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+
+// Modern Mixins
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+@mixin modern-shadow {
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@mixin modern-shadow-hover {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin gradient-bg($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+}
+
+// Main Container
+.admin-paiements-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+// Header Section
+.admin-paiements-header {
+  @include glassmorphism;
+  border-radius: 24px;
+  padding: 2.5rem;
+  margin-bottom: 2.5rem;
+  @include modern-shadow;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, $gray-900, $primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: -0.025em;
+  }
+
+  p {
+    color: $gray-600;
+    font-size: 1.125rem;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+// Stats Section
+.admin-paiements-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stats-card {
+  @include glassmorphism;
+  border-radius: 20px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  @include modern-shadow;
+  @include smooth-transition;
+
+  &:hover {
+    @include modern-shadow-hover;
+    transform: translateY(-2px);
+  }
+
+  .stats-icon {
+    svg {
+      width: 32px;
+      height: 32px;
+      color: $primary-color;
+      filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.2));
+    }
+  }
+
+  .stats-content {
+    h3 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: $primary-color;
+      margin: 0;
+      line-height: 1;
+    }
+
+    p {
+      color: $gray-600;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+// Actions Section
+.admin-paiements-actions {
+  margin-bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-paiement-btn {
+  @include gradient-bg($primary-color, $primary-light);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  @include smooth-transition;
+  @include modern-shadow;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: currentColor;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  }
+}
+
+// Search Section
+.search-section {
+  margin-bottom: 0;
+}
+
+// Search + Action Row alignment
+.search-action-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1.2rem;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
-.paiements-header h2 {
-  margin: 0;
-  font-size: 2rem;
+
+.search-action-row .search-section {
+  flex: 1;
+}
+
+.search-container {
+  position: relative;
+  max-width: 400px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+  color: $gray-700;
+  font-weight: 500;
+  @include smooth-transition;
+
+  &:focus {
+    outline: none;
+    border: 2px solid $primary-color;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+  }
+
+  &::placeholder {
+    color: $gray-400;
+  }
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+  pointer-events: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: $gray-500;
+  }
+}
+
+// Table Container
+.paiements-table-container {
+  @include glassmorphism;
+  border-radius: 20px;
+  overflow: hidden;
+  @include modern-shadow;
+}
+
+// Modern Table Styles
+.paiements-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th,
+  td {
+    padding: 1.25rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  th {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    color: $gray-900;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  td {
+    color: $gray-700;
+    font-weight: 500;
+    font-size: 0.95rem;
+    @include smooth-transition;
+  }
+
+  tbody tr {
+    @include smooth-transition;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-1px);
+    }
+
+    &:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+// Paiement Row Specific Styles
+.paiement-id {
   font-weight: 700;
-}
-.paiements-desc {
-  color: #444;
-  margin-bottom: 1.2rem;
-}
-.paiements-stats {
-  display: flex;
-  gap: 2rem;
-  margin-bottom: 1.2rem;
+  color: $primary-color;
   font-size: 1.1rem;
 }
-.paiements-stats span {
+
+.paiement-user {
+  color: $gray-900;
   font-weight: 600;
-  color: #2563eb;
 }
-.paiements-table-container {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  padding: 1.5rem;
-  overflow-x: auto;
-}
-.mat-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.mat-table th,
-.mat-table td {
-  padding: 0.9rem 1.2rem;
-  text-align: left;
-  font-size: 1.08rem;
-}
-.mat-table th {
-  background: #f4f7fa;
-  color: #2563eb;
+
+.paiement-amount {
   font-weight: 700;
-  border-bottom: 2px solid #e0e7ef;
+  color: $success-color;
+  font-size: 1.1rem;
 }
-.mat-table tr {
-  border-bottom: 1px solid #e0e7ef;
+
+.paiement-date {
+  color: $gray-600;
+  font-size: 0.9rem;
 }
-.mat-badge {
-  display: inline-block;
-  padding: 0.35em 1.1em;
-  border-radius: 12px;
-  font-size: 1em;
-  font-weight: 500;
-  background: #eee;
-  color: #222;
-}
-.badge-success {
-  background: #5ecba1;
-  color: #fff;
-}
-.badge-pending {
-  background: #b3e5fc;
-  color: #2563eb;
-}
-.badge-failed {
-  background: #ffb3b3;
-  color: #c62828;
-}
-.mat-btn {
-  background: #f4f7fa;
-  border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.3rem;
-  font-size: 1.08rem;
-  font-weight: 600;
-  color: #2563eb;
-  cursor: pointer;
-  transition:
-    background 0.18s,
-    color 0.18s;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.mat-btn.mat-primary {
-  background: #2563eb;
-  color: #fff;
-}
-.mat-btn.mat-accent {
-  background: #fff3e0;
-  color: #ff9800;
-  border: 1px solid #ffe0b2;
-}
-.mat-btn:hover {
-  background: #e0e7ef;
-}
-.mat-input {
-  border: 1px solid #e0e7ef;
-  border-radius: 6px;
-  padding: 0.7rem 1rem;
-  font-size: 1.08rem;
-  margin-bottom: 1.2rem;
-  width: 100%;
-  max-width: 320px;
-  display: block;
-}
-.material-icons {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: normal;
-  font-size: 1.2em;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  direction: ltr;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
-}
-@media (max-width: 900px) {
-  .paiements-table-container {
-    padding: 0.5rem;
+
+.paiement-status {
+  .status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &.badge-success {
+      background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      color: $success-color;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    &.badge-pending {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      color: $warning-color;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    &.badge-failed {
+      background: linear-gradient(135deg, #fef2f2, #fee2e2);
+      color: $danger-color;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
   }
-  .mat-table th,
-  .mat-table td {
-    padding: 0.5rem 0.6rem;
-    font-size: 0.98rem;
+}
+
+.paiement-actions {
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    @include smooth-transition;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    &.btn-accent {
+      @include gradient-bg($warning-color, #fbbf24);
+      color: white;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+      }
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      color: currentColor;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+  }
+}
+
+// Empty State
+.empty-state {
+  td {
+    padding: 4rem 2rem;
+  }
+}
+
+.empty-state-content {
+  text-align: center;
+  color: $gray-500;
+
+  .empty-icon {
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+
+    svg {
+      width: 64px;
+      height: 64px;
+      color: $gray-400;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .admin-paiements-container {
+    padding: 1rem;
+  }
+
+  .admin-paiements-header {
+    padding: 2rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .admin-paiements-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stats-card {
+    justify-content: center;
+  }
+
+  .search-container {
+    max-width: 100%;
+  }
+
+  .paiements-table {
+    th,
+    td {
+      padding: 1rem 0.75rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  .paiement-actions {
+    .btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .paiements-table {
+    th,
+    td {
+      padding: 0.75rem 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  .paiement-amount {
+    font-size: 1rem;
   }
 }

@@ -1,0 +1,430 @@
+<div class="ticket-detail-container">
+  <!-- Header -->
+  <div class="ticket-detail-header">
+    <button class="back-btn" (click)="goBack()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Retour aux tickets
+    </button>
+    <h1>Détail du ticket #{{ ticket()?.id }}</h1>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading()" class="loading-state">
+    <div class="loading-spinner"></div>
+    <p>Chargement...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error()" class="error-state">
+    <div class="error">{{ error() }}</div>
+  </div>
+
+  <!-- Ticket Content -->
+  <div *ngIf="ticket() && !loading()" class="ticket-detail-content">
+    <!-- Workflow Progress -->
+    <div class="workflow-progress">
+      <div class="workflow-steps">
+        <ng-container *ngFor="let step of workflowSteps; let i = index">
+          <div
+            class="workflow-step"
+            [ngClass]="{
+              active: i <= getStepIndex(ticket()?.status || 'Nouveau'),
+              completed: i < getStepIndex(ticket()?.status || 'Nouveau'),
+            }"
+          >
+            <div class="step-indicator">
+              <svg *ngIf="i < getStepIndex(ticket()?.status || 'Nouveau')" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span *ngIf="i >= getStepIndex(ticket()?.status || 'Nouveau')">{{ i + 1 }}</span>
+            </div>
+            <span class="step-label">{{ step }}</span>
+          </div>
+          <div
+            *ngIf="i < workflowSteps.length - 1"
+            class="step-connector"
+            [ngClass]="{ active: i < getStepIndex(ticket()?.status || 'Nouveau') }"
+          ></div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Ticket Information Grid -->
+    <div class="ticket-info-grid">
+      <!-- Carte unifiée: Infos + Description/Devis + Paiement -->
+      <div class="info-card workflow-card">
+        <div class="info-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <h4>Informations, description, devis et paiement</h4>
+        </div>
+        <div class="info-content">
+          <!-- Informations du ticket -->
+          <div class="info-section">
+            <h5>Informations du ticket</h5>
+            <div class="info-row">
+              <span class="info-label">Statut</span>
+              <span class="info-value status-badge" [ngClass]="'status-' + (ticket()?.status?.toLowerCase() || 'nouveau')">
+                {{ getTicketStatusTranslation(ticket()?.status) }}
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Type</span>
+              <span class="info-value type-badge" [ngClass]="'type-' + (ticket()?.type?.toLowerCase() || 'autre')">
+                {{ getTicketTypeTranslation(ticket()?.type) }}
+              </span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Date de création</span>
+              <span class="info-value">{{ ticket()?.createdDate | date: 'full' }}</span>
+            </div>
+          </div>
+
+          <!-- Description et devis -->
+          <div class="info-section">
+            <h5>Description et devis</h5>
+            <!-- Description du ticket -->
+            <div class="description-section">
+              <h5>Description du problème</h5>
+              <p class="description-text">{{ ticket()?.description }}</p>
+            </div>
+
+            <!-- Devis proposés -->
+            <div class="devis-section" *ngIf="hasDevis()">
+              <h5>Devis proposés</h5>
+              <div class="devis-list">
+                <div
+                  *ngFor="let devis of extractDevisFromDescription(); let i = index"
+                  class="devis-item"
+                  [ngClass]="{ 'devis-accepted': devis.accepted, 'devis-rejected': devis.rejected }"
+                >
+                  <div class="devis-header">
+                    <div class="devis-number">Devis #{{ i + 1 }}</div>
+                    <div class="devis-status" *ngIf="devis.accepted">
+                      <span class="status-badge status-accepted">Accepté</span>
+                    </div>
+                    <div class="devis-status" *ngIf="devis.rejected">
+                      <span class="status-badge status-rejected">Refusé</span>
+                    </div>
+                  </div>
+
+                  <div class="devis-content">
+                    <div class="devis-amount">
+                      <strong>Montant : {{ devis.amount }} MAD</strong>
+                    </div>
+                    <div class="devis-description">
+                      <strong>Description :</strong>
+                      <p>{{ devis.description }}</p>
+                    </div>
+                  </div>
+
+                  <!-- Actions pour accepter/refuser le devis -->
+                  <div class="devis-actions" *ngIf="canRespondToDevis() && !devis.accepted && !devis.rejected">
+                    <button type="button" class="btn btn-success btn-sm" (click)="acceptDevisFromDescription(devis, i)">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      Accepter ce devis
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="rejectDevisFromDescription(devis, i)">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      </svg>
+                      Refuser ce devis
+                    </button>
+                  </div>
+
+                  <!-- Message de confirmation -->
+                  <div class="devis-confirmation" *ngIf="devis.accepted">
+                    <div class="confirmation-message accepted">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      Devis accepté le {{ devis.acceptedDate | date: 'short' }}
+                    </div>
+                  </div>
+
+                  <div class="devis-confirmation" *ngIf="devis.rejected">
+                    <div class="confirmation-message rejected">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                      </svg>
+                      Devis refusé le {{ devis.rejectedDate | date: 'short' }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message si aucun devis -->
+            <div class="no-devis-message" *ngIf="!hasDevis()">
+              <p>Aucun devis n'a encore été proposé pour ce ticket.</p>
+            </div>
+          </div>
+
+          <!-- Paiement -->
+          <div class="info-section payment-section">
+            <h5>Paiement</h5>
+            <jhi-ticket-payment
+              [ticketId]="ticket()?.id || 0"
+              [ticketType]="ticket()?.type || ''"
+              (paymentCompleted)="onPaymentCompleted($event)"
+            >
+            </jhi-ticket-payment>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image jointe -->
+      <div *ngIf="ticket()?.imageUrl" class="info-card">
+        <div class="info-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M21 19V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <h4>Image jointe</h4>
+        </div>
+        <div class="info-content">
+          <div class="ticket-image-container">
+            <img [src]="ticket()?.imageUrl" alt="Image du ticket" class="ticket-image" (click)="openImageModal(ticket()?.imageUrl || '')" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Système de messagerie et devis/factures -->
+      <div class="info-card-message">
+        <div class="info-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M8 12h8m-8 4h4m-4-8h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <h4>Messages et documents</h4>
+        </div>
+        <div class="info-content">
+          <!-- Messages de l'admin -->
+          <div class="messages-section">
+            <div class="messages-wrapper">
+              <h5>Messages de l'équipe</h5>
+              <div class="messages-container">
+                <div
+                  *ngFor="let message of ticket()?.messageStrings || []; let i = index"
+                  class="message-bubble"
+                  [ngClass]="{ 'client-message': message.startsWith('[CLIENT]'), 'admin-message': !message.startsWith('[CLIENT]') }"
+                >
+                  <div class="message-header">
+                    <span class="message-author" *ngIf="!message.startsWith('[CLIENT]')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <circle
+                          cx="12"
+                          cy="7"
+                          r="4"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                      Équipe DevTech
+                    </span>
+                    <span class="message-author client-author" *ngIf="message.startsWith('[CLIENT]')">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path
+                          d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <circle
+                          cx="12"
+                          cy="7"
+                          r="4"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                      Vous
+                    </span>
+                    <span class="message-time">{{ getMessageTime(i) }}</span>
+                  </div>
+                  <div class="message-content">
+                    {{ message.startsWith('[CLIENT]') ? message.substring(8) : message }}
+                  </div>
+
+                  <div *ngIf="isDevisMessage(message)" class="message-actions">
+                    <div class="devis-info">
+                      <strong>Devis proposé : {{ extractDevisAmount(message) }} MAD</strong>
+                      <p>{{ extractDevisDescription(message) }}</p>
+                    </div>
+                    <div class="devis-actions" *ngIf="canRespondToDevis()">
+                      <button type="button" class="btn btn-success btn-sm" (click)="acceptDevis(message)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Accepter
+                      </button>
+                      <button type="button" class="btn btn-danger btn-sm" (click)="rejectDevis(message)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        Refuser
+                      </button>
+                    </div>
+                  </div>
+
+                  <div *ngIf="isFactureMessage(message)" class="message-actions">
+                    <div class="facture-info">
+                      <strong>Facture générée : {{ extractFactureAmount(message) }} MAD</strong>
+                      <p>{{ extractFactureDescription(message) }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions de paiement supprimées ici: gérées uniquement dans la section Paiement -->
+
+          <!-- Zone de réponse du client -->
+          <div class="client-reply-section">
+            <div class="reply-header">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M10 9H6a2 2 0 00-2 2v6a2 2 0 002 2h8a2 2 0 002-2v-6a2 2 0 00-2-2h-4m0 0V5a2 2 0 114 0v4m-4 0h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <span>Votre réponse</span>
+            </div>
+            <div class="reply-form">
+              <textarea
+                [(ngModel)]="clientReply"
+                (keydown.enter)="$event.preventDefault(); sendReply()"
+                placeholder="Tapez votre message ici..."
+                rows="3"
+                class="reply-textarea"
+                maxlength="500"
+              >
+              </textarea>
+              <div class="reply-actions">
+                <span class="char-count">{{ clientReply.length }}/500</span>
+                <button type="button" class="reply-btn" [disabled]="!clientReply.trim() || sendingReply()" (click)="sendReply()">
+                  <span *ngIf="!sendingReply()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    Envoyer
+                  </span>
+                  <span *ngIf="sendingReply()">
+                    <svg class="spinner" width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <path d="M21 12a9 9 0 11-6.219-8.56" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                    Envoi...
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section Avis Client -->
+      <div *ngIf="showReviewButton() || hasReview()" class="info-card">
+        <div class="info-header">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <h4>Avis client</h4>
+        </div>
+        <div class="info-content">
+          <div *ngIf="showReviewButton()" class="review-section">
+            <div class="review-message">
+              <p>Votre ticket a été fermé. Partagez votre expérience avec nous en donnant votre avis !</p>
+            </div>
+            <div class="review-actions">
+              <button type="button" class="review-btn" (click)="openReviewModal()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Donner un avis
+              </button>
+            </div>
+          </div>
+          <div *ngIf="hasReview()" class="review-completed">
+            <div class="review-success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+              <p>Merci ! Vous avez déjà donné votre avis pour ce ticket.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Avis -->
+      <div *ngIf="showReviewModal()" class="modal-overlay" (click)="closeReviewModal()">
+        <div class="modal-container" (click)="$event.stopPropagation()">
+          <button class="modal-close-btn" (click)="closeReviewModal()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+          <jhi-client-review [ticketIdInput]="ticket()?.id || 0" [embedded]="true" (submitted)="onReviewSubmitted()"></jhi-client-review>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div *ngIf="showImageModal()" class="modal-overlay" (click)="closeImageModal()">
+    <div class="image-modal-container" (click)="$event.stopPropagation()">
+      <button class="image-modal-close-btn" (click)="closeImageModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+      <img [src]="selectedImageUrl()" alt="Image du ticket" class="full-size-image" />
+    </div>
+  </div>
+</div>

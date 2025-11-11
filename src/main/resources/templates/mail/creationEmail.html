@@ -1,20 +1,286 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="fr">
   <head>
-    <title th:text="#{email.activation.title}">JHipster creation</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="icon" th:href="@{|${baseUrl}/favicon.ico|}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title th:text="#{email.activation.title}">Création de votre compte DevTechly</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        line-height: 1.6;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .email-header {
+        background: linear-gradient(135deg, #28a745, #1e7e34);
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        font-weight: bold;
+      }
+
+      .company-name {
+        font-size: 28px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .company-tagline {
+        font-size: 14px;
+        opacity: 0.9;
+        margin: 5px 0 0;
+      }
+
+      .email-content {
+        padding: 40px 30px;
+      }
+
+      .greeting {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .content-text {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 20px;
+      }
+
+      .welcome-box {
+        background-color: #d4edda;
+        border: 2px solid #28a745;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0;
+        text-align: center;
+      }
+
+      .welcome-title {
+        color: #28a745;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .button {
+        display: inline-block;
+        background: linear-gradient(135deg, #28a745, #1e7e34);
+        color: white;
+        padding: 15px 35px;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 600;
+        margin: 20px 0;
+        font-size: 16px;
+        transition: transform 0.2s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .features-list {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .features-list h3 {
+        color: #007bff;
+        margin-top: 0;
+      }
+
+      .features-list ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      .features-list li {
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      .security-note {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 20px 0;
+        font-size: 14px;
+        color: #856404;
+      }
+
+      .email-footer {
+        background-color: #f8f9fa;
+        padding: 30px;
+        text-align: center;
+        border-top: 1px solid #e9ecef;
+      }
+
+      .footer-logo {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        border-radius: 8px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .footer-text {
+        font-size: 14px;
+        color: #666;
+        margin: 10px 0;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .contact-item {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .copyright {
+        font-size: 12px;
+        color: #999;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #e9ecef;
+      }
+
+      @media (max-width: 600px) {
+        .email-container {
+          margin: 0;
+          box-shadow: none;
+        }
+
+        .email-content {
+          padding: 20px 15px;
+        }
+
+        .email-header {
+          padding: 20px 15px;
+        }
+
+        .company-name {
+          font-size: 24px;
+        }
+
+        .contact-info {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <p th:text="#{email.activation.greeting(${user.login})}">Dear</p>
-    <p th:text="#{email.creation.text1}">Your JHipster account has been created, please click on the URL below to access it:</p>
-    <p>
-      <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}" th:text="${url}">Login link</a>
-    </p>
-    <p>
-      <span th:text="#{email.activation.text2}">Regards, </span>
-      <br />
-      <em th:text="#{email.signature}">JHipster.</em>
-    </p>
+    <div class="email-container">
+      <!-- Header -->
+      <div class="email-header">
+        <div class="logo">DT</div>
+        <h1 class="company-name">DevTechly</h1>
+        <p class="company-tagline">Solutions Technologiques Innovantes</p>
+      </div>
+
+      <!-- Content -->
+      <div class="email-content">
+        <div class="greeting">Bonjour <span th:text="${user.login}">Utilisateur</span>,</div>
+
+        <div class="content-text">
+          Félicitations ! Votre compte DevTechly a été créé avec succès. Nous sommes ravis de vous accueillir dans notre communauté de
+          clients.
+        </div>
+
+        <div class="welcome-box">
+          <div class="welcome-title">🎉 Bienvenue chez DevTechly !</div>
+          <p>Votre compte est maintenant prêt. Cliquez sur le bouton ci-dessous pour accéder à votre espace client :</p>
+          <a th:with="url=(@{|${baseUrl}/account/reset/finish?key=${user.resetKey}|})" th:href="${url}" class="button"
+            >Accéder à mon compte</a
+          >
+        </div>
+
+        <div class="features-list">
+          <h3>🚀 Ce que vous pouvez faire avec votre compte :</h3>
+          <ul>
+            <li><strong>Créer des tickets de support</strong> - Obtenez de l'aide pour vos projets</li>
+            <li><strong>Suivre vos demandes</strong> - Consultez l'avancement en temps réel</li>
+            <li><strong>Gérer vos devis</strong> - Consultez et validez vos propositions</li>
+            <li><strong>Effectuer des paiements</strong> - Paiements sécurisés en ligne</li>
+            <li><strong>Communiquer avec notre équipe</strong> - Support technique dédié</li>
+            <li><strong>Accéder à votre historique</strong> - Tous vos projets en un endroit</li>
+          </ul>
+        </div>
+
+        <div class="security-note">
+          <strong>Note de sécurité :</strong> Ce lien d'accès est valide pendant 24 heures. Si vous n'avez pas demandé la création de ce
+          compte, vous pouvez ignorer cet email en toute sécurité.
+        </div>
+
+        <div class="content-text">
+          Notre équipe est là pour vous accompagner dans tous vos projets technologiques. N'hésitez pas à nous contacter si vous avez des
+          questions ou besoin d'aide.
+        </div>
+
+        <div class="content-text">Nous vous souhaitons une excellente expérience avec DevTechly !</div>
+
+        <div class="content-text">
+          Cordialement,<br />
+          <strong>L'équipe DevTechly</strong>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="email-footer">
+        <div class="footer-logo">DT</div>
+        <div class="footer-text">
+          <strong>DevTechly</strong><br />
+          Solutions Technologiques Innovantes
+        </div>
+
+        <div class="contact-info">
+          <div class="contact-item">📧 contact@devtechly.com</div>
+          <div class="contact-item">📱 +212 6XX XXX XXX</div>
+          <div class="contact-item">🌐 www.devtechly.com</div>
+        </div>
+
+        <div class="copyright">
+          <p>Cet email a été envoyé automatiquement par le système DevTechly.</p>
+          <p>© 2024 DevTechly. Tous droits réservés.</p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

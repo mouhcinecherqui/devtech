@@ -41,6 +41,64 @@
       "urgent": "Urgent"
     }
   },
+  "parameters": {
+    "title": "Paramètres de l'application",
+    "subtitle": "Gérez les paramètres système et les configurations de l'application",
+    "loading": "Chargement des paramètres...",
+    "saving": "Sauvegarde en cours...",
+    "empty": {
+      "title": "Aucun paramètre trouvé",
+      "message": "Commencez par ajouter vos premiers paramètres pour configurer l'application."
+    },
+    "key": "Clé",
+    "value": "Valeur",
+    "type": "Type",
+    "description": "Description",
+    "actions": "Actions",
+    "add": "Ajouter",
+    "save": "Sauvegarder",
+    "cancel": "Annuler",
+    "ticketStatus": {
+      "title": "Statuts de tickets",
+      "add": "Ajouter un statut"
+    },
+    "ticketType": {
+      "title": "Types de tickets",
+      "add": "Ajouter un type"
+    },
+    "ticketPriority": {
+      "title": "Priorités de tickets",
+      "add": "Ajouter une priorité"
+    },
+    "other": {
+      "title": "Autres paramètres",
+      "add": "Ajouter un paramètre"
+    },
+    "validation": {
+      "keyRequired": "La clé est obligatoire",
+      "keyTooLong": "La clé ne peut pas dépasser 100 caractères",
+      "keyExists": "Cette clé existe déjà",
+      "valueRequired": "La valeur est obligatoire",
+      "valueTooLong": "La valeur ne peut pas dépasser 500 caractères",
+      "descriptionTooLong": "La description ne peut pas dépasser 255 caractères"
+    },
+    "messages": {
+      "created": "Paramètre '{{key}}' créé avec succès",
+      "updated": "Paramètre '{{key}}' mis à jour avec succès",
+      "deleted": "Paramètre '{{key}}' supprimé avec succès"
+    },
+    "errors": {
+      "loadFailed": "Erreur lors du chargement des paramètres",
+      "saveFailed": "Erreur lors de la sauvegarde du paramètre",
+      "deleteFailed": "Erreur lors de la suppression du paramètre",
+      "invalidParameter": "Paramètre invalide",
+      "keyExists": "Cette clé existe déjà",
+      "invalidData": "Données invalides"
+    },
+    "confirm": {
+      "delete": "Êtes-vous sûr de vouloir supprimer le paramètre '{{key}}' ?"
+    }
+  },
   "global": {
     "title": "Devtech",
     "menu": {
@@ -57,7 +115,22 @@
     "form": {
       "username": "Nom d'utilisateur",
       "password": "Mot de passe",
-      "email": "Email"
+      "email": {
+        "label": "Email",
+        "placeholder": "Votre email"
+      },
+      "newpassword": {
+        "label": "Nouveau mot de passe",
+        "placeholder": "Entrez votre nouveau mot de passe"
+      },
+      "confirmpassword": {
+        "label": "Confirmer le nouveau mot de passe",
+        "placeholder": "Confirmez votre nouveau mot de passe"
+      },
+      "currentpassword": {
+        "label": "Mot de passe actuel",
+        "placeholder": "Entrez votre mot de passe actuel"
+      }
     },
     "messages": {
       "error": {
@@ -68,37 +141,45 @@
           "noaccount": "Vous n'avez pas encore de compte ?",
           "link": "Créer un compte"
         }
+      },
+      "validate": {
+        "email": {
+          "required": "Votre email est requis.",
+          "minlength": "Votre email doit comporter au moins 5 caractères.",
+          "maxlength": "Votre email ne doit pas comporter plus de 50 caractères.",
+          "invalid": "Votre email n'est pas valide."
+        }
       }
     },
     "field": {
       "id": "ID"
     },
-    "item-count": "Nombre d'éléments : {{count}}",
+    "item-count": "Affichage {{first}} - {{second}} de {{total}} éléments.",
     "home": {
-      "title": "Bienvenue sur DevTech !",
-      "subtitle": "Gérez vos tickets de support et les services de la plateforme facilement.",
+      "title": "Bienvenue chez DevTech",
+      "subtitle": "DevTech est votre partenaire de confiance pour l'innovation digitale. Nous sommes spécialisés dans la création d'applications web modernes et de plateformes e-commerce robustes avec intégration CMS. Notre mission est de vous accompagner avec les dernières technologies web et des solutions sur mesure.",
       "servicesTitle": "Nos services",
       "service1": {
-        "title": "Gestion des tickets",
-        "desc": "Créez, suivez et résolvez vos tickets de support efficacement."
+        "title": "Développement d'applications web sur mesure",
+        "desc": "Applications web évolutives, sécurisées et performantes pour tous les besoins métier."
       },
       "service2": {
-        "title": "Espace client",
-        "desc": "Accédez à votre tableau de bord client et gérez vos informations."
+        "title": "Développement de sites e-commerce",
+        "desc": "Boutiques en ligne avec intégration CMS, paiements et gestion des stocks."
       },
       "service3": {
-        "title": "Outils d'administration",
-        "desc": "Outils avancés pour les administrateurs et managers."
+        "title": "Systèmes de gestion de contenu (CMS)",
+        "desc": "Solutions CMS flexibles et intuitives pour une gestion facile de votre site."
       },
       "whyChooseTitle": "Pourquoi choisir DevTech ?",
-      "why1": "Support technique 24/7",
-      "why2": "Résolution rapide des problèmes",
-      "why3": "Interface intuitive",
-      "why4": "Sécurité garantie",
-      "why5": "Rapports détaillés",
-      "ctaTitle": "Commencez dès maintenant avec DevTech",
-      "ctaDesc": "Rejoignez des milliers d'utilisateurs satisfaits et découvrez la différence DevTech",
-      "ctaBtn": "Commencer maintenant"
+      "why1": "Équipe expérimentée de développeurs et designers web",
+      "why2": "Approche centrée client et communication transparente",
+      "why3": "Processus agile pour une livraison rapide",
+      "why4": "Technologies web de pointe et bonnes pratiques",
+      "why5": "Support complet après lancement",
+      "ctaTitle": "Prêt à démarrer votre projet web ?",
+      "ctaDesc": "Contactez-nous pour discuter de vos besoins et obtenir une consultation gratuite !",
+      "ctaBtn": "Commencer"
     }
   },
   "adminDashboard": {
@@ -143,6 +224,42 @@
     "register": "Créer un compte",
     "logout": "Déconnexion"
   },
+  "settings": {
+    "title": "Profil de l'utilisateur {{username}}",
+    "form": {
+      "firstname": "Prénom",
+      "lastname": "Nom",
+      "language": "Langue",
+      "button": "Sauvegarder"
+    },
+    "messages": {
+      "success": "Votre profil a été sauvegardé !",
+      "validate": {
+        "firstname": {
+          "required": "Votre prénom est requis.",
+          "minlength": "Votre prénom doit comporter au moins un caractère.",
+          "maxlength": "Votre prénom ne doit pas comporter plus de 50 caractères."
+        },
+        "lastname": {
+          "required": "Votre nom est requis.",
+          "minlength": "Votre nom doit comporter au moins un caractère.",
+          "maxlength": "Votre nom ne doit pas comporter plus de 50 caractères."
+        }
+      }
+    }
+  },
+  "password": {
+    "title": "Changer le mot de passe pour {{username}}",
+    "messages": {
+      "success": "Le mot de passe a été modifié !",
+      "error": "Une erreur est survenue ! Le mot de passe n'a pas pu être modifié."
+    },
+    "form": {
+      "button": "Sauvegarder",
+      "setPassword": "Définir le mot de passe",
+      "changePassword": "Changer le mot de passe"
+    }
+  },
   "sidebar": {
     "myTickets": "Mes tickets",
     "tickets": "Tickets",
@@ -153,16 +270,22 @@
   },
   "login": {
     "title": "Authentification",
+    "subtitle": "Connectez-vous à votre espace personnel",
+    "badge": "Connexion Sécurisée",
     "messages": {
       "error": {
         "authentication": "Erreur d'authentification ! Veuillez vérifier vos identifiants de connexion."
       }
     },
     "form": {
+      "usernameOrEmail": "Nom d'utilisateur ou Email",
+      "usernameOrEmail.placeholder": "Entrez votre nom d'utilisateur ou email",
       "password": "Mot de passe",
-      "password.placeholder": "Votre mot de passe",
+      "password.placeholder": "Entrez votre mot de passe",
       "rememberme": "Garder la session ouverte",
-      "button": "Connexion"
+      "button": "Connexion",
+      "google": "Continuer avec Google",
+      "divider": "ou"
     },
     "password": {
       "forgot": "Avez-vous oublié votre mot de passe ?"
@@ -212,7 +335,61 @@
       "tickets": "TICKETS",
       "open": "EN COURS",
       "closed": "RÉSOLUS / FERMÉS"
-    }
+    },
+    "welcome": {
+      "badge": "Espace Client",
+      "title": "Tableau de Bord Client",
+      "subtitle": "Bienvenue dans votre espace personnel. Gérez vos projets et suivez vos tickets.",
+      "userRole": "Client Utilisateur",
+      "logout": "Déconnexion"
+    },
+    "stats": {
+      "totalTickets": "Total Tickets",
+      "openTickets": "Tickets Ouverts",
+      "closedTickets": "Tickets Fermés",
+      "responseTime": "Temps de réponse moyen"
+    },
+    "activities": {
+      "title": "Activité Récente",
+      "viewAll": "Voir tout",
+      "noActivity": "Aucune activité récente",
+      "noActivityDesc": "Les activités apparaîtront ici"
+    },
+    "actions": {
+      "title": "Actions Rapides",
+      "newTicket": "Nouveau Ticket",
+      "contactSupport": "Contacter Support",
+      "documentation": "Documentation",
+      "history": "Historique"
+    },
+    "projects": {
+      "title": "Statut des Projets",
+      "noProjects": "Aucun projet en cours",
+      "noProjectsDesc": "Les projets apparaîtront ici",
+      "noProjectsStatus": "Aucun",
+      "status": {
+        "active": "En cours",
+        "testing": "Test",
+        "completed": "Terminé"
+      }
+    },
+    "tickets": {
+      "title": "Tickets Récents",
+      "viewAll": "Voir tout",
+      "noTickets": "Aucun ticket récent",
+      "noTicketsDesc": "Les tickets apparaîtront ici",
+      "priority": {
+        "urgent": "Urgent",
+        "normal": "Normal",
+        "low": "Faible"
+      }
+    },
+    "errors": {
+      "fetchError": "Erreur lors du chargement des tickets",
+      "retry": "Réessayer",
+      "clear": "Fermer"
+    },
+    "loading": "Chargement en cours..."
   },
   "ticketsUser": {
     "title": "Mes tickets",
@@ -254,7 +431,15 @@
     "messages": "Messages au client :",
     "addMessage": "Ajouter un message...",
     "save": "Enregistrer",
-    "image": "Image"
+    "image": "Image",
+    "create": "Créer un ticket",
+    "selectType": "Sélectionner un type",
+    "descriptionPlaceholder": "Décrivez votre demande en détail...",
+    "sendMessage": "Envoyer le message",
+    "clientEmail": "Email du client",
+    "clientEmailPlaceholder": "email@exemple.com (optionnel)",
+    "cancel": "Annuler",
+    "creating": "Création en cours..."
   },
   "ticketsClient": {
     "title": "Mes tickets",
@@ -282,7 +467,37 @@
     "send": "Envoyer",
     "sending": "Envoi...",
     "replySent": "Votre réponse a été envoyée avec succès !",
-    "replyError": "Erreur lors de l'envoi de votre réponse. Veuillez réessayer."
+    "replyError": "Erreur lors de l'envoi de votre réponse. Veuillez réessayer.",
+    "workflow": {
+      "devis": "Actions de devis",
+      "payment": "Actions de paiement",
+      "final": "Actions finales",
+      "createDevis": "Créer un devis",
+      "closeTicket": "Fermer le ticket",
+      "validateDevis": "Valider le devis",
+      "validatePayment": "Valider le paiement"
+    },
+    "devis": {
+      "title": "Créer un devis",
+      "amount": "Montant (MAD)",
+      "description": "Description du devis",
+      "submit": "Envoyer le devis",
+      "cancel": "Annuler"
+    },
+    "payment": {
+      "title": "Validation du paiement",
+      "confirm": "Êtes-vous sûr de vouloir valider le paiement pour ce ticket ?",
+      "validate": "Valider le paiement",
+      "cancel": "Annuler"
+    },
+    "status": {
+      "nouveau": "Nouveau",
+      "devisValide": "Devis validé",
+      "enCours": "En cours",
+      "resolu": "Résolu",
+      "paiementValide": "Paiement validé",
+      "ferme": "Fermé"
+    }
   },
   "clientsAdmin": {
     "title": "Clients",
@@ -293,6 +508,7 @@
     "name": "Nom",
     "email": "Email",
     "phone": "Téléphone",
+    "role": "Rôle",
     "actions": "Actions",
     "noClients": "Aucun client trouvé."
   },
@@ -310,13 +526,35 @@
     "date": "Date",
     "status": "Statut",
     "actions": "Actions",
-    "invoice": "Facture PDF"
+    "invoice": "Facture PDF",
+    "form": {
+      "title": "Ajouter un nouveau paiement",
+      "client": "Client",
+      "clientRequired": "Le nom du client est requis",
+      "amount": "Montant (MAD)",
+      "amountRequired": "Le montant est requis et doit être positif",
+      "currency": "Devise",
+      "status": "Statut",
+      "description": "Description",
+      "descriptionPlaceholder": "Description du paiement...",
+      "cmiOrderId": "ID Commande CMI",
+      "cmiTransactionId": "ID Transaction CMI",
+      "paymentMethod": "Méthode de paiement",
+      "cardType": "Type de carte",
+      "cardHolder": "Titulaire de la carte",
+      "cancel": "Annuler",
+      "submit": "Ajouter le paiement",
+      "submitting": "Ajout en cours...",
+      "selectPaymentMethod": "Sélectionner",
+      "selectCardType": "Sélectionner"
+    }
   },
   "userManagement": {
     "home": {
       "title": "Utilisateurs",
       "refreshListLabel": "Actualiser la liste",
-      "createLabel": "Créer un nouvel utilisateur"
+      "createLabel": "Créer un nouvel utilisateur",
+      "createOrEditLabel": "Créer ou éditer un utilisateur"
     },
     "login": "Login",
     "email": "Email",
@@ -325,6 +563,13 @@
     "createdDate": "Créé le",
     "lastModifiedBy": "Modifié par",
     "lastModifiedDate": "Modifié le",
+    "activated": "Activé",
+    "deactivated": "Désactivé",
+    "detail": {
+      "title": "Utilisateur"
+    },
+    "firstName": "Prénom",
+    "lastName": "Nom",
     "activated": "Activé",
     "deactivated": "Désactivé"
   },
@@ -373,19 +618,35 @@
       "Support": "Support",
       "Autre": "Autre",
       "Nouveau": "Nouveau",
+      "Devis validé": "Devis validé",
       "En cours": "En cours",
       "Résolu": "Résolu",
+      "Paiement validé": "Paiement validé",
       "Fermé": "Fermé",
       "Urgent": "Urgent",
       "Request": "Demande",
-      "Support": "Support"
+      "Support": "Support",
+      "DEMANDE": "Demande",
+      "BUG": "Bug",
+      "AMELIORATION": "Amélioration",
+      "SUPPORT": "Support"
     }
   },
   "entity": {
     "action": {
       "view": "Voir",
       "edit": "Modifier",
-      "delete": "Supprimer"
+      "delete": "Supprimer",
+      "save": "Sauvegarder",
+      "cancel": "Annuler",
+      "back": "Retour"
+    },
+    "validation": {
+      "required": "Ce champ est obligatoire.",
+      "maxlength": "Ce champ doit faire moins de {{max}} caractères.",
+      "minlength": "Ce champ doit faire au minimum {{min}} caractères.",
+      "email": "Votre email n'est pas valide.",
+      "patternLogin": "Ce champ ne peut contenir que des lettres, des chiffres ou des adresses e-mail."
     }
   },
   "error": {
@@ -393,6 +654,68 @@
     "http": {
       "403": "Vous n'avez pas les droits d'accès à cette page.",
       "404": "La page demandée n'existe pas."
+    }
+  },
+  "contact": {
+    "title": "Contactez l'Administration",
+    "description": "Besoin d'aide ? Contactez notre équipe administrative pour toute question ou assistance.",
+    "companyInfo": {
+      "title": "Informations de Contact",
+      "phone": "Téléphone",
+      "email": "Email",
+      "address": "Adresse",
+      "workingHours": "Heures d'ouverture"
+    },
+    "form": {
+      "title": "Envoyer un Message",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Décrivez brièvement votre demande",
+      "priority": "Priorité",
+      "message": "Message",
+      "messagePlaceholder": "Décrivez votre demande en détail...",
+      "send": "Envoyer le Message",
+      "sending": "Envoi en cours...",
+      "clear": "Effacer"
+    },
+    "priorities": {
+      "low": "Faible",
+      "normal": "Normale",
+      "high": "Élevée",
+      "urgent": "Urgente"
+    },
+    "messages": {
+      "success": "Votre message a été envoyé avec succès. Nous vous répondrons dans les plus brefs délais.",
+      "error": "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer."
+    },
+    "validation": {
+      "subjectRequired": "Le sujet est obligatoire",
+      "subjectMinLength": "Le sujet doit contenir au moins 5 caractères",
+      "messageRequired": "Le message est obligatoire",
+      "messageMinLength": "Le message doit contenir au moins 20 caractères"
+    }
+  },
+  "reset": {
+    "request": {
+      "title": "Réinitialiser son mot de passe",
+      "form": {
+        "button": "Réinitialiser le mot de passe"
+      },
+      "messages": {
+        "info": "Veuillez renseigner l'adresse email utilisée pour vous enregistrer",
+        "success": "Veuillez vérifier vos nouveaux emails et suivre les instructions pour réinitialiser votre mot de passe."
+      }
+    },
+    "finish": {
+      "title": "Réinitialisation du mot de passe",
+      "form": {
+        "button": "Réinitialiser le mot de passe"
+      },
+      "messages": {
+        "info": "Choisir un nouveau mot de passe",
+        "success": "<strong>Votre mot de passe a été réinitialisé.</strong> Merci de ",
+        "keymissing": "La clef de réinitialisation est manquante",
+        "error": "Votre mot de passe n'a pas pu être réinitialisé. La demande de réinitialisation n'est valable que 24 heures."
+      }
     }
   }
 }

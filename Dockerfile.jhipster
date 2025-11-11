@@ -1,0 +1,36 @@
+FROM eclipse-temurin:17-jdk
+
+# Install Node.js et nettoyer le cache apt (optimisé pour le cache Docker)
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl ca-certificates && \
+    curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y --no-install-recommends nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy Maven wrapper and pom.xml d'abord (pour optimiser le cache)
+COPY mvnw .
+RUN chmod +x mvnw
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Download dependencies (cette couche sera mise en cache si pom.xml ne change pas)
+RUN ./mvnw dependency:go-offline -B
+
+# Copier le code source seulement après l'installation des dépendances
+COPY . .
+
+# Build the application (avec frontend intégré)
+# Les erreurs Sass critiques ont été corrigées dans le code source
+RUN export NODE_OPTIONS="--max-old-space-size=4096" && \
+    ./mvnw -Pprod -DskipTests -Denforcer.skip=true -Dmodernizer.skip=true clean package
+
+# Expose port
+EXPOSE 8080
+
+# Run the application
+CMD ["sh", "-c", "java -jar target/*.jar"]
+

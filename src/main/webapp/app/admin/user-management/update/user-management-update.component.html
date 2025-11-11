@@ -1,153 +1,343 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">Créer ou éditer un utilisateur</h2>
+<div class="admin-user-update-container">
+  <div class="admin-user-update-content">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="user-update-form">
+      <!-- Header Section -->
+      <div class="form-header">
+        <div class="header-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+        <div class="header-content">
+          <h2 id="myUserLabel" jhiTranslate="userManagement.home.createOrEditLabel">Créer ou éditer un utilisateur</h2>
+          <p>Gérez les informations et les permissions de l'utilisateur</p>
+        </div>
+      </div>
 
       <jhi-alert-error />
 
-      <div class="mb-3" [hidden]="!editForm.value.id">
-        <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
-        <input type="text" id="field_id" class="form-control" name="id" formControlName="id" readonly />
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="field_login" jhiTranslate="userManagement.login">Login</label>
-        <input type="text" id="field_login" class="form-control" name="login" formControlName="login" />
-
-        @let loginRef = editForm.get('login')!;
-        @if (loginRef.invalid && (loginRef.dirty || loginRef.touched)) {
-          <div>
-            @if (loginRef?.errors?.required) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
-            }
-
-            @if (loginRef?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
-                >Ce champ doit faire moins de 50 caractères.</small
-              >
-            }
-
-            @if (loginRef?.errors?.pattern) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.patternLogin"
-                >Ce champ ne peut contenir que des lettres, des chiffres ou des adresses e-mail.</small
-              >
-            }
+      <!-- Form Fields -->
+      <div class="form-grid">
+        <!-- ID Field (Readonly) -->
+        <div class="form-group" [hidden]="!editForm.value.id">
+          <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 13A5 5 0 0 0 20 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M22 13C22 17.4183 18.4183 21 14 21C9.58172 21 6 17.4183 6 13C6 8.58172 9.58172 5 14 5C18.4183 5 22 8.58172 22 13Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <input type="text" id="field_id" class="form-control" name="id" formControlName="id" readonly />
           </div>
-        }
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="field_firstName" jhiTranslate="userManagement.firstName">Prénom</label>
-        <input type="text" id="field_firstName" class="form-control" name="firstName" formControlName="firstName" />
-
-        @let firstNameRef = editForm.get('firstName')!;
-        @if (firstNameRef.invalid && (firstNameRef.dirty || firstNameRef.touched)) {
-          <div>
-            @if (firstNameRef?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
-                >Ce champ doit faire moins de 50 caractères.</small
-              >
-            }
-          </div>
-        }
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="field_lastName" jhiTranslate="userManagement.lastName">Nom</label>
-        <input type="text" id="field_lastName" class="form-control" name="lastName" formControlName="lastName" />
-
-        @let lastNameRef = editForm.get('lastName')!;
-        @if (lastNameRef.invalid && (lastNameRef.dirty || lastNameRef.touched)) {
-          <div>
-            @if (lastNameRef?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
-                >Ce champ doit faire moins de 50 caractères.</small
-              >
-            }
-          </div>
-        }
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="field_email" jhiTranslate="userManagement.email">Email</label>
-        <input type="email" id="field_email" class="form-control" name="email" formControlName="email" />
-
-        @let emailRef = editForm.get('email')!;
-        @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
-          <div>
-            @if (emailRef?.errors?.required) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
-            }
-
-            @if (emailRef?.errors?.maxlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
-                >Ce champ doit faire moins de 100 caractères.</small
-              >
-            }
-
-            @if (emailRef?.errors?.minlength) {
-              <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '5' }"
-                >Ce champ doit faire au minimum 5 caractères.</small
-              >
-            }
-
-            @if (emailRef?.errors?.email) {
-              <small class="form-text text-danger" jhiTranslate="global.messages.validate.email.invalid"
-                >Votre email n&apos;est pas valide.</small
-              >
-            }
-          </div>
-        }
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label" for="field_type">Type d'utilisateur</label>
-        <select id="field_type" class="form-control" formControlName="type">
-          <option value="admin">Admin</option>
-          <option value="client">Client</option>
-        </select>
-      </div>
-
-      <div class="form-check">
-        <label class="form-check-label" for="activated">
-          <input
-            class="form-check-input"
-            [attr.disabled]="editForm.value.id === undefined ? 'disabled' : null"
-            type="checkbox"
-            id="activated"
-            name="activated"
-            formControlName="activated"
-          />
-          <span jhiTranslate="userManagement.activated">Activé</span>
-        </label>
-      </div>
-
-      @if (languages && languages.length > 0) {
-        <div class="mb-3">
-          <label class="form-label" for="langKey" jhiTranslate="userManagement.langKey">Langue</label>
-          <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
-            @for (language of languages; track $index) {
-              <option [value]="language">{{ language | findLanguageFromKey }}</option>
-            }
-          </select>
         </div>
-      }
 
-      <div class="mb-3">
-        <label class="form-label" for="field_authority" jhiTranslate="userManagement.profiles">Droits</label>
-        <select class="form-control" id="field_authority" multiple name="authority" formControlName="authorities">
-          @for (authority of authorities(); track $index) {
-            <option [value]="authority">{{ authority }}</option>
+        <!-- Login Field -->
+        <div class="form-group">
+          <label class="form-label" for="field_login" jhiTranslate="userManagement.login">Login</label>
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <input type="text" id="field_login" class="form-control" name="login" formControlName="login" />
+          </div>
+
+          @let loginRef = editForm.get('login')!;
+          @if (loginRef.invalid && (loginRef.dirty || loginRef.touched)) {
+            <div class="error-message">
+              @if (loginRef?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+
+              @if (loginRef?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
+                  >Ce champ doit faire moins de 50 caractères.</small
+                >
+              }
+
+              @if (loginRef?.errors?.pattern) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.patternLogin"
+                  >Ce champ ne peut contenir que des lettres, des chiffres ou des adresses e-mail.</small
+                >
+              }
+            </div>
           }
-        </select>
-      </div>
-      <button type="button" class="btn btn-secondary" (click)="previousState()">
-        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Annuler</span>
-      </button>
+        </div>
 
-      <button type="submit" [disabled]="editForm.invalid || isSaving()" class="btn btn-primary">
-        <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Sauvegarder</span>
-      </button>
+        <!-- First Name Field -->
+        <div class="form-group">
+          <label class="form-label" for="field_firstName" jhiTranslate="userManagement.firstName">Prénom</label>
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <input type="text" id="field_firstName" class="form-control" name="firstName" formControlName="firstName" />
+          </div>
+
+          @let firstNameRef = editForm.get('firstName')!;
+          @if (firstNameRef.invalid && (firstNameRef.dirty || firstNameRef.touched)) {
+            <div class="error-message">
+              @if (firstNameRef?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
+                  >Ce champ doit faire moins de 50 caractères.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Last Name Field -->
+        <div class="form-group">
+          <label class="form-label" for="field_lastName" jhiTranslate="userManagement.lastName">Nom</label>
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <input type="text" id="field_lastName" class="form-control" name="lastName" formControlName="lastName" />
+          </div>
+
+          @let lastNameRef = editForm.get('lastName')!;
+          @if (lastNameRef.invalid && (lastNameRef.dirty || lastNameRef.touched)) {
+            <div class="error-message">
+              @if (lastNameRef?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '50' }"
+                  >Ce champ doit faire moins de 50 caractères.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label class="form-label" for="field_email" jhiTranslate="userManagement.email">Email</label>
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <input type="email" id="field_email" class="form-control" name="email" formControlName="email" />
+          </div>
+
+          @let emailRef = editForm.get('email')!;
+          @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
+            <div class="error-message">
+              @if (emailRef?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Ce champ est obligatoire.</small>
+              }
+
+              @if (emailRef?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '100' }"
+                  >Ce champ doit faire moins de 100 caractères.</small
+                >
+              }
+
+              @if (emailRef?.errors?.minlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.minlength" [translateValues]="{ min: '5' }"
+                  >Ce champ doit faire au minimum 5 caractères.</small
+                >
+              }
+
+              @if (emailRef?.errors?.email) {
+                <small class="form-text text-danger" jhiTranslate="global.messages.validate.email.invalid"
+                  >Votre email n&apos;est pas valide.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <!-- User Type Field -->
+        <div class="form-group">
+          <label class="form-label" for="field_type">Type d'utilisateur</label>
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M23 21V19C23 17.9391 22.5786 16.9217 21.8284 16.1716C21.0783 15.4214 20.0609 15 19 15H16"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 11C17.6569 11 19 9.65685 19 8C19 6.34315 17.6569 5 16 5C14.3431 5 13 6.34315 13 8C13 9.65685 14.3431 11 16 11Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <select id="field_type" class="form-control" formControlName="type">
+              <option value="admin">Admin</option>
+              <option value="client">Client</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Activated Checkbox -->
+        <div class="form-group checkbox-group">
+          <div class="checkbox-wrapper">
+            <input
+              class="form-check-input"
+              [attr.disabled]="editForm.value.id === undefined ? 'disabled' : null"
+              type="checkbox"
+              id="activated"
+              name="activated"
+              formControlName="activated"
+            />
+            <label class="form-check-label" for="activated">
+              <span jhiTranslate="userManagement.activated">Activé</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Language Field -->
+        @if (languages && languages.length > 0) {
+          <div class="form-group">
+            <label class="form-label" for="langKey" jhiTranslate="userManagement.langKey">Langue</label>
+            <div class="input-wrapper">
+              <div class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M2 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M12 2A15.3 15.3 0 0 1 22 12A15.3 15.3 0 0 1 12 22A15.3 15.3 0 0 1 2 12A15.3 15.3 0 0 1 12 2Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+              <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
+                @for (language of languages; track $index) {
+                  <option [value]="language">{{ language | findLanguageFromKey }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        }
+
+        <!-- Authorities Field -->
+        <div class="form-group full-width">
+          <label class="form-label" for="field_authority" jhiTranslate="userManagement.profiles">Droits</label>
+          <div class="input-wrapper">
+            <div class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <select class="form-control" id="field_authority" multiple name="authority" formControlName="authorities">
+              @for (authority of authorities(); track $index) {
+                <option [value]="authority">{{ authority }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="previousState()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span jhiTranslate="entity.action.cancel">Annuler</span>
+        </button>
+
+        <button type="submit" [disabled]="editForm.invalid || isSaving()" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16L21 8V19C21 20.1046 20.1046 21 19 21Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M17 21V13H7V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7 3V8H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span jhiTranslate="entity.action.save">Sauvegarder</span>
+        </button>
+      </div>
     </form>
   </div>
 </div>

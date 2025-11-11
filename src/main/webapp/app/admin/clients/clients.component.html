@@ -1,31 +1,71 @@
 <div class="admin-clients-container">
   <!-- Header Section -->
   <div class="admin-clients-header">
-    <h2>{{ 'clientsAdmin.title' | translate }}</h2>
-    <p>{{ 'clientsAdmin.subtitle' | translate }}</p>
+    <div class="header-content">
+      <div class="header-text">
+        <h2>{{ 'clientsAdmin.title' | translate }}</h2>
+        <p>{{ 'clientsAdmin.subtitle' | translate }}</p>
+      </div>
+      <jhi-refresh-button [loading]="loading" (refresh)="loadClients()"></jhi-refresh-button>
+    </div>
   </div>
 
   <!-- Stats and Actions Section -->
   <div class="admin-clients-stats">
     <div class="stats-card">
-      <div class="stats-icon">👥</div>
+      <div class="stats-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path
+            d="M23 21V19C23 18.1475 22.6485 17.3311 22.0237 16.7237C21.3989 16.1163 20.5444 15.7778 19.6667 15.7778C18.7889 15.7778 17.9344 16.1163 17.3096 16.7237C16.6848 17.3311 16.3333 18.1475 16.3333 19V21"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M16.3333 11.7778C18.1743 11.7778 19.6667 10.2854 19.6667 8.44444C19.6667 6.60351 18.1743 5.11111 16.3333 5.11111C14.4924 5.11111 13 6.60351 13 8.44444C13 10.2854 14.4924 11.7778 16.3333 11.7778Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
       <div class="stats-content">
         <h3>{{ clients.length }}</h3>
         <p>{{ 'clientsAdmin.total' | translate }}</p>
       </div>
     </div>
-    <button class="btn btn-primary add-client-btn" (click)="openAddForm()">
-      <span class="btn-icon">+</span>
-      {{ 'clientsAdmin.add' | translate }}
-    </button>
   </div>
 
-  <!-- Search Section -->
-  <div class="search-section">
-    <div class="search-container">
-      <input type="text" class="search-input" placeholder="{{ 'clientsAdmin.search' | translate }}" [(ngModel)]="searchTerm" />
-      <div class="search-icon">🔍</div>
+  <!-- Search + Action Row -->
+  <div class="search-action-row">
+    <div class="search-section">
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="{{ 'clientsAdmin.search' | translate }}" [(ngModel)]="searchTerm" />
+        <div class="search-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
+            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+      </div>
     </div>
+    <button class="btn btn-primary add-client-btn" (click)="openAddForm()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      {{ 'clientsAdmin.add' | translate }}
+    </button>
   </div>
 
   <!-- Clients Table -->
@@ -37,6 +77,7 @@
           <th>{{ 'clientsAdmin.name' | translate }}</th>
           <th>{{ 'clientsAdmin.email' | translate }}</th>
           <th>{{ 'clientsAdmin.phone' | translate }}</th>
+          <th>{{ 'clientsAdmin.role' | translate }}</th>
           <th>{{ 'clientsAdmin.actions' | translate }}</th>
         </tr>
       </thead>
@@ -45,7 +86,7 @@
           <td class="client-id">{{ client.id }}</td>
           <td class="client-name">
             <div class="client-avatar">
-              {{ (client.firstName?.charAt(0) || '') + (client.lastName?.charAt(0) || '') }}
+              {{ (client.firstName.charAt(0) || '') + (client.lastName.charAt(0) || '') }}
             </div>
             <div class="client-info">
               <strong>{{ client.firstName }} {{ client.lastName }}</strong>
@@ -57,19 +98,88 @@
           <td class="client-phone">
             <a href="tel:{{ client.phone }}" class="phone-link">{{ client.phone }}</a>
           </td>
+          <td class="client-role">
+            <span class="role-badge" [ngClass]="'role-' + (client.type?.toLowerCase() || 'client')">
+              {{ getRoleDisplayName(client.type) }}
+            </span>
+          </td>
           <td class="client-actions">
             <button class="btn btn-edit" (click)="openEditForm(client)" title="Modifier">
-              <span class="action-icon">✏️</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.0391C19.7893 20.7893 20 20.5304 20 20V13"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button class="btn btn-role" (click)="openRoleModal(client)" title="Modifier le rôle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2L2 7L12 12L22 7L12 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </button>
             <button class="btn btn-delete" (click)="deleteClient(client)" title="Supprimer">
-              <span class="action-icon">🗑️</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
             </button>
           </td>
         </tr>
         <tr *ngIf="!filteredClients.length" class="empty-state">
-          <td colspan="5">
+          <td colspan="6">
             <div class="empty-state-content">
-              <div class="empty-icon">👥</div>
+              <div class="empty-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M23 21V19C23 18.1475 22.6485 17.3311 22.0237 16.7237C21.3989 16.1163 20.5444 15.7778 19.6667 15.7778C18.7889 15.7778 17.9344 16.1163 17.3096 16.7237C16.6848 17.3311 16.3333 18.1475 16.3333 19V21"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M16.3333 11.7778C18.1743 11.7778 19.6667 10.2854 19.6667 8.44444C19.6667 6.60351 18.1743 5.11111 16.3333 5.11111C14.4924 5.11111 13 6.60351 13 8.44444C13 10.2854 14.4924 11.7778 16.3333 11.7778Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
               <h3>{{ 'clientsAdmin.noClients' | translate }}</h3>
               <p>Aucun client trouvé</p>
             </div>
@@ -77,5 +187,24 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Pagination Section -->
+  <div class="pagination-section">
+    <div class="pagination-info">
+      <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+    </div>
+    <div class="pagination-controls">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="onPageChange($event)"
+        class="modern-pagination"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

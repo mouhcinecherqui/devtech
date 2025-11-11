@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import SharedModule from '../shared/shared.module';
 
 @Component({
-  selector: 'app-user-register',
+  selector: 'jhi-user-register',
   standalone: true,
   imports: [CommonModule, SharedModule, ReactiveFormsModule],
   templateUrl: './app-user-register.component.html',
@@ -61,7 +61,10 @@ export class AppUserRegisterComponent {
     }
   }
 
-  loginWithProvider(provider: 'google') {
-    window.location.href = `/oauth2/authorization/${provider}`;
+  loginWithProvider(provider: 'google'): void {
+    const origin = window.location.origin;
+    const redirectPath = '/login';
+    const apiUrl = window.location.hostname === 'localhost' ? 'http://localhost:8080' : window.location.origin;
+    window.location.href = `${apiUrl}/oauth2/authorization/${provider}?redirect_uri=${encodeURIComponent(origin)}&redirect_path=${encodeURIComponent(redirectPath)}`;
   }
 }

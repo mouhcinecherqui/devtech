@@ -1,94 +1,537 @@
-<div *ngIf="!account()" class="home-flex-wrapper">
-  <div class="page-side-decoration left"></div>
-  <div class="landing-container">
-    <!-- main content start -->
-    <main>
-      <section class="company-intro">
-        <h1 class="landing-title animated-fade-in welcome-title" style="animation-delay: 0s">{{ 'global.home.title' | translate }}</h1>
-        <p class="landing-subtitle animated-fade-in" style="animation-delay: 0.2s">
+<div *ngIf="!account()" class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <div class="hero-overlay"></div>
+      <div class="hero-pattern"></div>
+      <div class="floating-elements">
+        <div class="floating-element element-1"></div>
+        <div class="floating-element element-2"></div>
+        <div class="floating-element element-3"></div>
+        <div class="floating-element element-4"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="badge-text">Innovation Digitale</span>
+        </div>
+        <h1 class="hero-title animated-fade-in" style="animation-delay: 0s">
+          {{ 'global.home.title' | translate }}
+        </h1>
+        <p class="hero-subtitle animated-fade-in" style="animation-delay: 0.2s">
           {{ 'global.home.subtitle' | translate }}
         </p>
-      </section>
-      <!-- Modern Services Section -->
-      <h2 class="animated-fade-in services-title" style="animation-delay: 0.8s">{{ 'global.home.servicesTitle' | translate }}</h2>
-      <section class="services-presentation">
-        <div class="services-columns">
-          <div class="service-card">
-            <span class="service-bg-number">01</span>
-            <h3>{{ 'global.home.service1.title' | translate }}</h3>
-            <p>{{ 'global.home.service1.desc' | translate }}</p>
+        <div class="hero-stats animated-fade-in" style="animation-delay: 0.3s">
+          <div class="stat-item">
+            <span class="stat-number">500+</span>
+            <span class="stat-label">Projets Réalisés</span>
           </div>
-          <div class="service-card">
-            <span class="service-bg-number">02</span>
-            <h3>{{ 'global.home.service2.title' | translate }}</h3>
-            <p>{{ 'global.home.service2.desc' | translate }}</p>
+          <div class="stat-item">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Clients Satisfaits</span>
           </div>
-          <div class="service-card">
-            <span class="service-bg-number">03</span>
-            <h3>{{ 'global.home.service3.title' | translate }}</h3>
-            <p>{{ 'global.home.service3.desc' | translate }}</p>
+          <div class="stat-item">
+            <span class="stat-number">5+</span>
+            <span class="stat-label">Années d'Expérience</span>
           </div>
         </div>
-      </section>
-      <section class="landing-section why-choose">
-        <h2 class="animated-fade-in why-choose-title" style="animation-delay: 0.4s">{{ 'global.home.whyChooseTitle' | translate }}</h2>
-        <div class="why-choose-columns-modern">
-          <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.1s">
-            <span class="why-choose-badge-modern">
-              <svg width="20" height="20" fill="none">
-                <circle cx="10" cy="10" r="10" fill="#00bcd4" />
-                <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-            <p>{{ 'global.home.why1' | translate }}</p>
+        <div class="hero-actions animated-fade-in" style="animation-delay: 0.4s">
+          <button class="btn-primary" routerLink="/app-user-register">
+            {{ 'global.home.ctaBtn' | translate }}
+          </button>
+          <button class="btn-secondary" routerLink="/home" fragment="services">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            En savoir plus
+          </button>
+        </div>
+      </div>
+      <div class="hero-visual animated-fade-in" style="animation-delay: 0.6s">
+        <div class="floating-card card-1">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
           </div>
-          <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.2s">
-            <span class="why-choose-badge-modern">
-              <svg width="20" height="20" fill="none">
-                <circle cx="10" cy="10" r="10" fill="#00bcd4" />
-                <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-            <p>{{ 'global.home.why2' | translate }}</p>
-          </div>
-          <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.3s">
-            <span class="why-choose-badge-modern">
-              <svg width="20" height="20" fill="none">
-                <circle cx="10" cy="10" r="10" fill="#00bcd4" />
-                <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-            <p>{{ 'global.home.why3' | translate }}</p>
-          </div>
-          <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.4s">
-            <span class="why-choose-badge-modern">
-              <svg width="20" height="20" fill="none">
-                <circle cx="10" cy="10" r="10" fill="#00bcd4" />
-                <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-            <p>{{ 'global.home.why4' | translate }}</p>
-          </div>
-          <div class="why-choose-card-modern animated-modern-card" style="animation-delay: 0.5s">
-            <span class="why-choose-badge-modern">
-              <svg width="20" height="20" fill="none">
-                <circle cx="10" cy="10" r="10" fill="#00bcd4" />
-                <path d="M7 10.5l2 2 4-4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
-            <p>{{ 'global.home.why5' | translate }}</p>
+          <div class="card-content">
+            <h3>Développement Web</h3>
+            <p>Applications modernes et performantes</p>
           </div>
         </div>
-      </section>
-      <!-- Modern, visually distinct CTA section -->
-      <section class="cta-section animated-cta" style="animation-delay: 1.1s">
-        <h2 class="cta-title-alt">{{ 'global.home.ctaTitle' | translate }}</h2>
-        <p class="cta-desc">{{ 'global.home.ctaDesc' | translate }}</p>
-        <button class="cta-btn" routerLink="/account/register">{{ 'global.home.ctaBtn' | translate }}</button>
-      </section>
-    </main>
-    <!-- main content end -->
-  </div>
-  <div class="page-side-decoration right"></div>
+        <div class="floating-card card-2">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M3 3H21V21H3V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9 21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>E-commerce</h3>
+            <p>Boutiques en ligne optimisées</p>
+          </div>
+        </div>
+        <div class="floating-card card-3">
+          <div class="card-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2" stroke="currentColor" stroke-width="2" />
+              <line x1="12" y1="18" x2="12.01" y2="18" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <div class="card-content">
+            <h3>Mobile First</h3>
+            <p>Design responsive et adaptatif</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="features-section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Nos Services</h2>
+        <p class="section-subtitle">Découvrez notre gamme complète de services digitaux pour transformer votre vision en réalité</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="service-content">
+            <h3>Développement d'applications web sur mesure</h3>
+            <p>Applications web évolutives, sécurisées et performantes pour tous les besoins métier.</p>
+            <ul class="service-features">
+              <li>Applications React/Angular</li>
+              <li>APIs RESTful</li>
+              <li>Bases de données optimisées</li>
+            </ul>
+          </div>
+          <div class="service-number">01</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path d="M3 3H21V21H3V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M3 9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9 21V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="service-content">
+            <h3>Développement de sites e-commerce</h3>
+            <p>Boutiques en ligne avec intégration CMS, paiements et gestion des stocks.</p>
+            <ul class="service-features">
+              <li>Paiements sécurisés</li>
+              <li>Gestion des stocks</li>
+              <li>Analytics avancés</li>
+            </ul>
+          </div>
+          <div class="service-number">02</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="service-content">
+            <h3>Systèmes de gestion de contenu (CMS)</h3>
+            <p>Solutions CMS flexibles et intuitives pour une gestion facile de votre site.</p>
+            <ul class="service-features">
+              <li>Interface intuitive</li>
+              <li>Gestion de contenu</li>
+              <li>SEO optimisé</li>
+            </ul>
+          </div>
+          <div class="service-number">03</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-container">
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3>100%</h3>
+            <p>Projets Livrés à Temps</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3>4.9/5</h3>
+            <p>Note Client Moyenne</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M13 2L3 14H12L11 22L21 10H12L13 2Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3>24/7</h3>
+            <p>Support Technique</p>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="stat-content">
+            <h3>99.9%</h3>
+            <p>Disponibilité Serveur</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-choose-section">
+    <div class="container">
+      <div class="section-header animated-fade-in" style="animation-delay: 1.4s">
+        <div class="section-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="badge-text">Notre Excellence</span>
+        </div>
+        <h2 class="section-title">{{ 'global.home.whyChooseTitle' | translate }}</h2>
+        <p class="section-subtitle">Notre approche unique pour votre succès digital avec des technologies de pointe</p>
+      </div>
+
+      <div class="features-grid animated-fade-in" style="animation-delay: 1.6s">
+        <div class="feature-card" style="animation-delay: 1.7s">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M23 21V19C23 18.1137 22.6485 17.2528 22.0112 16.6118C21.3739 15.9709 20.4941 15.6 19.58 15.6H18"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M16 3.13C16.8704 3.35031 17.6237 3.85071 18.1677 4.55232C18.7117 5.25392 19.0216 6.12083 19.0606 7.02C19.0996 7.91917 18.8657 8.80903 18.3869 9.57168C17.9081 10.3343 17.2058 10.9345 16.3614 11.2944C15.517 11.6544 14.5638 11.7581 13.6444 11.5899C12.725 11.4217 11.8782 10.9885 11.2148 10.3356C10.5514 9.68273 10.1009 8.83522 9.92151 7.9156C9.74212 6.99598 9.84188 6.04226 10.2078 5.19747C10.5737 4.35268 11.1895 3.64983 11.9664 3.17049C12.7433 2.69115 13.6476 2.45691 14.56 2.5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3>Équipe expérimentée</h3>
+          <p>{{ 'global.home.why1' | translate }}</p>
+          <div class="feature-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>10+ développeurs experts</span>
+          </div>
+        </div>
+
+        <div class="feature-card" style="animation-delay: 1.8s">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3>Communication transparente</h3>
+          <p>{{ 'global.home.why2' | translate }}</p>
+          <div class="feature-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Réunions hebdomadaires</span>
+          </div>
+        </div>
+
+        <div class="feature-card" style="animation-delay: 1.9s">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3>Processus agile</h3>
+          <p>{{ 'global.home.why3' | translate }}</p>
+          <div class="feature-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Livraisons en 2 semaines</span>
+          </div>
+        </div>
+
+        <div class="feature-card" style="animation-delay: 2s">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3>Technologies de pointe</h3>
+          <p>{{ 'global.home.why4' | translate }}</p>
+          <div class="feature-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M13 2L3 14H12L11 22L21 10H12L13 2Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Stack moderne & optimisé</span>
+          </div>
+        </div>
+
+        <div class="feature-card" style="animation-delay: 2.1s">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M18 8A6 6 0 0 0 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M13.73 21A2 2 0 0 1 10.27 21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3>Support complet</h3>
+          <p>{{ 'global.home.why5' | translate }}</p>
+          <div class="feature-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M14.7 6.3A1 1 0 0 0 14 7H12V9H14A1 1 0 0 0 15 8A1 1 0 0 0 14.7 6.3Z" stroke="currentColor" stroke-width="2" />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            <span>Maintenance & mises à jour</span>
+          </div>
+        </div>
+
+        <div class="feature-card" style="animation-delay: 2.2s">
+          <div class="feature-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3>Garantie qualité</h3>
+          <p>Tests rigoureux et validation client</p>
+          <div class="feature-detail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>Tests automatisés</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Avis Clients -->
+  <jhi-client-reviews-display></jhi-client-reviews-display>
+
+  <!-- CTA Section -->
+  <section class="cta-section animated-fade-in" style="animation-delay: 2.3s">
+    <div class="container">
+      <div class="cta-content">
+        <div class="cta-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+          </svg>
+          <span class="badge-text">Prêt à Démarrer ?</span>
+        </div>
+        <h2 class="cta-title">{{ 'global.home.ctaTitle' | translate }}</h2>
+        <p class="cta-description">{{ 'global.home.ctaDesc' | translate }}</p>
+        <div class="cta-features">
+          <div class="cta-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            <span>Consultation gratuite</span>
+          </div>
+          <div class="cta-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            <span>Devis personnalisé</span>
+          </div>
+          <div class="cta-feature">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M9 12L11 14L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+            <span>Démarrage rapide</span>
+          </div>
+        </div>
+        <div class="cta-actions">
+          <button class="btn-primary" routerLink="/app-user-register">
+            {{ 'global.home.ctaBtn' | translate }}
+          </button>
+          <button class="btn-secondary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Nous contacter
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
-<!-- Section dashboard admin supprimée : on ne montre plus le dashboard admin sur la page home après authentification -->

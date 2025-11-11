@@ -10,6 +10,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { fontAwesomeIcons } from './config/font-awesome-icons';
 import MainComponent from './layouts/main/main.component';
 import { Title, Meta } from '@angular/platform-browser';
+import { OAuth2Service } from 'app/core/auth/oauth2.service'; // Import OAuth2Service
 
 @Component({
   selector: 'jhi-app',
@@ -25,6 +26,7 @@ export default class AppComponent {
   private readonly dpConfig = inject(NgbDatepickerConfig);
   private readonly titleService = inject(Title);
   private readonly metaService = inject(Meta);
+  private readonly oauth2Service = inject(OAuth2Service); // Inject OAuth2Service
 
   constructor() {
     this.applicationConfigService.setEndpointPrefix(SERVER_API_URL);
@@ -38,5 +40,8 @@ export default class AppComponent {
       content: 'Plateforme DevTech : gestion des tickets, support client, administration, notifications et plus.',
     });
     this.metaService.updateTag({ name: 'keywords', content: 'support, tickets, admin, gestion, DevTech, client, SaaS' });
+
+    // Call OAuth2Service to check for success parameters in URL
+    this.oauth2Service.checkOAuth2Success();
   }
 }

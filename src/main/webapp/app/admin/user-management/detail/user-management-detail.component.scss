@@ -1,0 +1,409 @@
+// Modern Design Variables
+$primary-color: #667eea;
+$primary-light: #818cf8;
+$primary-dark: #4f46e5;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$danger-color: #ef4444;
+$info-color: #06b6d4;
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+
+// Modern Mixins
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+@mixin modern-shadow {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@mixin modern-shadow-hover {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin gradient-bg($start, $end) {
+  background: linear-gradient(135deg, $start 0%, $end 100%);
+}
+
+// Main Container
+.admin-user-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  border-radius: 12px;
+  min-height: 100vh;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+    border-radius: 12px;
+  }
+}
+
+.admin-user-detail-content {
+  position: relative;
+  z-index: 1;
+}
+
+// User Detail Card
+.user-detail-card {
+  @include glassmorphism;
+  border-radius: 24px;
+  padding: 3rem;
+  @include modern-shadow;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  }
+}
+
+// Header Section
+.user-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.user-avatar-large {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $primary-color, $primary-light);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 2rem;
+  text-transform: uppercase;
+  @include modern-shadow;
+  @include smooth-transition;
+
+  &:hover {
+    transform: scale(1.05);
+    @include modern-shadow-hover;
+  }
+}
+
+.user-info-header {
+  flex: 1;
+
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, $gray-900, $primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.025em;
+
+    strong {
+      color: $primary-color;
+      -webkit-text-fill-color: $primary-color;
+    }
+  }
+}
+
+// Status Badges
+.status-badge {
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  @include smooth-transition;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  &.status-active {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    color: $success-color;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+    }
+  }
+
+  &.status-inactive {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    color: $danger-color;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, #fee2e2, #fecaca);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+    }
+  }
+}
+
+// User Details Grid
+.user-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.detail-item {
+  @include glassmorphism;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  @include modern-shadow;
+  @include smooth-transition;
+
+  &:hover {
+    @include modern-shadow-hover;
+    transform: translateY(-2px);
+  }
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+}
+
+.detail-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, $primary-color, $primary-light);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include smooth-transition;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: white;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+}
+
+.detail-content {
+  flex: 1;
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $gray-600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  span {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $gray-900;
+  }
+}
+
+// Authorities List
+.authorities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.authority-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  color: $info-color;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  display: inline-block;
+  @include smooth-transition;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+  }
+}
+
+// Actions
+.user-detail-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn {
+  border: none;
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  @include smooth-transition;
+  @include modern-shadow;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    color: currentColor;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+  }
+
+  &.btn-back {
+    background: linear-gradient(135deg, $gray-600, $gray-700);
+    color: white;
+
+    &:hover:not(:disabled) {
+      box-shadow: 0 8px 20px rgba(71, 85, 105, 0.4);
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .admin-user-detail-container {
+    padding: 1rem;
+  }
+
+  .user-detail-card {
+    padding: 2rem;
+  }
+
+  .user-detail-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .user-avatar-large {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .user-details-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .detail-item {
+    padding: 1rem;
+  }
+
+  .detail-icon {
+    width: 35px;
+    height: 35px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .user-detail-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    .btn {
+      justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .user-detail-card {
+    padding: 1.5rem;
+  }
+
+  .user-detail-header {
+    h2 {
+      font-size: 1.75rem;
+    }
+  }
+
+  .detail-content {
+    label {
+      font-size: 0.8rem;
+    }
+
+    span {
+      font-size: 1rem;
+    }
+  }
+
+  .authority-badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}

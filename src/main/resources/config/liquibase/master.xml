@@ -31,6 +31,15 @@
     <include file="config/liquibase/changelog/20240719_add_ticket_image_url.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240724_fix_ticket_messages_table.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240724_add_ticket_payment_fields.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240724_add_app_parameter_data.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240827_add_paiement_missing_columns.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20241020_fix_notification_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20241201_fix_ticket_message_table_structure.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250101_000001_added_client_reviews.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250115_add_activity_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250115_add_message_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250903_add_payment_method_table.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250915_add_ticket_last_modified_date.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

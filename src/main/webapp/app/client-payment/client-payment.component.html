@@ -60,6 +60,113 @@
         </div>
       </div>
 
+      <!-- Payment Method Section -->
+      <div class="form-section">
+        <h3>💳 Moyen de Paiement</h3>
+
+        <!-- Saved Payment Methods -->
+        <div *ngIf="savedPaymentMethods().length > 0" class="saved-payment-methods">
+          <h4>Moyens de paiement enregistrés</h4>
+          <div class="payment-methods-list">
+            <div
+              *ngFor="let method of savedPaymentMethods()"
+              class="payment-method-card"
+              [class.selected]="selectedPaymentMethod?.id === method.id"
+              (click)="selectSavedPaymentMethod(method)"
+            >
+              <div class="payment-method-icon">
+                {{ getPaymentMethodIcon(method.brand) }}
+              </div>
+              <div class="payment-method-info">
+                <div class="payment-method-name">{{ getPaymentMethodDisplayName(method) }}</div>
+                <div class="payment-method-holder">{{ method.holderName }}</div>
+                <div *ngIf="method.isDefault" class="default-badge">Par défaut</div>
+              </div>
+              <div class="payment-method-radio">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  [checked]="selectedPaymentMethod?.id === method.id"
+                  (change)="selectSavedPaymentMethod(method)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="payment-method-actions">
+            <button type="button" class="btn btn-secondary" (click)="useNewPaymentMethod()">
+              <span class="btn-icon">➕</span>
+              Utiliser un nouveau moyen de paiement
+            </button>
+          </div>
+        </div>
+
+        <!-- New Payment Method Option -->
+        <div *ngIf="savedPaymentMethods().length === 0 || showNewPaymentForm" class="new-payment-method">
+          <div class="payment-method-card new-method" [class.selected]="!useSavedPayment">
+            <div class="payment-method-icon">💳</div>
+            <div class="payment-method-info">
+              <div class="payment-method-name">Nouveau moyen de paiement</div>
+              <div class="payment-method-holder">Saisir les informations de carte</div>
+            </div>
+            <div class="payment-method-radio">
+              <input type="radio" name="paymentMethod" [checked]="!useSavedPayment" (change)="useNewPaymentMethod()" />
+            </div>
+          </div>
+
+          <div *ngIf="!useSavedPayment" class="new-payment-form">
+            <div class="form-group">
+              <label for="cardNumber" class="form-label">
+                <span class="label-icon">💳</span>
+                Numéro de carte
+              </label>
+              <div class="input-container">
+                <input id="cardNumber" type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" />
+                <div class="input-border"></div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="expiryDate" class="form-label">
+                    <span class="label-icon">📅</span>
+                    Date d'expiration
+                  </label>
+                  <div class="input-container">
+                    <input id="expiryDate" type="text" class="form-input" placeholder="MM/AA" maxlength="5" />
+                    <div class="input-border"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="cvv" class="form-label">
+                    <span class="label-icon">🔒</span>
+                    CVV
+                  </label>
+                  <div class="input-container">
+                    <input id="cvv" type="text" class="form-input" placeholder="123" maxlength="4" />
+                    <div class="input-border"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cardHolder" class="form-label">
+                <span class="label-icon">👤</span>
+                Nom du titulaire
+              </label>
+              <div class="input-container">
+                <input id="cardHolder" type="text" class="form-input" placeholder="Nom tel qu'il apparaît sur la carte" />
+                <div class="input-border"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Description Section -->
       <div class="form-section">
         <h3>📝 Description</h3>

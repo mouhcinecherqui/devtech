@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-bug-report',
+  selector: 'jhi-bug-report',
   templateUrl: './bug-report.component.html',
   styleUrls: ['./bug-report.component.scss'],
   standalone: true,
@@ -22,7 +22,7 @@ export class BugReportComponent {
     });
   }
 
-  submit() {
+  submit(): void {
     this.submitted = true;
     // Here you would send the data to the backend
   }

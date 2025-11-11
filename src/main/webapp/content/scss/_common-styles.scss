@@ -1,0 +1,157 @@
+/* ==========================================================================
+   Common Styles - Shared Variables and Mixins
+   ========================================================================== */
+
+// Color Variables
+$primary-color: #3b82f6;
+$primary-light: #60a5fa;
+$primary-dark: #1d4ed8;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$danger-color: #ef4444;
+$info-color: #06b6d4;
+$white: #ffffff;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Common Mixins
+@mixin smooth-transition {
+  transition: all 0.2s ease;
+}
+
+@mixin card-shadow {
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+@mixin card-shadow-hover {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+@mixin gradient-bg($start-color, $end-color) {
+  background: linear-gradient(135deg, $start-color 0%, $end-color 100%);
+}
+
+@mixin glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin button-base {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  @include smooth-transition;
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $primary-color;
+  color: $white;
+
+  &:hover {
+    background: $primary-dark;
+    @include card-shadow-hover;
+  }
+}
+
+@mixin button-success {
+  @include button-base;
+  background: $success-color;
+  color: $white;
+
+  &:hover {
+    background: darken($success-color, 10%);
+    @include card-shadow-hover;
+  }
+}
+
+@mixin button-danger {
+  @include button-base;
+  background: $danger-color;
+  color: $white;
+
+  &:hover {
+    background: darken($danger-color, 10%);
+    @include card-shadow-hover;
+  }
+}
+
+// Common Classes
+.container-base {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.card-base {
+  background: $white;
+  border-radius: 0.75rem;
+  @include card-shadow;
+  @include smooth-transition;
+
+  &:hover {
+    @include card-shadow-hover;
+  }
+}
+
+.gradient-background {
+  @include gradient-bg(#667eea, #764ba2);
+  min-height: 100vh;
+  position: relative;
+}
+
+.text-primary {
+  color: $primary-color;
+}
+.text-success {
+  color: $success-color;
+}
+.text-warning {
+  color: $warning-color;
+}
+.text-danger {
+  color: $danger-color;
+}
+.text-gray-500 {
+  color: $gray-500;
+}
+.text-gray-600 {
+  color: $gray-600;
+}
+.text-gray-700 {
+  color: $gray-700;
+}
+
+.bg-primary {
+  background-color: $primary-color;
+}
+.bg-success {
+  background-color: $success-color;
+}
+.bg-warning {
+  background-color: $warning-color;
+}
+.bg-danger {
+  background-color: $danger-color;
+}
+.bg-gray-50 {
+  background-color: $gray-50;
+}
+.bg-gray-100 {
+  background-color: $gray-100;
+}

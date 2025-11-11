@@ -57,8 +57,9 @@ export class AccountService {
           // After retrieve the account info, the language will be changed to
           // the user's preferred language configured in the account setting
           // unless user have chosen another language in the current session
+          const lang = account.langKey ?? 'en';
           if (!this.stateStorageService.getLocale()) {
-            this.translateService.use(account.langKey);
+            this.translateService.use(lang);
           }
 
           this.navigateToStoredUrl();

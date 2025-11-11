@@ -1,0 +1,151 @@
+{
+  "adminDashboard": {
+    "title": "Panel de control",
+    "welcome": "Bienvenido,",
+    "headerSubtitle": "Panel administrativo - Gestión de la plataforma",
+    "role": "Administrador",
+    "status": { "online": "En línea" },
+    "recentActivity": "Actividad reciente",
+    "quickAccess": "Acceso rápido",
+    "quickAccessSubtitle": "Acciones rápidas para la gestión",
+    "createTicket": "Crear un nuevo ticket",
+    "createTicketDesc": "Crear un nuevo ticket",
+    "addClient": "Agregar un cliente",
+    "addClientDesc": "Gestionar clientes",
+    "managePayments": "Gestionar pagos",
+    "managePaymentsDesc": "Gestionar pagos",
+    "editSettings": "Modificar",
+    "editSettingsDesc": "Parámetros del sistema",
+    "overview": {
+      "permissions": "Permisos",
+      "sessions": "Sesiones",
+      "sessionsStatus": "Activa"
+    },
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "resolved": "RESUELTOS",
+      "urgent": "URGENTE"
+    },
+    "table": {
+      "title": "Últimas solicitudes",
+      "subtitle": "Resumen de tickets",
+      "id": "ID",
+      "type": "Tipo",
+      "description": "Descripción",
+      "status": "Estado",
+      "date": "Fecha",
+      "notFound": "No se encontraron tickets."
+    },
+    "loading": "Cargando...",
+    "error": "Error",
+    "showMore": "Mostrar todo ({{count}})",
+    "showLess": "Mostrar menos"
+  },
+  "managerDashboard": {
+    "header": "Manager",
+    "title": "Panel de control",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "resolved": "RESUELTOS",
+      "urgent": "URGENTE"
+    },
+    "table": {
+      "title": "Últimas solicitudes",
+      "titleCol": "Título",
+      "client": "Cliente",
+      "status": "Estado",
+      "date": "Fecha"
+    },
+    "status": {
+      "inProgress": "En curso",
+      "resolved": "Resuelto",
+      "urgent": "Urgente"
+    }
+  },
+  "userDashboard": {
+    "header": "Usuario",
+    "title": "Panel de control",
+    "stats": {
+      "tickets": "TICKETS",
+      "open": "EN CURSO",
+      "closed": "RESUELTOS / CERRADOS"
+    },
+    "table": {
+      "title": "Mis últimas solicitudes",
+      "id": "ID",
+      "type": "Tipo",
+      "description": "Descripción",
+      "status": "Estado",
+      "date": "Fecha",
+      "notFound": "No se encontraron tickets."
+    },
+    "loading": "Cargando...",
+    "error": "Error"
+  },
+  "clientDashboard": {
+    "common": {
+      "now": "Ahora"
+    },
+    "welcome": {
+      "badge": "Espacio Cliente",
+      "title": "Panel de Cliente",
+      "subtitle": "Bienvenido a tu espacio personal. Gestiona tus proyectos y sigue tus tickets."
+    },
+    "stats": {
+      "totalTickets": "Tickets Totales",
+      "openTickets": "Tickets Abiertos",
+      "closedTickets": "Tickets Cerrados",
+      "responseTime": "Tiempo medio de respuesta"
+    },
+    "activities": {
+      "title": "Actividad Reciente",
+      "viewAll": "Ver todo",
+      "noActivity": "Sin actividad reciente",
+      "noActivityDesc": "Las actividades aparecerán aquí"
+    },
+    "actions": {
+      "title": "Acciones Rápidas",
+      "newTicket": "Nuevo Ticket",
+      "contactSupport": "Contactar Soporte",
+      "documentation": "Documentación",
+      "history": "Historial"
+    },
+    "tickets": {
+      "title": "Tickets Recientes",
+      "viewAll": "Ver todo",
+      "view": "Ver",
+      "create": "Crear",
+      "noTickets": "No hay tickets recientes",
+      "noTicketsDesc": "Los tickets aparecerán aquí",
+      "priority": {
+        "urgent": "Urgente",
+        "normal": "Normal",
+        "low": "Baja"
+      }
+    },
+    "projects": {
+      "title": "Estado de Proyectos",
+      "noProjects": "No hay proyectos en curso",
+      "noProjectsDesc": "Los proyectos aparecerán aquí",
+      "noProjectsStatus": "Ninguno",
+      "status": {
+        "active": "En curso",
+        "testing": "Pruebas",
+        "completed": "Terminado"
+      }
+    },
+    "errors": {
+      "fetchError": "Error al cargar los tickets",
+      "retry": "Reintentar",
+      "clear": "Cerrar"
+    },
+    "loading": "Cargando..."
+  },
+  "sidebar": {
+    "myTickets": "Mis tickets",
+    "managePayments": "Gestionar mis pagos",
+    "contactAdmin": "Contactar administración"
+  }
+}

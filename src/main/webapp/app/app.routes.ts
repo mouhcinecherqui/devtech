@@ -63,6 +63,20 @@ const routes: Routes = [
     title: 'User Dashboard',
   },
   {
+    path: 'payment-methods',
+    loadComponent: () => import('./payment-methods/payment-methods.component').then(m => m.PaymentMethodsComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.USER, Authority.CLIENT] },
+    title: 'Mes Moyens de Paiement',
+  },
+  {
+    path: 'user-tickets',
+    loadComponent: () => import('./user-tickets/user-tickets.component').then(m => m.UserTicketsComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.USER] },
+    title: 'My Tickets',
+  },
+  {
     path: 'admin-dashboard',
     loadComponent: () => import('./admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent),
     canActivate: [UserRouteAccessService],
@@ -89,6 +103,13 @@ const routes: Routes = [
     title: 'Mes tickets',
   },
   {
+    path: 'client-tickets',
+    loadComponent: () => import('./client-tickets/client-tickets.component').then(m => m.ClientTicketsComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.CLIENT] },
+    title: 'Mes Tickets',
+  },
+  {
     path: 'client-dashboard',
     loadComponent: () => import('./client-dashboard/client-dashboard.component').then(m => m.ClientDashboardComponent),
     canActivate: [UserRouteAccessService],
@@ -101,6 +122,30 @@ const routes: Routes = [
     canActivate: [UserRouteAccessService],
     data: { authorities: [Authority.CLIENT] },
     title: 'Mes Tickets',
+  },
+  {
+    path: 'client-tickets/:id',
+    loadComponent: () => import('./client-tickets/ticket-detail.component').then(m => m.TicketDetailComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.CLIENT] },
+    title: 'Détail du ticket',
+  },
+  {
+    path: 'client-review/:id',
+    loadComponent: () => import('./client-review/client-review.component').then(m => m.ClientReviewComponent),
+    title: 'Donner un avis',
+  },
+  {
+    path: 'client-reviews',
+    loadComponent: () => import('./client-reviews-display/client-reviews-display.component').then(m => m.ClientReviewsDisplayComponent),
+    title: 'Avis clients',
+  },
+  {
+    path: 'client-contact',
+    loadComponent: () => import('./client-contact/client-contact.component').then(m => m.ClientContactComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.CLIENT] },
+    title: 'Contact Administration',
   },
   ...errorRoute,
 ];

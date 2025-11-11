@@ -39,5 +39,6 @@ public interface TicketMessageRepository extends JpaRepository<TicketMessage, Lo
     /**
      * Supprime tous les messages d'un ticket
      */
-    void deleteByTicketId(Long ticketId);
+    @Query("DELETE FROM TicketMessage tm WHERE tm.ticket.id = :ticketId")
+    void deleteByTicketId(@Param("ticketId") Long ticketId);
 }

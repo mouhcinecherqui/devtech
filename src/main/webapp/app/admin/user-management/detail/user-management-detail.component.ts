@@ -7,6 +7,7 @@ import { User } from '../user-management.model';
 @Component({
   selector: 'jhi-user-mgmt-detail',
   templateUrl: './user-management-detail.component.html',
+  styleUrls: ['./user-management-detail.component.scss'],
   imports: [RouterModule, SharedModule],
 })
 export default class UserManagementDetailComponent {

@@ -6,7 +6,9 @@ services:
     volumes:
       - ./config/mysql:/etc/mysql/conf.d
     environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=devtech
+      - MYSQL_PASSWORD=root
       - MYSQL_DATABASE=devtech
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix

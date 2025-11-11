@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!-- Créer la table message pour l'entité Message -->
+    <changeSet id="20250115_create_message_table" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="message"/>
+            </not>
+        </preConditions>
+        
+        <createTable tableName="message">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="${datetimeType}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ticket_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sender_name" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sender_email" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="is_from_client" type="bit(1)" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="${datetimeType}">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        
+        <!-- Ajouter la clé étrangère vers ticket -->
+        <addForeignKeyConstraint 
+            baseTableName="message" 
+            baseColumnNames="ticket_id" 
+            constraintName="fk_message_ticket"
+            referencedTableName="ticket" 
+            referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- Ajouter les index pour améliorer les performances -->
+    <changeSet id="20250115_add_message_indexes" author="devtech">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="message"/>
+        </preConditions>
+        
+        <createIndex tableName="message" indexName="idx_message_ticket_id">
+            <column name="ticket_id"/>
+        </createIndex>
+        
+        <createIndex tableName="message" indexName="idx_message_timestamp">
+            <column name="timestamp"/>
+        </createIndex>
+        
+        <createIndex tableName="message" indexName="idx_message_sender_id">
+            <column name="sender_id"/>
+        </createIndex>
+        
+        <createIndex tableName="message" indexName="idx_message_created_date">
+            <column name="created_date"/>
+        </createIndex>
+        
+        <createIndex tableName="message" indexName="idx_message_is_from_client">
+            <column name="is_from_client"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
+
+
+
+
+
+
+
+

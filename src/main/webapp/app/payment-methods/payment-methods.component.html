@@ -1,0 +1,421 @@
+<!-- Background Elements -->
+<div class="payment-background">
+  <div class="payment-overlay"></div>
+  <div class="payment-pattern"></div>
+  <div class="floating-elements">
+    <div class="floating-element element-1"></div>
+    <div class="floating-element element-2"></div>
+    <div class="floating-element element-3"></div>
+    <div class="floating-element element-4"></div>
+  </div>
+</div>
+
+<div class="payment-methods">
+  <div class="pm-header-card">
+    <div class="pm-header-left">
+      <h3>Mes moyens de paiement</h3>
+      <p>Enregistrez une carte pour faciliter vos prochains paiements.</p>
+    </div>
+    <div class="pm-header-right">
+      <button class="btn btn-primary add-card-btn" (click)="startAdd()" *ngIf="!adding()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor" />
+        </svg>
+        Ajouter une carte
+      </button>
+    </div>
+  </div>
+
+  <div class="add-form" *ngIf="adding()">
+    <div class="form-header">
+      <div class="form-title">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="form-icon">
+          <path
+            d="M3 4a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v2.586a1 1 0 0 1-.293.707l-6.414 6.414a1 1 0 0 0-.293.707V17l-4 4v-6.586a1 1 0 0 0-.293-.707L3.293 7.293A1 1 0 0 1 3 6.586V4z"
+            fill="currentColor"
+          />
+        </svg>
+        <h3>Ajouter une méthode de paiement</h3>
+      </div>
+      <p class="form-description">Renseignez les informations de votre carte bancaire de manière sécurisée</p>
+    </div>
+
+    <form [formGroup]="addForm" (ngSubmit)="save()" class="modern-form">
+      <!-- Formulaire principal en deux colonnes -->
+      <div class="form-main-grid">
+        <!-- Colonne gauche - Informations personnelles -->
+        <div class="form-column left-column">
+          <div class="form-section">
+            <div class="section-header">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="section-icon">
+                <path
+                  d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                  fill="currentColor"
+                />
+              </svg>
+              <h4>Informations du titulaire</h4>
+            </div>
+
+            <div class="form-group">
+              <label for="holderName" class="form-label">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="label-icon">
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Nom complet du titulaire
+                <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input
+                  id="holderName"
+                  type="text"
+                  formControlName="holderName"
+                  placeholder="Jean Dupont"
+                  class="form-input"
+                  [class.error]="addForm.get('holderName')?.invalid && addForm.get('holderName')?.touched"
+                />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                  <path
+                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div class="error-message" *ngIf="addForm.get('holderName')?.invalid && addForm.get('holderName')?.touched">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                  <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+                  <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span *ngIf="addForm.get('holderName')?.errors?.['required']">Le nom du titulaire est requis</span>
+                <span *ngIf="addForm.get('holderName')?.errors?.['maxlength']">Le nom ne peut pas dépasser 80 caractères</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="brand" class="form-label">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="label-icon">
+                  <path
+                    d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Type de carte
+                <span class="required">*</span>
+              </label>
+              <div class="select-wrapper">
+                <select
+                  id="brand"
+                  formControlName="brand"
+                  class="form-select"
+                  [class.error]="addForm.get('brand')?.invalid && addForm.get('brand')?.touched"
+                >
+                  <option value="VISA">💳 Visa</option>
+                  <option value="MASTERCARD">💳 Mastercard</option>
+                  <option value="AMEX">💳 American Express</option>
+                </select>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="select-arrow">
+                  <path d="M7 10l5 5 5-5z" fill="currentColor" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Adresse de facturation -->
+          <div class="form-section">
+            <div class="section-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="section-icon">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                  fill="currentColor"
+                />
+              </svg>
+              <h4>Adresse de facturation</h4>
+            </div>
+
+            <div class="form-group">
+              <label for="billingAddress" class="form-label">Adresse</label>
+              <div class="input-wrapper">
+                <input
+                  id="billingAddress"
+                  type="text"
+                  formControlName="billingAddress"
+                  placeholder="123 Rue de la Paix"
+                  class="form-input"
+                />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div class="form-grid two-cols">
+              <div class="form-group">
+                <label for="billingCity" class="form-label">Ville</label>
+                <div class="input-wrapper">
+                  <input id="billingCity" type="text" formControlName="billingCity" placeholder="Paris" class="form-input" />
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                    <path
+                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="billingZip" class="form-label">Code postal</label>
+                <div class="input-wrapper">
+                  <input id="billingZip" type="text" formControlName="billingZip" placeholder="75001" class="form-input" />
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                    <path
+                      d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="billingCountry" class="form-label">Pays</label>
+              <div class="input-wrapper">
+                <input id="billingCountry" type="text" formControlName="billingCountry" placeholder="France" class="form-input" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne droite - Informations de la carte -->
+        <div class="form-column right-column">
+          <div class="form-section">
+            <div class="section-header">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="section-icon">
+                <path
+                  d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
+                  fill="currentColor"
+                />
+              </svg>
+              <h4>Informations de la carte</h4>
+            </div>
+
+            <div class="form-group">
+              <label for="number" class="form-label">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="label-icon">
+                  <path
+                    d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Numéro de carte
+                <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input
+                  id="number"
+                  type="text"
+                  formControlName="number"
+                  placeholder="1234 5678 9012 3456"
+                  class="form-input card-number"
+                  [class.error]="addForm.get('number')?.invalid && addForm.get('number')?.touched"
+                  maxlength="19"
+                />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                  <path
+                    d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div class="error-message" *ngIf="addForm.get('number')?.invalid && addForm.get('number')?.touched">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                  <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2" />
+                  <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <span *ngIf="addForm.get('number')?.errors?.['required']">Le numéro de carte est requis</span>
+                <span *ngIf="addForm.get('number')?.errors?.['invalidCardNumber']">Numéro de carte invalide</span>
+              </div>
+            </div>
+
+            <!-- Date d'expiration et CVV -->
+            <div class="form-grid two-cols">
+              <div class="form-group">
+                <label for="expMonth" class="form-label">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="label-icon">
+                    <path
+                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Mois d'expiration
+                  <span class="required">*</span>
+                </label>
+                <div class="select-wrapper">
+                  <select
+                    id="expMonth"
+                    formControlName="expMonth"
+                    class="form-select"
+                    [class.error]="addForm.get('expMonth')?.invalid && addForm.get('expMonth')?.touched"
+                  >
+                    <option value="1">01 - Janvier</option>
+                    <option value="2">02 - Février</option>
+                    <option value="3">03 - Mars</option>
+                    <option value="4">04 - Avril</option>
+                    <option value="5">05 - Mai</option>
+                    <option value="6">06 - Juin</option>
+                    <option value="7">07 - Juillet</option>
+                    <option value="8">08 - Août</option>
+                    <option value="9">09 - Septembre</option>
+                    <option value="10">10 - Octobre</option>
+                    <option value="11">11 - Novembre</option>
+                    <option value="12">12 - Décembre</option>
+                  </select>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="select-arrow">
+                    <path d="M7 10l5 5 5-5z" fill="currentColor" />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="expYear" class="form-label">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="label-icon">
+                    <path
+                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  Année d'expiration
+                  <span class="required">*</span>
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    id="expYear"
+                    type="number"
+                    formControlName="expYear"
+                    placeholder="2024"
+                    class="form-input"
+                    [class.error]="addForm.get('expYear')?.invalid && addForm.get('expYear')?.touched"
+                    min="2024"
+                    max="2030"
+                  />
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                    <path
+                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="cvv" class="form-label">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" class="label-icon">
+                  <path
+                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Code de sécurité (CVV)
+                <span class="required">*</span>
+              </label>
+              <div class="input-wrapper">
+                <input
+                  id="cvv"
+                  type="password"
+                  formControlName="cvv"
+                  placeholder="123"
+                  class="form-input"
+                  [class.error]="addForm.get('cvv')?.invalid && addForm.get('cvv')?.touched"
+                  maxlength="4"
+                />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="input-icon">
+                  <path
+                    d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"
+                    fill="currentColor"
+                  />
+                </svg>
+              </div>
+              <div class="error-message" *ngIf="addForm.get('cvv')?.invalid && addForm.get('cvv')?.touched">
+                <span *ngIf="addForm.get('cvv')?.errors?.['required']">Le code de sécurité est requis</span>
+                <span *ngIf="addForm.get('cvv')?.errors?.['invalidCvv']">Le code de sécurité doit contenir 3 ou 4 chiffres</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Options et Actions -->
+      <div class="form-footer">
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="makeDefault" class="checkbox-input" />
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">
+              <strong>Définir comme méthode de paiement par défaut</strong>
+              <small>Cette carte sera utilisée automatiquement pour vos prochains paiements</small>
+            </span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="cancelAdd()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                fill="currentColor"
+              />
+            </svg>
+            Annuler
+          </button>
+          <button type="submit" class="btn btn-primary" [disabled]="addForm.invalid || isSubmit">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" *ngIf="!isSubmit">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" fill="currentColor" />
+            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="spinner" *ngIf="isSubmit">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                fill="currentColor"
+              />
+            </svg>
+            <span *ngIf="!isSubmit">Enregistrer la carte</span>
+            <span *ngIf="isSubmit">Enregistrement...</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <h4 class="section-title" *ngIf="methods().length">Cartes enregistrées</h4>
+  <div class="methods-list" *ngIf="methods().length; else empty">
+    <div class="method" *ngFor="let m of methods()">
+      <div class="summary">
+        <div class="brand">{{ m.brand }}</div>
+        <div class="pan">•••• {{ m.last4 }}</div>
+        <div class="exp">{{ m.expMonth }}/{{ m.expYear }}</div>
+        <div class="holder">{{ m.holderName }}</div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-light" (click)="setDefault(m.id)" *ngIf="!m.isDefault">Définir par défaut</button>
+        <button class="btn btn-danger" (click)="remove(m.id)">Supprimer</button>
+        <span class="badge" *ngIf="m.isDefault">Défaut</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #empty>
+    <div class="empty">Aucune carte enregistrée. Cliquez sur "Ajouter une carte".</div>
+  </ng-template>
+</div>

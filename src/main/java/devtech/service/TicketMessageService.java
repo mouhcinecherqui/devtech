@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class TicketMessageService {
 
     private static final Logger log = LoggerFactory.getLogger(TicketMessageService.class);
@@ -28,6 +27,7 @@ public class TicketMessageService {
     /**
      * Ajoute un message à un ticket
      */
+    @Transactional
     public TicketMessage addMessage(Long ticketId, String content, TicketMessage.AuthorType authorType, String authorLogin) {
         log.info("Tentative d'ajout de message pour le ticket {} avec le contenu: {}", ticketId, content);
 
@@ -44,6 +44,18 @@ public class TicketMessageService {
                 throw new RuntimeException("Le contenu du message ne peut pas être vide");
             }
 
+            // Vérifier que l'auteur n'est pas vide
+            if (authorLogin == null || authorLogin.trim().isEmpty()) {
+                throw new RuntimeException("Le login de l'auteur ne peut pas être vide");
+            }
+
+            // Vérifier que le type d'auteur est valide
+            if (authorType == null) {
+                throw new RuntimeException("Le type d'auteur ne peut pas être null");
+            }
+
+            log.info("Validation OK, création du message...");
+
             // Créer le message
             TicketMessage message = new TicketMessage(ticket, content.trim(), authorType, authorLogin);
             log.info("Message créé, tentative de sauvegarde...");
@@ -57,6 +69,14 @@ public class TicketMessageService {
                 throw new RuntimeException("Le message n'a pas été sauvegardé correctement");
             }
 
+            log.info(
+                "Message final: ID={}, Content={}, AuthorType={}, AuthorLogin={}",
+                savedMessage.getId(),
+                savedMessage.getContent(),
+                savedMessage.getAuthorType(),
+                savedMessage.getAuthorLogin()
+            );
+
             return savedMessage;
         } catch (Exception e) {
             log.error("Erreur lors de l'ajout du message pour le ticket {}: {}", ticketId, e.getMessage(), e);
@@ -67,6 +87,7 @@ public class TicketMessageService {
     /**
      * Ajoute un message client à un ticket
      */
+    @Transactional
     public TicketMessage addClientMessage(Long ticketId, String content) {
         log.info("Ajout d'un message client pour le ticket {}", ticketId);
 
@@ -85,6 +106,7 @@ public class TicketMessageService {
     /**
      * Ajoute un message admin à un ticket
      */
+    @Transactional
     public TicketMessage addAdminMessage(Long ticketId, String content) {
         log.info("Ajout d'un message admin pour le ticket {}", ticketId);
 
@@ -103,36 +125,39 @@ public class TicketMessageService {
     /**
      * Récupère tous les messages d'un ticket (pour les admins)
      */
+    @Transactional(readOnly = true)
     public List<TicketMessage> getTicketMessages(Long ticketId) {
         try {
             log.info("Récupération de tous les messages pour le ticket {}", ticketId);
             List<TicketMessage> messages = ticketMessageRepository.findByTicketIdOrderByCreatedDateAsc(ticketId);
-            log.info("Nombre de messages trouvés: {}", messages.size());
-            return messages;
+            log.info("Nombre de messages trouvés: {}", messages != null ? messages.size() : 0);
+            return messages != null ? messages : List.of();
         } catch (Exception e) {
             log.error("Erreur lors de la récupération des messages pour le ticket {}: {}", ticketId, e.getMessage(), e);
-            throw e;
+            return List.of();
         }
     }
 
     /**
      * Récupère les messages publics d'un ticket (pour les clients)
      */
+    @Transactional(readOnly = true)
     public List<TicketMessage> getPublicTicketMessages(Long ticketId) {
         try {
             log.info("Récupération des messages publics pour le ticket {}", ticketId);
             List<TicketMessage> messages = ticketMessageRepository.findPublicMessagesByTicketIdOrderByCreatedDateAsc(ticketId);
-            log.info("Nombre de messages publics trouvés: {}", messages.size());
-            return messages;
+            log.info("Nombre de messages publics trouvés: {}", messages != null ? messages.size() : 0);
+            return messages != null ? messages : List.of();
         } catch (Exception e) {
             log.error("Erreur lors de la récupération des messages publics pour le ticket {}: {}", ticketId, e.getMessage(), e);
-            throw e;
+            return List.of();
         }
     }
 
     /**
      * Compte le nombre de messages d'un ticket
      */
+    @Transactional(readOnly = true)
     public long getMessageCount(Long ticketId) {
         return ticketMessageRepository.countByTicketId(ticketId);
     }
@@ -140,6 +165,7 @@ public class TicketMessageService {
     /**
      * Supprime tous les messages d'un ticket
      */
+    @Transactional
     public void deleteTicketMessages(Long ticketId) {
         ticketMessageRepository.deleteByTicketId(ticketId);
     }

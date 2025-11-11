@@ -57,7 +57,19 @@
     "form": {
       "username": "Username",
       "password": "Password",
-      "email": "Email"
+      "email": "Email",
+      "newpassword": {
+        "label": "New password",
+        "placeholder": "Enter your new password"
+      },
+      "confirmpassword": {
+        "label": "Confirm new password",
+        "placeholder": "Confirm your new password"
+      },
+      "currentpassword": {
+        "label": "Current password",
+        "placeholder": "Enter your current password"
+      }
     },
     "messages": {
       "error": {
@@ -73,32 +85,32 @@
     "field": {
       "id": "ID"
     },
-    "item-count": "Item count: {{count}}",
+    "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
     "home": {
-      "title": "Welcome to DevTech!",
-      "subtitle": "Manage your support tickets and platform services easily.",
+      "title": "Welcome to DevTech",
+      "subtitle": "DevTech is your trusted partner for digital innovation. We specialize in building modern web applications and robust e-commerce platforms with CMS integration. Our mission is to empower your business with the latest web technologies and deliver solutions tailored to your needs.",
       "servicesTitle": "Our Services",
       "service1": {
-        "title": "Ticket Management",
-        "desc": "Create, track, and resolve your support tickets efficiently."
+        "title": "Custom Web Application Development",
+        "desc": "Scalable, secure, and high-performance web apps for any business need."
       },
       "service2": {
-        "title": "Client Area",
-        "desc": "Access your client dashboard and manage your information."
+        "title": "E-commerce Website Development",
+        "desc": "Online stores with seamless CMS integration, payment gateways, and inventory management."
       },
       "service3": {
-        "title": "Admin Tools",
-        "desc": "Advanced tools for administrators and managers."
+        "title": "Content Management Systems (CMS)",
+        "desc": "Flexible and user-friendly CMS solutions for easy website management."
       },
-      "whyChooseTitle": "Why choose DevTech?",
-      "why1": "24/7 Technical Support",
-      "why2": "Quick Problem Resolution",
-      "why3": "Intuitive Interface",
-      "why4": "Guaranteed Security",
-      "why5": "Detailed Reports",
-      "ctaTitle": "Start now with DevTech",
-      "ctaDesc": "Join thousands of satisfied users and discover the DevTech difference",
-      "ctaBtn": "Get Started Now"
+      "whyChooseTitle": "Why Choose DevTech?",
+      "why1": "Experienced team of web developers and designers",
+      "why2": "Client-focused approach and transparent communication",
+      "why3": "Agile development process for faster delivery",
+      "why4": "Latest web technologies and best practices",
+      "why5": "Comprehensive post-launch support",
+      "ctaTitle": "Ready to start your web project?",
+      "ctaDesc": "Contact us today to discuss your web application or e-commerce needs and get a free consultation!",
+      "ctaBtn": "Get Started"
     }
   },
   "adminDashboard": {
@@ -143,6 +155,43 @@
     "register": "Register",
     "logout": "Logout"
   },
+  "settings": {
+    "title": "Profile of user {{username}}",
+    "form": {
+      "firstname": "First name",
+      "lastname": "Last name",
+      "language": "Language",
+      "button": "Save",
+      "phone": "Phone number"
+    },
+    "messages": {
+      "success": "Your profile has been saved!",
+      "validate": {
+        "firstname": {
+          "required": "Your first name is required.",
+          "minlength": "Your first name must be at least one character.",
+          "maxlength": "Your first name cannot be longer than 50 characters."
+        },
+        "lastname": {
+          "required": "Your last name is required.",
+          "minlength": "Your last name must be at least one character.",
+          "maxlength": "Your last name cannot be longer than 50 characters."
+        }
+      }
+    }
+  },
+  "password": {
+    "title": "Change password for {{username}}",
+    "messages": {
+      "success": "Password changed successfully!",
+      "error": "An error occurred! The password could not be changed."
+    },
+    "form": {
+      "button": "Save",
+      "setPassword": "Set password",
+      "changePassword": "Change password"
+    }
+  },
   "sidebar": {
     "myTickets": "My tickets",
     "tickets": "Tickets",
@@ -153,16 +202,22 @@
   },
   "login": {
     "title": "Login",
+    "subtitle": "Sign in to your personal space",
+    "badge": "Secure Connection",
     "messages": {
       "error": {
         "authentication": "Authentication error! Please check your login credentials."
       }
     },
     "form": {
+      "usernameOrEmail": "Username or Email",
+      "usernameOrEmail.placeholder": "Enter your username or email",
       "password": "Password",
-      "password.placeholder": "Your password",
+      "password.placeholder": "Enter your password",
       "rememberme": "Keep session open",
-      "button": "Login"
+      "button": "Login",
+      "google": "Continue with Google",
+      "divider": "or"
     },
     "password": {
       "forgot": "Did you forget your password?"
@@ -212,7 +267,61 @@
       "tickets": "TICKETS",
       "open": "IN PROGRESS",
       "closed": "RESOLVED / CLOSED"
-    }
+    },
+    "welcome": {
+      "badge": "Client Space",
+      "title": "Client Dashboard",
+      "subtitle": "Welcome to your personal space. Manage your projects and track your tickets.",
+      "userRole": "Client User",
+      "logout": "Logout"
+    },
+    "stats": {
+      "totalTickets": "Total Tickets",
+      "openTickets": "Open Tickets",
+      "closedTickets": "Closed Tickets",
+      "responseTime": "Average Response Time"
+    },
+    "activities": {
+      "title": "Recent Activity",
+      "viewAll": "View all",
+      "noActivity": "No recent activity",
+      "noActivityDesc": "Activities will appear here"
+    },
+    "actions": {
+      "title": "Quick Actions",
+      "newTicket": "New Ticket",
+      "contactSupport": "Contact Support",
+      "documentation": "Documentation",
+      "history": "History"
+    },
+    "projects": {
+      "title": "Project Status",
+      "noProjects": "No ongoing projects",
+      "noProjectsDesc": "Projects will appear here",
+      "noProjectsStatus": "None",
+      "status": {
+        "active": "In Progress",
+        "testing": "Testing",
+        "completed": "Completed"
+      }
+    },
+    "tickets": {
+      "title": "Recent Tickets",
+      "viewAll": "View all",
+      "noTickets": "No recent tickets",
+      "noTicketsDesc": "Tickets will appear here",
+      "priority": {
+        "urgent": "Urgent",
+        "normal": "Normal",
+        "low": "Low"
+      }
+    },
+    "errors": {
+      "fetchError": "Error loading tickets",
+      "retry": "Retry",
+      "clear": "Close"
+    },
+    "loading": "Loading..."
   },
   "ticketsUser": {
     "title": "My tickets",
@@ -253,7 +362,15 @@
     "statusClosed": "Closed",
     "messages": "Messages to client:",
     "addMessage": "Add a message...",
-    "save": "Save"
+    "save": "Save",
+    "create": "Create ticket",
+    "selectType": "Select a type",
+    "descriptionPlaceholder": "Describe your request in detail...",
+    "sendMessage": "Send message",
+    "clientEmail": "Client email",
+    "clientEmailPlaceholder": "email@example.com (optional)",
+    "cancel": "Cancel",
+    "creating": "Creating..."
   },
   "ticketsClient": {
     "title": "My tickets",
@@ -308,7 +425,8 @@
     "home": {
       "title": "Users",
       "refreshListLabel": "Refresh list",
-      "createLabel": "Create a new user"
+      "createLabel": "Create a new user",
+      "createOrEditLabel": "Create or edit user"
     },
     "login": "Login",
     "email": "Email",
@@ -317,6 +435,13 @@
     "createdDate": "Created on",
     "lastModifiedBy": "Modified by",
     "lastModifiedDate": "Modified on",
+    "activated": "Activated",
+    "deactivated": "Deactivated",
+    "detail": {
+      "title": "User"
+    },
+    "firstName": "First name",
+    "lastName": "Last name",
     "activated": "Activated",
     "deactivated": "Deactivated"
   },
@@ -377,7 +502,17 @@
     "action": {
       "view": "View",
       "edit": "Edit",
-      "delete": "Delete"
+      "delete": "Delete",
+      "save": "Save",
+      "cancel": "Cancel",
+      "back": "Back"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "maxlength": "This field must be less than {{max}} characters.",
+      "minlength": "This field must be at least {{min}} characters.",
+      "email": "Your email is not valid.",
+      "patternLogin": "This field can only contain letters, numbers or email addresses."
     }
   },
   "error": {
@@ -385,6 +520,44 @@
     "http": {
       "403": "You don't have access rights to this page.",
       "404": "The requested page doesn't exist."
+    }
+  },
+  "contact": {
+    "title": "Contact Administration",
+    "description": "Need help? Contact our administrative team for any questions or assistance.",
+    "companyInfo": {
+      "title": "Contact Information",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "workingHours": "Working Hours"
+    },
+    "form": {
+      "title": "Send Message",
+      "subject": "Subject",
+      "subjectPlaceholder": "Briefly describe your request",
+      "priority": "Priority",
+      "message": "Message",
+      "messagePlaceholder": "Describe your request in detail...",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "clear": "Clear"
+    },
+    "priorities": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "messages": {
+      "success": "Your message has been sent successfully. We will respond as soon as possible.",
+      "error": "An error occurred while sending your message. Please try again."
+    },
+    "validation": {
+      "subjectRequired": "Subject is required",
+      "subjectMinLength": "Subject must contain at least 5 characters",
+      "messageRequired": "Message is required",
+      "messageMinLength": "Message must contain at least 20 characters"
     }
   }
 }

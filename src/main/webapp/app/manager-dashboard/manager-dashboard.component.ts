@@ -4,7 +4,7 @@ import { SidebarComponent } from '../layouts/main/sidebar.component';
 import SharedModule from '../shared/shared.module';
 
 @Component({
-  selector: 'app-manager-dashboard',
+  selector: 'jhi-manager-dashboard',
   templateUrl: './manager-dashboard.component.html',
   styleUrls: ['./manager-dashboard.component.scss'],
   standalone: true,

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, shareReplay } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, shareReplay, catchError } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { InfoResponse, ProfileInfo } from './profile-info.model';
@@ -34,6 +34,16 @@ export class ProfileService {
           }
         }
         return profileInfo;
+      }),
+      catchError(error => {
+        console.warn('Profile info not available, using defaults:', error);
+        // Retourner des valeurs par défaut en cas d'erreur
+        const defaultProfileInfo: ProfileInfo = {
+          activeProfiles: ['dev'],
+          inProduction: false,
+          openAPIEnabled: true,
+        };
+        return of(defaultProfileInfo);
       }),
       shareReplay(),
     );

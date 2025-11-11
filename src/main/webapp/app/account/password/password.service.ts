@@ -12,4 +12,8 @@ export class PasswordService {
   save(newPassword: string, currentPassword: string): Observable<{}> {
     return this.http.post(this.applicationConfigService.getEndpointFor('api/account/change-password'), { currentPassword, newPassword });
   }
+
+  setPassword(newPassword: string): Observable<{}> {
+    return this.http.post(this.applicationConfigService.getEndpointFor('api/account/set-password'), { newPassword });
+  }
 }

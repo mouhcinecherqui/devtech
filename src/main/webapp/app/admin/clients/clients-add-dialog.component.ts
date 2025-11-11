@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AppUser } from './clients.service';
 
 @Component({
-  selector: 'app-clients-add-dialog',
+  selector: 'jhi-clients-add-dialog',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './clients-add-dialog.component.html',

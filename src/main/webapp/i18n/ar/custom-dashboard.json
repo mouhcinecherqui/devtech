@@ -1,0 +1,151 @@
+{
+  "adminDashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً،",
+    "headerSubtitle": "لوحة تحكم إدارية - إدارة المنصة",
+    "role": "المدير",
+    "status": { "online": "متصل" },
+    "recentActivity": "النشاط الأخير",
+    "quickAccess": "الوصول السريع",
+    "quickAccessSubtitle": "إجراءات سريعة للإدارة",
+    "createTicket": "إنشاء تذكرة جديدة",
+    "createTicketDesc": "إنشاء تذكرة جديدة",
+    "addClient": "إضافة عميل",
+    "addClientDesc": "إدارة العملاء",
+    "managePayments": "إدارة المدفوعات",
+    "managePaymentsDesc": "إدارة المدفوعات",
+    "editSettings": "تعديل الإعدادات",
+    "editSettingsDesc": "إعدادات النظام",
+    "overview": {
+      "permissions": "الصلاحيات",
+      "sessions": "الجلسات",
+      "sessionsStatus": "نشطة"
+    },
+    "stats": {
+      "tickets": "التذاكر",
+      "open": "قيد التنفيذ",
+      "resolved": "محلولة",
+      "urgent": "عاجلة"
+    },
+    "table": {
+      "title": "آخر الطلبات",
+      "subtitle": "نظرة عامة على التذاكر",
+      "id": "الرقم",
+      "type": "النوع",
+      "description": "الوصف",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "notFound": "لم يتم العثور على تذكرة."
+    },
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "showMore": "عرض الكل ({{count}})",
+    "showLess": "عرض أقل"
+  },
+  "managerDashboard": {
+    "header": "المشرف",
+    "title": "لوحة التحكم",
+    "stats": {
+      "tickets": "التذاكر",
+      "open": "قيد التنفيذ",
+      "resolved": "محلولة",
+      "urgent": "عاجلة"
+    },
+    "table": {
+      "title": "آخر الطلبات",
+      "titleCol": "العنوان",
+      "client": "العميل",
+      "status": "الحالة",
+      "date": "التاريخ"
+    },
+    "status": {
+      "inProgress": "قيد التنفيذ",
+      "resolved": "محلولة",
+      "urgent": "عاجلة"
+    }
+  },
+  "userDashboard": {
+    "header": "المستخدم",
+    "title": "لوحة التحكم",
+    "stats": {
+      "tickets": "التذاكر",
+      "open": "قيد التنفيذ",
+      "closed": "محلولة / مغلقة"
+    },
+    "table": {
+      "title": "آخر طلباتي",
+      "id": "الرقم",
+      "type": "النوع",
+      "description": "الوصف",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "notFound": "لم يتم العثور على تذكرة."
+    },
+    "loading": "جاري التحميل...",
+    "error": "خطأ"
+  },
+  "clientDashboard": {
+    "common": {
+      "now": "الآن"
+    },
+    "welcome": {
+      "badge": "مساحة العميل",
+      "title": "لوحة تحكم العميل",
+      "subtitle": "مرحباً بك في مساحتك الخاصة. قم بإدارة مشاريعك وتابع تذاكرك."
+    },
+    "stats": {
+      "totalTickets": "إجمالي التذاكر",
+      "openTickets": "التذاكر المفتوحة",
+      "closedTickets": "التذاكر المغلقة",
+      "responseTime": "متوسط زمن الاستجابة"
+    },
+    "activities": {
+      "title": "النشاط الأخير",
+      "viewAll": "عرض الكل",
+      "noActivity": "لا يوجد نشاط حديث",
+      "noActivityDesc": "سيظهر النشاط هنا"
+    },
+    "actions": {
+      "title": "إجراءات سريعة",
+      "newTicket": "تذكرة جديدة",
+      "contactSupport": "التواصل مع الدعم",
+      "documentation": "التوثيق",
+      "history": "السجل"
+    },
+    "tickets": {
+      "title": "التذاكر الأخيرة",
+      "viewAll": "عرض الكل",
+      "view": "عرض",
+      "create": "إنشاء",
+      "noTickets": "لا توجد تذاكر حديثة",
+      "noTicketsDesc": "ستظهر التذاكر هنا",
+      "priority": {
+        "urgent": "عاجلة",
+        "normal": "عادية",
+        "low": "منخفضة"
+      }
+    },
+    "projects": {
+      "title": "حالة المشاريع",
+      "noProjects": "لا توجد مشاريع نشطة",
+      "noProjectsDesc": "ستظهر المشاريع هنا",
+      "noProjectsStatus": "لا يوجد",
+      "status": {
+        "active": "قيد التنفيذ",
+        "testing": "اختبار",
+        "completed": "مكتمل"
+      }
+    },
+    "errors": {
+      "fetchError": "حدث خطأ أثناء تحميل التذاكر",
+      "retry": "إعادة المحاولة",
+      "clear": "إغلاق"
+    },
+    "loading": "جاري التحميل..."
+  },
+  "sidebar": {
+    "myTickets": "تذاكري",
+    "managePayments": "إدارة مدفوعاتي",
+    "contactAdmin": "الاتصال بالإدارة"
+  }
+}
