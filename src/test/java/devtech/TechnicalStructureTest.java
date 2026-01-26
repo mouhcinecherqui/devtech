@@ -1,4 +1,4 @@
-package devtech;
+package devtechly;
 
 import static com.tngtech.archunit.base.DescribedPredicate.alwaysTrue;
 import static com.tngtech.archunit.core.domain.JavaClass.Predicates.belongToAnyOf;
@@ -32,7 +32,7 @@ class TechnicalStructureTest {
 
         .ignoreDependency(belongToAnyOf(DevtechApp.class), alwaysTrue())
         .ignoreDependency(alwaysTrue(), belongToAnyOf(
-            devtech.config.Constants.class,
-            devtech.config.ApplicationProperties.class
+            devtechly.config.Constants.class,
+            devtechly.config.ApplicationProperties.class
         ));
 }

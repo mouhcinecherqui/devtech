@@ -1,4 +1,4 @@
-package devtech.web.rest.errors;
+package devtechly.web.rest.errors;
 
 import static org.springframework.core.annotation.AnnotatedElementUtils.findMergedAnnotation;
 
@@ -86,11 +86,11 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     }
 
     private ProblemDetailWithCause getProblemDetailWithCause(Throwable ex) {
-        if (ex instanceof devtech.service.UsernameAlreadyUsedException) return (ProblemDetailWithCause) new LoginAlreadyUsedException()
+        if (ex instanceof devtechly.service.UsernameAlreadyUsedException) return (ProblemDetailWithCause) new LoginAlreadyUsedException()
             .getBody();
-        if (ex instanceof devtech.service.EmailAlreadyUsedException) return (ProblemDetailWithCause) new EmailAlreadyUsedException()
+        if (ex instanceof devtechly.service.EmailAlreadyUsedException) return (ProblemDetailWithCause) new EmailAlreadyUsedException()
             .getBody();
-        if (ex instanceof devtech.service.InvalidPasswordException) return (ProblemDetailWithCause) new InvalidPasswordException()
+        if (ex instanceof devtechly.service.InvalidPasswordException) return (ProblemDetailWithCause) new InvalidPasswordException()
             .getBody();
 
         if (
@@ -249,6 +249,6 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
 
     private boolean containsPackageName(String message) {
         // This list is for sure not complete
-        return StringUtils.containsAny(message, "org.", "java.", "net.", "jakarta.", "javax.", "com.", "io.", "de.", "devtech");
+        return StringUtils.containsAny(message, "org.", "java.", "net.", "jakarta.", "javax.", "com.", "io.", "de.", "devtechly");
     }
 }

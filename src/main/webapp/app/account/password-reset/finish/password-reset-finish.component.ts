@@ -10,6 +10,7 @@ import { PasswordResetFinishService } from './password-reset-finish.service';
   selector: 'jhi-password-reset-finish',
   imports: [SharedModule, RouterModule, FormsModule, ReactiveFormsModule, PasswordStrengthBarComponent],
   templateUrl: './password-reset-finish.component.html',
+  styleUrl: './password-reset-finish.component.scss',
 })
 export default class PasswordResetFinishComponent implements OnInit, AfterViewInit {
   newPassword = viewChild.required<ElementRef>('newPassword');

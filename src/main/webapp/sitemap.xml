@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://devtech.example.com/</loc>
+    <loc>https://devtechly.example.com/</loc>
   </url>
   <url>
-    <loc>https://devtech.example.com/user-dashboard</loc>
+    <loc>https://devtechly.example.com/user-dashboard</loc>
   </url>
   <url>
-    <loc>https://devtech.example.com/admin-dashboard</loc>
+    <loc>https://devtechly.example.com/admin-dashboard</loc>
   </url>
   <url>
-    <loc>https://devtech.example.com/manager-dashboard</loc>
+    <loc>https://devtechly.example.com/manager-dashboard</loc>
   </url>
   <url>
-    <loc>https://devtech.example.com/login</loc>
+    <loc>https://devtechly.example.com/login</loc>
   </url>
   <url>
-    <loc>https://devtech.example.com/app-user-register</loc>
+    <loc>https://devtechly.example.com/app-user-register</loc>
   </url>
 </urlset> 

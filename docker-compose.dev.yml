@@ -1,6 +1,6 @@
-name: devtech-dev
+name: devtechly-dev
 services:
-  devtech-app:
+  devtechly-app:
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -15,17 +15,18 @@ services:
       - '4200:4200'
     environment:
       - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      - SPRING_DATASOURCE_USERNAME=devtech
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - DB_URL=jdbc:mysql://mysql:3306/devtechly?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - DB_USER=devtechly
+      - DB_PASSWORD=root
+      # JWT_SECRET depuis .env si présent, sinon valeur par défaut dev
+      - JWT_SECRET=${JWT_SECRET:-NDMyNzk5OTM2MThlOTE3MTI5ZGY5YTQ5ZmE3ZmY3NTg0ZjE2MDZlODVjNTlmOTFkYTU4ZDI5ZDgzOGNkNjk3ODNlN2EwYjNhOTFhYTI5N2NlMTNiMDE1YWE5MjJlMmZiNDFmMWM4YTcyYjU0N2U0NjViMDQ5MjllODliNTU0YzY=}
       - JHIPSTER_SLEEP=0
     command: npm run watch
     depends_on:
       mysql:
         condition: service_healthy
     networks:
-      - devtech-network
+      - devtechly-network
   mysql:
     image: mysql:8.0.32
     volumes:
@@ -33,9 +34,9 @@ services:
       - mysql_data:/var/lib/mysql # Persiste les données MySQL
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=devtech
+      - MYSQL_USER=devtechly
       - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=devtech
+      - MYSQL_DATABASE=devtechly
     ports:
       - '127.0.0.1:3307:3306' # Port externe 3307 pour éviter les conflits avec MySQL local
     command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
@@ -46,10 +47,10 @@ services:
       retries: 10
       start_period: 10s
     networks:
-      - devtech-network
+      - devtechly-network
 
 networks:
-  devtech-network:
+  devtechly-network:
     driver: bridge
 
 volumes:

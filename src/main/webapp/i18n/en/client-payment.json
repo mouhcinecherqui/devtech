@@ -1,0 +1,135 @@
+{
+  "clientPayment": {
+    "pageTitle": "My payment methods",
+    "header": {
+      "title": "Secure Payment",
+      "subtitle": "Complete your payment safely via PayPal or direct bank transfer"
+    },
+    "alerts": {
+      "errorPrefix": "Error:",
+      "successPrefix": "Success:"
+    },
+    "sections": {
+      "amount": {
+        "title": "Payment Amount"
+      },
+      "currency": {
+        "title": "Currency"
+      },
+      "method": {
+        "title": "Payment Method"
+      },
+      "description": {
+        "title": "Description"
+      },
+      "date": {
+        "title": "Payment Date"
+      },
+      "security": {
+        "title": "Secure Payment",
+        "message": "Your payment will be processed securely. Your banking information is never stored on our servers."
+      }
+    },
+    "fields": {
+      "amount": {
+        "label": "Amount (MAD)",
+        "placeholder": "Enter the amount"
+      },
+      "currency": {
+        "label": "Currency",
+        "options": {
+          "MAD": "MAD - Moroccan Dirham",
+          "EUR": "EUR - Euro",
+          "USD": "USD - US Dollar"
+        }
+      },
+      "cardNumber": {
+        "label": "Card Number",
+        "placeholder": "1234 5678 9012 3456"
+      },
+      "expiryDate": {
+        "label": "Expiry Date",
+        "placeholder": "MM/YY"
+      },
+      "cvv": {
+        "label": "CVV",
+        "placeholder": "123"
+      },
+      "cardHolder": {
+        "label": "Cardholder Name",
+        "placeholder": "Name as it appears on the card"
+      },
+      "description": {
+        "label": "Payment Description",
+        "placeholder": "Describe the reason for this payment"
+      },
+      "date": {
+        "label": "Date"
+      }
+    },
+    "savedMethods": {
+      "title": "Saved Payment Methods",
+      "defaultBadge": "Default",
+      "useNew": "Use a new payment method",
+      "newTitle": "New payment method",
+      "newSubtitle": "Enter card information"
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "submit": "Proceed to payment",
+      "processing": "Processing...",
+      "submitPaypal": "Pay with PayPal",
+      "submitBankTransfer": "Confirm transfer request"
+    },
+    "info": {
+      "title": "Important Information",
+      "items": {
+        "realTime": "The payment will be processed in real time",
+        "confirmation": "You will receive a confirmation by email",
+        "invoice": "An invoice will be generated automatically",
+        "support": "Support available 24/7 in case of issues"
+      }
+    },
+    "methods": {
+      "bankTransfer": "Bank Transfer",
+      "bankTransferDesc": "Pay via direct bank transfer and share your receipt.",
+      "paypal": "PayPal",
+      "paypalDesc": "Use your PayPal account for an instant, secure payment."
+    },
+    "messages": {
+      "createSuccess": "Payment request created successfully. Redirecting to the payment gateway...",
+      "createSuccessBankTransfer": "Payment request recorded. Please complete the transfer and share the proof of payment.",
+      "createSuccessPaypal": "Payment request recorded. Opening PayPal to finalize your payment...",
+      "createError": "Error while creating the payment request: {{error}}",
+      "unknownError": "Unknown error"
+    },
+    "validation": {
+      "required": "This field is required",
+      "amountMin": "The minimum amount is {{min}}",
+      "amountMax": "The maximum amount is {{max}}",
+      "descriptionMax": "The description cannot exceed {{max}} characters"
+    },
+    "bankDetails": {
+      "title": "Pay by bank transfer",
+      "description": "Send the transfer to the bank account below and email us the proof to speed up validation.",
+      "accountNameLabel": "Account holder",
+      "accountName": "MOUHCINE CHERQUI",
+      "bankName": "CIH BANK",
+      "iban": "MA64 2302 7035 5923 3211 0334 0052",
+      "bic": "CIHMMAMC",
+      "referenceLabel": "Reference",
+      "referenceValue": "Add your invoice number or email in the transfer reference",
+      "note": "After your transfer, send the receipt to support@devtechly.com for a faster confirmation."
+    },
+    "paypal": {
+      "title": "Pay with PayPal",
+      "description": "You will be redirected to PayPal to confirm the payment.",
+      "steps": {
+        "instant": "Instant confirmation with your PayPal account",
+        "secure": "No card data is stored on our site",
+        "confirmation": "You will receive a PayPal receipt for your payment"
+      },
+      "note": "The amount entered above will be pre-filled on PayPal."
+    }
+  }
+}

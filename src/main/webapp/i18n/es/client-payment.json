@@ -1,0 +1,135 @@
+{
+  "clientPayment": {
+    "pageTitle": "Mis métodos de pago",
+    "header": {
+      "title": "Pago seguro",
+      "subtitle": "Realiza tu pago de forma segura vía PayPal o transferencia bancaria directa"
+    },
+    "alerts": {
+      "errorPrefix": "Error:",
+      "successPrefix": "Éxito:"
+    },
+    "sections": {
+      "amount": {
+        "title": "Importe del pago"
+      },
+      "currency": {
+        "title": "Moneda"
+      },
+      "method": {
+        "title": "Método de pago"
+      },
+      "description": {
+        "title": "Descripción"
+      },
+      "date": {
+        "title": "Fecha de pago"
+      },
+      "security": {
+        "title": "Pago seguro",
+        "message": "Tu pago se procesará de forma segura. Tu información bancaria nunca se almacena en nuestros servidores."
+      }
+    },
+    "fields": {
+      "amount": {
+        "label": "Importe (MAD)",
+        "placeholder": "Introduce el importe"
+      },
+      "currency": {
+        "label": "Moneda",
+        "options": {
+          "MAD": "MAD - Dirham marroquí",
+          "EUR": "EUR - Euro",
+          "USD": "USD - Dólar estadounidense"
+        }
+      },
+      "cardNumber": {
+        "label": "Número de tarjeta",
+        "placeholder": "1234 5678 9012 3456"
+      },
+      "expiryDate": {
+        "label": "Fecha de caducidad",
+        "placeholder": "MM/AA"
+      },
+      "cvv": {
+        "label": "CVV",
+        "placeholder": "123"
+      },
+      "cardHolder": {
+        "label": "Nombre del titular",
+        "placeholder": "Nombre tal como aparece en la tarjeta"
+      },
+      "description": {
+        "label": "Descripción del pago",
+        "placeholder": "Describe el motivo de este pago"
+      },
+      "date": {
+        "label": "Fecha"
+      }
+    },
+    "savedMethods": {
+      "title": "Métodos de pago guardados",
+      "defaultBadge": "Predeterminado",
+      "useNew": "Usar un nuevo método de pago",
+      "newTitle": "Nuevo método de pago",
+      "newSubtitle": "Introducir información de la tarjeta"
+    },
+    "actions": {
+      "cancel": "Cancelar",
+      "submit": "Proceder al pago",
+      "processing": "Procesando...",
+      "submitPaypal": "Pagar con PayPal",
+      "submitBankTransfer": "Confirmar transferencia"
+    },
+    "info": {
+      "title": "Información importante",
+      "items": {
+        "realTime": "El pago se procesará en tiempo real",
+        "confirmation": "Recibirás una confirmación por correo electrónico",
+        "invoice": "Se generará una factura automáticamente",
+        "support": "Soporte disponible 24/7 en caso de problemas"
+      }
+    },
+    "methods": {
+      "bankTransfer": "Transferencia bancaria",
+      "bankTransferDesc": "Paga mediante transferencia bancaria directa y comparte el comprobante.",
+      "paypal": "PayPal",
+      "paypalDesc": "Usa tu cuenta de PayPal para un pago instantáneo y seguro."
+    },
+    "messages": {
+      "createSuccess": "Solicitud de pago creada con éxito. Redirigiendo a la pasarela de pago...",
+      "createSuccessBankTransfer": "Solicitud registrada. Realiza la transferencia y comparte el comprobante.",
+      "createSuccessPaypal": "Solicitud registrada. Abriendo PayPal para finalizar tu pago...",
+      "createError": "Error al crear la solicitud de pago: {{error}}",
+      "unknownError": "Error desconocido"
+    },
+    "validation": {
+      "required": "Este campo es obligatorio",
+      "amountMin": "El importe mínimo es {{min}}",
+      "amountMax": "El importe máximo es {{max}}",
+      "descriptionMax": "La descripción no puede superar los {{max}} caracteres"
+    },
+    "bankDetails": {
+      "title": "Pagar por transferencia bancaria",
+      "description": "Realiza la transferencia a la cuenta siguiente y envía el comprobante por correo para acelerar la validación.",
+      "accountNameLabel": "Titular de la cuenta",
+      "accountName": "MOUHCINE CHERQUI",
+      "bankName": "CIH BANK",
+      "iban": "MA64 2302 7035 5923 3211 0334 0052",
+      "bic": "CIHMMAMC",
+      "referenceLabel": "Referencia",
+      "referenceValue": "Añade tu número de factura o correo en la referencia",
+      "note": "Tras la transferencia, envía el justificante a support@devtechly.com para una confirmación más rápida."
+    },
+    "paypal": {
+      "title": "Pagar con PayPal",
+      "description": "Serás redirigido a PayPal para confirmar el pago.",
+      "steps": {
+        "instant": "Confirmación instantánea con tu cuenta de PayPal",
+        "secure": "No se almacena ningún dato bancario en nuestro sitio",
+        "confirmation": "Recibirás un recibo de PayPal por tu pago"
+      },
+      "note": "El importe introducido arriba se precompletará en PayPal."
+    }
+  }
+}

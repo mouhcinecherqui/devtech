@@ -1,12 +1,12 @@
-package devtech.service;
+package devtechly.service;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import devtech.domain.Paiement;
-import devtech.repository.PaiementRepository;
-import devtech.service.dto.PaiementDTO;
-import devtech.service.exception.PaiementException;
+import devtechly.domain.Paiement;
+import devtechly.repository.PaiementRepository;
+import devtechly.service.dto.PaiementDTO;
+import devtechly.service.exception.PaiementException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
 /**
  * Rest layer visual models.
  */
-package devtech.web.rest.vm;
+package devtechly.web.rest.vm;

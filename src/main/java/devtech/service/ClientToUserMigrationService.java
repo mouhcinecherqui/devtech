@@ -1,11 +1,11 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.AppUser;
-import devtech.domain.Authority;
-import devtech.domain.User;
-import devtech.repository.AppUserRepository;
-import devtech.repository.AuthorityRepository;
-import devtech.repository.UserRepository;
+import devtechly.domain.AppUser;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
+import devtechly.repository.AppUserRepository;
+import devtechly.repository.AuthorityRepository;
+import devtechly.repository.UserRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;

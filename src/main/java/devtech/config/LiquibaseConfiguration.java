@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 import java.util.concurrent.Executor;
 import javax.sql.DataSource;

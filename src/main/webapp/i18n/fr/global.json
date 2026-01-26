@@ -1,6 +1,6 @@
 {
   "global": {
-    "title": "Devtech",
+    "title": "devtechly",
     "browsehappy": "Vous utilisez un <strong>ancien</strong> navigateur. Veuillez <a href=\"http://browsehappy.com/?locale=fr\">mettre à jour votre navigateur</a> pour une meilleure expérience.",
     "menu": {
       "home": "Accueil",
@@ -83,35 +83,112 @@
     "field": {
       "id": "ID"
     },
+    "cancel": "Annuler",
     "ribbon": {
       "dev": "Développement"
     },
     "item-count": "Affichage {{first}} - {{second}} de {{total}} items.",
     "home": {
-      "title": "Bienvenue chez DevTech",
-      "subtitle": "DevTech est votre partenaire de confiance pour l'innovation digitale. Nous sommes spécialisés dans la création d'applications web modernes et de plateformes e-commerce robustes avec intégration CMS. Notre mission est de vous accompagner avec les dernières technologies web et des solutions sur mesure.",
+      "badge": "Innovation digitale",
+      "title": "Bienvenue chez devtechly",
+      "subtitle": "devtechly est votre partenaire de confiance pour l'innovation digitale. Nous sommes spécialisés dans la création d'applications web modernes et de plateformes e-commerce robustes avec intégration CMS. Notre mission est de vous accompagner avec les dernières technologies web et des solutions sur mesure.",
+      "learnMore": "En savoir plus",
+      "stats": {
+        "projects": "Projets",
+        "clients": "Clients",
+        "experience": "Années d'expérience"
+      },
+      "heroCard1": {
+        "title": "Solutions sur mesure",
+        "desc": "Développement adapté à vos besoins spécifiques"
+      },
+      "heroCard2": {
+        "title": "Technologies modernes",
+        "desc": "Utilisation des dernières innovations web"
+      },
+      "heroCard3": {
+        "title": "Support continu",
+        "desc": "Accompagnement à chaque étape de votre projet"
+      },
       "servicesTitle": "Nos services",
+      "servicesSubtitle": "Des solutions web complètes pour transformer votre présence digitale",
       "service1": {
         "title": "Développement d'applications web sur mesure",
-        "desc": "Applications web évolutives, sécurisées et performantes pour tous les besoins métier."
+        "desc": "Applications web évolutives, sécurisées et performantes pour tous les besoins métier.",
+        "feature1": "Architecture scalable et modulaire",
+        "feature2": "Sécurité renforcée et conformité",
+        "feature3": "Performance optimisée"
       },
       "service2": {
         "title": "Développement de sites e-commerce",
-        "desc": "Boutiques en ligne avec intégration CMS, paiements et gestion des stocks."
+        "desc": "Boutiques en ligne avec intégration CMS, paiements et gestion des stocks.",
+        "feature1": "Intégration de passerelles de paiement",
+        "feature2": "Gestion avancée des stocks",
+        "feature3": "Interface d'administration intuitive"
       },
       "service3": {
         "title": "Systèmes de gestion de contenu (CMS)",
-        "desc": "Solutions CMS flexibles et intuitives pour une gestion facile de votre site."
+        "desc": "Solutions CMS flexibles et intuitives pour une gestion facile de votre site.",
+        "feature1": "Édition de contenu simplifiée",
+        "feature2": "Gestion multi-utilisateurs",
+        "feature3": "SEO intégré"
       },
-      "whyChooseTitle": "Pourquoi choisir DevTech ?",
-      "why1": "Équipe expérimentée de développeurs et designers web",
-      "why2": "Approche centrée client et communication transparente",
-      "why3": "Processus agile pour une livraison rapide",
-      "why4": "Technologies web de pointe et bonnes pratiques",
-      "why5": "Support complet après lancement",
+      "statsSection": {
+        "onTime": "Livraison à temps",
+        "rating": "Note moyenne",
+        "support": "Support client",
+        "availability": "Disponibilité"
+      },
+      "whyChooseBadge": "Pourquoi nous choisir",
+      "whyChooseTitle": "Pourquoi choisir devtechly ?",
+      "whyChooseSubtitle": "Des avantages qui font la différence pour votre projet",
+      "why1": {
+        "title": "Équipe expérimentée",
+        "desc": "Équipe expérimentée de développeurs et designers web",
+        "detail": "Équipe expérimentée de développeurs et designers web"
+      },
+      "why2": {
+        "title": "Approche client",
+        "desc": "Approche centrée client et communication transparente",
+        "detail": "Approche centrée client et communication transparente"
+      },
+      "why3": {
+        "title": "Livraison rapide",
+        "desc": "Processus agile pour une livraison rapide",
+        "detail": "Processus agile pour une livraison rapide"
+      },
+      "why4": {
+        "title": "Technologies de pointe",
+        "desc": "Technologies web de pointe et bonnes pratiques",
+        "detail": "Technologies web de pointe et bonnes pratiques"
+      },
+      "why5": {
+        "title": "Support complet",
+        "desc": "Support complet après lancement",
+        "detail": "Support complet après lancement"
+      },
+      "why6": {
+        "title": "Qualité garantie",
+        "desc": "Engagement envers l'excellence et la satisfaction client",
+        "detail": "Tests rigoureux et qualité de code optimale"
+      },
       "ctaTitle": "Prêt à démarrer votre projet web ?",
       "ctaDesc": "Contactez-nous pour discuter de vos besoins et obtenir une consultation gratuite !",
       "ctaBtn": "Commencer"
+    },
+    "email": {
+      "greeting": "Bonjour {{name}}",
+      "regards": "Cordialement",
+      "ticket": {
+        "updated": {
+          "title": "Mise à jour de votre ticket (ID: {{ticket.id}})",
+          "text1": "Votre ticket a été mis à jour."
+        },
+        "id": "ID du ticket:",
+        "status": "Nouveau statut:",
+        "lastMessage": "Dernier message:"
+      },
+      "viewTicket": "Voir le ticket"
     }
   },
   "entity": {

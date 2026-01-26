@@ -16,6 +16,7 @@ import UserManagementDeleteDialogComponent from '../delete/user-management-delet
 import { UserManagementRoleDialogComponent } from '../role-dialog/user-management-role-dialog.component';
 import { AutoRefreshService } from '../../../core/services/auto-refresh.service';
 import { RefreshButtonComponent } from '../../../shared/components/refresh-button/refresh-button.component';
+import { AlertService } from '../../../core/util/alert.service';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -47,6 +48,7 @@ export default class UserManagementComponent implements OnInit {
   private readonly modalService = inject(NgbModal);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly autoRefreshService = inject(AutoRefreshService);
+  private readonly alertService = inject(AlertService);
 
   ngOnInit(): void {
     this.handleNavigation();
@@ -148,7 +150,11 @@ export default class UserManagementComponent implements OnInit {
       },
       error: error => {
         console.error('Erreur lors de la mise à jour des rôles:', error);
-        alert('Erreur lors de la mise à jour des rôles');
+        this.alertService.addAlert({
+          type: 'danger',
+          message: 'Erreur lors de la mise à jour des rôles',
+          timeout: 5000,
+        });
       },
     });
   }

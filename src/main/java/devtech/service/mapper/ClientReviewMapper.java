@@ -1,7 +1,7 @@
-package devtech.service.mapper;
+package devtechly.service.mapper;
 
-import devtech.domain.ClientReview;
-import devtech.service.dto.ClientReviewDTO;
+import devtechly.domain.ClientReview;
+import devtechly.service.dto.ClientReviewDTO;
 import java.util.List;
 import org.mapstruct.*;
 

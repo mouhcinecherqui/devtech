@@ -1,4 +1,4 @@
-package devtech.web.rest.errors;
+package devtechly.web.rest.errors;
 
 import java.net.URI;
 import org.springframework.http.HttpStatus;

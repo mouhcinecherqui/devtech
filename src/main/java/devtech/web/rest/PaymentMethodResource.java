@@ -1,8 +1,8 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.PaymentMethod;
-import devtech.repository.PaymentMethodRepository;
-import devtech.security.SecurityUtils;
+import devtechly.domain.PaymentMethod;
+import devtechly.repository.PaymentMethodRepository;
+import devtechly.security.SecurityUtils;
 import java.net.URI;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class PaymentMethodResource {
         Optional<PaymentMethod> existingOpt = repository.findByIdAndUserLogin(id, login);
         if (existingOpt.isEmpty()) return ResponseEntity.notFound().build();
 
-        PaymentMethod existing = existingOpt.get();
+        PaymentMethod existing = existingOpt.orElseThrow();
         existing.setHolderName(method.getHolderName());
         existing.setBrand(method.getBrand());
         existing.setExpMonth(method.getExpMonth());
@@ -82,8 +82,9 @@ public class PaymentMethodResource {
         Optional<PaymentMethod> existingOpt = repository.findByIdAndUserLogin(id, login);
         if (existingOpt.isEmpty()) return ResponseEntity.notFound().build();
 
-        boolean wasDefault = Boolean.TRUE.equals(existingOpt.get().getIsDefault());
-        repository.delete(existingOpt.get());
+        PaymentMethod existing = existingOpt.orElseThrow();
+        boolean wasDefault = Boolean.TRUE.equals(existing.getIsDefault());
+        repository.delete(existing);
 
         // If deleted default, set another as default if exists
         if (wasDefault) {
@@ -106,7 +107,7 @@ public class PaymentMethodResource {
         if (methodOpt.isEmpty()) return ResponseEntity.notFound().build();
 
         repository.findByUserLoginAndIsDefaultTrue(login).forEach(m -> m.setIsDefault(false));
-        PaymentMethod m = methodOpt.get();
+        PaymentMethod m = methodOpt.orElseThrow();
         m.setIsDefault(true);
         return ResponseEntity.noContent().build();
     }

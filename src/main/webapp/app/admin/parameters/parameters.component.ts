@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { AlertService } from 'app/core/util/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 // Types de paramètres utilisés pour les sections
 const TICKET_STATUS = 'ticket-status';
@@ -28,6 +30,7 @@ export class ParametersComponent implements OnInit, OnDestroy {
   private readonly translateService = inject(TranslateService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly autoRefreshService = inject(AutoRefreshService);
+  private readonly modalService = inject(NgbModal);
   private readonly destroy$ = new Subject<void>();
 
   // États de chargement
@@ -209,34 +212,41 @@ export class ParametersComponent implements OnInit, OnDestroy {
     }
 
     const confirmMessage = this.translateService.instant('parameters.confirm.delete', { key: param.key });
-    if (!confirm(confirmMessage)) {
-      return;
-    }
+    const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'md' });
+    modalRef.componentInstance.title = this.translateService.instant('entity.delete.title');
+    modalRef.componentInstance.message = confirmMessage;
 
-    this.deleting = true;
-    this.parametersService
-      .delete(param.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.deleting = false;
-          this.loadAll();
-          this.alertService.addAlert({
-            type: 'success',
-            message: this.translateService.instant('parameters.messages.deleted', { key: param.key }),
-            timeout: 3000,
-          });
-        },
-        error: error => {
-          console.error('Erreur lors de la suppression:', error);
-          this.deleting = false;
-          this.alertService.addAlert({
-            type: 'danger',
-            message: this.translateService.instant('parameters.errors.deleteFailed'),
-            timeout: 5000,
-          });
-        },
-      });
+    modalRef.result.then(
+      (confirmed: boolean) => {
+        if (confirmed && param.id != null) {
+          this.deleting = true;
+          this.parametersService
+            .delete(param.id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+              next: () => {
+                this.deleting = false;
+                this.loadAll();
+                this.alertService.addAlert({
+                  type: 'success',
+                  message: this.translateService.instant('parameters.messages.deleted', { key: param.key }),
+                  timeout: 3000,
+                });
+              },
+              error: error => {
+                console.error('Erreur lors de la suppression:', error);
+                this.deleting = false;
+                this.alertService.addAlert({
+                  type: 'danger',
+                  message: this.translateService.instant('parameters.errors.deleteFailed'),
+                  timeout: 5000,
+                });
+              },
+            });
+        }
+      },
+      () => {},
+    );
   }
 
   cancel(): void {

@@ -7,7 +7,7 @@ cmi:
   # Clé secrète du magasin (à remplacer par votre vraie clé)
   store:
     key: 'your-secret-store-key-here'
-    name: 'DevTech Store'
+    name: 'devtechly Store'
 
   # URLs de la passerelle CMI
   gateway:

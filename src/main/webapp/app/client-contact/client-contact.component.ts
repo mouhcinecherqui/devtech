@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { AlertService } from 'app/core/util/alert.service';
 
 @Component({
@@ -12,16 +13,17 @@ import { AlertService } from 'app/core/util/alert.service';
   templateUrl: './client-contact.component.html',
   styleUrls: ['./client-contact.component.scss'],
 })
-export class ClientContactComponent implements OnInit {
+export class ClientContactComponent implements OnInit, OnDestroy {
   contactForm: FormGroup;
   isSubmitting = false;
+  private langChangeSubscription?: Subscription;
 
   // Informations de contact de l'entreprise
   companyInfo = {
-    name: 'DevTech',
-    phone: '+33 1 23 45 67 89',
-    email: 'contact@devtech.com',
-    workingHours: 'Lundi - Vendredi: 9h00 - 18h00',
+    name: '',
+    phone: '',
+    email: '',
+    workingHours: '',
   };
 
   constructor(
@@ -38,7 +40,12 @@ export class ClientContactComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Component initialization logic if needed
+    this.updateCompanyInfoTranslations();
+    this.langChangeSubscription = this.translateService.onLangChange.subscribe(() => this.updateCompanyInfoTranslations());
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSubscription?.unsubscribe();
   }
 
   onSubmit(): void {
@@ -96,5 +103,14 @@ export class ClientContactComponent implements OnInit {
       const control = this.contactForm.get(key);
       control?.markAsTouched();
     });
+  }
+
+  private updateCompanyInfoTranslations(): void {
+    this.companyInfo = {
+      name: this.translateService.instant('contact.companyInfo.name'),
+      phone: this.translateService.instant('contact.companyInfo.phoneValue'),
+      email: this.translateService.instant('contact.companyInfo.emailValue'),
+      workingHours: this.translateService.instant('contact.companyInfo.workingHoursValue'),
+    };
   }
 }

@@ -1,7 +1,7 @@
 {
   "home": {
-    "title": "Bienvenue chez DevTech",
-    "subtitle": "DevTech est votre partenaire de confiance pour l'innovation digitale. Nous sommes spécialisés dans la création d'applications web modernes et de plateformes e-commerce robustes avec intégration CMS. Notre mission est de vous accompagner avec les dernières technologies web et des solutions sur mesure.",
+    "title": "Bienvenue chez devtechly",
+    "subtitle": "devtechly est votre partenaire de confiance pour l'innovation digitale. Nous sommes spécialisés dans la création d'applications web modernes et de plateformes e-commerce robustes avec intégration CMS. Notre mission est de vous accompagner avec les dernières technologies web et des solutions sur mesure.",
     "servicesTitle": "Nos services",
     "service1": {
       "title": "Développement d'applications web sur mesure",
@@ -15,7 +15,7 @@
       "title": "Systèmes de gestion de contenu (CMS)",
       "desc": "Solutions CMS flexibles et intuitives pour une gestion facile de votre site."
     },
-    "whyChooseTitle": "Pourquoi choisir DevTech ?",
+    "whyChooseTitle": "Pourquoi choisir devtechly ?",
     "why1": "Équipe expérimentée de développeurs et designers web",
     "why2": "Approche centrée client et communication transparente",
     "why3": "Processus agile pour une livraison rapide",

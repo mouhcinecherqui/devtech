@@ -1,8 +1,8 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.Paiement;
-import devtech.repository.PaiementRepository;
-import devtech.service.dto.PaiementDTO;
+import devtechly.domain.Paiement;
+import devtechly.repository.PaiementRepository;
+import devtechly.service.dto.PaiementDTO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.time.LocalDate;
@@ -21,14 +21,27 @@ public class CmiPaymentService {
 
     private static final Logger log = LoggerFactory.getLogger(CmiPaymentService.class);
 
-    // Credentials de test CMI officiels
-    private String merchantId = "000000000000001";
-    private String storeKey = "TEST123456789";
-    private String storeName = "DevTech Store";
-    private String gatewayUrl = "https://testpayment.cmi.co.ma/fim/est3Dgate";
-    private String callbackUrl = "http://localhost:8080/api/paiements/cmi/callback";
-    private String okUrl = "http://localhost:3000/payment-result";
-    private String failUrl = "http://localhost:3000/payment-result";
+    // Credentials CMI - chargés depuis la configuration
+    @Value("${cmi.merchant.id:000000000000001}")
+    private String merchantId;
+
+    @Value("${cmi.store.key:TEST123456789}")
+    private String storeKey;
+
+    @Value("${cmi.store.name:devtechly Store}")
+    private String storeName;
+
+    @Value("${cmi.gateway.url:https://testpayment.cmi.co.ma/fim/est3Dgate}")
+    private String gatewayUrl;
+
+    @Value("${cmi.callback.url:http://localhost:8080/api/paiements/cmi-callback}")
+    private String callbackUrl;
+
+    @Value("${cmi.ok.url:http://localhost:3000/payment-success}")
+    private String okUrl;
+
+    @Value("${cmi.fail.url:http://localhost:3000/payment-failed}")
+    private String failUrl;
 
     private final PaiementRepository paiementRepository;
 
@@ -122,7 +135,7 @@ public class CmiPaymentService {
             params.put("failUrl", failUrl);
             params.put("rnd", generateRandomString());
             params.put("lang", "fr");
-            params.put("email", paiementDTO.user + "@devtech.com");
+            params.put("email", paiementDTO.user + "@devtechly.com");
             params.put("tel", "");
             params.put("BillToName", paiementDTO.user);
             params.put("BillToStreet1", "");
@@ -134,7 +147,7 @@ public class CmiPaymentService {
             params.put("ShipToCity", "");
             params.put("ShipToCountry", "MA");
             params.put("ShipToPostalCode", "");
-            params.put("description", paiementDTO.description != null ? paiementDTO.description : "Paiement DevTech");
+            params.put("description", paiementDTO.description != null ? paiementDTO.description : "Paiement devtechly");
 
             // Générer le hash
             String hash = generateHash(params);

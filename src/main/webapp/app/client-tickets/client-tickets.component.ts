@@ -56,8 +56,8 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   defaultType = 'Support';
   defaultPriority = 'Normal';
   maxTicketsPerUser = 10;
-  supportEmail = 'support@devtech.com';
-  companyName = 'DevTech';
+  supportEmail = 'support@devtechly.com';
+  companyName = 'devtechly';
 
   // États de chargement
   loadingParameters = signal(false);
@@ -143,13 +143,13 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
     if (file) {
       // Validate file type
       if (!file.type.startsWith('image/')) {
-        this.error.set('Veuillez sélectionner une image valide');
+        this.error.set(this.translateService.instant('ticketsClient.messages.invalidImage'));
         return;
       }
 
       // Validate file size (5MB max)
       if (file.size > 5 * 1024 * 1024) {
-        this.error.set("L'image ne doit pas dépasser 5MB");
+        this.error.set(this.translateService.instant('ticketsClient.messages.imageTooLarge'));
         return;
       }
 
@@ -197,7 +197,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
 
   submitDevis(): void {
     if (!this.selectedTicketForDevis || this.devisAmount() <= 0) {
-      this.showErrorMessage('Veuillez saisir un montant valide pour le devis.');
+      this.showErrorMessage(this.translateService.instant('ticketsClient.messages.devisInvalid'));
       return;
     }
 
@@ -210,12 +210,12 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
 
     this.http.post('/api/tickets/devis', devisData).subscribe({
       next: () => {
-        this.showSuccessMessage('Devis envoyé avec succès !');
+        this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.devisSuccess'));
         this.closeDevisModal();
         this.fetchTickets();
       },
       error: () => {
-        this.showErrorMessage("Erreur lors de l'envoi du devis.");
+        this.showErrorMessage(this.translateService.instant('ticketsClient.messages.devisError'));
       },
     });
   }
@@ -235,11 +235,11 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   validatePayment(ticketId: number): void {
     this.http.put(`/api/tickets/${ticketId}/validate-payment`, {}).subscribe({
       next: () => {
-        this.showSuccessMessage('Paiement validé avec succès !');
+        this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.paymentSuccess'));
         this.fetchTickets();
       },
       error: () => {
-        this.showErrorMessage('Erreur lors de la validation du paiement.');
+        this.showErrorMessage(this.translateService.instant('ticketsClient.messages.paymentError'));
       },
     });
   }
@@ -259,11 +259,11 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   closeTicket(ticketId: number): void {
     this.http.put(`/api/tickets/${ticketId}/close`, {}).subscribe({
       next: () => {
-        this.showSuccessMessage('Ticket fermé avec succès !');
+        this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.closeSuccess'));
         this.fetchTickets();
       },
       error: () => {
-        this.showErrorMessage('Erreur lors de la fermeture du ticket.');
+        this.showErrorMessage(this.translateService.instant('ticketsClient.messages.closeError'));
       },
     });
   }
@@ -271,30 +271,48 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   getTicketTypeTranslation(type: string | undefined): string {
     if (!type) return '';
 
-    const typeMap: Record<string, string> = {
-      Bug: 'Bug',
-      Demande: 'Demande',
-      Support: 'Support',
-      Autre: 'Autre',
-    };
-
-    return typeMap[type] ?? type;
+    const translationKey = `ticketsClient.types.${type.toLowerCase()}`;
+    const translated = this.translateService.instant(translationKey);
+    return translated === translationKey ? type : translated;
   }
 
   getTicketStatusTranslation(status: string | undefined): string {
     if (!status) return '';
 
+    // Normaliser le statut pour gérer les différentes variantes de casse
+    const normalizedStatus = status.trim();
+
     const statusMap: Record<string, string> = {
       Nouveau: 'ticketsClient.status.nouveau',
       'En cours': 'ticketsClient.status.enCours',
       Résolu: 'ticketsClient.status.resolu',
-      'En attente de paiement': 'En attente de paiement',
+      'En attente de paiement': 'ticketsClient.status.enAttentePaiement',
       'Paiement validé': 'ticketsClient.status.paiementValide',
       Fermé: 'ticketsClient.status.ferme',
-      Urgent: 'Urgent',
+      Urgent: 'ticketsClient.status.urgent',
+      'DEVIS VALIDÉ': 'ticketsClient.status.devisValide',
+      'Devis validé': 'ticketsClient.status.devisValide',
+      'DEVIS VALIDE': 'ticketsClient.status.devisValide',
+      'Devis Validé': 'ticketsClient.status.devisValide',
     };
 
-    const translationKey = statusMap[status] ?? status;
+    // Chercher d'abord la correspondance exacte
+    let translationKey = statusMap[normalizedStatus];
+
+    // Si pas de correspondance exacte, chercher de manière insensible à la casse
+    if (!translationKey) {
+      const upperStatus = normalizedStatus
+        .toUpperCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+      if (upperStatus === 'DEVIS VALIDE' || (upperStatus.includes('DEVIS') && upperStatus.includes('VALID'))) {
+        translationKey = 'ticketsClient.status.devisValide';
+      } else {
+        // Pour les autres statuts, utiliser la valeur originale
+        translationKey = normalizedStatus;
+      }
+    }
+
     return this.translateService.instant(translationKey);
   }
 
@@ -311,6 +329,14 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   getPriorityLabel(priorityKey: string): string {
     const priority = this.ticketPriorities.find(p => p.key === priorityKey);
     return priority?.value ?? priorityKey;
+  }
+
+  getAdminMessagesLabel(count: number): string {
+    const messageCount = count || 0;
+    if (messageCount <= 1) {
+      return this.translateService.instant('ticketsClient.adminMessages.singular', { count: messageCount });
+    }
+    return this.translateService.instant('ticketsClient.adminMessages.plural', { count: messageCount });
   }
 
   getStatusColor(statusKey: string): string {
@@ -367,7 +393,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
         this.loading.set(false);
       },
       error: () => {
-        this.error.set('Erreur lors du chargement des tickets');
+        this.error.set(this.translateService.instant('ticketsClient.messages.loadTicketsError'));
         this.loading.set(false);
         this.clearErrorAfterDelay();
       },
@@ -426,11 +452,11 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
             this.closeModal();
             this.loading.set(false);
             this.uploadProgress.set(100);
-            this.showSuccessMessage('Ticket créé avec succès !');
+            this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.createSuccess'));
           }
         },
         error: () => {
-          this.error.set('Erreur lors de la création du ticket');
+          this.error.set(this.translateService.instant('ticketsClient.messages.createError'));
           this.loading.set(false);
           this.uploadProgress.set(0);
           this.clearErrorAfterDelay();
@@ -449,7 +475,10 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
           this.ticketStatuses = statuses;
         },
         error: (error: any) => {
-          this.error.set(`Erreur lors du chargement des statuts: ${error.message || 'Erreur inconnue'}`);
+          const message = this.translateService.instant('ticketsClient.messages.loadStatusesError', {
+            error: error.message || this.translateService.instant('ticketsClient.messages.unknownError'),
+          });
+          this.error.set(message);
         },
       });
 
@@ -461,7 +490,10 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
           this.ticketTypesParams = types;
         },
         error: (error: any) => {
-          this.error.set(`Erreur lors du chargement des types: ${error.message || 'Erreur inconnue'}`);
+          const message = this.translateService.instant('ticketsClient.messages.loadTypesError', {
+            error: error.message || this.translateService.instant('ticketsClient.messages.unknownError'),
+          });
+          this.error.set(message);
         },
       });
 
@@ -473,7 +505,10 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
           this.ticketPriorities = priorities;
         },
         error: (error: any) => {
-          this.error.set(`Erreur lors du chargement des priorités: ${error.message || 'Erreur inconnue'}`);
+          const message = this.translateService.instant('ticketsClient.messages.loadPrioritiesError', {
+            error: error.message || this.translateService.instant('ticketsClient.messages.unknownError'),
+          });
+          this.error.set(message);
         },
       });
 

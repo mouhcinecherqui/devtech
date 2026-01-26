@@ -1,0 +1,44 @@
+{
+  "contact": {
+    "title": "Contact Administration",
+    "description": "Need help? Contact our administrative team for any questions or assistance.",
+    "companyInfo": {
+      "title": "Contact Information",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "workingHours": "Working Hours",
+      "name": "devtechly",
+      "phoneValue": "+33 1 23 45 67 89",
+      "emailValue": "contact@devtechly.com",
+      "workingHoursValue": "Monday - Friday: 9:00 AM - 6:00 PM"
+    },
+    "form": {
+      "title": "Send Message",
+      "subject": "Subject",
+      "subjectPlaceholder": "Briefly describe your request",
+      "priority": "Priority",
+      "message": "Message",
+      "messagePlaceholder": "Describe your request in detail...",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "clear": "Clear"
+    },
+    "priorities": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "messages": {
+      "success": "Your message has been sent successfully. We will respond as soon as possible.",
+      "error": "An error occurred while sending your message. Please try again."
+    },
+    "validation": {
+      "subjectRequired": "Subject is required",
+      "subjectMinLength": "Subject must contain at least 5 characters",
+      "messageRequired": "Message is required",
+      "messageMinLength": "Message must contain at least 20 characters"
+    }
+  }
+}

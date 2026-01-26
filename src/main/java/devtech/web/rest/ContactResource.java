@@ -1,11 +1,13 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.service.MailService;
-import devtech.service.dto.ContactRequestDTO;
-import devtech.web.rest.errors.BadRequestAlertException;
+import devtechly.security.SecurityUtils;
+import devtechly.service.MailService;
+import devtechly.service.dto.ContactRequestDTO;
+import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 /**
  * REST controller for managing contact requests from clients.
@@ -30,9 +34,11 @@ public class ContactResource {
     private String adminEmail;
 
     private final MailService mailService;
+    private final SpringTemplateEngine templateEngine;
 
-    public ContactResource(MailService mailService) {
+    public ContactResource(MailService mailService, SpringTemplateEngine templateEngine) {
         this.mailService = mailService;
+        this.templateEngine = templateEngine;
     }
 
     /**
@@ -55,7 +61,12 @@ public class ContactResource {
                 contactRequest.getSubject()
             );
 
-            String content = buildEmailContent(contactRequest);
+            // Get current authenticated user details
+            String userLogin = SecurityUtils.getCurrentUserLogin().orElse("unknown");
+            String userEmail = mailService.getLoggedUserEmail(userLogin);
+
+            // Build email content using Thymeleaf template
+            String content = buildEmailContentFromTemplate(contactRequest, userLogin, userEmail);
 
             // Send email to admin
             mailService.sendEmail(adminEmail, subject, content, false, true);
@@ -75,32 +86,61 @@ public class ContactResource {
     }
 
     /**
-     * Build the email content for the contact request.
+     * Build the email content for the contact request using Thymeleaf template.
      */
-    private String buildEmailContent(ContactRequestDTO contactRequest) {
-        StringBuilder content = new StringBuilder();
-        content.append("<html><body>");
-        content.append("<h2>Nouvelle demande de contact client</h2>");
-        content.append("<div style='background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin: 20px 0;'>");
+    private String buildEmailContentFromTemplate(ContactRequestDTO contactRequest, String clientLogin, String clientEmail) {
+        Locale locale = Locale.FRENCH;
+        Context context = new Context(locale);
+        context.setVariable("contactRequest", contactRequest);
+        context.setVariable("clientLogin", clientLogin);
+        context.setVariable("clientEmail", clientEmail);
+        return templateEngine.process("mail/contactAdminEmail", context);
+    }
 
-        content.append("<h3>Informations de la demande</h3>");
-        content.append("<p><strong>Priorité:</strong> ").append(contactRequest.getPriority()).append("</p>");
-        content.append("<p><strong>Sujet:</strong> ").append(contactRequest.getSubject()).append("</p>");
-        content.append("<p><strong>Date:</strong> ").append(contactRequest.getTimestamp()).append("</p>");
+    /**
+     * {@code POST  /contact/test-email} : Test email sending (Admin only).
+     * This endpoint is for testing SMTP configuration.
+     *
+     * @param email the email address to send test email to.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and confirmation message.
+     */
+    @PostMapping("/test-email")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')")
+    public ResponseEntity<Map<String, String>> testEmail(@RequestParam(required = false) String email) {
+        LOG.debug("REST request to test email sending");
 
-        content.append("<h3>Message</h3>");
-        content.append("<div style='background-color: white; padding: 15px; border-left: 4px solid #007bff;'>");
-        content.append("<p>").append(contactRequest.getMessage().replace("\n", "<br>")).append("</p>");
-        content.append("</div>");
+        try {
+            String testEmail = email != null && !email.isEmpty() ? email : adminEmail;
 
-        content.append("<hr style='margin: 20px 0;'>");
-        content.append("<p style='color: #6c757d; font-size: 0.9em;'>");
-        content.append("Ce message a été envoyé depuis l'interface client de ").append(applicationName);
-        content.append("</p>");
+            String subject = "Test Email - Configuration SMTP DevTechly";
+            String content =
+                "<html><body>" +
+                "<h2>Test d'envoi d'email</h2>" +
+                "<p>Ceci est un email de test pour vérifier la configuration SMTP Gmail.</p>" +
+                "<p><strong>Date:</strong> " +
+                LocalDateTime.now() +
+                "</p>" +
+                "<p><strong>Expéditeur:</strong> contact.devtechly@gmail.com</p>" +
+                "<p>Si vous recevez cet email, la configuration SMTP fonctionne correctement !</p>" +
+                "<hr>" +
+                "<p style='color: #6c757d; font-size: 0.9em;'>DevTechly - Test Email</p>" +
+                "</body></html>";
 
-        content.append("</div>");
-        content.append("</body></html>");
+            mailService.sendEmail(testEmail, subject, content, false, true);
 
-        return content.toString();
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Email de test envoyé avec succès à " + testEmail);
+            response.put("timestamp", LocalDateTime.now().toString());
+            response.put("status", "success");
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            LOG.error("Error sending test email", e);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Erreur lors de l'envoi de l'email de test: " + e.getMessage());
+            response.put("timestamp", LocalDateTime.now().toString());
+            response.put("status", "error");
+            return ResponseEntity.status(500).body(response);
+        }
     }
 }

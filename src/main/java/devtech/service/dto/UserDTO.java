@@ -1,6 +1,6 @@
-package devtech.service.dto;
+package devtechly.service.dto;
 
-import devtech.domain.User;
+import devtechly.domain.User;
 import java.io.Serializable;
 import java.util.Objects;
 

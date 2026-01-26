@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "title": "Perfil del usuario [<strong>{{username}}</strong>]",
+    "titlePrefix": "Perfil de",
+    "form": {
+      "firstname": "Nombre",
+      "firstname.placeholder": "Tu nombre",
+      "lastname": "Apellido",
+      "lastname.placeholder": "Tu apellido",
+      "phone": "Teléfono",
+      "phone.placeholder": "Tu número de teléfono",
+      "language": "Idioma",
+      "button": "Guardar",
+      "changePassword": "Cambiar contraseña"
+    },
+    "oauth": {
+      "googleAccount": "Cuenta de Google:",
+      "googleAccountMessage": "Has iniciado sesión a través de Google. Puedes establecer una contraseña para tu cuenta para poder iniciar sesión con tus credenciales tradicionales."
+    },
+    "messages": {
+      "error": {
+        "fail": "<strong>¡Ha ocurrido un error!</strong> Tu perfil no se ha guardado.",
+        "emailexists": "<strong>¡Este correo ya está en uso!</strong> Por favor elige otro."
+      },
+      "success": "<strong>¡Tu perfil ha sido guardado!</strong>",
+      "validate": {
+        "firstname": {
+          "required": "Tu nombre es obligatorio.",
+          "minlength": "Tu nombre debe tener al menos 1 carácter.",
+          "maxlength": "Tu nombre no puede tener más de 50 caracteres."
+        },
+        "lastname": {
+          "required": "Tu apellido es obligatorio.",
+          "minlength": "Tu apellido debe tener al menos 1 carácter.",
+          "maxlength": "Tu apellido no puede tener más de 50 caracteres."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "global": {
+    "title": "devtechly",
+    "browsehappy": "Está usando un navegador <strong>desactualizado</strong>. Por favor <a href=\"http://browsehappy.com/?locale=es\">actualice su navegador</a> para mejorar su experiencia.",
+    "menu": {
+      "home": "Inicio",
+      "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "entities": {
+        "main": "Entidades",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "adminAuthority": "Authority"
+      },
+      "account": {
+        "main": "Cuenta",
+        "settings": "Perfil",
+        "password": "Contraseña",
+        "sessions": "Sesiones",
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "register": "Registrarse"
+      },
+      "admin": {
+        "main": "Administración",
+        "userManagement": "Gestión de usuarios",
+        "tracker": "Seguimiento de usuarios",
+        "metrics": "Métricas",
+        "health": "Salud",
+        "configuration": "Configuración",
+        "logs": "Logs",
+        "apidocs": "API",
+        "database": "Base de datos",
+        "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+      },
+      "language": "Idioma"
+    },
+    "form": {
+      "username.label": "Nombre de usuario",
+      "username.placeholder": "Su nombre de usuario",
+      "currentpassword.label": "Contraseña actual",
+      "currentpassword.placeholder": "Contraseña actual",
+      "newpassword.label": "Nueva contraseña",
+      "newpassword.placeholder": "Nueva contraseña",
+      "confirmpassword.label": "Confirmar nueva contraseña",
+      "confirmpassword.placeholder": "Confirmar nueva contraseña",
+      "email.label": "Correo electrónico",
+      "email.placeholder": "Su correo electrónico"
+    },
+    "messages": {
+      "info": {
+        "authenticated": {
+          "prefix": "Si desea ",
+          "link": "iniciar sesión",
+          "suffix": ", puede usar las cuentas por defecto:<br/>- Administrador (nombre de usuario=\"admin\" y contraseña=\"admin\") <br/>- Usuario (nombre de usuario=\"user\" y contraseña=\"user\")."
+        },
+        "register": {
+          "noaccount": "¿Aún no tiene una cuenta?",
+          "link": "Registrar una nueva cuenta"
+        }
+      },
+      "error": {
+        "dontmatch": "¡La contraseña y su confirmación no coinciden!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "Su contraseña es obligatoria.",
+          "minlength": "Su contraseña debe tener al menos 4 caracteres.",
+          "maxlength": "Su contraseña no puede tener más de 50 caracteres.",
+          "strength": "Robustez de la contraseña:"
+        },
+        "confirmpassword": {
+          "required": "Su confirmación de contraseña es obligatoria.",
+          "minlength": "Su confirmación de contraseña debe tener al menos 4 caracteres.",
+          "maxlength": "Su confirmación de contraseña no puede tener más de 50 caracteres."
+        },
+        "email": {
+          "required": "Su correo electrónico es obligatorio.",
+          "minlength": "Su correo electrónico debe tener al menos 5 caracteres.",
+          "maxlength": "Su correo electrónico no puede tener más de 50 caracteres.",
+          "invalid": "Su correo electrónico no es válido."
+        }
+      }
+    },
+    "field": {
+      "id": "ID"
+    },
+    "cancel": "Cancelar",
+    "ribbon": {
+      "dev": "Desarrollo"
+    },
+    "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
+    "home": {
+      "badge": "Innovación digital",
+      "title": "Bienvenido a devtechly",
+      "subtitle": "devtechly es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
+      "learnMore": "Saber más",
+      "stats": {
+        "projects": "Proyectos",
+        "clients": "Clientes",
+        "experience": "Años de experiencia"
+      },
+      "heroCard1": {
+        "title": "Soluciones a medida",
+        "desc": "Desarrollo adaptado a sus necesidades específicas"
+      },
+      "heroCard2": {
+        "title": "Tecnologías modernas",
+        "desc": "Uso de las últimas innovaciones web"
+      },
+      "heroCard3": {
+        "title": "Soporte continuo",
+        "desc": "Acompañamiento en cada etapa de su proyecto"
+      },
+      "servicesTitle": "Nuestros servicios",
+      "servicesSubtitle": "Soluciones web completas para transformar su presencia digital",
+      "service1": {
+        "title": "Desarrollo de aplicaciones web a medida",
+        "desc": "Aplicaciones web escalables, seguras y de alto rendimiento para cualquier necesidad empresarial.",
+        "feature1": "Arquitectura escalable y modular",
+        "feature2": "Seguridad mejorada y cumplimiento",
+        "feature3": "Rendimiento optimizado"
+      },
+      "service2": {
+        "title": "Desarrollo de sitios web de comercio electrónico",
+        "desc": "Tiendas online con integración CMS, pasarelas de pago y gestión de inventario.",
+        "feature1": "Integración de pasarelas de pago",
+        "feature2": "Gestión avanzada de inventario",
+        "feature3": "Interfaz de administración intuitiva"
+      },
+      "service3": {
+        "title": "Sistemas de gestión de contenidos (CMS)",
+        "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web.",
+        "feature1": "Edición de contenido simplificada",
+        "feature2": "Gestión multi-usuario",
+        "feature3": "SEO integrado"
+      },
+      "statsSection": {
+        "onTime": "Entrega a tiempo",
+        "rating": "Calificación promedio",
+        "support": "Soporte al cliente",
+        "availability": "Disponibilidad"
+      },
+      "whyChooseBadge": "Por qué elegirnos",
+      "whyChooseTitle": "¿Por qué elegir devtechly?",
+      "whyChooseSubtitle": "Ventajas que marcan la diferencia para su proyecto",
+      "why1": {
+        "title": "Equipo experimentado",
+        "desc": "Equipo experimentado de desarrolladores y diseñadores web",
+        "detail": "Equipo experimentado de desarrolladores y diseñadores web"
+      },
+      "why2": {
+        "title": "Enfoque cliente",
+        "desc": "Enfoque centrado en el cliente y comunicación transparente",
+        "detail": "Enfoque centrado en el cliente y comunicación transparente"
+      },
+      "why3": {
+        "title": "Entrega rápida",
+        "desc": "Proceso ágil de desarrollo para una entrega más rápida",
+        "detail": "Proceso ágil de desarrollo para una entrega más rápida"
+      },
+      "why4": {
+        "title": "Tecnologías de vanguardia",
+        "desc": "Últimas tecnologías web y mejores prácticas",
+        "detail": "Últimas tecnologías web y mejores prácticas"
+      },
+      "why5": {
+        "title": "Soporte completo",
+        "desc": "Soporte integral después del lanzamiento",
+        "detail": "Soporte integral después del lanzamiento"
+      },
+      "why6": {
+        "title": "Calidad garantizada",
+        "desc": "Compromiso con la excelencia y la satisfacción del cliente",
+        "detail": "Pruebas rigurosas y calidad de código óptima"
+      },
+      "ctaTitle": "¿Listo para comenzar su proyecto web?",
+      "ctaDesc": "¡Contáctenos hoy para hablar de sus necesidades y obtener una consulta gratuita!",
+      "ctaBtn": "Comenzar"
+    },
+    "email": {
+      "greeting": "Hola {{name}}",
+      "regards": "Saludos cordiales",
+      "ticket": {
+        "updated": {
+          "title": "Su ticket ha sido actualizado (ID: {{ticket.id}})",
+          "text1": "Su ticket ha sido actualizado."
+        },
+        "id": "ID del ticket:",
+        "status": "Nuevo estado:",
+        "lastMessage": "Último mensaje:"
+      },
+      "viewTicket": "Ver Ticket"
+    }
+  },
+  "entity": {
+    "action": {
+      "addblob": "Agregar blob",
+      "addimage": "Agregar imagen",
+      "back": "Atrás",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "open": "Abrir",
+      "save": "Guardar",
+      "view": "Ver",
+      "show": "Mostrar {{otherEntity}}"
+    },
+    "detail": {
+      "field": "Campo",
+      "value": "Valor"
+    },
+    "delete": {
+      "title": "Confirmar operación de eliminación"
+    },
+    "validation": {
+      "required": "Este campo es obligatorio.",
+      "minlength": "Este campo debe tener al menos {{min}} caracteres.",
+      "maxlength": "Este campo no puede tener más de {{max}} caracteres.",
+      "min": "Este campo debe ser mayor que {{min}}.",
+      "max": "Este campo debe ser menor que {{max}}.",
+      "minbytes": "Este campo debe ser mayor que {{min}} bytes.",
+      "maxbytes": "Este campo debe ser menor que {{max}} bytes.",
+      "pattern": "Este campo debe seguir el patrón {{pattern}}.",
+      "number": "Este campo debe ser un número.",
+      "datetimelocal": "Este campo debe ser una fecha y hora.",
+      "patternLogin": "Este campo solo puede contener letras, dígitos y direcciones de correo electrónico."
+    },
+    "filters": {
+      "set": "Se han establecido los siguientes filtros",
+      "clear": "Limpiar filtro",
+      "clearAll": "Limpiar todos los filtros"
+    }
+  },
+  "error": {
+    "internalServerError": "Error interno del servidor",
+    "server.not.reachable": "Servidor no accesible",
+    "url.not.found": "No encontrado",
+    "NotNull": "¡Este campo no puede estar vacío!",
+    "Size": "¡Este campo no cumple con los requisitos mínimos y máximos!",
+    "userexists": "¡El nombre de usuario ya está en uso!",
+    "emailexists": "¡El correo electrónico ya está en uso!",
+    "idexists": "Un nuevo {{entityName}} no puede tener ya un ID",
+    "idnull": "ID inválido",
+    "idinvalid": "ID inválido",
+    "idnotfound": "No se puede encontrar el ID",
+    "file": {
+      "could.not.extract": "No se pudo extraer el archivo",
+      "not.image": "Se esperaba que el archivo fuera una imagen y se encontró que era \"{{ fileType }}\""
+    }
+  },
+  "footer": "Este es su pie de página",
+  "navbar": {
+    "home": "Inicio",
+    "userDashboard": "Panel de usuario",
+    "adminDashboard": "Panel de admin",
+    "managerDashboard": "Panel de manager",
+    "clientDashboard": "Panel de cliente",
+    "notifications": "Notificaciones",
+    "markAllRead": "Marcar todo como leído",
+    "noNotifications": "Sin notificaciones",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión"
+  }
+}

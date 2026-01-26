@@ -1,7 +1,7 @@
-package devtech;
+package devtechly;
 
-import devtech.config.ApplicationProperties;
-import devtech.config.CRLFLogConverter;
+import devtechly.config.ApplicationProperties;
+import devtechly.config.CRLFLogConverter;
 import jakarta.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -33,7 +33,7 @@ public class DevtechApp {
     }
 
     /**
-     * Initializes devtech.
+     * Initializes devtechly.
      * <p>
      * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
      * <p>

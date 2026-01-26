@@ -42,7 +42,7 @@
             <div class="contact-info">
               <div class="contact-label">{{ 'contact.companyInfo.phone' | translate }}</div>
               <div class="contact-value">
-                <a href="tel:{{ companyInfo.phone }}" class="contact-link">
+                <a [href]="'tel:' + companyInfo.phone" class="contact-link">
                   {{ companyInfo.phone }}
                 </a>
               </div>
@@ -54,7 +54,7 @@
             <div class="contact-info">
               <div class="contact-label">{{ 'contact.companyInfo.email' | translate }}</div>
               <div class="contact-value">
-                <a href="mailto:{{ companyInfo.email }}" class="contact-link">
+                <a [href]="'mailto:' + companyInfo.email" class="contact-link">
                   {{ companyInfo.email }}
                 </a>
               </div>

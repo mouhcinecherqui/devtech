@@ -100,7 +100,7 @@
     }
   },
   "global": {
-    "title": "Devtech",
+    "title": "devtechly",
     "menu": {
       "home": "Accueil",
       "login": "S'authentifier",
@@ -154,10 +154,11 @@
     "field": {
       "id": "ID"
     },
+    "cancel": "Annuler",
     "item-count": "Affichage {{first}} - {{second}} de {{total}} éléments.",
     "home": {
-      "title": "Bienvenue chez DevTech",
-      "subtitle": "DevTech est votre partenaire de confiance pour l'innovation digitale. Nous sommes spécialisés dans la création d'applications web modernes et de plateformes e-commerce robustes avec intégration CMS. Notre mission est de vous accompagner avec les dernières technologies web et des solutions sur mesure.",
+      "title": "Bienvenue chez devtechly",
+      "subtitle": "devtechly est votre partenaire de confiance pour l'innovation digitale. Nous sommes spécialisés dans la création d'applications web modernes et de plateformes e-commerce robustes avec intégration CMS. Notre mission est de vous accompagner avec les dernières technologies web et des solutions sur mesure.",
       "servicesTitle": "Nos services",
       "service1": {
         "title": "Développement d'applications web sur mesure",
@@ -171,7 +172,7 @@
         "title": "Systèmes de gestion de contenu (CMS)",
         "desc": "Solutions CMS flexibles et intuitives pour une gestion facile de votre site."
       },
-      "whyChooseTitle": "Pourquoi choisir DevTech ?",
+      "whyChooseTitle": "Pourquoi choisir devtechly ?",
       "why1": "Équipe expérimentée de développeurs et designers web",
       "why2": "Approche centrée client et communication transparente",
       "why3": "Processus agile pour une livraison rapide",
@@ -226,11 +227,21 @@
   },
   "settings": {
     "title": "Profil de l'utilisateur {{username}}",
+    "titlePrefix": "Profil de",
     "form": {
       "firstname": "Prénom",
+      "firstname.placeholder": "Votre prénom",
       "lastname": "Nom",
+      "lastname.placeholder": "Votre nom",
+      "phone": "Téléphone",
+      "phone.placeholder": "Votre numéro de téléphone",
       "language": "Langue",
-      "button": "Sauvegarder"
+      "button": "Sauvegarder",
+      "changePassword": "Changer le mot de passe"
+    },
+    "oauth": {
+      "googleAccount": "Compte Google :",
+      "googleAccountMessage": "Vous êtes connecté via Google. Vous pouvez définir un mot de passe pour votre compte afin de pouvoir vous connecter avec vos identifiants traditionnels."
     },
     "messages": {
       "success": "Votre profil a été sauvegardé !",
@@ -453,7 +464,13 @@
     "hostingUrl": "URL d'hébergement",
     "cancel": "Annuler",
     "detail": "Détail du ticket",
-    "info": "Informations du ticket",
+    "info": {
+      "title": "Informations du ticket",
+      "backofficeUrlPlaceholder": "https://votre-backoffice.com",
+      "loginPlaceholder": "Votre identifiant",
+      "passwordPlaceholder": "Votre mot de passe",
+      "hostingUrlPlaceholder": "https://votre-hebergement.com"
+    },
     "status": "Statut",
     "date": "Date",
     "history": "Historique de mes tickets",
@@ -461,7 +478,10 @@
     "backoffice": "Backoffice",
     "hosting": "Hébergement",
     "noTickets": "Aucun ticket pour le moment.",
-    "adminMessages": "Messages de l'équipe support",
+    "adminMessages": {
+      "singular": "{{count}} message de l'équipe",
+      "plural": "{{count}} messages de l'équipe"
+    },
     "yourReply": "Votre réponse",
     "replyPlaceholder": "Tapez votre réponse ici...",
     "send": "Envoyer",
@@ -492,11 +512,22 @@
     },
     "status": {
       "nouveau": "Nouveau",
-      "devisValide": "Devis validé",
       "enCours": "En cours",
       "resolu": "Résolu",
+      "ferme": "Fermé",
+      "urgent": "Urgent",
+      "enAttentePaiement": "En attente de paiement",
       "paiementValide": "Paiement validé",
-      "ferme": "Fermé"
+      "devisValide": "Devis validé"
+    },
+    "viewDetails": "Voir les détails →",
+    "meta": {
+      "backoffice": "Backoffice",
+      "hosting": "Hébergement"
+    },
+    "empty": {
+      "title": "Aucun ticket trouvé",
+      "cta": "Créer votre premier ticket"
     }
   },
   "clientsAdmin": {
@@ -664,7 +695,11 @@
       "phone": "Téléphone",
       "email": "Email",
       "address": "Adresse",
-      "workingHours": "Heures d'ouverture"
+      "workingHours": "Heures d'ouverture",
+      "name": "devtechly",
+      "phoneValue": "+33 1 23 45 67 89",
+      "emailValue": "contact@devtechly.com",
+      "workingHoursValue": "Lundi - Vendredi : 9h00 - 18h00"
     },
     "form": {
       "title": "Envoyer un Message",

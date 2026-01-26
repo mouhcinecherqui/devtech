@@ -1,10 +1,10 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.Ticket;
-import devtech.domain.TicketMessage;
-import devtech.repository.TicketMessageRepository;
-import devtech.repository.TicketRepository;
-import devtech.security.SecurityUtils;
+import devtechly.domain.Ticket;
+import devtechly.domain.TicketMessage;
+import devtechly.repository.TicketMessageRepository;
+import devtechly.repository.TicketRepository;
+import devtechly.security.SecurityUtils;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

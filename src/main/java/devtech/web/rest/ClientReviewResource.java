@@ -1,8 +1,8 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.service.ClientReviewService;
-import devtech.service.dto.ClientReviewDTO;
-import devtech.web.rest.errors.BadRequestAlertException;
+import devtechly.service.ClientReviewService;
+import devtechly.service.dto.ClientReviewDTO;
+import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -27,7 +27,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link devtech.domain.ClientReview}.
+ * REST controller for managing {@link devtechly.domain.ClientReview}.
  */
 @RestController
 @RequestMapping("/api/client-reviews")

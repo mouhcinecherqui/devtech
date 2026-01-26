@@ -1,4 +1,4 @@
-# devtech
+# devtechly
 
 This application was generated using JHipster 8.11.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.11.0](https://www.jhipster.tech/documentation-archive/v8.11.0).
 
@@ -21,6 +21,16 @@ In the project root, JHipster generates configuration files for tools like git, 
 - `/src/main/docker` - Docker configurations for the application and services that the application depends on
 
 ## Development
+
+### Fichier `.env` (variables d'environnement)
+
+Pour personnaliser la DB, le JWT et OAuth2 Google en local :
+
+1. **Créer `.env`** : `npm run setup-env` (copie `env.example` → `.env` si absent).
+2. **Modifier `.env`** avec vos valeurs : `DB_URL`, `DB_USER`, `DB_PASSWORD`, `JWT_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`.
+3. **Lancer le backend avec `.env`** : `npm run backend:start:env` ou `npm run watch:env` (frontend + backend avec `.env` chargé).
+
+Sans `.env`, utilisez `./mvnw` / `npm run backend:start` / `npm run watch` : les valeurs par défaut de `application-dev.yml` sont utilisées.
 
 The build system will install automatically the recommended version of Node and npm.
 
@@ -110,7 +120,7 @@ update src/main/webapp/app/app.config.ts
 
 ### Packaging as jar
 
-To build the final jar and optimize the devtech application for production, run:
+To build the final jar and optimize the devtechly application for production, run:
 
 ```
 ./mvnw -Pprod clean verify

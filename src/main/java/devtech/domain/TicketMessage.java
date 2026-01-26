@@ -1,4 +1,4 @@
-package devtech.domain;
+package devtechly.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -126,9 +126,9 @@ public class TicketMessage implements Serializable {
             case CLIENT:
                 return "Vous";
             case ADMIN:
-                return "Équipe DevTech";
+                return "Équipe devtechly";
             case MANAGER:
-                return "Manager DevTech";
+                return "Manager devtechly";
             default:
                 return authorLogin;
         }

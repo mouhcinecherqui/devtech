@@ -1,14 +1,14 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import devtech.IntegrationTest;
-import devtech.domain.User;
-import devtech.repository.UserRepository;
-import devtech.security.AuthoritiesConstants;
-import devtech.service.UserService;
+import devtechly.IntegrationTest;
+import devtechly.domain.User;
+import devtechly.repository.UserRepository;
+import devtechly.security.AuthoritiesConstants;
+import devtechly.service.UserService;
 import java.util.Set;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

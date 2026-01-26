@@ -1,4 +1,4 @@
-package devtech.security;
+package devtechly.security;
 
 /**
  * Constants for Spring Security authorities.

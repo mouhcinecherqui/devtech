@@ -1,20 +1,16 @@
 import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
-import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { DOCUMENT } from '@angular/common';
+import { Title, Meta, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import SharedModule from 'app/shared/shared.module';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
 import { PaiementsService } from 'app/admin/paiements/paiements.service';
 import { ClientsService } from 'app/admin/clients/clients.service';
-import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatButtonModule } from '@angular/material/button';
 import { ClientReviewsDisplayComponent } from '../client-reviews-display/client-reviews-display.component';
 import { OAuth2UserService, OAuth2UserInfo } from '../core/auth/oauth2-user.service';
 import { OAuth2Service } from '../core/auth/oauth2.service';
@@ -23,21 +19,12 @@ import { OAuth2Service } from '../core/auth/oauth2.service';
   selector: 'jhi-home',
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  imports: [
-    SharedModule,
-    RouterModule,
-    MatCardModule,
-    MatGridListModule,
-    MatListModule,
-    MatIconModule,
-    MatBadgeModule,
-    MatButtonModule,
-    ClientReviewsDisplayComponent,
-  ],
+  imports: [SharedModule, RouterModule, ClientReviewsDisplayComponent],
 })
 export default class HomeComponent implements OnInit, OnDestroy {
   account = signal<Account | null>(null);
   oauth2UserInfo = signal<OAuth2UserInfo | null>(null);
+  structuredData: SafeHtml | null = null;
 
   // Compteurs et listes pour dashboard admin
   ticketsCount = 0;
@@ -62,8 +49,13 @@ export default class HomeComponent implements OnInit, OnDestroy {
   private readonly clientsService = inject(ClientsService);
   private readonly oauth2Service: OAuth2Service = inject(OAuth2Service);
   private readonly oauth2UserService = inject(OAuth2UserService);
+  private readonly titleService = inject(Title);
+  private readonly metaService = inject(Meta);
+  private readonly sanitizer = inject(DomSanitizer);
+  private readonly document = inject(DOCUMENT);
 
   ngOnInit(): void {
+    this.updateSeoMetadata();
     // Vérifier les paramètres OAuth2
     this.oauth2Service.checkOAuth2Success();
     this.accountService
@@ -161,5 +153,95 @@ export default class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private updateSeoMetadata(): void {
+    const baseUrl = this.getBaseUrl();
+    const pageUrl = `${baseUrl}/home`;
+    const pageTitle = 'DevTechly | Agence digitale pour applications web et e-commerce';
+    const description =
+      "DevTechly accompagne les entreprises avec des solutions web modernes, e-commerce et CMS sur mesure, de l'idée à la mise en production.";
+    const keywords = 'devtechly, agence web, développement web, e-commerce, maroc, applications sur mesure';
+
+    this.titleService.setTitle(pageTitle);
+    this.metaService.updateTag({ name: 'description', content: description });
+    this.metaService.updateTag({ name: 'keywords', content: keywords });
+    this.metaService.updateTag({ property: 'og:title', content: pageTitle });
+    this.metaService.updateTag({ property: 'og:description', content: description });
+    this.metaService.updateTag({ property: 'og:type', content: 'website' });
+    this.metaService.updateTag({ property: 'og:url', content: pageUrl });
+    this.metaService.updateTag({ property: 'og:site_name', content: 'DevTechly' });
+    this.metaService.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.metaService.updateTag({ name: 'twitter:title', content: pageTitle });
+    this.metaService.updateTag({ name: 'twitter:description', content: description });
+
+    this.updateCanonicalLink(pageUrl);
+    this.setStructuredData(baseUrl);
+  }
+
+  private updateCanonicalLink(url: string): void {
+    if (!this.document) {
+      return;
+    }
+    let link: HTMLLinkElement | null = this.document.querySelector("link[rel='canonical']");
+    if (!link) {
+      link = this.document.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      this.document.head.appendChild(link);
+    }
+    link.setAttribute('href', url);
+  }
+
+  private setStructuredData(baseUrl: string): void {
+    const organization = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'DevTechly',
+      url: `${baseUrl}/home`,
+      logo: `${baseUrl}/favicon.ico`,
+      sameAs: ['https://www.linkedin.com/company/devtechly', 'https://twitter.com/devtechly'],
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          telephone: '+212612345678',
+          contactType: 'customer service',
+          availableLanguage: ['fr', 'en'],
+          areaServed: 'Worldwide',
+        },
+      ],
+      makesOffer: [
+        {
+          '@type': 'Service',
+          name: 'Développement web sur mesure',
+          serviceType: 'SoftwareDevelopment',
+        },
+        {
+          '@type': 'Service',
+          name: 'Solutions e-commerce',
+          serviceType: 'ECommerce',
+        },
+      ],
+    };
+
+    const website = {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'DevTechly',
+      url: `${baseUrl}/home`,
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: `${baseUrl}/search?query={search_term_string}`,
+        'query-input': 'required name=search_term_string',
+      },
+    };
+
+    this.structuredData = this.sanitizer.bypassSecurityTrustHtml(JSON.stringify([organization, website]));
+  }
+
+  private getBaseUrl(): string {
+    if (typeof window !== 'undefined' && window.location) {
+      return window.location.origin;
+    }
+    return 'https://devtechly.com';
   }
 }

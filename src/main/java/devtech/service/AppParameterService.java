@@ -1,7 +1,7 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.AppParameter;
-import devtech.repository.AppParameterRepository;
+import devtechly.domain.AppParameter;
+import devtechly.repository.AppParameterRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -115,11 +115,11 @@ public class AppParameterService {
     }
 
     public String getSupportEmail() {
-        return getValueByKeyOrDefault("support_email", "support@devtech.com");
+        return getValueByKeyOrDefault("support_email", "support@devtechly.com");
     }
 
     public String getCompanyName() {
-        return getValueByKeyOrDefault("company_name", "DevTech");
+        return getValueByKeyOrDefault("company_name", "devtechly");
     }
 
     // Validation des paramètres

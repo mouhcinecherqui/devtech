@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;

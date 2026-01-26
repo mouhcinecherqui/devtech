@@ -1,0 +1,115 @@
+{
+  "ticketsClient": {
+    "pageTitle": "My tickets",
+    "title": "My tickets",
+    "subtitle": "Manage your support requests and track their progress",
+    "create": "Create ticket",
+    "history": "Ticket history",
+    "loading": "Loading...",
+    "stats": {
+      "total": "Total tickets",
+      "open": "In progress",
+      "resolved": "Resolved"
+    },
+    "filters": {
+      "all": "All statuses",
+      "status": {
+        "nouveau": "New",
+        "enCours": "In progress",
+        "resolu": "Resolved",
+        "ferme": "Closed",
+        "urgent": "Urgent",
+        "enAttentePaiement": "Awaiting payment",
+        "paiementValide": "Payment validated"
+      }
+    },
+    "types": {
+      "bug": "Bug",
+      "demande": "Request",
+      "support": "Support",
+      "autre": "Other"
+    },
+    "status": {
+      "nouveau": "New",
+      "enCours": "In progress",
+      "resolu": "Resolved",
+      "ferme": "Closed",
+      "urgent": "Urgent",
+      "enAttentePaiement": "Awaiting payment",
+      "paiementValide": "Payment validated",
+      "devisValide": "Quote validated"
+    },
+    "adminMessages": {
+      "singular": "{{count}} team message",
+      "plural": "{{count}} team messages"
+    },
+    "meta": {
+      "backoffice": "Backoffice",
+      "hosting": "Hosting"
+    },
+    "viewDetails": "View details →",
+    "type": "Ticket type",
+    "selectType": "Select a type",
+    "description": "Problem description",
+    "backofficeUrl": "Backoffice link",
+    "backofficeLogin": "Backoffice login",
+    "backofficePassword": "Backoffice password",
+    "hostingUrl": "Hosting URL",
+    "cancel": "Cancel",
+    "noTickets": "No tickets yet.",
+    "empty": {
+      "title": "No tickets found",
+      "cta": "Create your first ticket"
+    },
+    "devis": {
+      "title": "Send quote",
+      "amount": "Amount (MAD)",
+      "description": "Quote description",
+      "cancel": "Cancel",
+      "submit": "Send quote"
+    },
+    "image": {
+      "label": "Image (optional)",
+      "add": "Click to add an image",
+      "hint": "PNG, JPG up to 5MB",
+      "previewAlt": "Image preview"
+    },
+    "form": {
+      "ticketPlaceholder": "Describe your issue in detail...",
+      "backofficeSection": "Backoffice information (optional)",
+      "devisPlaceholder": "Quote details...",
+      "creating": "Creating..."
+    },
+    "payment": {
+      "title": "Validate payment",
+      "ticketLabel": "Ticket #{{id}}",
+      "confirm": "Confirm payment for the following ticket:",
+      "cancel": "Cancel",
+      "validate": "Validate payment"
+    },
+    "info": {
+      "backofficeUrlPlaceholder": "https://your-backoffice.com",
+      "hostingUrlPlaceholder": "https://your-hosting.com",
+      "loginPlaceholder": "Your username",
+      "passwordPlaceholder": "Your password"
+    },
+    "messages": {
+      "invalidImage": "Please select a valid image",
+      "imageTooLarge": "The image must not exceed 5MB",
+      "devisSuccess": "Quote sent successfully!",
+      "devisError": "Error while sending the quote.",
+      "devisInvalid": "Please enter a valid amount for the quote.",
+      "paymentSuccess": "Payment validated successfully!",
+      "paymentError": "Error while validating the payment.",
+      "closeSuccess": "Ticket closed successfully!",
+      "closeError": "Error while closing the ticket.",
+      "createSuccess": "Ticket created successfully!",
+      "createError": "Error while creating the ticket",
+      "loadTicketsError": "Error while loading tickets",
+      "loadStatusesError": "Error while loading statuses: {{error}}",
+      "loadTypesError": "Error while loading types: {{error}}",
+      "loadPrioritiesError": "Error while loading priorities: {{error}}",
+      "unknownError": "Unknown error"
+    }
+  }
+}

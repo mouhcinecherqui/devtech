@@ -23,6 +23,14 @@ export const errorRoute: Routes = [
     title: 'error.title',
   },
   {
+    path: '500',
+    loadComponent: () => import('./error.component'),
+    data: {
+      errorMessage: 'error.http.500',
+    },
+    title: 'error.title',
+  },
+  {
     path: '**',
     redirectTo: '/404',
   },

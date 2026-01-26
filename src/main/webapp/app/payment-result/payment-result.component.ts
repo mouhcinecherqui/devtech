@@ -110,6 +110,6 @@ export class PaymentResultComponent implements OnInit {
 
   onContactSupport(): void {
     // Rediriger vers la page de contact ou ouvrir un email
-    window.open('mailto:support@devtech.com?subject=Problème de paiement', '_blank');
+    window.open('mailto:support@devtechly.com?subject=Problème de paiement', '_blank');
   }
 }

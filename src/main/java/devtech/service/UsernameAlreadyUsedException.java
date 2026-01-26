@@ -1,4 +1,4 @@
-package devtech.service;
+package devtechly.service;
 
 public class UsernameAlreadyUsedException extends RuntimeException {
 

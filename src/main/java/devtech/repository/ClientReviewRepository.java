@@ -1,6 +1,6 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.ClientReview;
+import devtechly.domain.ClientReview;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

@@ -42,7 +42,7 @@
     }
   },
   "global": {
-    "title": "Devtech",
+    "title": "devtechly",
     "menu": {
       "home": "الرئيسية",
       "login": "تسجيل الدخول",
@@ -73,10 +73,11 @@
     "field": {
       "id": "الرقم"
     },
+    "cancel": "إلغاء",
     "item-count": "عرض {{first}} - {{second}} من {{total}} عنصر.",
     "home": {
-      "title": "مرحباً بكم في DevTech",
-      "subtitle": "DevTech هو شريككم الموثوق للابتكار الرقمي. نحن متخصصون في بناء تطبيقات الويب الحديثة ومنصات التجارة الإلكترونية القوية مع تكامل CMS. مهمتنا هي تمكين أعمالكم بأحدث تقنيات الويب وتقديم حلول مصممة خصيصاً لاحتياجاتكم.",
+      "title": "مرحباً بكم في devtechly",
+      "subtitle": "devtechly هو شريككم الموثوق للابتكار الرقمي. نحن متخصصون في بناء تطبيقات الويب الحديثة ومنصات التجارة الإلكترونية القوية مع تكامل CMS. مهمتنا هي تمكين أعمالكم بأحدث تقنيات الويب وتقديم حلول مصممة خصيصاً لاحتياجاتكم.",
       "servicesTitle": "خدماتنا",
       "service1": {
         "title": "تطوير تطبيقات الويب المخصصة",
@@ -90,7 +91,7 @@
         "title": "أنظمة إدارة المحتوى (CMS)",
         "desc": "حلول CMS مرنة وسهلة الاستخدام لإدارة الموقع بسهولة."
       },
-      "whyChooseTitle": "لماذا تختار DevTech؟",
+      "whyChooseTitle": "لماذا تختار devtechly؟",
       "why1": "فريق من ذوي الخبرة من مطوري ومصممي الويب",
       "why2": "نهج يركز على العميل وتواصل شفاف",
       "why3": "عملية تطوير رشيقة للتسليم الأسرع",
@@ -335,14 +336,43 @@
     "hostingUrl": "رابط الاستضافة",
     "cancel": "إلغاء",
     "detail": "تفاصيل التذكرة",
-    "info": "معلومات التذكرة",
+    "info": {
+      "title": "معلومات التذكرة",
+      "backofficeUrlPlaceholder": "https://backoffice-الخاصة-بك.com",
+      "loginPlaceholder": "اسم المستخدم",
+      "passwordPlaceholder": "كلمة المرور",
+      "hostingUrlPlaceholder": "https://hosting-الخاصة-بك.com"
+    },
     "status": "الحالة",
     "date": "التاريخ",
     "history": "سجل تذاكري",
     "loading": "جاري التحميل...",
     "backoffice": "المكتب الخلفي",
     "hosting": "الاستضافة",
-    "noTickets": "لا توجد تذاكر بعد."
+    "noTickets": "لا توجد تذاكر بعد.",
+    "adminMessages": {
+      "singular": "{{count}} رسالة من الفريق",
+      "plural": "{{count}} رسائل من الفريق"
+    },
+    "status": {
+      "nouveau": "جديد",
+      "enCours": "قيد المعالجة",
+      "resolu": "تم الحل",
+      "ferme": "مغلق",
+      "urgent": "عاجل",
+      "enAttentePaiement": "بانتظار الدفع",
+      "paiementValide": "تم تأكيد الدفع",
+      "devisValide": "تم تأكيد العرض"
+    },
+    "viewDetails": "عرض التفاصيل →",
+    "meta": {
+      "backoffice": "الواجهة الخلفية",
+      "hosting": "الاستضافة"
+    },
+    "empty": {
+      "title": "لا توجد تذاكر",
+      "cta": "أنشئ أول تذكرة لك"
+    }
   },
   "clientsAdmin": {
     "title": "العملاء",
@@ -481,7 +511,11 @@
       "phone": "الهاتف",
       "email": "البريد الإلكتروني",
       "address": "العنوان",
-      "workingHours": "ساعات العمل"
+      "workingHours": "ساعات العمل",
+      "name": "ديفتكلي",
+      "phoneValue": "+33 1 23 45 67 89",
+      "emailValue": "contact@devtechly.com",
+      "workingHoursValue": "الاثنين - الجمعة: 9:00 صباحًا - 6:00 مساءً"
     },
     "form": {
       "title": "إرسال رسالة",

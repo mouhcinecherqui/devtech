@@ -1,4 +1,4 @@
-package devtech.domain;
+package devtechly.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;

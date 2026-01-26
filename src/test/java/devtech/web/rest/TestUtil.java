@@ -1,4 +1,4 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

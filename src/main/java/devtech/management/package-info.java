@@ -1,4 +1,4 @@
 /**
  * Application management.
  */
-package devtech.management;
+package devtechly.management;

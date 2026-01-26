@@ -1,8 +1,8 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.Authority;
-import devtech.repository.AuthorityRepository;
-import devtech.web.rest.errors.BadRequestAlertException;
+import devtechly.domain.Authority;
+import devtechly.repository.AuthorityRepository;
+import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,7 +19,7 @@ import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link devtech.domain.Authority}.
+ * REST controller for managing {@link devtechly.domain.Authority}.
  */
 @RestController
 @RequestMapping("/api/authorities")

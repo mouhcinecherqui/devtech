@@ -1,6 +1,6 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.Activity;
+import devtechly.domain.Activity;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -19,26 +19,29 @@
         align-items: center;
         margin-bottom: 15px;
         padding-bottom: 15px;
-        border-bottom: 2px solid #007bff;
+        border-bottom: 2px solid #667eea;
       }
 
       .logo {
         width: 60px;
         height: 60px;
         margin-right: 15px;
-        background: linear-gradient(135deg, #007bff, #0056b3);
+        display: block;
+        background-color: white;
         border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 18px;
+        padding: 6px;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+      }
+
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
 
       .company-info h3 {
         margin: 0;
-        color: #007bff;
+        color: #667eea;
         font-size: 20px;
         font-weight: 600;
       }
@@ -67,7 +70,7 @@
         width: 16px;
         height: 16px;
         margin-right: 8px;
-        background: #007bff;
+        background: #667eea;
         border-radius: 50%;
         display: inline-block;
       }
@@ -81,7 +84,7 @@
       .social-link {
         width: 32px;
         height: 32px;
-        background: #007bff;
+        background: #667eea;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -93,7 +96,7 @@
       }
 
       .social-link:hover {
-        background: #0056b3;
+        background: #764ba2;
       }
 
       .footer-text {
@@ -126,7 +129,9 @@
   <body>
     <div class="email-signature">
       <div class="signature-header">
-        <div class="logo">DT</div>
+        <div class="logo">
+          <img th:src="|cid:dt-logo.png|" alt="DevTechly Logo" />
+        </div>
         <div class="company-info">
           <h3>DevTechly</h3>
           <p>Solutions Technologiques Innovantes</p>

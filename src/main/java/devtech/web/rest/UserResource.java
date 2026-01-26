@@ -1,15 +1,15 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.config.Constants;
-import devtech.domain.User;
-import devtech.repository.UserRepository;
-import devtech.security.AuthoritiesConstants;
-import devtech.service.MailService;
-import devtech.service.UserService;
-import devtech.service.dto.AdminUserDTO;
-import devtech.web.rest.errors.BadRequestAlertException;
-import devtech.web.rest.errors.EmailAlreadyUsedException;
-import devtech.web.rest.errors.LoginAlreadyUsedException;
+import devtechly.config.Constants;
+import devtechly.domain.User;
+import devtechly.repository.UserRepository;
+import devtechly.security.AuthoritiesConstants;
+import devtechly.service.MailService;
+import devtechly.service.UserService;
+import devtechly.service.dto.AdminUserDTO;
+import devtechly.web.rest.errors.BadRequestAlertException;
+import devtechly.web.rest.errors.EmailAlreadyUsedException;
+import devtechly.web.rest.errors.LoginAlreadyUsedException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import java.net.URI;
@@ -34,7 +34,7 @@ import tech.jhipster.web.util.ResponseUtil;
 /**
  * REST controller for managing users.
  * <p>
- * This class accesses the {@link devtech.domain.User} entity, and needs to fetch its collection of authorities.
+ * This class accesses the {@link devtechly.domain.User} entity, and needs to fetch its collection of authorities.
  * <p>
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
  * and send everything to the client side: there would be no View Model and DTO, a lot less code, and an outer-join
@@ -226,7 +226,7 @@ public class UserResource {
             return ResponseEntity.notFound().build();
         }
 
-        User user = userOpt.get();
+        User user = userOpt.orElseThrow();
         Set<String> newAuthorities = new HashSet<>(rolesRequest.getAuthorities());
 
         // Valider les autorités
@@ -239,7 +239,7 @@ public class UserResource {
             newAuthorities
                 .stream()
                 .map(authority -> {
-                    devtech.domain.Authority auth = new devtech.domain.Authority();
+                    devtechly.domain.Authority auth = new devtechly.domain.Authority();
                     auth.setName(authority);
                     return auth;
                 })

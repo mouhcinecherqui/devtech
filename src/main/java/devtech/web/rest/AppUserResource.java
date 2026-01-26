@@ -1,12 +1,12 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.AppUser;
-import devtech.domain.Authority;
-import devtech.domain.User;
-import devtech.repository.AppUserRepository;
-import devtech.repository.AuthorityRepository;
-import devtech.repository.UserRepository;
-import devtech.service.ClientEmailService;
+import devtechly.domain.AppUser;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
+import devtechly.repository.AppUserRepository;
+import devtechly.repository.AuthorityRepository;
+import devtechly.repository.UserRepository;
+import devtechly.service.ClientEmailService;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
@@ -126,7 +126,7 @@ public class AppUserResource {
             return ResponseEntity.notFound().build();
         }
 
-        AppUser user = userOpt.get();
+        AppUser user = userOpt.orElseThrow();
         String newRole = request.getType();
 
         // Valider le rôle
@@ -141,7 +141,7 @@ public class AppUserResource {
         // Mettre à jour le rôle dans User (pour l'authentification)
         Optional<User> systemUserOpt = userRepository.findOneByLogin(user.getEmail().toLowerCase());
         if (systemUserOpt.isPresent()) {
-            User systemUser = systemUserOpt.get();
+            User systemUser = systemUserOpt.orElseThrow();
             HashSet<Authority> authorities = new HashSet<>();
 
             // Créer ou récupérer l'autorité correspondante

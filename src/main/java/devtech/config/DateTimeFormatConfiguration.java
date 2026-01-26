@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;

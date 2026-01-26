@@ -9,6 +9,7 @@ import { AutoRefreshService } from '../../core/services/auto-refresh.service';
 import ItemCountComponent from '../../shared/pagination/item-count.component';
 import { createRequestOption } from '../../core/request/request-util';
 import { Pagination } from '../../core/request/request.model';
+import { AlertService } from '../../core/util/alert.service';
 
 interface Ticket {
   id?: number;
@@ -70,6 +71,7 @@ export class TicketsComponent implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly autoRefreshService = inject(AutoRefreshService);
+  private readonly alertService = inject(AlertService);
 
   ngOnInit(): void {
     this.fetchTickets();
@@ -131,7 +133,8 @@ export class TicketsComponent implements OnInit {
 
   private loadFallbackData(): void {
     this.tickets = [];
-    this.error = 'Impossible de charger les tickets. Veuillez réessayer plus tard.';
+    // Ne pas afficher d'alerte bloquante côté UI, on laisse l'état vide + console
+    this.error = null;
     this.cdr.detectChanges();
   }
 
@@ -190,17 +193,29 @@ export class TicketsComponent implements OnInit {
                   });
                 }
               },
-              error() {
-                alert("Erreur lors de l'ajout du message");
+              error: () => {
+                this.alertService.addAlert({
+                  type: 'danger',
+                  message: "Erreur lors de l'ajout du message",
+                  timeout: 5000,
+                });
               },
             });
         }
 
         this.newMessage = '';
-        alert('Ticket mis à jour avec succès');
+        this.alertService.addAlert({
+          type: 'success',
+          message: 'Ticket mis à jour avec succès',
+          timeout: 3000,
+        });
       },
-      error() {
-        alert('Erreur lors de la mise à jour du ticket');
+      error: () => {
+        this.alertService.addAlert({
+          type: 'danger',
+          message: 'Erreur lors de la mise à jour du ticket',
+          timeout: 5000,
+        });
       },
     });
   }
@@ -285,12 +300,20 @@ export class TicketsComponent implements OnInit {
       next: createdTicket => {
         this.tickets.unshift(createdTicket); // Ajouter au début de la liste
         this.closeCreateTicketModal();
-        alert('Ticket créé avec succès !');
+        this.alertService.addAlert({
+          type: 'success',
+          message: 'Ticket créé avec succès !',
+          timeout: 3000,
+        });
       },
       error: error => {
         this.creating = false;
         console.error('Erreur lors de la création du ticket:', error);
-        alert('Erreur lors de la création du ticket. Veuillez réessayer.');
+        this.alertService.addAlert({
+          type: 'danger',
+          message: 'Erreur lors de la création du ticket. Veuillez réessayer.',
+          timeout: 5000,
+        });
       },
     });
   }
@@ -313,7 +336,11 @@ export class TicketsComponent implements OnInit {
 
   submitDevis(): void {
     if (!this.selectedTicketForDevis || this.devisAmount <= 0) {
-      alert('Veuillez saisir un montant valide pour le devis.');
+      this.alertService.addAlert({
+        type: 'warning',
+        message: 'Veuillez saisir un montant valide pour le devis.',
+        timeout: 5000,
+      });
       return;
     }
 
@@ -327,14 +354,22 @@ export class TicketsComponent implements OnInit {
 
     this.http.post('/api/tickets/devis', devisData).subscribe({
       next: () => {
-        alert('Devis envoyé avec succès !');
+        this.alertService.addAlert({
+          type: 'success',
+          message: 'Devis envoyé avec succès !',
+          timeout: 3000,
+        });
         this.closeDevisModal();
         this.fetchTickets(); // Recharger les tickets pour mettre à jour les statuts
       },
       error: error => {
         this.submittingDevis = false;
         console.error("Erreur lors de l'envoi du devis:", error);
-        alert("Erreur lors de l'envoi du devis. Veuillez réessayer.");
+        this.alertService.addAlert({
+          type: 'danger',
+          message: "Erreur lors de l'envoi du devis. Veuillez réessayer.",
+          timeout: 5000,
+        });
       },
     });
   }
@@ -352,6 +387,10 @@ export class TicketsComponent implements OnInit {
     return ticket.status === 'En cours';
   }
 
+  canSendInvoice(ticket: Ticket): boolean {
+    return ticket.status === 'Résolu';
+  }
+
   canValidatePayment(ticket: Ticket): boolean {
     return ticket.status === 'En attente de paiement';
   }
@@ -363,15 +402,21 @@ export class TicketsComponent implements OnInit {
   // Méthode de test pour vérifier les permissions
   testPermissions(): void {
     this.http.get('/api/tickets/test-permissions').subscribe({
-      next(response: any) {
+      next: (response: any) => {
         console.warn('Test des permissions:', response);
-        alert(
-          `Permissions testées:\nLogin: ${response.login}\nAutorités: ${response.authorities.join(', ')}\nEst admin: ${response.isAdmin}`,
-        );
+        this.alertService.addAlert({
+          type: 'info',
+          message: `Permissions testées: Login: ${response.login}, Autorités: ${response.authorities.join(', ')}, Est admin: ${response.isAdmin}`,
+          timeout: 5000,
+        });
       },
-      error(error) {
+      error: error => {
         console.error('Erreur lors du test des permissions:', error);
-        alert(`Erreur lors du test des permissions: ${error.status} - ${error.message || 'Erreur inconnue'}`);
+        this.alertService.addAlert({
+          type: 'danger',
+          message: `Erreur lors du test des permissions: ${error.status} - ${error.message || 'Erreur inconnue'}`,
+          timeout: 5000,
+        });
       },
     });
   }
@@ -379,25 +424,33 @@ export class TicketsComponent implements OnInit {
   // Méthode de diagnostic pour vérifier l'état de la base de données
   runDiagnostic(): void {
     this.http.get('/api/tickets/diagnostic').subscribe({
-      next(response: any) {
+      next: (response: any) => {
         console.warn('Diagnostic:', response);
-        let diagnosticMessage = 'Diagnostic de la base de données:\n\n';
-        diagnosticMessage += `Connexion DB: ${response.databaseConnected ? 'OK' : 'ERREUR'}\n`;
-        diagnosticMessage += `Utilisateur: ${response.currentUser}\n`;
-        diagnosticMessage += `Est admin: ${response.isAdmin}\n`;
-        diagnosticMessage += `Nombre de tickets: ${response.ticketCount}\n`;
-        diagnosticMessage += `Table messages existe: ${response.messageTableExists ? 'OUI' : 'NON'}\n`;
-        diagnosticMessage += `Nombre de messages: ${response.messageCount}\n`;
+        let diagnosticMessage = 'Diagnostic de la base de données: ';
+        diagnosticMessage += `Connexion DB: ${response.databaseConnected ? 'OK' : 'ERREUR'}, `;
+        diagnosticMessage += `Utilisateur: ${response.currentUser}, `;
+        diagnosticMessage += `Est admin: ${response.isAdmin}, `;
+        diagnosticMessage += `Nombre de tickets: ${response.ticketCount}, `;
+        diagnosticMessage += `Table messages existe: ${response.messageTableExists ? 'OUI' : 'NON'}, `;
+        diagnosticMessage += `Nombre de messages: ${response.messageCount}`;
 
         if (response.messageTableError) {
-          diagnosticMessage += `Erreur table messages: ${response.messageTableError}\n`;
+          diagnosticMessage += `, Erreur table messages: ${response.messageTableError}`;
         }
 
-        alert(diagnosticMessage);
+        this.alertService.addAlert({
+          type: 'info',
+          message: diagnosticMessage,
+          timeout: 10000,
+        });
       },
-      error(error) {
+      error: error => {
         console.error('Erreur lors du diagnostic:', error);
-        alert(`Erreur lors du diagnostic: ${error.status} - ${error.message || 'Erreur inconnue'}`);
+        this.alertService.addAlert({
+          type: 'danger',
+          message: `Erreur lors du diagnostic: ${error.status} - ${error.message || 'Erreur inconnue'}`,
+          timeout: 5000,
+        });
       },
     });
   }
@@ -448,15 +501,23 @@ export class TicketsComponent implements OnInit {
                 this.tickets[idx] = updatedTicket;
               }
 
-              alert('Facture envoyée au client avec succès ! Le ticket est maintenant en attente de paiement.');
+              this.alertService.addAlert({
+                type: 'success',
+                message: 'Facture envoyée au client avec succès ! Le ticket est maintenant en attente de paiement.',
+                timeout: 5000,
+              });
             },
-            error(updateError) {
+            error: updateError => {
               console.error('Erreur lors de la mise à jour du ticket:', updateError);
-              alert('Facture envoyée mais erreur lors de la mise à jour du statut du ticket.');
+              this.alertService.addAlert({
+                type: 'warning',
+                message: 'Facture envoyée mais erreur lors de la mise à jour du statut du ticket.',
+                timeout: 5000,
+              });
             },
           });
         },
-        error(error) {
+        error: error => {
           console.error("Erreur lors de l'envoi de la validation du paiement:", error);
           console.error('Status:', error.status);
           console.error('Message:', error.message || 'No message available');
@@ -475,7 +536,11 @@ export class TicketsComponent implements OnInit {
             errorMessage += `: ${error.status} - ${error.message || 'Erreur inconnue'}`;
           }
 
-          alert(errorMessage);
+          this.alertService.addAlert({
+            type: 'danger',
+            message: errorMessage,
+            timeout: 5000,
+          });
         },
       });
   }
@@ -494,11 +559,19 @@ export class TicketsComponent implements OnInit {
           this.tickets[idx] = ticket;
         }
 
-        alert('Paiement validé avec succès !');
+        this.alertService.addAlert({
+          type: 'success',
+          message: 'Paiement validé avec succès !',
+          timeout: 3000,
+        });
       },
-      error(error) {
+      error: error => {
         console.error('Erreur lors de la validation du paiement:', error);
-        alert('Erreur lors de la validation du paiement');
+        this.alertService.addAlert({
+          type: 'danger',
+          message: 'Erreur lors de la validation du paiement',
+          timeout: 5000,
+        });
       },
     });
   }

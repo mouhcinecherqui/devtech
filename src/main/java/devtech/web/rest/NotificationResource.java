@@ -1,8 +1,9 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.Notification;
-import devtech.repository.NotificationRepository;
-import devtech.web.rest.errors.BadRequestAlertException;
+import devtechly.domain.Notification;
+import devtechly.repository.NotificationRepository;
+import devtechly.security.SecurityUtils;
+import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -24,7 +25,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link devtech.domain.Notification}.
+ * REST controller for managing {@link devtechly.domain.Notification}.
  */
 @RestController
 @RequestMapping("/api/notifications")
@@ -171,8 +172,14 @@ public class NotificationResource {
      */
     @GetMapping("")
     public ResponseEntity<List<Notification>> getAllNotifications(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        log.debug("REST request to get a page of Notifications");
-        Page<Notification> page = notificationRepository.findAll(pageable);
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        log.debug("REST request to get notifications for user: {}", login);
+
+        if (login == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        Page<Notification> page = notificationRepository.findByUserLoginOrderByTimestampDesc(login, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -185,8 +192,14 @@ public class NotificationResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Notification> getNotification(@PathVariable Long id) {
-        log.debug("REST request to get Notification : {}", id);
-        Optional<Notification> notification = notificationRepository.findById(id);
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        log.debug("REST request to get Notification : {} for user {}", id, login);
+
+        if (login == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        Optional<Notification> notification = notificationRepository.findByIdAndUserLogin(id, login);
         return ResponseUtil.wrapOrNotFound(notification);
     }
 
@@ -213,13 +226,18 @@ public class NotificationResource {
      */
     @PutMapping("/{id}/read")
     public ResponseEntity<Void> markNotificationAsRead(@PathVariable Long id) {
-        log.debug("REST request to mark Notification as read : {}", id);
-        Optional<Notification> notificationOpt = notificationRepository.findById(id);
-        if (notificationOpt.isPresent()) {
-            Notification notification = notificationOpt.get();
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        log.debug("REST request to mark Notification as read : {} for user {}", id, login);
+
+        if (login == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        Optional<Notification> notificationOpt = notificationRepository.findByIdAndUserLogin(id, login);
+        notificationOpt.ifPresent(notification -> {
             notification.setRead(true);
             notificationRepository.save(notification);
-        }
+        });
         return ResponseEntity.ok().build();
     }
 
@@ -230,8 +248,14 @@ public class NotificationResource {
      */
     @PutMapping("/read-all")
     public ResponseEntity<Void> markAllNotificationsAsRead() {
-        log.debug("REST request to mark all Notifications as read");
-        List<Notification> notifications = notificationRepository.findByReadFalse();
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        log.debug("REST request to mark all Notifications as read for user {}", login);
+
+        if (login == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        List<Notification> notifications = notificationRepository.findByUserLoginAndReadFalse(login);
         for (Notification notification : notifications) {
             notification.setRead(true);
             notificationRepository.save(notification);

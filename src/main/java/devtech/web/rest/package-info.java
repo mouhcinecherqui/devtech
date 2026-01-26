@@ -1,4 +1,4 @@
 /**
  * Rest layer.
  */
-package devtech.web.rest;
+package devtechly.web.rest;

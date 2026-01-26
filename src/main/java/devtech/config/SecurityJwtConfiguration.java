@@ -1,10 +1,10 @@
-package devtech.config;
+package devtechly.config;
 
-import static devtech.security.SecurityUtils.JWT_ALGORITHM;
+import static devtechly.security.SecurityUtils.JWT_ALGORITHM;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.util.Base64;
-import devtech.management.SecurityMetersService;
+import devtechly.management.SecurityMetersService;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;

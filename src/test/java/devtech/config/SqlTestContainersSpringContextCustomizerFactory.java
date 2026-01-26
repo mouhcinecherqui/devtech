@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 import java.util.Arrays;
 import java.util.List;

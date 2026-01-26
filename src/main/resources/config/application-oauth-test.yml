@@ -7,9 +7,8 @@ spring:
       client:
         registration:
           google:
-            # Remplacez par vos nouveaux identifiants Google Cloud Console
-            client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
-            client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: openid,profile,email
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
             # Configuration supplémentaire pour le debug
@@ -29,5 +28,5 @@ logging:
     org.springframework.security.oauth2: DEBUG
     org.springframework.security.oauth2.client: DEBUG
     org.springframework.security.oauth2.core: DEBUG
-    devtech.web.rest.OAuth2Controller: DEBUG
-    devtech.service.OAuth2JwtService: DEBUG
+    devtechly.web.rest.OAuth2Controller: DEBUG
+    devtechly.service.OAuth2JwtService: DEBUG

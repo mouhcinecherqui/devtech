@@ -1,0 +1,135 @@
+{
+  "clientPayment": {
+    "pageTitle": "طرق الدفع الخاصة بي",
+    "header": {
+      "title": "دفع آمن",
+      "subtitle": "أكمل الدفع بأمان عبر PayPal أو تحويل بنكي مباشر"
+    },
+    "alerts": {
+      "errorPrefix": "خطأ:",
+      "successPrefix": "تم بنجاح:"
+    },
+    "sections": {
+      "amount": {
+        "title": "مبلغ الدفع"
+      },
+      "currency": {
+        "title": "العملة"
+      },
+      "method": {
+        "title": "طريقة الدفع"
+      },
+      "description": {
+        "title": "الوصف"
+      },
+      "date": {
+        "title": "تاريخ الدفع"
+      },
+      "security": {
+        "title": "دفع آمن",
+        "message": "سيتم معالجة دفعتك بأمان. لن يتم تخزين معلوماتك البنكية على خوادمنا."
+      }
+    },
+    "fields": {
+      "amount": {
+        "label": "المبلغ (درهم)",
+        "placeholder": "أدخل المبلغ"
+      },
+      "currency": {
+        "label": "العملة",
+        "options": {
+          "MAD": "MAD - الدرهم المغربي",
+          "EUR": "EUR - اليورو",
+          "USD": "USD - الدولار الأمريكي"
+        }
+      },
+      "cardNumber": {
+        "label": "رقم البطاقة",
+        "placeholder": "1234 5678 9012 3456"
+      },
+      "expiryDate": {
+        "label": "تاريخ الانتهاء",
+        "placeholder": "MM/YY"
+      },
+      "cvv": {
+        "label": "CVV",
+        "placeholder": "123"
+      },
+      "cardHolder": {
+        "label": "اسم صاحب البطاقة",
+        "placeholder": "الاسم كما هو على البطاقة"
+      },
+      "description": {
+        "label": "وصف الدفع",
+        "placeholder": "اشرح سبب هذا الدفع"
+      },
+      "date": {
+        "label": "التاريخ"
+      }
+    },
+    "savedMethods": {
+      "title": "طرق الدفع المحفوظة",
+      "defaultBadge": "افتراضي",
+      "useNew": "استخدام طريقة دفع جديدة",
+      "newTitle": "طريقة دفع جديدة",
+      "newSubtitle": "أدخل معلومات البطاقة"
+    },
+    "actions": {
+      "cancel": "إلغاء",
+      "submit": "متابعة الدفع",
+      "processing": "جاري المعالجة...",
+      "submitPaypal": "الدفع عبر باي بال",
+      "submitBankTransfer": "تأكيد طلب التحويل"
+    },
+    "info": {
+      "title": "معلومات مهمة",
+      "items": {
+        "realTime": "سيتم معالجة الدفع في الوقت الفعلي",
+        "confirmation": "ستتلقى تأكيداً عبر البريد الإلكتروني",
+        "invoice": "سيتم إنشاء فاتورة تلقائياً",
+        "support": "دعم متوفر على مدار الساعة في حال حدوث مشكلة"
+      }
+    },
+    "methods": {
+      "bankTransfer": "تحويل بنكي",
+      "bankTransferDesc": "ادفع عبر تحويل بنكي مباشر وشارك وصل التحويل.",
+      "paypal": "باي بال",
+      "paypalDesc": "استخدم حساب PayPal للدفع الفوري والآمن."
+    },
+    "messages": {
+      "createSuccess": "تم إنشاء طلب الدفع بنجاح. جارٍ تحويلك إلى بوابة الدفع...",
+      "createSuccessBankTransfer": "تم تسجيل الطلب. يرجى إتمام التحويل وإرسال الإثبات.",
+      "createSuccessPaypal": "تم تسجيل الطلب. سيتم فتح باي بال لإتمام الدفع...",
+      "createError": "حدث خطأ أثناء إنشاء طلب الدفع: {{error}}",
+      "unknownError": "خطأ غير معروف"
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب",
+      "amountMin": "الحد الأدنى للمبلغ هو {{min}}",
+      "amountMax": "الحد الأقصى للمبلغ هو {{max}}",
+      "descriptionMax": "لا يمكن أن يتجاوز الوصف {{max}} حرفاً"
+    },
+    "bankDetails": {
+      "title": "الدفع عن طريق التحويل البنكي",
+      "description": "قم بالتحويل إلى الحساب أدناه ثم أرسل وصل الدفع عبر البريد لتسريع التأكيد.",
+      "accountNameLabel": "صاحب الحساب",
+      "accountName": "MOUHCINE CHERQUI",
+      "bankName": "CIH BANK",
+      "iban": "MA64 2302 7035 5923 3211 0334 0052",
+      "bic": "CIHMMAMC",
+      "referenceLabel": "المرجع",
+      "referenceValue": "أضف رقم الفاتورة أو بريدك في خانة المرجع",
+      "note": "بعد التحويل، أرسل الوصل إلى support@devtechly.com للحصول على تأكيد أسرع."
+    },
+    "paypal": {
+      "title": "الدفع عبر باي بال",
+      "description": "سيتم تحويلك إلى PayPal لتأكيد الدفع.",
+      "steps": {
+        "instant": "تأكيد فوري باستخدام حساب PayPal الخاص بك",
+        "secure": "لا يتم تخزين أي بيانات بنكية على موقعنا",
+        "confirmation": "ستصلك رسالة إيصال من PayPal بعد الدفع"
+      },
+      "note": "سيتم تعبئة المبلغ المدخل أعلاه تلقائياً في PayPal."
+    }
+  }
+}

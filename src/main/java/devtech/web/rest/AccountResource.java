@@ -1,20 +1,20 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.AppUser;
-import devtech.domain.Authority;
-import devtech.domain.User;
-import devtech.repository.AppUserRepository;
-import devtech.repository.AuthorityRepository;
-import devtech.repository.UserRepository;
-import devtech.security.AuthoritiesConstants;
-import devtech.security.SecurityUtils;
-import devtech.service.MailService;
-import devtech.service.UserService;
-import devtech.service.dto.AdminUserDTO;
-import devtech.service.dto.PasswordChangeDTO;
-import devtech.web.rest.errors.*;
-import devtech.web.rest.vm.KeyAndPasswordVM;
-import devtech.web.rest.vm.ManagedUserVM;
+import devtechly.domain.AppUser;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
+import devtechly.repository.AppUserRepository;
+import devtechly.repository.AuthorityRepository;
+import devtechly.repository.UserRepository;
+import devtechly.security.AuthoritiesConstants;
+import devtechly.security.SecurityUtils;
+import devtechly.service.MailService;
+import devtechly.service.UserService;
+import devtechly.service.dto.AdminUserDTO;
+import devtechly.service.dto.PasswordChangeDTO;
+import devtechly.web.rest.errors.*;
+import devtechly.web.rest.vm.KeyAndPasswordVM;
+import devtechly.web.rest.vm.ManagedUserVM;
 import jakarta.validation.Valid;
 import java.util.*;
 import org.apache.commons.lang3.StringUtils;
@@ -183,7 +183,7 @@ public class AccountResource {
             // For OAuth2 users, persist changes into AppUser as well
             Optional<AppUser> appUserOpt = appUserRepository.findByEmail(userLogin);
             if (appUserOpt.isPresent()) {
-                AppUser appUser = appUserOpt.get();
+                AppUser appUser = appUserOpt.orElseThrow();
                 appUser.setFirstName(userDTO.getFirstName());
                 appUser.setLastName(userDTO.getLastName());
                 appUser.setEmail(userDTO.getEmail());
@@ -231,13 +231,20 @@ public class AccountResource {
         Optional<AppUser> appUserOpt = appUserRepository.findByEmail(userLogin);
         if (appUserOpt.isPresent()) {
             // For OAuth2 users, we need to create a JHipster User with the password
-            AppUser appUser = appUserOpt.get();
+            AppUser appUser = appUserOpt.orElseThrow();
 
             // Check if a JHipster User already exists for this email
             Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(appUser.getEmail());
             if (existingUser.isPresent()) {
-                // Update existing user's password
-                userService.changePassword(null, passwordDto.getNewPassword());
+                // Update existing user's password WITHOUT requiring current password (OAuth2 users don't have one)
+                User user = existingUser.orElseThrow();
+                String encryptedPassword = passwordEncoder.encode(passwordDto.getNewPassword());
+                user.setPassword(encryptedPassword);
+                userRepository.save(user);
+
+                // Keep AppUser password in sync as well (used by some flows)
+                appUser.setPassword(encryptedPassword);
+                appUserRepository.save(appUser);
             } else {
                 // Create new JHipster User for OAuth2 user
                 User newUser = new User();
@@ -266,6 +273,10 @@ public class AccountResource {
                 newUser.setPassword(encryptedPassword);
 
                 userRepository.save(newUser);
+
+                // Also persist password on AppUser (so future lookups remain consistent)
+                appUser.setPassword(encryptedPassword);
+                appUserRepository.save(appUser);
             }
         } else {
             throw new AccountResourceException("OAuth2 user not found");
@@ -279,13 +290,29 @@ public class AccountResource {
      */
     @PostMapping(path = "/account/reset-password/init")
     public void requestPasswordReset(@RequestBody String mail) {
+        LOG.info("Password reset requested for email: {}", mail);
         Optional<User> user = userService.requestPasswordReset(mail);
         if (user.isPresent()) {
-            mailService.sendPasswordResetMail(user.orElseThrow());
+            User userToReset = user.orElseThrow();
+            LOG.info("User found for password reset: {} (activated: {})", userToReset.getLogin(), userToReset.isActivated());
+            try {
+                mailService.sendPasswordResetMail(userToReset);
+                LOG.info("Password reset email sent successfully to: {}", mail);
+            } catch (Exception e) {
+                LOG.error("Failed to send password reset email to: {}. Error details: {}", mail, e.getMessage(), e);
+                // Don't throw exception to maintain security (don't reveal if email exists)
+                // But log the error for debugging
+            }
         } else {
+            // Check if user exists but is not activated
+            Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(mail);
+            if (existingUser.isPresent()) {
+                LOG.warn("Password reset requested for non-activated user: {}", mail);
+            } else {
+                LOG.warn("Password reset requested for non-existing email: {}", mail);
+            }
             // Pretend the request has been successful to prevent checking which emails really exist
             // but log that an invalid attempt has been made
-            LOG.warn("Password reset requested for non existing mail");
         }
     }
 

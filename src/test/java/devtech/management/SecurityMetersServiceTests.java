@@ -1,4 +1,4 @@
-package devtech.management;
+package devtechly.management;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

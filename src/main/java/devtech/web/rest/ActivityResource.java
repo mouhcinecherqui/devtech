@@ -1,8 +1,8 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.service.ActivityService;
-import devtech.service.dto.ActivityDTO;
-import devtech.web.rest.errors.BadRequestAlertException;
+import devtechly.service.ActivityService;
+import devtechly.service.dto.ActivityDTO;
+import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -24,7 +24,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link devtech.domain.Activity}.
+ * REST controller for managing {@link devtechly.domain.Activity}.
  */
 @RestController
 @RequestMapping("/api/activities")

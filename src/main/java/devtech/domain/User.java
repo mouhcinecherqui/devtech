@@ -1,7 +1,7 @@
-package devtech.domain;
+package devtechly.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import devtech.config.Constants;
+import devtechly.config.Constants;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

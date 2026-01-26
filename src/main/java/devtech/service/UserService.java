@@ -1,14 +1,14 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.config.Constants;
-import devtech.domain.Authority;
-import devtech.domain.User;
-import devtech.repository.AuthorityRepository;
-import devtech.repository.UserRepository;
-import devtech.security.AuthoritiesConstants;
-import devtech.security.SecurityUtils;
-import devtech.service.dto.AdminUserDTO;
-import devtech.service.dto.UserDTO;
+import devtechly.config.Constants;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
+import devtechly.repository.AuthorityRepository;
+import devtechly.repository.UserRepository;
+import devtechly.security.AuthoritiesConstants;
+import devtechly.security.SecurityUtils;
+import devtechly.service.dto.AdminUserDTO;
+import devtechly.service.dto.UserDTO;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -116,7 +116,7 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         if (
-            userDTO instanceof devtech.web.rest.vm.ManagedUserVM managedUserVM &&
+            userDTO instanceof devtechly.web.rest.vm.ManagedUserVM managedUserVM &&
             managedUserVM.getType() != null &&
             managedUserVM.getType().equalsIgnoreCase("client")
         ) {

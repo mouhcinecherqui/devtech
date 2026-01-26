@@ -41,7 +41,7 @@
         {{ 'sidebar.myTickets' | translate }}
       </a>
     </li>
-    <li routerLinkActive="active" *ngIf="isUser || isClient">
+    <li routerLinkActive="active" *ngIf="isUser">
       <a routerLink="/payment-methods">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">

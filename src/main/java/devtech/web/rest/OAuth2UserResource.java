@@ -1,8 +1,8 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.AppUser;
-import devtech.repository.AppUserRepository;
-import devtech.security.SecurityUtils;
+import devtechly.domain.AppUser;
+import devtechly.repository.AppUserRepository;
+import devtechly.security.SecurityUtils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -71,7 +71,7 @@ public class OAuth2UserResource {
             if (appUserId != null) {
                 Optional<AppUser> appUser = appUserRepository.findById(appUserId);
                 if (appUser.isPresent()) {
-                    AppUser user = appUser.get();
+                    AppUser user = appUser.orElseThrow();
                     Map<String, Object> userInfo = new HashMap<>();
                     userInfo.put("id", user.getId());
                     userInfo.put("firstName", user.getFirstName());
@@ -118,7 +118,7 @@ public class OAuth2UserResource {
             if (appUserId != null) {
                 Optional<AppUser> appUserOpt = appUserRepository.findById(appUserId);
                 if (appUserOpt.isPresent()) {
-                    AppUser appUser = appUserOpt.get();
+                    AppUser appUser = appUserOpt.orElseThrow();
 
                     // Mettre à jour les informations depuis le JWT
                     String name = jwt.getClaimAsString("name");

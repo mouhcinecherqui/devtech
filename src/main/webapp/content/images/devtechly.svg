@@ -2,6 +2,100 @@
   <defs>
     <style type="text/css">
       @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&amp;display=swap');
+
+      #animated-logo .wordmark {
+          font-size: 32px;
+          text-anchor: middle;
+          fill: url(#textGradient);
+      }
+
+      #animated-logo .wordmark .dev {
+          font-weight: 700;
+      }
+
+      #animated-logo .wordmark .techly {
+          font-weight: 500;
+      }
+
+      #animated-logo .slash {
+          font-family: monospace;
+          font-size: 36px;
+          text-anchor: middle;
+          font-weight: bold;
+          fill: #8E2DE2;
+          opacity: 0;
+          animation: slash-fade 7s infinite;
+      }
+
+      #animated-logo .bracket {
+          stroke-width: 7;
+          fill: none;
+          stroke-linecap: round;
+      }
+
+      #animated-logo .bracket.left {
+          stroke: #8E2DE2;
+          animation: left-bracket-anim 7s infinite;
+      }
+
+      #animated-logo .bracket.right {
+          stroke: #007BFF;
+          animation: right-bracket-anim 7s infinite;
+      }
+
+      #animated-logo .wordmark {
+          mask: url(#wipeMask);
+      }
+
+      #wipeMask rect {
+          animation: wipe-anim 7s infinite;
+      }
+
+      @keyframes wipe-anim {
+          0%, 100% {
+              x: 0;
+              width: 300px;
+          }
+          10% {
+              x: 0;
+              width: 300px;
+          }
+          20% {
+              x: 0;
+              width: 0;
+          }
+          70% {
+              x: 150px;
+              width: 0;
+          }
+      }
+
+      @keyframes slash-fade {
+          0%, 30%, 50%, 100% {
+              opacity: 0;
+          }
+          35%, 45% {
+              opacity: 1;
+          }
+      }
+
+      @keyframes left-bracket-anim {
+          0%, 20%, 70%, 100% {
+              d: path("M 70 20 L 55 35 L 70 50");
+          }
+          30%, 50% {
+              d: path("M 135 20 L 120 35 L 135 50");
+          }
+      }
+
+      @keyframes right-bracket-anim {
+          0%, 20%, 70%, 100% {
+              d: path("M 230 20 L 245 35 L 230 50");
+          }
+          30%, 50% {
+              d: path("M 165 20 L 180 35 L 165 50");
+          }
+      }
     </style>
 
     <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -19,36 +113,25 @@
       </feMerge>
     </filter>
 
-    <!-- Mask for the wipe effect with a SINGLE rectangle to prevent seams -->
     <mask id="wipeMask">
       <rect x="0" y="0" width="300" height="90" fill="white">
-        <animate attributeName="x" dur="7s" repeatCount="indefinite" values="0; 0; 150; 0" keyTimes="0; 0.2; 0.7; 1" />
-        <animate attributeName="width" dur="7s" repeatCount="indefinite" values="300; 0; 0; 300" keyTimes="0; 0.2; 0.7; 1" />
       </rect>
     </mask>
 
   </defs>
 
-  <g filter="url(#softShadow)" transform="translate(0, 10)">
-    <!-- Animated Brackets -->
+  <g id="animated-logo" filter="url(#softShadow)" transform="translate(0, 10)">
     <g font-family="monospace" font-weight="bold">
-      <path stroke="#8E2DE2" stroke-width="7" fill="none" stroke-linecap="round">
-        <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M 70 20 L 55 35 L 70 50; M 135 20 L 120 35 L 135 50; M 135 20 L 120 35 L 135 50; M 70 20 L 55 35 L 70 50; M 70 20 L 55 35 L 70 50" keyTimes="0; 0.2; 0.5; 0.7; 1" />
-      </path>
-      <path stroke="#007BFF" stroke-width="7" fill="none" stroke-linecap="round">
-        <animate attributeName="d" dur="7s" repeatCount="indefinite" values="M 230 20 L 245 35 L 230 50; M 165 20 L 180 35 L 165 50; M 165 20 L 180 35 L 165 50; M 230 20 L 245 35 L 230 50; M 230 20 L 245 35 L 230 50" keyTimes="0; 0.2; 0.5; 0.7; 1" />
-      </path>
+        <path class="bracket left" d="M 70 20 L 55 35 L 70 50"></path>
+        <path class="bracket right" d="M 230 20 L 245 35 L 230 50"></path>
     </g>
 
-    <!-- Wordmark with wipe effect -->
-    <text x="150" y="48" font-family="'Rajdhani', sans-serif" font-size="32" fill="url(#textGradient)" text-anchor="middle" mask="url(#wipeMask)">
-      <tspan font-weight="700">Dev</tspan><tspan font-weight="500">Techly</tspan>
+    <text class="wordmark" x="150" y="48" font-family="'Rajdhani', sans-serif">
+      <tspan class="dev">Dev</tspan><tspan class="techly">Techly</tspan>
     </text>
 
-    <!-- Slash symbol / -->
-    <text x="150" y="48" font-family="monospace" font-size="36" fill="#8E2DE2" text-anchor="middle" font-weight="bold">
+    <text class="slash" x="150" y="48">
       /
-      <animate attributeName="opacity" dur="7s" repeatCount="indefinite" values="0; 0; 1; 1; 0; 0" keyTimes="0; 0.2; 0.3; 0.4; 0.5; 1" />
     </text>
   </g>
 </svg>

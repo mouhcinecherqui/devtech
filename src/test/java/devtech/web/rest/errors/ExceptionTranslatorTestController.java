@@ -1,4 +1,4 @@
-package devtech.web.rest.errors;
+package devtechly.web.rest.errors;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

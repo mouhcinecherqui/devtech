@@ -1,6 +1,6 @@
-package devtech.config;
+package devtechly.config;
 
-import devtech.IntegrationTest;
+import devtechly.IntegrationTest;
 import java.util.Comparator;
 import org.junit.jupiter.api.ClassDescriptor;
 import org.junit.jupiter.api.ClassOrderer;

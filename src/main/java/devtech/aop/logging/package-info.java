@@ -1,4 +1,4 @@
 /**
  * Logging aspect.
  */
-package devtech.aop.logging;
+package devtechly.aop.logging;

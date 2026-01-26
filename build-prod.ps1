@@ -28,7 +28,7 @@ Write-Host ""
 Write-Host "[*] Construction de l'image Docker de production..." -ForegroundColor Cyan
 Write-Host "    Cela peut prendre 10-15 minutes..." -ForegroundColor Yellow
 
-docker build -f Dockerfile.jhipster -t devtech:latest .
+docker build -f Dockerfile.jhipster -t devtechly:latest .
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host ""
@@ -59,6 +59,10 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "   Verifiez les logs ci-dessus pour plus de details" -ForegroundColor Yellow
     exit 1
 }
+
+
+
+
 
 
 

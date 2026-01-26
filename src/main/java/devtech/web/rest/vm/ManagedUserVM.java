@@ -1,6 +1,6 @@
-package devtech.web.rest.vm;
+package devtechly.web.rest.vm;
 
-import devtech.service.dto.AdminUserDTO;
+import devtechly.service.dto.AdminUserDTO;
 import jakarta.validation.constraints.Size;
 
 /**

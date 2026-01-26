@@ -1,15 +1,119 @@
-<div>
-  <div class="row">
-    <div class="col-md-4">
-      <span class="hipster img-fluid rounded"></span>
-    </div>
-
-    <div class="col-md-8">
-      <h1 jhiTranslate="error.title">Page d&apos;erreur !</h1>
-
-      @if (errorMessage(); as errMessage) {
-        <div class="alert alert-danger">{{ errMessage }}</div>
+<div
+  class="error-container"
+  [attr.data-error-type]="
+    errorKey === 'error.http.403' ? '403' : errorKey === 'error.http.404' ? '404' : errorKey === 'error.http.500' ? '500' : null
+  "
+>
+  <div class="error-content">
+    @switch (errorKey) {
+      @case ('error.http.403') {
+        <div class="error-icon">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-slash"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          </svg>
+        </div>
+        <h1 class="error-title" jhiTranslate="error.http.403.title"></h1>
+        <p class="error-description" jhiTranslate="error.http.403.description"></p>
       }
-    </div>
+      @case ('error.http.404') {
+        <div class="error-icon">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-alert-triangle"
+          >
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <h1 class="error-title" jhiTranslate="error.http.404.title"></h1>
+        <p class="error-description" jhiTranslate="error.http.404.description"></p>
+      }
+      @case ('error.http.500') {
+        <div class="error-icon">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-server"
+          >
+            <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+            <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+            <line x1="6" y1="6" x2="6.01" y2="6"></line>
+            <line x1="18" y1="6" x2="18.01" y2="6"></line>
+            <line x1="6" y1="18" x2="6.01" y2="18"></line>
+            <line x1="18" y1="18" x2="18.01" y2="18"></line>
+          </svg>
+        </div>
+        <h1 class="error-title" jhiTranslate="error.http.500.title"></h1>
+        <p class="error-description" jhiTranslate="error.http.500.description"></p>
+      }
+      @default {
+        <div class="error-icon">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-help-circle"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <h1 class="error-title" jhiTranslate="error.title"></h1>
+        <p class="error-description" jhiTranslate="error.description"></p>
+      }
+    }
+
+    @if (errorMessage(); as errMessage) {
+      <div class="alert alert-danger">{{ errMessage }}</div>
+    }
+
+    <button class="btn-primary error-cta" routerLink="/">
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-home"
+      >
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+      </svg>
+      {{ 'error.http.backToHome' | translate }}
+    </button>
   </div>
 </div>

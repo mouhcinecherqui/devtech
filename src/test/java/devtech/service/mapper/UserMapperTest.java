@@ -1,12 +1,12 @@
-package devtech.service.mapper;
+package devtechly.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import devtech.domain.Authority;
-import devtech.domain.User;
-import devtech.security.AuthoritiesConstants;
-import devtech.service.dto.AdminUserDTO;
-import devtech.service.dto.UserDTO;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
+import devtechly.security.AuthoritiesConstants;
+import devtechly.service.dto.AdminUserDTO;
+import devtechly.service.dto.UserDTO;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;

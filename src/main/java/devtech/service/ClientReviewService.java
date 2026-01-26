@@ -1,9 +1,9 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.ClientReview;
-import devtech.repository.ClientReviewRepository;
-import devtech.service.dto.ClientReviewDTO;
-import devtech.service.mapper.ClientReviewMapper;
+import devtechly.domain.ClientReview;
+import devtechly.repository.ClientReviewRepository;
+import devtechly.service.dto.ClientReviewDTO;
+import devtechly.service.mapper.ClientReviewMapper;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;

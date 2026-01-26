@@ -1,4 +1,4 @@
-package devtech.domain;
+package devtechly.domain;
 
 import java.util.UUID;
 

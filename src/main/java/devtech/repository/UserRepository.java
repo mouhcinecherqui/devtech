@@ -1,12 +1,14 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.User;
+import devtechly.domain.User;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -27,4 +29,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
     Page<User> findAllByIdNotNullAndActivatedIsTrue(Pageable pageable);
+
+    /**
+     * Récupérer tous les utilisateurs disposant d'une autorité donnée
+     */
+    @EntityGraph(attributePaths = "authorities")
+    @Query("select distinct user from User user left join user.authorities auth where auth.name = :authority")
+    List<User> findAllByAuthority(@Param("authority") String authority);
 }

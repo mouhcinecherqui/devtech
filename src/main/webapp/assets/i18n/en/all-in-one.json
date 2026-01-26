@@ -42,7 +42,7 @@
     }
   },
   "global": {
-    "title": "Devtech",
+    "title": "devtechly",
     "menu": {
       "home": "Home",
       "login": "Sign in",
@@ -57,7 +57,10 @@
     "form": {
       "username": "Username",
       "password": "Password",
-      "email": "Email",
+      "email": {
+        "label": "Email",
+        "placeholder": "Your email"
+      },
       "newpassword": {
         "label": "New password",
         "placeholder": "Enter your new password"
@@ -80,15 +83,24 @@
           "noaccount": "Don't have an account yet?",
           "link": "Create an account"
         }
+      },
+      "validate": {
+        "email": {
+          "required": "Your email is required.",
+          "minlength": "Your email must be at least 5 characters.",
+          "maxlength": "Your email cannot be longer than 50 characters.",
+          "invalid": "Your email is not valid."
+        }
       }
     },
     "field": {
       "id": "ID"
     },
+    "cancel": "Cancel",
     "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
     "home": {
-      "title": "Welcome to DevTech",
-      "subtitle": "DevTech is your trusted partner for digital innovation. We specialize in building modern web applications and robust e-commerce platforms with CMS integration. Our mission is to empower your business with the latest web technologies and deliver solutions tailored to your needs.",
+      "title": "Welcome to devtechly",
+      "subtitle": "devtechly is your trusted partner for digital innovation. We specialize in building modern web applications and robust e-commerce platforms with CMS integration. Our mission is to empower your business with the latest web technologies and deliver solutions tailored to your needs.",
       "servicesTitle": "Our Services",
       "service1": {
         "title": "Custom Web Application Development",
@@ -102,7 +114,7 @@
         "title": "Content Management Systems (CMS)",
         "desc": "Flexible and user-friendly CMS solutions for easy website management."
       },
-      "whyChooseTitle": "Why Choose DevTech?",
+      "whyChooseTitle": "Why Choose devtechly?",
       "why1": "Experienced team of web developers and designers",
       "why2": "Client-focused approach and transparent communication",
       "why3": "Agile development process for faster delivery",
@@ -157,15 +169,28 @@
   },
   "settings": {
     "title": "Profile of user {{username}}",
+    "titlePrefix": "Profile of",
     "form": {
       "firstname": "First name",
+      "firstname.placeholder": "Your first name",
       "lastname": "Last name",
+      "lastname.placeholder": "Your last name",
+      "phone": "Phone",
+      "phone.placeholder": "Your phone number",
       "language": "Language",
       "button": "Save",
-      "phone": "Phone number"
+      "changePassword": "Change password"
+    },
+    "oauth": {
+      "googleAccount": "Google Account:",
+      "googleAccountMessage": "You are logged in via Google. You can set a password for your account in order to be able to log in with your traditional credentials."
     },
     "messages": {
-      "success": "Your profile has been saved!",
+      "success": "<strong>Your profile has been saved!</strong>",
+      "error": {
+        "fail": "<strong>Something went wrong!</strong> Your profile could not be saved.",
+        "emailexists": "<strong>This email is already in use!</strong> Please choose another."
+      },
       "validate": {
         "firstname": {
           "required": "Your first name is required.",
@@ -384,14 +409,43 @@
     "hostingUrl": "Hosting URL",
     "cancel": "Cancel",
     "detail": "Ticket detail",
-    "info": "Ticket information",
+    "info": {
+      "title": "Ticket information",
+      "backofficeUrlPlaceholder": "https://your-backoffice.com",
+      "loginPlaceholder": "Your username",
+      "passwordPlaceholder": "Your password",
+      "hostingUrlPlaceholder": "https://your-hosting.com"
+    },
     "status": "Status",
     "date": "Date",
     "history": "My ticket history",
     "loading": "Loading...",
     "backoffice": "Backoffice",
     "hosting": "Hosting",
-    "noTickets": "No tickets yet."
+    "noTickets": "No tickets yet.",
+    "adminMessages": {
+      "singular": "{{count}} team message",
+      "plural": "{{count}} team messages"
+    },
+    "status": {
+      "nouveau": "New",
+      "enCours": "In progress",
+      "resolu": "Resolved",
+      "ferme": "Closed",
+      "urgent": "Urgent",
+      "enAttentePaiement": "Awaiting payment",
+      "paiementValide": "Payment validated",
+      "devisValide": "Quote validated"
+    },
+    "viewDetails": "View details →",
+    "meta": {
+      "backoffice": "Backoffice",
+      "hosting": "Hosting"
+    },
+    "empty": {
+      "title": "No tickets found",
+      "cta": "Create your first ticket"
+    }
   },
   "clientsAdmin": {
     "title": "Clients",
@@ -530,7 +584,11 @@
       "phone": "Phone",
       "email": "Email",
       "address": "Address",
-      "workingHours": "Working Hours"
+      "workingHours": "Working Hours",
+      "name": "devtechly",
+      "phoneValue": "+33 1 23 45 67 89",
+      "emailValue": "contact@devtechly.com",
+      "workingHoursValue": "Monday - Friday: 9:00 AM - 6:00 PM"
     },
     "form": {
       "title": "Send Message",

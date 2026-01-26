@@ -1,9 +1,11 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/main/webapp/**/*.ts"],
+  "include": ["src/main/webapp/**/*.ts", "src/main/webapp/**/*.json"],
   "compilerOptions": {
     "composite": true,
     "outDir": "target/out-tsc/spec",
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   }
 }

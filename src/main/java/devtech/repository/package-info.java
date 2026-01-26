@@ -1,4 +1,4 @@
 /**
  * Repository layer.
  */
-package devtech.repository;
+package devtechly.repository;

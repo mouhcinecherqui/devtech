@@ -1,6 +1,6 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.Paiement;
+import devtechly.domain.Paiement;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

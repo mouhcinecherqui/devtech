@@ -1,0 +1,264 @@
+{
+  "global": {
+    "title": "devtechly",
+    "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
+    "menu": {
+      "home": "Home",
+      "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "entities": {
+        "main": "Entities",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
+        "adminAuthority": "Authority"
+      },
+      "account": {
+        "main": "Account",
+        "settings": "Profile",
+        "password": "Password",
+        "sessions": "Sessions",
+        "login": "Sign in",
+        "logout": "Sign out",
+        "register": "Register"
+      },
+      "admin": {
+        "main": "Administration",
+        "userManagement": "User management",
+        "tracker": "User tracker",
+        "metrics": "Metrics",
+        "health": "Health",
+        "configuration": "Configuration",
+        "logs": "Logs",
+        "apidocs": "API",
+        "database": "Database",
+        "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
+      },
+      "language": "Language"
+    },
+    "form": {
+      "username.label": "Username",
+      "username.placeholder": "Your username",
+      "currentpassword.label": "Current password",
+      "currentpassword.placeholder": "Current password",
+      "newpassword.label": "New password",
+      "newpassword.placeholder": "New password",
+      "confirmpassword.label": "Confirm new password",
+      "confirmpassword.placeholder": "Confirm new password",
+      "email.label": "Email",
+      "email.placeholder": "Your email"
+    },
+    "messages": {
+      "info": {
+        "authenticated": {
+          "prefix": "If you want to ",
+          "link": "sign in",
+          "suffix": ", you can try the default accounts:<br/>- Administrator (login=\"admin\" and password=\"admin\") <br/>- User (login=\"user\" and password=\"user\")."
+        },
+        "register": {
+          "noaccount": "You don't have an account yet?",
+          "link": "Register a new account"
+        }
+      },
+      "error": {
+        "dontmatch": "The password and its confirmation do not match!"
+      },
+      "validate": {
+        "newpassword": {
+          "required": "Your password is required.",
+          "minlength": "Your password is required to be at least 4 characters.",
+          "maxlength": "Your password cannot be longer than 50 characters.",
+          "strength": "Password strength:"
+        },
+        "confirmpassword": {
+          "required": "Your confirmation password is required.",
+          "minlength": "Your confirmation password is required to be at least 4 characters.",
+          "maxlength": "Your confirmation password cannot be longer than 50 characters."
+        },
+        "email": {
+          "required": "Your email is required.",
+          "minlength": "Your email is required to be at least 5 characters.",
+          "maxlength": "Your email cannot be longer than 50 characters.",
+          "invalid": "Your email is invalid."
+        }
+      }
+    },
+    "field": {
+      "id": "ID"
+    },
+    "cancel": "Cancel",
+    "ribbon": {
+      "dev": "Development"
+    },
+    "item-count": "Showing {{first}} - {{second}} of {{total}} items.",
+    "home": {
+      "badge": "Digital Innovation",
+      "title": "Welcome to devtechly",
+      "subtitle": "devtechly is your trusted partner for digital innovation. We specialize in building modern web applications and robust e-commerce platforms with CMS integration. Our mission is to empower your business with the latest web technologies and deliver solutions tailored to your needs.",
+      "learnMore": "Learn More",
+      "stats": {
+        "projects": "Projects",
+        "clients": "Clients",
+        "experience": "Years of Experience"
+      },
+      "heroCard1": {
+        "title": "Custom Solutions",
+        "desc": "Development tailored to your specific needs"
+      },
+      "heroCard2": {
+        "title": "Modern Technologies",
+        "desc": "Using the latest web innovations"
+      },
+      "heroCard3": {
+        "title": "Ongoing Support",
+        "desc": "Support at every step of your project"
+      },
+      "servicesTitle": "Our Services",
+      "servicesSubtitle": "Complete web solutions to transform your digital presence",
+      "service1": {
+        "title": "Custom Web Application Development",
+        "desc": "Scalable, secure, and high-performance web apps for any business need.",
+        "feature1": "Scalable and modular architecture",
+        "feature2": "Enhanced security and compliance",
+        "feature3": "Optimized performance"
+      },
+      "service2": {
+        "title": "E-commerce Website Development",
+        "desc": "Online stores with seamless CMS integration, payment gateways, and inventory management.",
+        "feature1": "Payment gateway integration",
+        "feature2": "Advanced inventory management",
+        "feature3": "Intuitive admin interface"
+      },
+      "service3": {
+        "title": "Content Management Systems (CMS)",
+        "desc": "Flexible and user-friendly CMS solutions for easy website management.",
+        "feature1": "Simplified content editing",
+        "feature2": "Multi-user management",
+        "feature3": "Built-in SEO"
+      },
+      "statsSection": {
+        "onTime": "On-Time Delivery",
+        "rating": "Average Rating",
+        "support": "Customer Support",
+        "availability": "Uptime"
+      },
+      "whyChooseBadge": "Why Choose Us",
+      "whyChooseTitle": "Why choose devtechly?",
+      "whyChooseSubtitle": "Advantages that make a difference for your project",
+      "why1": {
+        "title": "Experienced Team",
+        "desc": "Experienced team of web developers and designers",
+        "detail": "Experienced team of web developers and designers"
+      },
+      "why2": {
+        "title": "Client-Focused",
+        "desc": "Client-centered approach and transparent communication",
+        "detail": "Client-centered approach and transparent communication"
+      },
+      "why3": {
+        "title": "Fast Delivery",
+        "desc": "Agile development process for faster delivery",
+        "detail": "Agile development process for faster delivery"
+      },
+      "why4": {
+        "title": "Cutting-Edge Tech",
+        "desc": "Cutting-edge web technologies and best practices",
+        "detail": "Cutting-edge web technologies and best practices"
+      },
+      "why5": {
+        "title": "Complete Support",
+        "desc": "Complete support after launch",
+        "detail": "Complete support after launch"
+      },
+      "why6": {
+        "title": "Quality Guaranteed",
+        "desc": "Commitment to excellence and customer satisfaction",
+        "detail": "Rigorous testing and optimal code quality"
+      },
+      "ctaTitle": "Ready to start your web project?",
+      "ctaDesc": "Contact us today to discuss your needs and get a free consultation!",
+      "ctaBtn": "Get Started"
+    },
+    "email": {
+      "greeting": "Hello {{name}}",
+      "regards": "Regards",
+      "ticket": {
+        "updated": {
+          "title": "Your ticket has been updated (ID: {{ticket.id}})",
+          "text1": "Your ticket has been updated."
+        },
+        "id": "Ticket ID:",
+        "status": "New status:",
+        "lastMessage": "Last message:"
+      },
+      "viewTicket": "View Ticket"
+    }
+  },
+  "entity": {
+    "action": {
+      "addblob": "Add blob",
+      "addimage": "Add image",
+      "back": "Back",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "open": "Open",
+      "save": "Save",
+      "view": "View",
+      "show": "Show {{otherEntity}}"
+    },
+    "detail": {
+      "field": "Field",
+      "value": "Value"
+    },
+    "delete": {
+      "title": "Confirm delete operation"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "minlength": "This field is required to be at least {{min}} character.",
+      "maxlength": "This field cannot be longer than {{max}} characters.",
+      "min": "This field should be greater than {{min}}.",
+      "max": "This field should be less than {{max}}.",
+      "minbytes": "This field should be greater than {{min}} bytes.",
+      "maxbytes": "This field should be less than {{max}} bytes.",
+      "pattern": "This field should follow pattern {{pattern}}.",
+      "number": "This field should be a number.",
+      "datetimelocal": "This field should be a date and time.",
+      "patternLogin": "This field can only contain letters, digits and e-mail addresses."
+    },
+    "filters": {
+      "set": "Following filters are set",
+      "clear": "Clear filter",
+      "clearAll": "Clear all filters"
+    }
+  },
+  "error": {
+    "internalServerError": "Internal server error",
+    "server.not.reachable": "Server not reachable",
+    "url.not.found": "Not found",
+    "NotNull": "This field cannot be empty!",
+    "Size": "This field does not meet the min and max requirements!",
+    "userexists": "Login name already used!",
+    "emailexists": "Email is already in use!",
+    "idexists": "A new {{entityName}} cannot already have an ID",
+    "idnull": "Invalid Id",
+    "idinvalid": "Invalid Id",
+    "idnotfound": "ID cannot be found",
+    "file": {
+      "could.not.extract": "Could not extract file",
+      "not.image": "File was expected to be an image and was found to be \"{{ fileType }}\""
+    }
+  },
+  "footer": "This is your footer",
+  "navbar": {
+    "home": "Home",
+    "userDashboard": "User Dashboard",
+    "adminDashboard": "Admin Dashboard",
+    "managerDashboard": "Manager Dashboard",
+    "clientDashboard": "Client Dashboard",
+    "notifications": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications",
+    "login": "Sign in",
+    "register": "Register",
+    "logout": "Sign out"
+  }
+}

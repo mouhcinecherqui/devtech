@@ -1,10 +1,10 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.Paiement;
-import devtech.domain.Ticket;
-import devtech.repository.PaiementRepository;
-import devtech.repository.TicketRepository;
-import devtech.service.dto.PaiementDTO;
+import devtechly.domain.Paiement;
+import devtechly.domain.Ticket;
+import devtechly.repository.PaiementRepository;
+import devtechly.repository.TicketRepository;
+import devtechly.service.dto.PaiementDTO;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,7 +104,7 @@ public class TicketPaymentService {
             // Trouver le ticket associé au paiement
             Optional<Ticket> ticketOpt = ticketRepository.findByPaiementId(paiementDTO.id);
             if (ticketOpt.isPresent()) {
-                Ticket ticket = ticketOpt.get();
+                Ticket ticket = ticketOpt.orElseThrow();
 
                 // Mettre à jour le statut du ticket selon le paiement
                 if ("COMPLETED".equals(paiementDTO.status)) {

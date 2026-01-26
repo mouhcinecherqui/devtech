@@ -2,7 +2,7 @@
   "generator-jhipster": {
     "applicationType": "monolith",
     "authenticationType": "jwt",
-    "baseName": "devtech",
+    "baseName": "devtechly",
     "buildTool": "maven",
     "cacheProvider": "no",
     "clientFramework": "angular",
@@ -21,7 +21,7 @@
     "microfrontend": null,
     "microfrontends": [],
     "nativeLanguage": "fr",
-    "packageName": "devtech",
+    "packageName": "devtechly",
     "prodDatabaseType": "mysql",
     "reactive": false,
     "serverPort": null,

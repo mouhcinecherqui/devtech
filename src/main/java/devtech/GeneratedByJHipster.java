@@ -1,4 +1,4 @@
-package devtech;
+package devtechly;
 
 import jakarta.annotation.Generated;
 import java.lang.annotation.ElementType;

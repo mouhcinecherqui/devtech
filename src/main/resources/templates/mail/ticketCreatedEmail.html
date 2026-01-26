@@ -17,27 +17,30 @@
         max-width: 600px;
         margin: 0 auto;
         background-color: #ffffff;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+        border-radius: 12px;
+        overflow: hidden;
       }
 
       .email-header {
-        background: linear-gradient(135deg, #17a2b8, #138496);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 30px 20px;
         text-align: center;
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
       }
 
       .logo {
         width: 80px;
         height: 80px;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
         margin: 0 auto 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 32px;
-        font-weight: bold;
+        display: block;
+      }
+
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
 
       .company-name {
@@ -58,26 +61,28 @@
 
       .greeting {
         font-size: 18px;
-        color: #333;
+        color: #1e293b;
         margin-bottom: 20px;
+        font-weight: 500;
       }
 
       .content-text {
         font-size: 16px;
-        color: #555;
+        color: #475569;
         margin-bottom: 20px;
+        line-height: 1.7;
       }
 
       .ticket-box {
-        background-color: #e1f5fe;
-        border: 2px solid #17a2b8;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border: 2px solid #667eea;
         border-radius: 8px;
         padding: 25px;
         margin: 25px 0;
       }
 
       .ticket-title {
-        color: #17a2b8;
+        color: #667eea;
         font-size: 20px;
         font-weight: 600;
         margin-bottom: 15px;
@@ -98,7 +103,7 @@
       }
 
       .info-table th {
-        background-color: #17a2b8;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 12px;
         text-align: left;
@@ -126,7 +131,7 @@
       }
 
       .status-open {
-        background-color: #d4edda;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
         color: #155724;
       }
 
@@ -142,7 +147,7 @@
 
       .button {
         display: inline-block;
-        background: linear-gradient(135deg, #17a2b8, #138496);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         padding: 15px 35px;
         text-decoration: none;
@@ -181,24 +186,23 @@
       }
 
       .email-footer {
-        background-color: #f8f9fa;
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
         padding: 30px;
         text-align: center;
-        border-top: 1px solid #e9ecef;
+        border-top: 2px solid rgba(102, 126, 234, 0.2);
       }
 
       .footer-logo {
         width: 50px;
         height: 50px;
-        background: linear-gradient(135deg, #007bff, #0056b3);
-        border-radius: 8px;
         margin: 0 auto 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 16px;
+        display: block;
+      }
+
+      .footer-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
       }
 
       .footer-text {
@@ -217,7 +221,8 @@
 
       .contact-item {
         font-size: 13px;
-        color: #666;
+        color: #64748b;
+        font-weight: 500;
       }
 
       .copyright {
@@ -225,7 +230,7 @@
         color: #999;
         margin-top: 20px;
         padding-top: 20px;
-        border-top: 1px solid #e9ecef;
+        border-top: 2px solid rgba(102, 126, 234, 0.2);
       }
 
       @media (max-width: 600px) {
@@ -257,7 +262,9 @@
     <div class="email-container">
       <!-- Header -->
       <div class="email-header">
-        <div class="logo">DT</div>
+        <div class="logo">
+          <img th:src="|cid:dt-logo.png|" alt="DevTechly Logo" />
+        </div>
         <h1 class="company-name">DevTechly</h1>
         <p class="company-tagline">Solutions Technologiques Innovantes</p>
       </div>
@@ -333,7 +340,9 @@
 
       <!-- Footer -->
       <div class="email-footer">
-        <div class="footer-logo">DT</div>
+        <div class="footer-logo">
+          <img th:src="|cid:dt-logo.png|" alt="DevTechly Logo" />
+        </div>
         <div class="footer-text">
           <strong>DevTechly</strong><br />
           Solutions Technologiques Innovantes

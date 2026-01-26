@@ -1,4 +1,4 @@
-package devtech.service.mapper;
+package devtechly.service.mapper;
 
 import java.util.List;
 

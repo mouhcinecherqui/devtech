@@ -7,9 +7,12 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!-- Ajouter les champs de paiement à la table ticket -->
-    <changeSet id="20240724_add_ticket_payment_fields" author="devtech">
+    <changeSet id="20240724_add_ticket_payment_fields" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket"/>
+            <not>
+                <columnExists tableName="ticket" columnName="payment_required"/>
+            </not>
         </preConditions>
         
         <!-- Champ pour indiquer si un paiement est requis -->
@@ -56,9 +59,12 @@
     </changeSet>
 
     <!-- Ajouter des index pour les performances -->
-    <changeSet id="20240724_add_ticket_payment_indexes" author="devtech">
+    <changeSet id="20240724_add_ticket_payment_indexes" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket"/>
+            <not>
+                <indexExists tableName="ticket" indexName="idx_ticket_payment_required"/>
+            </not>
         </preConditions>
         
         <!-- Index pour les tickets nécessitant un paiement -->
@@ -83,7 +89,7 @@
     </changeSet>
 
     <!-- Ajouter une contrainte de clé étrangère pour paiement_id -->
-    <changeSet id="20240724_add_ticket_paiement_fk" author="devtech">
+    <changeSet id="20240724_add_ticket_paiement_fk" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket"/>
             <tableExists tableName="paiement"/>

@@ -1,8 +1,8 @@
-package devtech.service.dto;
+package devtechly.service.dto;
 
-import devtech.config.Constants;
-import devtech.domain.Authority;
-import devtech.domain.User;
+import devtechly.config.Constants;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;

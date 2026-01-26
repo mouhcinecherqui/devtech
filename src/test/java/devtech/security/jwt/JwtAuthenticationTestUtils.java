@@ -1,8 +1,8 @@
-package devtech.security.jwt;
+package devtechly.security.jwt;
 
-import static devtech.security.AuthoritiesConstants.ADMIN;
-import static devtech.security.SecurityUtils.AUTHORITIES_CLAIM;
-import static devtech.security.SecurityUtils.JWT_ALGORITHM;
+import static devtechly.security.AuthoritiesConstants.ADMIN;
+import static devtechly.security.SecurityUtils.AUTHORITIES_CLAIM;
+import static devtechly.security.SecurityUtils.JWT_ALGORITHM;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.util.Base64;

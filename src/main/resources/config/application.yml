@@ -91,7 +91,7 @@ management:
 
 spring:
   application:
-    name: devtech
+    name: devtechly
   docker:
     compose:
       enabled: true
@@ -108,6 +108,10 @@ spring:
         - api-docs
         # Uncomment to activate TLS for the dev profile
         #- tls
+      prod:
+        - prod
+        - cmi-prod
+        - oauth-prod
   jmx:
     enabled: false
   data:
@@ -152,8 +156,9 @@ spring:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
-            client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+            # Placeholders si .env absent ; .env + backend:start:env pour OAuth2 réel
+            client-id: ${GOOGLE_CLIENT_ID:dev-google-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:dev-google-client-secret}
             scope: openid,profile,email
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
         provider:
@@ -164,13 +169,13 @@ spring:
             user-name-attribute: sub
   task:
     execution:
-      thread-name-prefix: devtech-task-
+      thread-name-prefix: devtechly-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: devtech-scheduling-
+      thread-name-prefix: devtechly-scheduling-
       pool:
         size: 2
   thymeleaf:
@@ -211,12 +216,12 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: devtech@localhost
+    from: devtechly@localhost
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
-    title: Devtech API
-    description: Devtech API documentation
+    title: devtechly API
+    description: devtechly API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:

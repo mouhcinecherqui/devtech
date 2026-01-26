@@ -7,6 +7,28 @@
     </div>
   </div>
 
+  <!-- Virement bancaire (seul moyen de paiement) -->
+  <!-- On l'affiche dès que le composant a tenté de charger ou a des données -->
+  <div *ngIf="shouldDisplayContent()" class="transfer-info">
+    <div class="alert alert-secondary">
+      <strong>Virement bancaire</strong><br />
+      <strong>Banque :</strong> CIH BANK<br />
+      <strong>Titulaire :</strong> MOUHCINE CHERQUI<br />
+      IBAN : MA64 2302 7035 5923 3211 0334 0052<br />
+      BIC / SWIFT : CIHMMAMC<br />
+      Référence à indiquer : Ticket #{{ ticketId }}<br />
+      Montant : {{ paymentStatus?.paymentAmount || paymentInfo?.amount || 0 }}
+      {{ paymentStatus?.paymentCurrency || paymentInfo?.currency || 'MAD' }}<br />
+      Envoyez le justificatif à support&#64;devtechly.com pour validation rapide.
+      <div class="proof-upload">
+        <label class="form-label" for="transferProof">Joindre le justificatif (capture ou PDF)</label>
+        <input id="transferProof" type="file" class="form-control" accept="image/*,.pdf" (change)="onTransferProofSelected($event)" />
+        <div class="proof-hint">Formats acceptés : images ou PDF, max ~10 Mo.</div>
+        <div *ngIf="transferProofName" class="proof-selected">Fichier sélectionné : {{ transferProofName }}</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Statut de paiement pour un ticket existant -->
   <div *ngIf="paymentStatus" class="payment-status">
     <div class="status-card">
@@ -43,10 +65,13 @@
     </div>
   </div>
 
-  <!-- Indicateur de chargement -->
-  <div *ngIf="isLoading" class="loading-overlay">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Chargement...</span>
+  <!-- Indicateur de chargement supprimé (virement bancaire affiché sans spinner) -->
+
+  <!-- État neutre si rien à afficher mais qu'on a tenté de charger -->
+  <div *ngIf="!isLoading && !paymentStatus && !paymentInfo && shouldDisplayContent()" class="payment-empty">
+    <div class="alert alert-info">
+      <i class="fas fa-info-circle"></i>
+      Paiement en cours d'initialisation. Veuillez réessayer ou contacter le support si le problème persiste.
     </div>
   </div>
 </div>

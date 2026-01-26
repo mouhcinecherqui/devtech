@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter, inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, inject, OnChanges, SimpleChanges } from '@angular/core';
 import { PaymentMethodService } from '../payment-methods/payment-method.service';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 interface PaymentInfo {
   paymentRequired: boolean;
@@ -26,7 +27,7 @@ interface TicketPaymentStatus {
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
-export class TicketPaymentComponent implements OnInit {
+export class TicketPaymentComponent implements OnInit, OnChanges {
   @Input() ticketId?: number;
   @Input() ticketType?: string;
   @Output() paymentCompleted = new EventEmitter<boolean>();
@@ -36,25 +37,49 @@ export class TicketPaymentComponent implements OnInit {
   isLoading = false;
   errorMessage = '';
   showPaymentForm = false;
+  hasAttemptedLoad = false;
+  showTransferInfo = false;
+  transferProofName: string | null = null;
 
   private paymentMethodService = inject(PaymentMethodService);
+  private router = inject(Router);
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    if (this.ticketType) {
-      this.checkPaymentRequired();
+    this.refreshPaymentData();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ticketType'] || changes['ticketId']) {
+      this.refreshPaymentData();
     }
-    if (this.ticketId) {
-      this.getPaymentStatus();
+  }
+
+  /**
+   * Rafraîchir les infos de paiement quand l'ID ou le type du ticket sont disponibles
+   */
+  private refreshPaymentData(): void {
+    // Si les inputs ne sont pas encore fournis, stopper le spinner et éviter de bloquer l'UI
+    if (!this.ticketType || !this.ticketId) {
+      this.isLoading = false;
+      return;
     }
+
+    // Vérifier la nécessité du paiement et récupérer le statut
+    this.hasAttemptedLoad = true;
+    this.checkPaymentRequired();
+    this.getPaymentStatus();
   }
 
   /**
    * Vérifie si un paiement est requis pour ce type de ticket
    */
   checkPaymentRequired(): void {
-    if (!this.ticketType) return;
+    if (!this.ticketType) {
+      this.isLoading = false;
+      return;
+    }
 
     this.isLoading = true;
     this.http.get<PaymentInfo>(`/api/ticket-payments/check/${this.ticketType}`).subscribe({
@@ -74,7 +99,10 @@ export class TicketPaymentComponent implements OnInit {
    * Obtient le statut de paiement d'un ticket
    */
   getPaymentStatus(): void {
-    if (!this.ticketId) return;
+    if (!this.ticketId) {
+      this.isLoading = false;
+      return;
+    }
 
     this.isLoading = true;
     this.http.get<TicketPaymentStatus>(`/api/ticket-payments/status/${this.ticketId}`).subscribe({
@@ -88,6 +116,14 @@ export class TicketPaymentComponent implements OnInit {
         this.isLoading = false;
       },
     });
+  }
+
+  /**
+   * Permet d'afficher une zone vide si aucune info n'a été chargée mais que le composant est affiché
+   */
+  shouldDisplayContent(): boolean {
+    // On affiche quand on a tenté de charger ou qu'on a des données
+    return this.hasAttemptedLoad || !!this.paymentStatus || !!this.paymentInfo;
   }
 
   /**
@@ -119,6 +155,34 @@ export class TicketPaymentComponent implements OnInit {
    */
   showPayment(): void {
     this.showPaymentForm = true;
+  }
+
+  // Les autres moyens de paiement (CMI / PayPal / méthodes) ont été désactivés côté UI.
+  // On conserve uniquement le virement bancaire, affiché directement dans le template.
+
+  /**
+   * Gestion du justificatif de virement (capture ou PDF)
+   */
+  onTransferProofSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      this.transferProofName = `${file.name} (${Math.round(file.size / 1024)} Ko)`;
+    } else {
+      this.transferProofName = null;
+    }
+  }
+
+  private getPaymentAmount(): number {
+    if (this.paymentStatus?.paymentAmount) return this.paymentStatus.paymentAmount;
+    if (this.paymentInfo?.amount) return this.paymentInfo.amount;
+    return 0;
+  }
+
+  private getPaymentCurrency(): string {
+    if (this.paymentStatus?.paymentCurrency) return this.paymentStatus.paymentCurrency;
+    if (this.paymentInfo?.currency) return this.paymentInfo.currency;
+    return 'MAD';
   }
 
   /**

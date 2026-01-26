@@ -1,4 +1,4 @@
 /**
  * Application security utilities.
  */
-package devtech.security;
+package devtechly.security;

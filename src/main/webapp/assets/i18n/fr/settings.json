@@ -1,13 +1,21 @@
 {
   "settings": {
     "title": "Profil de l'utilisateur [<strong>{{username}}</strong>]",
+    "titlePrefix": "Profil de",
     "form": {
       "firstname": "Prénom",
       "firstname.placeholder": "Votre prénom",
       "lastname": "Nom",
       "lastname.placeholder": "Votre nom",
+      "phone": "Téléphone",
+      "phone.placeholder": "Votre numéro de téléphone",
       "language": "Langue",
-      "button": "Sauvegarder"
+      "button": "Sauvegarder",
+      "changePassword": "Changer le mot de passe"
+    },
+    "oauth": {
+      "googleAccount": "Compte Google :",
+      "googleAccountMessage": "Vous êtes connecté via Google. Vous pouvez définir un mot de passe pour votre compte afin de pouvoir vous connecter avec vos identifiants traditionnels."
     },
     "messages": {
       "error": {

@@ -1,11 +1,11 @@
-package devtech.service;
+package devtechly.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import devtech.IntegrationTest;
-import devtech.domain.User;
-import devtech.repository.UserRepository;
+import devtechly.IntegrationTest;
+import devtechly.domain.User;
+import devtechly.repository.UserRepository;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

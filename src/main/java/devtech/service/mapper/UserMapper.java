@@ -1,9 +1,9 @@
-package devtech.service.mapper;
+package devtechly.service.mapper;
 
-import devtech.domain.Authority;
-import devtech.domain.User;
-import devtech.service.dto.AdminUserDTO;
-import devtech.service.dto.UserDTO;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
+import devtechly.service.dto.AdminUserDTO;
+import devtechly.service.dto.UserDTO;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.mapstruct.BeanMapping;

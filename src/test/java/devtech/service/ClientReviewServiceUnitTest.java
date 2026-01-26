@@ -1,13 +1,13 @@
-package devtech.service;
+package devtechly.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import devtech.domain.ClientReview;
-import devtech.repository.ClientReviewRepository;
-import devtech.service.dto.ClientReviewDTO;
-import devtech.service.mapper.ClientReviewMapper;
+import devtechly.domain.ClientReview;
+import devtechly.repository.ClientReviewRepository;
+import devtechly.service.dto.ClientReviewDTO;
+import devtechly.service.mapper.ClientReviewMapper;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,7 +75,7 @@ class ClientReviewServiceUnitTest {
         Optional<ClientReviewDTO> result = clientReviewService.findOne(1L);
 
         assertThat(result).isPresent();
-        assertThat(result.get()).isSameAs(dto);
+        assertThat(result.orElseThrow()).isSameAs(dto);
     }
 
     @Test

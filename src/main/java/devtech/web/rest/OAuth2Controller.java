@@ -1,9 +1,10 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.service.OAuth2JwtService;
+import devtechly.service.OAuth2JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.core.env.Environment;
@@ -65,15 +66,15 @@ public class OAuth2Controller {
             String host = request.getServerName();
             if ("localhost".equals(host) || "127.0.0.1".equals(host)) {
                 // Check common Angular dev ports
-                return "http://localhost:4200";
+                return "http://localhost:3000";
             }
         }
 
-        // 6. Fallback: use request scheme and host, but with port 4200 for Angular dev server
+        // 6. Fallback: use request scheme and host, but with port 3000 for Angular dev server
         String scheme = request.getScheme();
         String host = request.getServerName();
         if ("localhost".equals(host) || "127.0.0.1".equals(host)) {
-            return scheme + "://" + host + ":4200";
+            return scheme + "://" + host + ":3000";
         }
 
         // 7. Last fallback: use same host as backend (for production)
@@ -106,9 +107,9 @@ public class OAuth2Controller {
             String redirectUrl =
                 frontendUrl +
                 "/login?oauth2=success&token=" +
-                java.net.URLEncoder.encode(jwt, "UTF-8") +
-                (name != null ? "&name=" + java.net.URLEncoder.encode(name, "UTF-8") : "") +
-                (email != null ? "&email=" + java.net.URLEncoder.encode(email, "UTF-8") : "");
+                java.net.URLEncoder.encode(jwt, StandardCharsets.UTF_8) +
+                (name != null ? "&name=" + java.net.URLEncoder.encode(name, StandardCharsets.UTF_8) : "") +
+                (email != null ? "&email=" + java.net.URLEncoder.encode(email, StandardCharsets.UTF_8) : "");
 
             response.sendRedirect(redirectUrl);
         } else {

@@ -1,12 +1,12 @@
-package devtech.security;
+package devtechly.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import devtech.IntegrationTest;
-import devtech.domain.User;
-import devtech.repository.UserRepository;
-import devtech.service.UserService;
+import devtechly.IntegrationTest;
+import devtechly.domain.User;
+import devtechly.repository.UserRepository;
+import devtechly.service.UserService;
 import java.util.Locale;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.AfterEach;

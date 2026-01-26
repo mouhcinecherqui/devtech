@@ -24,8 +24,8 @@ Navbar
 Logo styles
 ========================================================================== */
 .logo-img {
-  height: 45px;
-  width: 45px;
+  height: 58px;
+  width: 58px;
   display: inline-block;
   vertical-align: middle;
   background: url('/content/images/devtechly.svg') no-repeat center center;
@@ -65,12 +65,27 @@ Logo styles
   padding: 0 1rem;
 }
 
+.header-left .site-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
 .header-left .site-title img {
-  height: 50px;
+  height: 56px; /* Logo plus visible dans la navbar */
   max-height: 100%;
   width: auto;
   display: block;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+  padding: 6px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease;
+}
+
+.header-left .site-title:hover img {
+  transform: scale(1.03);
 }
 
 .header-nav {

@@ -1,6 +1,6 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.service.TicketPaymentService;
+import devtechly.service.TicketPaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 import org.slf4j.Logger;

@@ -503,18 +503,40 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
   getTicketStatusTranslation(status: string | undefined): string {
     if (!status) return '';
 
+    // Normaliser le statut pour gérer les différentes variantes de casse
+    const normalizedStatus = status.trim();
+
     const statusMap: Record<string, string> = {
       Nouveau: 'ticketsClient.status.nouveau',
       'En cours': 'ticketsClient.status.enCours',
       Résolu: 'ticketsClient.status.resolu',
-      'En attente de paiement': 'En attente de paiement',
+      'En attente de paiement': 'ticketsClient.status.enAttentePaiement',
       'Paiement validé': 'ticketsClient.status.paiementValide',
       Fermé: 'ticketsClient.status.ferme',
-      Urgent: 'Urgent',
-      'DEVIS VALIDÉ': 'Devis validé',
+      Urgent: 'ticketsClient.status.urgent',
+      'DEVIS VALIDÉ': 'ticketsClient.status.devisValide',
+      'Devis validé': 'ticketsClient.status.devisValide',
+      'DEVIS VALIDE': 'ticketsClient.status.devisValide',
+      'Devis Validé': 'ticketsClient.status.devisValide',
     };
 
-    const translationKey = statusMap[status] || status;
+    // Chercher d'abord la correspondance exacte
+    let translationKey = statusMap[normalizedStatus];
+
+    // Si pas de correspondance exacte, chercher de manière insensible à la casse
+    if (!translationKey) {
+      const upperStatus = normalizedStatus
+        .toUpperCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+      if (upperStatus === 'DEVIS VALIDE' || (upperStatus.includes('DEVIS') && upperStatus.includes('VALID'))) {
+        translationKey = 'ticketsClient.status.devisValide';
+      } else {
+        // Pour les autres statuts, utiliser la valeur originale
+        translationKey = normalizedStatus;
+      }
+    }
+
     return this.translateService.instant(translationKey);
   }
 

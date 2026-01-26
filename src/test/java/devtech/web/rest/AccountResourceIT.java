@@ -1,21 +1,21 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import devtech.IntegrationTest;
-import devtech.config.Constants;
-import devtech.domain.User;
-import devtech.repository.AuthorityRepository;
-import devtech.repository.UserRepository;
-import devtech.security.AuthoritiesConstants;
-import devtech.service.UserService;
-import devtech.service.dto.AdminUserDTO;
-import devtech.service.dto.PasswordChangeDTO;
-import devtech.web.rest.vm.KeyAndPasswordVM;
-import devtech.web.rest.vm.ManagedUserVM;
+import devtechly.IntegrationTest;
+import devtechly.config.Constants;
+import devtechly.domain.User;
+import devtechly.repository.AuthorityRepository;
+import devtechly.repository.UserRepository;
+import devtechly.security.AuthoritiesConstants;
+import devtechly.service.UserService;
+import devtechly.service.dto.AdminUserDTO;
+import devtechly.service.dto.PasswordChangeDTO;
+import devtechly.web.rest.vm.KeyAndPasswordVM;
+import devtechly.web.rest.vm.ManagedUserVM;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Stream;

@@ -1,7 +1,7 @@
 #!/usr/bin/env pwsh
-# Script de déploiement en production pour DevTech
+# Script de déploiement en production pour devtechly
 
-Write-Host "[*] Deploiement DevTech en production" -ForegroundColor Green
+Write-Host "[*] Deploiement devtechly en production" -ForegroundColor Green
 Write-Host ""
 
 # Vérifier si Docker est disponible
@@ -38,35 +38,33 @@ if (-not (Test-Path $envFile)) {
     $dbPassword = -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | ForEach-Object {[char]$_})
     $rootPassword = -join ((48..57) + (65..90) + (97..122) | Get-Random -Count 32 | ForEach-Object {[char]$_})
     
-    $datasourceUrl = 'jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true'
-    $liquibaseUrl = 'jdbc:mysql://mysql:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true'
+    $dbUrl = 'jdbc:mysql://mysql:3306/devtechly?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true'
     
-    $envContent = "# Configuration de production DevTech`n"
+    $envContent = "# Configuration de production devtechly`n"
     $envContent += "# Généré automatiquement le " + (Get-Date -Format "yyyy-MM-dd HH:mm:ss") + "`n"
     $envContent += "`n# Profil Spring`n"
     $envContent += "SPRING_PROFILES_ACTIVE=prod`n"
-    $envContent += "`n# Base de données MySQL`n"
+    $envContent += "`n# Base de données MySQL (conteneur)`n"
     $envContent += "MYSQL_ROOT_PASSWORD=$rootPassword`n"
-    $envContent += "MYSQL_DATABASE=devtech`n"
-    $envContent += "MYSQL_USER=devtech`n"
+    $envContent += "MYSQL_DATABASE=devtechly`n"
+    $envContent += "MYSQL_USER=devtechly`n"
     $envContent += "MYSQL_PASSWORD=$dbPassword`n"
-    $envContent += "`n# Application - Base de données`n"
-    $envContent += "SPRING_DATASOURCE_URL=$datasourceUrl`n"
-    $envContent += "SPRING_DATASOURCE_USERNAME=devtech`n"
-    $envContent += "SPRING_DATASOURCE_PASSWORD=$dbPassword`n"
-    $envContent += "SPRING_LIQUIBASE_URL=$liquibaseUrl`n"
+    $envContent += "`n# Application - Base de données (DB_* référencés dans application-prod.yml)`n"
+    $envContent += "DB_URL=$dbUrl`n"
+    $envContent += "DB_USER=devtechly`n"
+    $envContent += "DB_PASSWORD=$dbPassword`n"
     $envContent += "`n# JWT Secret (IMPORTANT: Changez-le en production)`n"
-    $envContent += "JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET=$jwtSecret`n"
-    $envContent += "`n# Email (À configurer avec vos vraies données)`n"
+    $envContent += "JWT_SECRET=$jwtSecret`n"
+    $envContent += "`n# Mail (Gmail SMTP) - à configurer`n"
     $envContent += "SPRING_MAIL_HOST=smtp.gmail.com`n"
     $envContent += "SPRING_MAIL_PORT=587`n"
     $envContent += "SPRING_MAIL_USERNAME=votre-email@gmail.com`n"
     $envContent += "SPRING_MAIL_PASSWORD=votre-mot-de-passe-app`n"
     $envContent += "SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH=true`n"
     $envContent += "SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE=true`n"
-    $envContent += "`n# OAuth2 Google (À configurer avec vos vraies clés)`n"
-    $envContent += "GOOGLE_CLIENT_ID=votre_client_id_google`n"
-    $envContent += "GOOGLE_CLIENT_SECRET=votre_client_secret_google`n"
+    $envContent += "`n# OAuth2 Google - à configurer`n"
+    $envContent += "GOOGLE_CLIENT_ID=votre_client_id.apps.googleusercontent.com`n"
+    $envContent += "GOOGLE_CLIENT_SECRET=votre_client_secret`n"
     $envContent += "`n# URL de base`n"
     $envContent += "JHIPSTER_MAIL_BASE_URL=https://devtechly.com`n"
     $envContent += "`n# Configuration Java`n"
@@ -74,38 +72,18 @@ if (-not (Test-Path $envFile)) {
     
     $envContent | Out-File -FilePath $envFile -Encoding UTF8
     Write-Host "[OK] Fichier .env.prod cree" -ForegroundColor Green
-    Write-Host "   [!] IMPORTANT: Modifiez les valeurs EMAIL et OAUTH2 avant le deploiement!" -ForegroundColor Yellow
+    Write-Host "   [!] IMPORTANT: Modifiez EMAIL et OAuth2 Google dans .env.prod avant deploiement!" -ForegroundColor Yellow
     Write-Host ""
 }
 
-# Mettre à jour docker-compose.prod.yml pour utiliser le fichier .env
-Write-Host "[*] Preparation de la configuration Docker Compose..." -ForegroundColor Cyan
-
-# Lire le docker-compose.prod.yml
-$composeContent = Get-Content "docker-compose.prod.yml" -Raw
-
-# Vérifier si le fichier utilise déjà env_file
-if ($composeContent -notmatch "env_file") {
-    # Ajouter env_file aux services
-    $composeContent = $composeContent -replace '(services:\s+devtech-app:)', '$1`n    env_file:`n      - .env.prod'
-    $composeContent = $composeContent -replace '(services:\s+mysql:\s+image:)', '$1`n    env_file:`n      - .env.prod'
-    
-    # Remplacer les valeurs CHANGEME_IN_PRODUCTION par des variables d'environnement
-    $composeContent = $composeContent -replace 'JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET=CHANGEME_IN_PRODUCTION', 'JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET=${JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET}'
-    $composeContent = $composeContent -replace 'SPRING_DATASOURCE_PASSWORD=CHANGEME_IN_PRODUCTION', 'SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}'
-    $composeContent = $composeContent -replace 'MYSQL_ROOT_PASSWORD=CHANGEME_IN_PRODUCTION', 'MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}'
-    $composeContent = $composeContent -replace 'MYSQL_PASSWORD=CHANGEME_IN_PRODUCTION', 'MYSQL_PASSWORD=${MYSQL_PASSWORD}'
-    
-    $composeContent | Out-File -FilePath "docker-compose.prod.yml" -Encoding UTF8 -NoNewline
-    Write-Host "[OK] docker-compose.prod.yml mis a jour" -ForegroundColor Green
-}
+Write-Host "[*] Configuration Docker Compose (env_file .env.prod, DB_*, JWT_SECRET, GOOGLE_CLIENT_*)" -ForegroundColor Cyan
 
 if ($dockerAvailable) {
     Write-Host ""
     Write-Host "[*] Construction de l'image Docker..." -ForegroundColor Cyan
     
     try {
-        docker build -f Dockerfile.jhipster -t devtech:latest .
+        docker build -f Dockerfile.jhipster -t devtechly:latest .
         if ($LASTEXITCODE -eq 0) {
             Write-Host "[OK] Image Docker construite avec succes" -ForegroundColor Green
         } else {
@@ -164,7 +142,7 @@ if ($dockerAvailable) {
     $deployScript = '#!/bin/bash' + "`n"
     $deployScript += '# Script de déploiement pour serveur Linux' + "`n"
     $deployScript += "`n"
-    $deployScript += 'echo "Deploiement DevTech en production"' + "`n"
+    $deployScript += 'echo "Deploiement devtechly en production"' + "`n"
     $deployScript += "`n"
     $deployScript += '# Vérifier Docker' + "`n"
     $deployScript += 'if ! command -v docker 2> /dev/null; then' + "`n"
@@ -174,7 +152,7 @@ if ($dockerAvailable) {
     $deployScript += "`n"
     $deployScript += '# Construire l''image' + "`n"
     $deployScript += 'echo "Construction de l''image Docker..."' + "`n"
-    $deployScript += 'docker build -f Dockerfile.jhipster -t devtech:latest .' + "`n"
+    $deployScript += 'docker build -f Dockerfile.jhipster -t devtechly:latest .' + "`n"
     $deployScript += "`n"
     $deployScript += 'if [ $? -ne 0 ]; then' + "`n"
     $deployScript += '    echo "Erreur lors de la construction"' + "`n"

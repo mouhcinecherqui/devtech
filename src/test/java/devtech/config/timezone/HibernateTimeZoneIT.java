@@ -1,11 +1,11 @@
-package devtech.config.timezone;
+package devtechly.config.timezone;
 
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import devtech.IntegrationTest;
-import devtech.repository.timezone.DateTimeWrapper;
-import devtech.repository.timezone.DateTimeWrapperRepository;
+import devtechly.IntegrationTest;
+import devtechly.repository.timezone.DateTimeWrapper;
+import devtechly.repository.timezone.DateTimeWrapperRepository;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "title": "ملف المستخدم [<strong>{{username}}</strong>]",
+    "titlePrefix": "ملف",
+    "form": {
+      "firstname": "الاسم الأول",
+      "firstname.placeholder": "اسمك الأول",
+      "lastname": "اسم العائلة",
+      "lastname.placeholder": "اسم عائلتك",
+      "phone": "رقم الهاتف",
+      "phone.placeholder": "رقم هاتفك",
+      "language": "اللغة",
+      "button": "حفظ",
+      "changePassword": "تغيير كلمة المرور"
+    },
+    "oauth": {
+      "googleAccount": "حساب Google:",
+      "googleAccountMessage": "لقد قمت بتسجيل الدخول عبر Google. يمكنك تعيين كلمة مرور لحسابك لتتمكن من تسجيل الدخول ببيانات الاعتماد التقليدية الخاصة بك."
+    },
+    "messages": {
+      "error": {
+        "fail": "<strong>حدث خطأ ما!</strong> لم يتم حفظ ملفك الشخصي.",
+        "emailexists": "<strong>هذا البريد مستخدم بالفعل!</strong> يرجى اختيار بريد آخر."
+      },
+      "success": "<strong>تم حفظ ملفك الشخصي!</strong>",
+      "validate": {
+        "firstname": {
+          "required": "الاسم الأول إجباري.",
+          "minlength": "يجب أن يحتوي الاسم الأول على حرف واحد على الأقل.",
+          "maxlength": "لا يمكن أن يزيد الاسم الأول عن 50 حرفاً."
+        },
+        "lastname": {
+          "required": "اسم العائلة إجباري.",
+          "minlength": "يجب أن يحتوي اسم العائلة على حرف واحد على الأقل.",
+          "maxlength": "لا يمكن أن يزيد اسم العائلة عن 50 حرفاً."
+        }
+      }
+    }
+  }
+}

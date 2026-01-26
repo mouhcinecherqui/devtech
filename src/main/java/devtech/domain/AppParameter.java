@@ -1,4 +1,4 @@
-package devtech.domain;
+package devtechly.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

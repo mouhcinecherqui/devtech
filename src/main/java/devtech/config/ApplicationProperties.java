@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.convert.DataSizeUnit;
@@ -6,7 +6,7 @@ import org.springframework.util.unit.DataSize;
 import org.springframework.util.unit.DataUnit;
 
 /**
- * Properties specific to Devtech.
+ * Properties specific to devtechly.
  * <p>
  * Properties are configured in the {@code application.yml} file.
  * See {@link tech.jhipster.config.JHipsterProperties} for a good example.

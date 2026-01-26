@@ -1,4 +1,4 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -8,8 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import devtech.service.MailService;
-import devtech.service.dto.ContactRequestDTO;
+import devtechly.service.MailService;
+import devtechly.service.dto.ContactRequestDTO;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

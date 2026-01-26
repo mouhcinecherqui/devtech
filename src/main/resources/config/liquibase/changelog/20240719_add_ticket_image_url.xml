@@ -6,7 +6,12 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="20240719_add_ticket_image_url" author="devtech">
+    <changeSet id="20240719_add_ticket_image_url" author="devtechly">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="ticket" columnName="image_url"/>
+            </not>
+        </preConditions>
         <addColumn tableName="ticket">
             <column name="image_url" type="varchar(500)">
                 <constraints nullable="true"/>

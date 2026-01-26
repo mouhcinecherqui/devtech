@@ -1,6 +1,6 @@
-package devtech.security.jwt;
+package devtechly.security.jwt;
 
-import static devtech.security.jwt.JwtAuthenticationTestUtils.*;
+import static devtechly.security.jwt.JwtAuthenticationTestUtils.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 

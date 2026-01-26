@@ -1,7 +1,7 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.service.UserService;
-import devtech.service.dto.UserDTO;
+import devtechly.service.UserService;
+import devtechly.service.dto.UserDTO;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

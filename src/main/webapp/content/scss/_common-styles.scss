@@ -155,3 +155,69 @@ $gray-900: #111827;
 .bg-gray-100 {
   background-color: $gray-100;
 }
+
+/* Error Page Styles */
+.error-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $gray-50;
+  font-family: 'Inter', sans-serif;
+  color: $gray-700;
+}
+
+.error-content {
+  text-align: center;
+  padding: 3rem;
+  border-radius: 1rem;
+  background-color: $white;
+  @include card-shadow;
+  max-width: 500px;
+}
+
+.error-icon {
+  color: $danger-color;
+  margin-bottom: 1.5rem;
+  svg {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.error-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: $gray-900;
+}
+
+.error-description {
+  font-size: 1.125rem;
+  color: $gray-600;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.error-cta {
+  @include button-primary;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.alert-danger {
+  background-color: lighten($danger-color, 40%);
+  color: $danger-color;
+  border: 1px solid lighten($danger-color, 30%);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-top: 1.5rem;
+}

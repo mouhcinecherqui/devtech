@@ -13,7 +13,7 @@
             />
             <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          Profil de <strong>{{ settingsForm.value.firstName }} {{ settingsForm.value.lastName }}</strong>
+          {{ 'settings.titlePrefix' | translate }} <strong>{{ settingsForm.value.firstName }} {{ settingsForm.value.lastName }}</strong>
         </h2>
       }
 
@@ -37,7 +37,7 @@
                 />
                 <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              Prénom
+              {{ 'settings.form.firstname' | translate }}
             </label>
             <div class="input-container">
               <input
@@ -99,7 +99,7 @@
                 />
                 <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              Nom
+              {{ 'settings.form.lastname' | translate }}
             </label>
             <div class="input-container">
               <input
@@ -161,7 +161,7 @@
                 />
                 <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              Email
+              {{ 'global.form.email.label' | translate }}
             </label>
             <div class="input-container">
               <input
@@ -228,10 +228,17 @@
                   stroke-linejoin="round"
                 />
               </svg>
-              Téléphone
+              {{ 'settings.form.phone' | translate }}
             </label>
             <div class="input-container">
-              <input type="text" class="form-input-modern" id="phone" name="phone" placeholder="06 12 34 56 78" formControlName="phone" />
+              <input
+                type="text"
+                class="form-input-modern"
+                id="phone"
+                name="phone"
+                [placeholder]="'settings.form.phone.placeholder' | translate"
+                formControlName="phone"
+              />
               <div class="input-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
@@ -248,7 +255,7 @@
 
           @if (languages && languages.length > 0) {
             <div class="mb-3">
-              <label for="langKey" jhiTranslate="settings.form.language">Langue</label>
+              <label for="langKey" jhiTranslate="settings.form.language">{{ 'settings.form.language' | translate }}</label>
               <select class="form-control" id="langKey" name="langKey" formControlName="langKey" data-cy="langKey">
                 @for (language of languages; track $index) {
                   <option [value]="language">{{ language | findLanguageFromKey }}</option>
@@ -265,10 +272,10 @@
               data-cy="submit"
               jhiTranslate="settings.form.button"
             >
-              Sauvegarder
+              {{ 'settings.form.button' | translate }}
             </button>
             <button type="button" (click)="togglePasswordForm()" class="btn btn-outline-secondary">
-              {{ showPasswordForm() ? 'Annuler' : 'Changer le mot de passe' }}
+              {{ showPasswordForm() ? ('global.cancel' | translate) : ('settings.form.changePassword' | translate) }}
             </button>
           </div>
         </form>
@@ -276,7 +283,7 @@
         <!-- Password Change Form -->
         @if (showPasswordForm()) {
           <div class="password-section">
-            <h3 class="password-title">Changer le mot de passe</h3>
+            <h3 class="password-title">{{ 'settings.form.changePassword' | translate }}</h3>
 
             @if (passwordSuccess()) {
               <div class="alert alert-success" jhiTranslate="password.messages.success">
@@ -294,7 +301,7 @@
               @if (!isOAuth2User()) {
                 <div class="mb-3">
                   <label class="form-label" for="currentPassword" jhiTranslate="global.form.currentpassword.label">
-                    Mot de passe actuel
+                    {{ 'global.form.currentpassword.label' | translate }}
                   </label>
                   <input
                     type="password"
@@ -324,14 +331,16 @@
                       <path d="M12 16V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                       <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <strong>Compte Google :</strong> Vous êtes connecté via Google. Vous pouvez définir un mot de passe pour votre compte
-                    afin de pouvoir vous connecter avec vos identifiants traditionnels.
+                    <strong>{{ 'settings.oauth.googleAccount' | translate }}</strong>
+                    {{ 'settings.oauth.googleAccountMessage' | translate }}
                   </div>
                 </div>
               }
 
               <div class="mb-3">
-                <label class="form-label" for="newPassword" jhiTranslate="global.form.newpassword.label"> Nouveau mot de passe </label>
+                <label class="form-label" for="newPassword" jhiTranslate="global.form.newpassword.label">{{
+                  'global.form.newpassword.label' | translate
+                }}</label>
                 <input
                   type="password"
                   class="form-control"
@@ -365,7 +374,7 @@
 
               <div class="mb-3">
                 <label class="form-label" for="confirmPassword" jhiTranslate="global.form.confirmpassword.label">
-                  Confirmer le nouveau mot de passe
+                  {{ 'global.form.confirmpassword.label' | translate }}
                 </label>
                 <input
                   type="password"
@@ -402,7 +411,9 @@
                 >
                   {{ isOAuth2User() ? ('password.form.setPassword' | translate) : ('password.form.changePassword' | translate) }}
                 </button>
-                <button type="button" (click)="togglePasswordForm()" class="btn btn-outline-secondary">Annuler</button>
+                <button type="button" (click)="togglePasswordForm()" class="btn btn-outline-secondary">
+                  {{ 'global.cancel' | translate }}
+                </button>
               </div>
             </form>
           </div>

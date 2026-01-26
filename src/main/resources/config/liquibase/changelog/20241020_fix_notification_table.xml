@@ -17,31 +17,89 @@
         <renameColumn tableName="notification" oldColumnName="is_read" newColumnName="read" columnDataType="boolean"/>
     </changeSet>
 
-    <changeSet id="20241020-add-missing-notification-columns" author="assistant">
+    <changeSet id="20241020-add-notification-title" author="assistant">
         <preConditions onFail="MARK_RAN">
-            <tableExists tableName="notification"/>
+            <and>
+                <tableExists tableName="notification"/>
+                <not>
+                    <columnExists tableName="notification" columnName="title"/>
+                </not>
+            </and>
         </preConditions>
-
-        <!-- Add columns only if they are missing -->
         <addColumn tableName="notification">
             <column name="title" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="20241020-add-notification-timestamp" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="notification"/>
+                <not>
+                    <columnExists tableName="notification" columnName="timestamp"/>
+                </not>
+            </and>
+        </preConditions>
         <addColumn tableName="notification">
             <column name="timestamp" type="datetime(6)">
                 <constraints nullable="true"/>
             </column>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="20241020-add-notification-user-id" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="notification"/>
+                <not>
+                    <columnExists tableName="notification" columnName="user_id"/>
+                </not>
+            </and>
+        </preConditions>
         <addColumn tableName="notification">
             <column name="user_id" type="bigint"/>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="20241020-add-notification-ticket-id" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="notification"/>
+                <not>
+                    <columnExists tableName="notification" columnName="ticket_id"/>
+                </not>
+            </and>
+        </preConditions>
         <addColumn tableName="notification">
             <column name="ticket_id" type="bigint"/>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="20241020-add-notification-payment-id" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="notification"/>
+                <not>
+                    <columnExists tableName="notification" columnName="payment_id"/>
+                </not>
+            </and>
+        </preConditions>
         <addColumn tableName="notification">
             <column name="payment_id" type="bigint"/>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="20241020-add-notification-action-url" author="assistant">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="notification"/>
+                <not>
+                    <columnExists tableName="notification" columnName="action_url"/>
+                </not>
+            </and>
+        </preConditions>
         <addColumn tableName="notification">
             <column name="action_url" type="varchar(255)"/>
         </addColumn>

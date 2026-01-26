@@ -1,4 +1,4 @@
-package devtech.service.dto;
+package devtechly.service.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

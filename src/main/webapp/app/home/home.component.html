@@ -1,4 +1,5 @@
 <div *ngIf="!account()" class="home-container">
+  <script type="application/ld+json" [innerHTML]="structuredData"></script>
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-background">
@@ -19,7 +20,7 @@
             <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="badge-text">Innovation Digitale</span>
+          <span class="badge-text">{{ 'global.home.badge' | translate }}</span>
         </div>
         <h1 class="hero-title animated-fade-in" style="animation-delay: 0s">
           {{ 'global.home.title' | translate }}
@@ -30,15 +31,15 @@
         <div class="hero-stats animated-fade-in" style="animation-delay: 0.3s">
           <div class="stat-item">
             <span class="stat-number">500+</span>
-            <span class="stat-label">Projets Réalisés</span>
+            <span class="stat-label">{{ 'global.home.stats.projects' | translate }}</span>
           </div>
           <div class="stat-item">
             <span class="stat-number">50+</span>
-            <span class="stat-label">Clients Satisfaits</span>
+            <span class="stat-label">{{ 'global.home.stats.clients' | translate }}</span>
           </div>
           <div class="stat-item">
             <span class="stat-number">5+</span>
-            <span class="stat-label">Années d'Expérience</span>
+            <span class="stat-label">{{ 'global.home.stats.experience' | translate }}</span>
           </div>
         </div>
         <div class="hero-actions animated-fade-in" style="animation-delay: 0.4s">
@@ -50,7 +51,7 @@
               <path d="M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M12 5L19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            En savoir plus
+            {{ 'global.home.learnMore' | translate }}
           </button>
         </div>
       </div>
@@ -67,8 +68,8 @@
             </svg>
           </div>
           <div class="card-content">
-            <h3>Développement Web</h3>
-            <p>Applications modernes et performantes</p>
+            <h3>{{ 'global.home.heroCard1.title' | translate }}</h3>
+            <p>{{ 'global.home.heroCard1.desc' | translate }}</p>
           </div>
         </div>
         <div class="floating-card card-2">
@@ -80,8 +81,8 @@
             </svg>
           </div>
           <div class="card-content">
-            <h3>E-commerce</h3>
-            <p>Boutiques en ligne optimisées</p>
+            <h3>{{ 'global.home.heroCard2.title' | translate }}</h3>
+            <p>{{ 'global.home.heroCard2.desc' | translate }}</p>
           </div>
         </div>
         <div class="floating-card card-3">
@@ -92,8 +93,8 @@
             </svg>
           </div>
           <div class="card-content">
-            <h3>Mobile First</h3>
-            <p>Design responsive et adaptatif</p>
+            <h3>{{ 'global.home.heroCard3.title' | translate }}</h3>
+            <p>{{ 'global.home.heroCard3.desc' | translate }}</p>
           </div>
         </div>
       </div>
@@ -104,8 +105,8 @@
   <section class="features-section" id="services">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Nos Services</h2>
-        <p class="section-subtitle">Découvrez notre gamme complète de services digitaux pour transformer votre vision en réalité</p>
+        <h2 class="section-title">{{ 'global.home.servicesTitle' | translate }}</h2>
+        <p class="section-subtitle">{{ 'global.home.servicesSubtitle' | translate }}</p>
       </div>
 
       <div class="features-grid">
@@ -118,12 +119,12 @@
             </svg>
           </div>
           <div class="service-content">
-            <h3>Développement d'applications web sur mesure</h3>
-            <p>Applications web évolutives, sécurisées et performantes pour tous les besoins métier.</p>
+            <h3>{{ 'global.home.service1.title' | translate }}</h3>
+            <p>{{ 'global.home.service1.desc' | translate }}</p>
             <ul class="service-features">
-              <li>Applications React/Angular</li>
-              <li>APIs RESTful</li>
-              <li>Bases de données optimisées</li>
+              <li>{{ 'global.home.service1.feature1' | translate }}</li>
+              <li>{{ 'global.home.service1.feature2' | translate }}</li>
+              <li>{{ 'global.home.service1.feature3' | translate }}</li>
             </ul>
           </div>
           <div class="service-number">01</div>
@@ -138,12 +139,12 @@
             </svg>
           </div>
           <div class="service-content">
-            <h3>Développement de sites e-commerce</h3>
-            <p>Boutiques en ligne avec intégration CMS, paiements et gestion des stocks.</p>
+            <h3>{{ 'global.home.service2.title' | translate }}</h3>
+            <p>{{ 'global.home.service2.desc' | translate }}</p>
             <ul class="service-features">
-              <li>Paiements sécurisés</li>
-              <li>Gestion des stocks</li>
-              <li>Analytics avancés</li>
+              <li>{{ 'global.home.service2.feature1' | translate }}</li>
+              <li>{{ 'global.home.service2.feature2' | translate }}</li>
+              <li>{{ 'global.home.service2.feature3' | translate }}</li>
             </ul>
           </div>
           <div class="service-number">02</div>
@@ -166,12 +167,12 @@
             </svg>
           </div>
           <div class="service-content">
-            <h3>Systèmes de gestion de contenu (CMS)</h3>
-            <p>Solutions CMS flexibles et intuitives pour une gestion facile de votre site.</p>
+            <h3>{{ 'global.home.service3.title' | translate }}</h3>
+            <p>{{ 'global.home.service3.desc' | translate }}</p>
             <ul class="service-features">
-              <li>Interface intuitive</li>
-              <li>Gestion de contenu</li>
-              <li>SEO optimisé</li>
+              <li>{{ 'global.home.service3.feature1' | translate }}</li>
+              <li>{{ 'global.home.service3.feature2' | translate }}</li>
+              <li>{{ 'global.home.service3.feature3' | translate }}</li>
             </ul>
           </div>
           <div class="service-number">03</div>
@@ -199,7 +200,7 @@
           </div>
           <div class="stat-content">
             <h3>100%</h3>
-            <p>Projets Livrés à Temps</p>
+            <p>{{ 'global.home.statsSection.onTime' | translate }}</p>
           </div>
         </div>
         <div class="stat-item">
@@ -216,7 +217,7 @@
           </div>
           <div class="stat-content">
             <h3>4.9/5</h3>
-            <p>Note Client Moyenne</p>
+            <p>{{ 'global.home.statsSection.rating' | translate }}</p>
           </div>
         </div>
         <div class="stat-item">
@@ -233,7 +234,7 @@
           </div>
           <div class="stat-content">
             <h3>24/7</h3>
-            <p>Support Technique</p>
+            <p>{{ 'global.home.statsSection.support' | translate }}</p>
           </div>
         </div>
         <div class="stat-item">
@@ -249,7 +250,7 @@
           </div>
           <div class="stat-content">
             <h3>99.9%</h3>
-            <p>Disponibilité Serveur</p>
+            <p>{{ 'global.home.statsSection.availability' | translate }}</p>
           </div>
         </div>
       </div>
@@ -266,10 +267,10 @@
             <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span class="badge-text">Notre Excellence</span>
+          <span class="badge-text">{{ 'global.home.whyChooseBadge' | translate }}</span>
         </div>
         <h2 class="section-title">{{ 'global.home.whyChooseTitle' | translate }}</h2>
-        <p class="section-subtitle">Notre approche unique pour votre succès digital avec des technologies de pointe</p>
+        <p class="section-subtitle">{{ 'global.home.whyChooseSubtitle' | translate }}</p>
       </div>
 
       <div class="features-grid animated-fade-in" style="animation-delay: 1.6s">
@@ -300,8 +301,8 @@
               />
             </svg>
           </div>
-          <h3>Équipe expérimentée</h3>
-          <p>{{ 'global.home.why1' | translate }}</p>
+          <h3>{{ 'global.home.why1.title' | translate }}</h3>
+          <p>{{ 'global.home.why1.desc' | translate }}</p>
           <div class="feature-detail">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path
@@ -313,7 +314,7 @@
               />
               <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span>10+ développeurs experts</span>
+            <span>{{ 'global.home.why1.detail' | translate }}</span>
           </div>
         </div>
 
@@ -329,8 +330,8 @@
               />
             </svg>
           </div>
-          <h3>Communication transparente</h3>
-          <p>{{ 'global.home.why2' | translate }}</p>
+          <h3>{{ 'global.home.why2.title' | translate }}</h3>
+          <p>{{ 'global.home.why2.desc' | translate }}</p>
           <div class="feature-detail">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path
@@ -341,7 +342,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <span>Réunions hebdomadaires</span>
+            <span>{{ 'global.home.why2.detail' | translate }}</span>
           </div>
         </div>
 
@@ -352,8 +353,8 @@
               <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
-          <h3>Processus agile</h3>
-          <p>{{ 'global.home.why3' | translate }}</p>
+          <h3>{{ 'global.home.why3.title' | translate }}</h3>
+          <p>{{ 'global.home.why3.desc' | translate }}</p>
           <div class="feature-detail">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path
@@ -363,7 +364,7 @@
               />
               <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span>Livraisons en 2 semaines</span>
+            <span>{{ 'global.home.why3.detail' | translate }}</span>
           </div>
         </div>
 
@@ -375,8 +376,8 @@
               <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
-          <h3>Technologies de pointe</h3>
-          <p>{{ 'global.home.why4' | translate }}</p>
+          <h3>{{ 'global.home.why4.title' | translate }}</h3>
+          <p>{{ 'global.home.why4.desc' | translate }}</p>
           <div class="feature-detail">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path
@@ -387,7 +388,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <span>Stack moderne & optimisé</span>
+            <span>{{ 'global.home.why4.detail' | translate }}</span>
           </div>
         </div>
 
@@ -410,8 +411,8 @@
               />
             </svg>
           </div>
-          <h3>Support complet</h3>
-          <p>{{ 'global.home.why5' | translate }}</p>
+          <h3>{{ 'global.home.why5.title' | translate }}</h3>
+          <p>{{ 'global.home.why5.desc' | translate }}</p>
           <div class="feature-detail">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M14.7 6.3A1 1 0 0 0 14 7H12V9H14A1 1 0 0 0 15 8A1 1 0 0 0 14.7 6.3Z" stroke="currentColor" stroke-width="2" />
@@ -421,7 +422,7 @@
                 stroke-width="2"
               />
             </svg>
-            <span>Maintenance & mises à jour</span>
+            <span>{{ 'global.home.why5.detail' | translate }}</span>
           </div>
         </div>
 
@@ -439,8 +440,8 @@
               <path d="M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
-          <h3>Garantie qualité</h3>
-          <p>Tests rigoureux et validation client</p>
+          <h3>{{ 'global.home.why6.title' | translate }}</h3>
+          <p>{{ 'global.home.why6.desc' | translate }}</p>
           <div class="feature-detail">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path
@@ -452,7 +453,7 @@
               />
               <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <span>Tests automatisés</span>
+            <span>{{ 'global.home.why6.detail' | translate }}</span>
           </div>
         </div>
       </div>

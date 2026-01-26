@@ -1,4 +1,4 @@
-package devtech.web.rest.errors;
+package devtechly.web.rest.errors;
 
 @SuppressWarnings("java:S110") // Inheritance tree of classes should not be too deep
 public class LoginAlreadyUsedException extends BadRequestAlertException {

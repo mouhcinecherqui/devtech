@@ -1,10 +1,10 @@
-package devtech.security.jwt;
+package devtechly.security.jwt;
 
-import devtech.config.SecurityConfiguration;
-import devtech.config.SecurityJwtConfiguration;
-import devtech.config.WebConfigurer;
-import devtech.management.SecurityMetersService;
-import devtech.web.rest.AuthenticateController;
+import devtechly.config.SecurityConfiguration;
+import devtechly.config.SecurityJwtConfiguration;
+import devtechly.config.WebConfigurer;
+import devtechly.management.SecurityMetersService;
+import devtechly.web.rest.AuthenticateController;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

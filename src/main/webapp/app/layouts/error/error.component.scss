@@ -1,0 +1,255 @@
+// ==========================================================================
+// Error Component Styles
+// ==========================================================================
+
+// Variables
+$primary-color: #3b82f6;
+$primary-dark: #1d4ed8;
+$danger-color: #ef4444;
+$warning-color: #f59e0b;
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$white: #ffffff;
+
+// Mixins
+@mixin smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin card-shadow {
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+@mixin card-shadow-hover {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+// Main Container
+:host {
+  display: block;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  // Override card styles when inside a card wrapper
+  :host-context(.jh-card) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: -1.5rem !important;
+    width: calc(100% + 3rem) !important;
+    min-height: calc(100vh - 4rem) !important;
+  }
+}
+
+.error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+
+  // Background pattern overlay
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.15) 1px, transparent 0);
+    background-size: 40px 40px;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+.error-content {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  @include card-shadow;
+  @include smooth-transition;
+  position: relative;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  &:hover {
+    @include card-shadow-hover;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
+  }
+}
+
+// Error Icon
+.error-icon {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 80px;
+    height: 80px;
+    @include smooth-transition;
+    color: $danger-color; // Default color for 403 and 500
+    stroke: currentColor;
+    fill: none;
+  }
+
+  // Animation for icon
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+  }
+
+  animation: pulse 2s ease-in-out infinite;
+}
+
+// Error Title
+.error-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: $gray-800;
+  margin: 0 0 1rem 0;
+  line-height: 1.2;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+}
+
+// Error Description
+.error-description {
+  font-size: 1.125rem;
+  color: $gray-600;
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+// Alert Message
+.alert {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  border: 1px solid;
+
+  &.alert-danger {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #dc2626;
+  }
+}
+
+// Back to Home Button
+.error-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 2rem;
+  background: $primary-color;
+  color: $white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  @include smooth-transition;
+  @include card-shadow;
+  text-decoration: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: $primary-dark;
+    transform: translateY(-2px);
+    @include card-shadow-hover;
+    color: $white;
+    text-decoration: none;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+}
+
+// Specific styles for different error types
+.error-container {
+  &[data-error-type='403'] .error-icon svg,
+  &[data-error-type='500'] .error-icon svg {
+    color: $danger-color;
+  }
+
+  &[data-error-type='404'] .error-icon svg {
+    color: $warning-color;
+  }
+}
+
+// Dark theme support
+:host-context(.dark-theme) {
+  .error-content {
+    background: rgba(35, 39, 47, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .error-title {
+    color: $white;
+  }
+
+  .error-description {
+    color: $gray-300;
+  }
+
+  .alert.alert-danger {
+    background-color: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #fca5a5;
+  }
+}

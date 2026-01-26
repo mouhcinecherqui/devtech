@@ -1,4 +1,4 @@
-package devtech.web.filter;
+package devtechly.web.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

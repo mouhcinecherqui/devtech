@@ -1,4 +1,4 @@
 /**
  * Data transfer objects for rest mapping.
  */
-package devtech.service.dto;
+package devtechly.service.dto;

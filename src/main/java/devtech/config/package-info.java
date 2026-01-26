@@ -1,4 +1,4 @@
 /**
  * Application configuration.
  */
-package devtech.config;
+package devtechly.config;

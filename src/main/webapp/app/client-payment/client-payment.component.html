@@ -1,14 +1,18 @@
 <div class="client-payment-container">
   <!-- Header Section -->
   <div class="payment-header">
-    <h2>💳 Paiement Sécurisé</h2>
-    <p>Effectuez votre paiement en toute sécurité via CMI</p>
+    <h2>💳 {{ 'clientPayment.header.title' | translate }}</h2>
+    <p>{{ 'clientPayment.header.subtitle' | translate }}</p>
   </div>
 
   <!-- Alerts -->
   <div class="alerts-section">
-    <div *ngIf="errorMessage" class="alert alert-danger" role="alert"><strong>Erreur :</strong> {{ errorMessage }}</div>
-    <div *ngIf="successMessage" class="alert alert-success" role="alert"><strong>Succès :</strong> {{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      <strong>{{ 'clientPayment.alerts.errorPrefix' | translate }}</strong> {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+      <strong>{{ 'clientPayment.alerts.successPrefix' | translate }}</strong> {{ successMessage }}
+    </div>
   </div>
 
   <!-- Payment Form -->
@@ -16,11 +20,11 @@
     <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
       <!-- Amount Section -->
       <div class="form-section">
-        <h3>💰 Montant du Paiement</h3>
+        <h3>💰 {{ 'clientPayment.sections.amount.title' | translate }}</h3>
         <div class="form-group">
           <label for="amount" class="form-label">
             <span class="label-icon">💵</span>
-            Montant (MAD)
+            {{ 'clientPayment.fields.amount.label' | translate }}
           </label>
           <div class="input-container">
             <input
@@ -28,7 +32,7 @@
               type="number"
               class="form-input"
               formControlName="amount"
-              placeholder="Entrez le montant"
+              [placeholder]="'clientPayment.fields.amount.placeholder' | translate"
               min="1"
               max="100000"
               step="0.01"
@@ -43,17 +47,17 @@
 
       <!-- Currency Section -->
       <div class="form-section">
-        <h3>🌍 Devise</h3>
+        <h3>🌍 {{ 'clientPayment.sections.currency.title' | translate }}</h3>
         <div class="form-group">
           <label for="currency" class="form-label">
             <span class="label-icon">🏦</span>
-            Devise
+            {{ 'clientPayment.fields.currency.label' | translate }}
           </label>
           <div class="input-container">
             <select id="currency" class="form-input" formControlName="currency">
-              <option value="MAD">MAD - Dirham Marocain</option>
-              <option value="EUR">EUR - Euro</option>
-              <option value="USD">USD - Dollar US</option>
+              <option value="MAD">{{ 'clientPayment.fields.currency.options.MAD' | translate }}</option>
+              <option value="EUR">{{ 'clientPayment.fields.currency.options.EUR' | translate }}</option>
+              <option value="USD">{{ 'clientPayment.fields.currency.options.USD' | translate }}</option>
             </select>
             <div class="input-border"></div>
           </div>
@@ -62,125 +66,103 @@
 
       <!-- Payment Method Section -->
       <div class="form-section">
-        <h3>💳 Moyen de Paiement</h3>
-
-        <!-- Saved Payment Methods -->
-        <div *ngIf="savedPaymentMethods().length > 0" class="saved-payment-methods">
-          <h4>Moyens de paiement enregistrés</h4>
-          <div class="payment-methods-list">
-            <div
-              *ngFor="let method of savedPaymentMethods()"
-              class="payment-method-card"
-              [class.selected]="selectedPaymentMethod?.id === method.id"
-              (click)="selectSavedPaymentMethod(method)"
-            >
-              <div class="payment-method-icon">
-                {{ getPaymentMethodIcon(method.brand) }}
-              </div>
-              <div class="payment-method-info">
-                <div class="payment-method-name">{{ getPaymentMethodDisplayName(method) }}</div>
-                <div class="payment-method-holder">{{ method.holderName }}</div>
-                <div *ngIf="method.isDefault" class="default-badge">Par défaut</div>
-              </div>
-              <div class="payment-method-radio">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  [checked]="selectedPaymentMethod?.id === method.id"
-                  (change)="selectSavedPaymentMethod(method)"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="payment-method-actions">
-            <button type="button" class="btn btn-secondary" (click)="useNewPaymentMethod()">
-              <span class="btn-icon">➕</span>
-              Utiliser un nouveau moyen de paiement
-            </button>
-          </div>
-        </div>
-
-        <!-- New Payment Method Option -->
-        <div *ngIf="savedPaymentMethods().length === 0 || showNewPaymentForm" class="new-payment-method">
-          <div class="payment-method-card new-method" [class.selected]="!useSavedPayment">
-            <div class="payment-method-icon">💳</div>
+        <h3>💳 {{ 'clientPayment.sections.method.title' | translate }}</h3>
+        <div class="payment-methods-list">
+          <label
+            class="payment-method-card"
+            [class.selected]="selectedPaymentMethod === 'bank_transfer'"
+            (click)="onPaymentMethodChange('bank_transfer')"
+          >
+            <div class="payment-method-icon">🏦</div>
             <div class="payment-method-info">
-              <div class="payment-method-name">Nouveau moyen de paiement</div>
-              <div class="payment-method-holder">Saisir les informations de carte</div>
+              <div class="payment-method-name">{{ 'clientPayment.methods.bankTransfer' | translate }}</div>
+              <div class="payment-method-description">{{ 'clientPayment.methods.bankTransferDesc' | translate }}</div>
             </div>
             <div class="payment-method-radio">
-              <input type="radio" name="paymentMethod" [checked]="!useSavedPayment" (change)="useNewPaymentMethod()" />
+              <input type="radio" formControlName="paymentMethod" value="bank_transfer" />
+            </div>
+          </label>
+
+          <label
+            class="payment-method-card"
+            [class.selected]="selectedPaymentMethod === 'paypal'"
+            (click)="onPaymentMethodChange('paypal')"
+          >
+            <div class="payment-method-icon">🅿️</div>
+            <div class="payment-method-info">
+              <div class="payment-method-name">{{ 'clientPayment.methods.paypal' | translate }}</div>
+              <div class="payment-method-description">{{ 'clientPayment.methods.paypalDesc' | translate }}</div>
+            </div>
+            <div class="payment-method-radio">
+              <input type="radio" formControlName="paymentMethod" value="paypal" />
+            </div>
+          </label>
+        </div>
+
+        <div *ngIf="selectedPaymentMethod === 'bank_transfer'" class="method-details">
+          <div class="method-details-header">
+            <div class="method-icon">🏦</div>
+            <div>
+              <h4>{{ 'clientPayment.bankDetails.title' | translate }}</h4>
+              <p>{{ 'clientPayment.bankDetails.description' | translate }}</p>
             </div>
           </div>
-
-          <div *ngIf="!useSavedPayment" class="new-payment-form">
-            <div class="form-group">
-              <label for="cardNumber" class="form-label">
-                <span class="label-icon">💳</span>
-                Numéro de carte
-              </label>
-              <div class="input-container">
-                <input id="cardNumber" type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" />
-                <div class="input-border"></div>
-              </div>
+          <div class="bank-details">
+            <div class="bank-detail">
+              <span class="label">Banque</span>
+              <span class="value">{{ 'clientPayment.bankDetails.bankName' | translate }}</span>
             </div>
-
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="expiryDate" class="form-label">
-                    <span class="label-icon">📅</span>
-                    Date d'expiration
-                  </label>
-                  <div class="input-container">
-                    <input id="expiryDate" type="text" class="form-input" placeholder="MM/AA" maxlength="5" />
-                    <div class="input-border"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label for="cvv" class="form-label">
-                    <span class="label-icon">🔒</span>
-                    CVV
-                  </label>
-                  <div class="input-container">
-                    <input id="cvv" type="text" class="form-input" placeholder="123" maxlength="4" />
-                    <div class="input-border"></div>
-                  </div>
-                </div>
-              </div>
+            <div class="bank-detail">
+              <span class="label">{{ 'clientPayment.bankDetails.accountNameLabel' | translate }}</span>
+              <span class="value">{{ 'clientPayment.bankDetails.accountName' | translate }}</span>
             </div>
-
-            <div class="form-group">
-              <label for="cardHolder" class="form-label">
-                <span class="label-icon">👤</span>
-                Nom du titulaire
-              </label>
-              <div class="input-container">
-                <input id="cardHolder" type="text" class="form-input" placeholder="Nom tel qu'il apparaît sur la carte" />
-                <div class="input-border"></div>
-              </div>
+            <div class="bank-detail">
+              <span class="label">IBAN</span>
+              <span class="value">{{ 'clientPayment.bankDetails.iban' | translate }}</span>
+            </div>
+            <div class="bank-detail">
+              <span class="label">BIC / SWIFT</span>
+              <span class="value">{{ 'clientPayment.bankDetails.bic' | translate }}</span>
+            </div>
+            <div class="bank-detail">
+              <span class="label">{{ 'clientPayment.bankDetails.referenceLabel' | translate }}</span>
+              <span class="value">{{ 'clientPayment.bankDetails.referenceValue' | translate }}</span>
             </div>
           </div>
+          <div class="method-note">{{ 'clientPayment.bankDetails.note' | translate }}</div>
+        </div>
+
+        <div *ngIf="selectedPaymentMethod === 'paypal'" class="method-details paypal-details">
+          <div class="method-details-header">
+            <div class="method-icon">💠</div>
+            <div>
+              <h4>{{ 'clientPayment.paypal.title' | translate }}</h4>
+              <p>{{ 'clientPayment.paypal.description' | translate }}</p>
+            </div>
+          </div>
+          <ul class="method-bullets">
+            <li>{{ 'clientPayment.paypal.steps.instant' | translate }}</li>
+            <li>{{ 'clientPayment.paypal.steps.secure' | translate }}</li>
+            <li>{{ 'clientPayment.paypal.steps.confirmation' | translate }}</li>
+          </ul>
+          <div class="method-note">{{ 'clientPayment.paypal.note' | translate }}</div>
         </div>
       </div>
 
       <!-- Description Section -->
       <div class="form-section">
-        <h3>📝 Description</h3>
+        <h3>📝 {{ 'clientPayment.sections.description.title' | translate }}</h3>
         <div class="form-group">
           <label for="description" class="form-label">
             <span class="label-icon">📋</span>
-            Description du Paiement
+            {{ 'clientPayment.fields.description.label' | translate }}
           </label>
           <div class="input-container">
             <textarea
               id="description"
               class="form-input"
               formControlName="description"
-              placeholder="Décrivez la raison de ce paiement"
+              [placeholder]="'clientPayment.fields.description.placeholder' | translate"
               rows="3"
             ></textarea>
             <div class="input-border"></div>
@@ -193,11 +175,11 @@
 
       <!-- Date Section -->
       <div class="form-section">
-        <h3>📅 Date de Paiement</h3>
+        <h3>📅 {{ 'clientPayment.sections.date.title' | translate }}</h3>
         <div class="form-group">
           <label for="date" class="form-label">
             <span class="label-icon">📆</span>
-            Date
+            {{ 'clientPayment.fields.date.label' | translate }}
           </label>
           <div class="input-container">
             <input id="date" type="date" class="form-input" formControlName="date" />
@@ -210,11 +192,8 @@
       <div class="security-notice">
         <div class="security-icon">🔒</div>
         <div class="security-content">
-          <h4>Paiement Sécurisé</h4>
-          <p>
-            Votre paiement sera traité de manière sécurisée via la passerelle CMI. Vos informations bancaires ne sont jamais stockées sur
-            nos serveurs.
-          </p>
+          <h4>{{ 'clientPayment.sections.security.title' | translate }}</h4>
+          <p>{{ 'clientPayment.sections.security.message' | translate }}</p>
         </div>
       </div>
 
@@ -222,12 +201,18 @@
       <div class="form-actions">
         <button type="button" class="btn btn-cancel" (click)="onCancel()" [disabled]="isLoading">
           <span class="btn-icon">✕</span>
-          Annuler
+          {{ 'clientPayment.actions.cancel' | translate }}
         </button>
         <button type="submit" class="btn btn-submit" [disabled]="paymentForm.invalid || isLoading">
           <span class="btn-icon" *ngIf="!isLoading">💳</span>
           <span class="btn-icon loading" *ngIf="isLoading">⏳</span>
-          {{ isLoading ? 'Traitement...' : 'Procéder au Paiement' }}
+          {{
+            isLoading
+              ? ('clientPayment.actions.processing' | translate)
+              : selectedPaymentMethod === 'paypal'
+                ? ('clientPayment.actions.submitPaypal' | translate)
+                : ('clientPayment.actions.submitBankTransfer' | translate)
+          }}
         </button>
       </div>
     </form>
@@ -238,12 +223,12 @@
     <div class="info-card">
       <div class="info-icon">ℹ️</div>
       <div class="info-content">
-        <h4>Informations Importantes</h4>
+        <h4>{{ 'clientPayment.info.title' | translate }}</h4>
         <ul>
-          <li>Le paiement sera traité en temps réel</li>
-          <li>Vous recevrez une confirmation par email</li>
-          <li>Une facture sera générée automatiquement</li>
-          <li>Support disponible 24/7 en cas de problème</li>
+          <li>{{ 'clientPayment.info.items.realTime' | translate }}</li>
+          <li>{{ 'clientPayment.info.items.confirmation' | translate }}</li>
+          <li>{{ 'clientPayment.info.items.invoice' | translate }}</li>
+          <li>{{ 'clientPayment.info.items.support' | translate }}</li>
         </ul>
       </div>
     </div>

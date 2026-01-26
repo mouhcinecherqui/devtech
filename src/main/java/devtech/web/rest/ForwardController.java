@@ -1,4 +1,4 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

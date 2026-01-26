@@ -10,13 +10,23 @@ import { AutoRefreshService } from '../../core/services/auto-refresh.service';
 import { RefreshButtonComponent } from '../../shared/components/refresh-button/refresh-button.component';
 import ItemCountComponent from '../../shared/pagination/item-count.component';
 import SharedModule from '../../shared/shared.module';
+import { AlertService } from '../../core/util/alert.service';
+import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'jhi-admin-clients',
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, SharedModule, RefreshButtonComponent, NgbPaginationModule, ItemCountComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SharedModule,
+    RefreshButtonComponent,
+    NgbPaginationModule,
+    ItemCountComponent,
+    ConfirmDialogComponent,
+  ],
 })
 export class ClientsComponent implements OnInit {
   clients: AppUser[] = [];
@@ -29,6 +39,7 @@ export class ClientsComponent implements OnInit {
   private readonly modalService = inject(NgbModal);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly autoRefreshService = inject(AutoRefreshService);
+  private readonly alertService = inject(AlertService);
 
   ngOnInit(): void {
     this.loadClients();
@@ -71,7 +82,11 @@ export class ClientsComponent implements OnInit {
           this.clientsService.create({ ...result, type: 'client' } as AppUser).subscribe(() => {
             this.loadClients();
             if (result._generatedPassword) {
-              alert('Mot de passe généré pour le client : ' + result._generatedPassword);
+              this.alertService.addAlert({
+                type: 'info',
+                message: 'Mot de passe généré pour le client : ' + result._generatedPassword,
+                timeout: 10000,
+              });
             }
           });
         }
@@ -95,9 +110,33 @@ export class ClientsComponent implements OnInit {
   }
 
   deleteClient(client: AppUser): void {
-    if (confirm(`Supprimer le client ${client.firstName} ${client.lastName} ?`)) {
-      this.clientsService.delete(client.id).subscribe(() => this.loadClients());
-    }
+    const modalRef = this.modalService.open(ConfirmDialogComponent, { size: 'md' });
+    modalRef.componentInstance.title = 'Confirmation de suppression';
+    modalRef.componentInstance.message = `Supprimer le client ${client.firstName} ${client.lastName} ?`;
+    modalRef.result.then(
+      (confirmed: boolean) => {
+        if (confirmed) {
+          this.clientsService.delete(client.id).subscribe({
+            next: () => {
+              this.loadClients();
+              this.alertService.addAlert({
+                type: 'success',
+                message: `Client ${client.firstName} ${client.lastName} supprimé avec succès`,
+                timeout: 3000,
+              });
+            },
+            error: () => {
+              this.alertService.addAlert({
+                type: 'danger',
+                message: 'Erreur lors de la suppression du client',
+                timeout: 5000,
+              });
+            },
+          });
+        }
+      },
+      () => {},
+    );
   }
 
   get filteredClients(): AppUser[] {
@@ -143,8 +182,11 @@ export class ClientsComponent implements OnInit {
       },
       error: error => {
         console.error('Erreur lors de la mise à jour du rôle:', error);
-        // Optionnel : afficher un message d'erreur
-        alert('Erreur lors de la mise à jour du rôle');
+        this.alertService.addAlert({
+          type: 'danger',
+          message: 'Erreur lors de la mise à jour du rôle',
+          timeout: 5000,
+        });
       },
     });
   }

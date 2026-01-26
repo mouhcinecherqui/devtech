@@ -1,6 +1,6 @@
-package devtech.security;
+package devtechly.security;
 
-import static devtech.security.SecurityUtils.USER_ID_CLAIM;
+import static devtechly.security.SecurityUtils.USER_ID_CLAIM;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Instant;

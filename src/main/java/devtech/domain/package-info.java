@@ -1,4 +1,4 @@
 /**
  * Domain objects.
  */
-package devtech.domain;
+package devtechly.domain;

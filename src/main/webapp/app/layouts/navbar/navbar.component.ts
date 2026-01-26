@@ -58,8 +58,19 @@ export default class NavbarComponent implements OnInit {
 
   changeLanguage(languageKey: string): void {
     this.stateStorageService.storeLocale(languageKey);
-    this.translateService.use(languageKey);
-    this.updateRTLLayout(languageKey);
+    // Charger et changer la langue - use() charge automatiquement les traductions
+    this.translateService.use(languageKey).subscribe({
+      next: () => {
+        // Les traductions ont été chargées avec succès
+        this.updateRTLLayout(languageKey);
+      },
+      error: error => {
+        // En cas d'erreur, essayer quand même de changer la langue
+        console.warn(`Error loading translations for ${languageKey}:`, error);
+        this.translateService.use(languageKey);
+        this.updateRTLLayout(languageKey);
+      },
+    });
   }
 
   private updateRTLLayout(langCode: string): void {

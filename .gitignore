@@ -124,6 +124,15 @@ Desktop.ini
 *.log*
 
 ######################
+# Environment / secrets
+######################
+.env
+.env.prod
+.env.local
+.env.*.local
+scripts/write-env-files.ps1
+
+######################
 # Others
 ######################
 *.class

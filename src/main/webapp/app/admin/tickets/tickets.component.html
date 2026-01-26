@@ -357,6 +357,22 @@
                 </button>
               </div>
 
+              <!-- Action pour envoyer la facture de paiement (ticket résolu) -->
+              <div *ngIf="selectedTicket && canSendInvoice(selectedTicket)" class="action-section">
+                <button type="button" class="btn btn-success btn-sm" (click)="sendPaymentValidationToClient(selectedTicket)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  Envoyer la facture de paiement
+                </button>
+              </div>
+
               <!-- Action pour envoyer la validation du paiement au client -->
               <div *ngIf="canValidatePayment(selectedTicket)" class="action-section">
                 <button type="button" class="btn btn-info btn-sm" (click)="sendPaymentValidationToClient(selectedTicket)">
@@ -386,8 +402,11 @@
           </div>
         </div>
 
-        <!-- Section Paiement -->
-        <div class="admin-ticket-row">
+        <!-- Section Paiement (affichée uniquement après envoi de la facture) -->
+        <div
+          class="admin-ticket-row"
+          *ngIf="selectedTicket?.status === 'En attente de paiement' || selectedTicket?.status === 'Paiement validé'"
+        >
           <div class="admin-ticket-label">Paiement :</div>
           <div class="admin-ticket-value">
             <jhi-ticket-payment

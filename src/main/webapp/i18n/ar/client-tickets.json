@@ -1,0 +1,115 @@
+{
+  "ticketsClient": {
+    "pageTitle": "تذاكري",
+    "title": "تذاكري",
+    "subtitle": "أدر طلبات الدعم الخاصة بك وتابع تقدمها",
+    "create": "إنشاء تذكرة",
+    "history": "سجل التذاكر",
+    "loading": "جارٍ التحميل...",
+    "stats": {
+      "total": "إجمالي التذاكر",
+      "open": "قيد المعالجة",
+      "resolved": "تم الحل"
+    },
+    "filters": {
+      "all": "جميع الحالات",
+      "status": {
+        "nouveau": "جديد",
+        "enCours": "قيد المعالجة",
+        "resolu": "تم الحل",
+        "ferme": "مغلق",
+        "urgent": "عاجل",
+        "enAttentePaiement": "بانتظار الدفع",
+        "paiementValide": "تم تأكيد الدفع"
+      }
+    },
+    "types": {
+      "bug": "خلل",
+      "demande": "طلب",
+      "support": "دعم",
+      "autre": "آخر"
+    },
+    "status": {
+      "nouveau": "جديد",
+      "enCours": "قيد المعالجة",
+      "resolu": "تم الحل",
+      "ferme": "مغلق",
+      "urgent": "عاجل",
+      "enAttentePaiement": "بانتظار الدفع",
+      "paiementValide": "تم تأكيد الدفع",
+      "devisValide": "تم تأكيد العرض"
+    },
+    "adminMessages": {
+      "singular": "{{count}} رسالة من الفريق",
+      "plural": "{{count}} رسائل من الفريق"
+    },
+    "meta": {
+      "backoffice": "الواجهة الخلفية",
+      "hosting": "الاستضافة"
+    },
+    "viewDetails": "عرض التفاصيل →",
+    "type": "نوع التذكرة",
+    "selectType": "اختر نوعًا",
+    "description": "وصف المشكلة",
+    "backofficeUrl": "رابط الواجهة الخلفية",
+    "backofficeLogin": "اسم مستخدم الواجهة الخلفية",
+    "backofficePassword": "كلمة مرور الواجهة الخلفية",
+    "hostingUrl": "رابط الاستضافة",
+    "cancel": "إلغاء",
+    "noTickets": "لا توجد تذاكر حتى الآن.",
+    "empty": {
+      "title": "لا توجد تذاكر",
+      "cta": "أنشئ أول تذكرة لك"
+    },
+    "devis": {
+      "title": "إرسال عرض",
+      "amount": "المبلغ (درهم)",
+      "description": "وصف العرض",
+      "cancel": "إلغاء",
+      "submit": "إرسال العرض"
+    },
+    "image": {
+      "label": "صورة (اختياري)",
+      "add": "انقر لإضافة صورة",
+      "hint": "PNG، JPG حتى 5 ميغابايت",
+      "previewAlt": "معاينة الصورة"
+    },
+    "form": {
+      "ticketPlaceholder": "صف مشكلتك بالتفصيل...",
+      "backofficeSection": "معلومات الواجهة الخلفية (اختياري)",
+      "devisPlaceholder": "تفاصيل العرض...",
+      "creating": "جاري الإنشاء..."
+    },
+    "payment": {
+      "title": "تأكيد الدفع",
+      "ticketLabel": "تذكرة رقم {{id}}",
+      "confirm": "تأكيد الدفع للتذكرة التالية:",
+      "cancel": "إلغاء",
+      "validate": "تأكيد الدفع"
+    },
+    "info": {
+      "backofficeUrlPlaceholder": "https://backoffice-الخاصة-بك.com",
+      "hostingUrlPlaceholder": "https://hosting-الخاصة-بك.com",
+      "loginPlaceholder": "اسم المستخدم",
+      "passwordPlaceholder": "كلمة المرور"
+    },
+    "messages": {
+      "invalidImage": "يرجى اختيار صورة صالحة",
+      "imageTooLarge": "يجب ألا يتجاوز حجم الصورة 5 ميغابايت",
+      "devisSuccess": "تم إرسال العرض بنجاح!",
+      "devisError": "حدث خطأ أثناء إرسال العرض.",
+      "devisInvalid": "يرجى إدخال مبلغ صالح للعرض.",
+      "paymentSuccess": "تم تأكيد الدفع بنجاح!",
+      "paymentError": "حدث خطأ أثناء تأكيد الدفع.",
+      "closeSuccess": "تم إغلاق التذكرة بنجاح!",
+      "closeError": "حدث خطأ أثناء إغلاق التذكرة.",
+      "createSuccess": "تم إنشاء التذكرة بنجاح!",
+      "createError": "حدث خطأ أثناء إنشاء التذكرة",
+      "loadTicketsError": "حدث خطأ أثناء تحميل التذاكر",
+      "loadStatusesError": "حدث خطأ أثناء تحميل الحالات: {{error}}",
+      "loadTypesError": "حدث خطأ أثناء تحميل الأنواع: {{error}}",
+      "loadPrioritiesError": "حدث خطأ أثناء تحميل الأولويات: {{error}}",
+      "unknownError": "خطأ غير معروف"
+    }
+  }
+}

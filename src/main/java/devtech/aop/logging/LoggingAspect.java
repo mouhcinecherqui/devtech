@@ -1,4 +1,4 @@
-package devtech.aop.logging;
+package devtechly.aop.logging;
 
 import java.util.Arrays;
 import org.aspectj.lang.JoinPoint;
@@ -42,7 +42,7 @@ public class LoggingAspect {
     /**
      * Pointcut that matches all Spring beans in the application's main packages.
      */
-    @Pointcut("within(devtech.repository..*)" + " || within(devtech.service..*)" + " || within(devtech.web.rest..*)")
+    @Pointcut("within(devtechly.repository..*)" + " || within(devtechly.service..*)" + " || within(devtechly.web.rest..*)")
     public void applicationPackagePointcut() {
         // Method is empty as this is just a Pointcut, the implementations are in the advices.
     }

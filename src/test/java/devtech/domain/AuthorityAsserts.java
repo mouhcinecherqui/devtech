@@ -1,4 +1,4 @@
-package devtech.domain;
+package devtechly.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

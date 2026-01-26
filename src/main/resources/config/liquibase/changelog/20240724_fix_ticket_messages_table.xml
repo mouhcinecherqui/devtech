@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!-- Correction et amélioration de la table ticket_message -->
-    <changeSet id="20240724_fix_ticket_messages_table" author="devtech">
+    <changeSet id="20240724_fix_ticket_messages_table" author="devtechly">
         <!-- Vérifier si la table existe -->
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket_message"/>
@@ -24,7 +24,7 @@
     </changeSet>
 
     <!-- Ajouter des index manquants si nécessaire -->
-    <changeSet id="20240724_add_missing_indexes" author="devtech">
+    <changeSet id="20240724_add_missing_indexes" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket_message"/>
             <not>
@@ -38,7 +38,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="20240724_add_created_date_index" author="devtech">
+    <changeSet id="20240724_add_created_date_index" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket_message"/>
             <not>
@@ -52,7 +52,7 @@
         </createIndex>
     </changeSet>
 
-    <changeSet id="20240724_add_author_index" author="devtech">
+    <changeSet id="20240724_add_author_index" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket_message"/>
             <not>

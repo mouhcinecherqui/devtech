@@ -1,5 +1,5 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
-name: devtech
+name: devtechly
 services:
   mysql:
     image: mysql:9.2.0
@@ -7,9 +7,9 @@ services:
       - ./config/mysql:/etc/mysql/conf.d
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=devtech
+      - MYSQL_USER=devtechly
       - MYSQL_PASSWORD=root
-      - MYSQL_DATABASE=devtech
+      - MYSQL_DATABASE=devtechly
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:

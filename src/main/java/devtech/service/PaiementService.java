@@ -1,12 +1,12 @@
-package devtech.service;
+package devtechly.service;
 
 // PDF
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
-import devtech.domain.Paiement;
-import devtech.repository.PaiementRepository;
-import devtech.service.dto.PaiementDTO;
-import devtech.service.exception.PaiementException;
+import devtechly.domain.Paiement;
+import devtechly.repository.PaiementRepository;
+import devtechly.service.dto.PaiementDTO;
+import devtechly.service.exception.PaiementException;
 import java.io.ByteArrayOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

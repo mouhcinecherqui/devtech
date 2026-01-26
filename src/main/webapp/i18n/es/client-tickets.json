@@ -1,0 +1,115 @@
+{
+  "ticketsClient": {
+    "pageTitle": "Mis tickets",
+    "title": "Mis tickets",
+    "subtitle": "Gestiona tus solicitudes de soporte y sigue su progreso",
+    "create": "Crear ticket",
+    "history": "Historial de tickets",
+    "loading": "Cargando...",
+    "stats": {
+      "total": "Total de tickets",
+      "open": "En curso",
+      "resolved": "Resueltos"
+    },
+    "filters": {
+      "all": "Todos los estados",
+      "status": {
+        "nouveau": "Nuevo",
+        "enCours": "En curso",
+        "resolu": "Resuelto",
+        "ferme": "Cerrado",
+        "urgent": "Urgente",
+        "enAttentePaiement": "Pendiente de pago",
+        "paiementValide": "Pago validado"
+      }
+    },
+    "types": {
+      "bug": "Bug",
+      "demande": "Solicitud",
+      "support": "Soporte",
+      "autre": "Otro"
+    },
+    "status": {
+      "nouveau": "Nuevo",
+      "enCours": "En curso",
+      "resolu": "Resuelto",
+      "ferme": "Cerrado",
+      "urgent": "Urgente",
+      "enAttentePaiement": "Pendiente de pago",
+      "paiementValide": "Pago validado",
+      "devisValide": "Presupuesto validado"
+    },
+    "adminMessages": {
+      "singular": "{{count}} mensaje del equipo",
+      "plural": "{{count}} mensajes del equipo"
+    },
+    "meta": {
+      "backoffice": "Backoffice",
+      "hosting": "Alojamiento"
+    },
+    "viewDetails": "Ver detalles →",
+    "type": "Tipo de ticket",
+    "selectType": "Selecciona un tipo",
+    "description": "Descripción del problema",
+    "backofficeUrl": "Enlace Backoffice",
+    "backofficeLogin": "Usuario Backoffice",
+    "backofficePassword": "Contraseña Backoffice",
+    "hostingUrl": "URL de alojamiento",
+    "cancel": "Cancelar",
+    "noTickets": "Aún no hay tickets.",
+    "empty": {
+      "title": "No se encontraron tickets",
+      "cta": "Crea tu primer ticket"
+    },
+    "devis": {
+      "title": "Enviar presupuesto",
+      "amount": "Importe (MAD)",
+      "description": "Descripción del presupuesto",
+      "cancel": "Cancelar",
+      "submit": "Enviar presupuesto"
+    },
+    "image": {
+      "label": "Imagen (opcional)",
+      "add": "Haz clic para añadir una imagen",
+      "hint": "PNG, JPG hasta 5MB",
+      "previewAlt": "Vista previa de la imagen"
+    },
+    "form": {
+      "ticketPlaceholder": "Describe tu problema en detalle...",
+      "backofficeSection": "Información de backoffice (opcional)",
+      "devisPlaceholder": "Detalles del presupuesto...",
+      "creating": "Creando..."
+    },
+    "payment": {
+      "title": "Validar pago",
+      "ticketLabel": "Ticket n.º {{id}}",
+      "confirm": "Confirmar el pago para el siguiente ticket:",
+      "cancel": "Cancelar",
+      "validate": "Validar pago"
+    },
+    "info": {
+      "backofficeUrlPlaceholder": "https://tu-backoffice.com",
+      "hostingUrlPlaceholder": "https://tu-alojamiento.com",
+      "loginPlaceholder": "Tu usuario",
+      "passwordPlaceholder": "Tu contraseña"
+    },
+    "messages": {
+      "invalidImage": "Selecciona una imagen válida",
+      "imageTooLarge": "La imagen no debe superar los 5MB",
+      "devisSuccess": "¡Presupuesto enviado con éxito!",
+      "devisError": "Error al enviar el presupuesto.",
+      "devisInvalid": "Introduce un importe válido para el presupuesto.",
+      "paymentSuccess": "¡Pago validado con éxito!",
+      "paymentError": "Error al validar el pago.",
+      "closeSuccess": "¡Ticket cerrado con éxito!",
+      "closeError": "Error al cerrar el ticket.",
+      "createSuccess": "¡Ticket creado con éxito!",
+      "createError": "Error al crear el ticket",
+      "loadTicketsError": "Error al cargar los tickets",
+      "loadStatusesError": "Error al cargar los estados: {{error}}",
+      "loadTypesError": "Error al cargar los tipos: {{error}}",
+      "loadPrioritiesError": "Error al cargar las prioridades: {{error}}",
+      "unknownError": "Error desconocido"
+    }
+  }
+}

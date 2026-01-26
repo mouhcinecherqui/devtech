@@ -8,13 +8,7 @@ import { ProfileService } from './profile.service';
 
 @Component({
   selector: 'jhi-page-ribbon',
-  template: `
-    @if (ribbonEnvSignal; as ribbonEnv) {
-      <div class="ribbon">
-        <a href="" [jhiTranslate]="'global.ribbon.' + (ribbonEnv() ?? '')">{{ { dev: 'Développement' }[ribbonEnv() ?? ''] }}</a>
-      </div>
-    }
-  `,
+  template: ``,
   styleUrl: './page-ribbon.component.scss',
   imports: [SharedModule],
 })

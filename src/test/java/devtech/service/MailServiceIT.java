@@ -1,12 +1,12 @@
-package devtech.service;
+package devtechly.service;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import devtech.IntegrationTest;
-import devtech.config.Constants;
-import devtech.domain.User;
+import devtechly.IntegrationTest;
+import devtechly.config.Constants;
+import devtechly.domain.User;
 import jakarta.mail.Multipart;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeBodyPart;

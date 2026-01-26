@@ -1,4 +1,4 @@
-package devtech.service.dto;
+package devtechly.service.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

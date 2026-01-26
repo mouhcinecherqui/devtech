@@ -1,6 +1,6 @@
-package devtech.config;
+package devtechly.config;
 
-import devtech.aop.logging.LoggingAspect;
+import devtechly.aop.logging.LoggingAspect;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import tech.jhipster.config.JHipsterConstants;

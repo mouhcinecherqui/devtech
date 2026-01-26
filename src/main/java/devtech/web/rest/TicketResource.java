@@ -1,21 +1,21 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.config.ApplicationProperties;
-import devtech.domain.AppUser;
-import devtech.domain.Devis;
-import devtech.domain.Message;
-import devtech.domain.Paiement;
-import devtech.domain.Ticket;
-import devtech.domain.TicketMessage;
-import devtech.repository.AppUserRepository;
-import devtech.repository.TicketMessageRepository;
-import devtech.repository.TicketRepository;
-import devtech.repository.UserRepository;
-import devtech.security.SecurityUtils;
-import devtech.service.ClientEmailService;
-import devtech.service.MailService;
-import devtech.service.NotificationService;
-import devtech.service.TicketMessageService;
+import devtechly.config.ApplicationProperties;
+import devtechly.domain.AppUser;
+import devtechly.domain.Devis;
+import devtechly.domain.Message;
+import devtechly.domain.Paiement;
+import devtechly.domain.Ticket;
+import devtechly.domain.TicketMessage;
+import devtechly.repository.AppUserRepository;
+import devtechly.repository.TicketMessageRepository;
+import devtechly.repository.TicketRepository;
+import devtechly.repository.UserRepository;
+import devtechly.security.SecurityUtils;
+import devtechly.service.ClientEmailService;
+import devtechly.service.MailService;
+import devtechly.service.NotificationService;
+import devtechly.service.TicketMessageService;
 import jakarta.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -679,7 +678,7 @@ public class TicketResource {
                         try {
                             // Créer un objet Message temporaire pour l'email
                             Message messageForEmail = new Message();
-                            messageForEmail.setSender("Équipe DevTech");
+                            messageForEmail.setSender("Équipe devtechly");
                             messageForEmail.setContent(content.trim());
                             messageForEmail.setCreatedDate(Instant.now());
 
@@ -744,7 +743,7 @@ public class TicketResource {
     @Transactional(readOnly = true)
     private String saveImage(MultipartFile file) throws IOException {
         // Créer le dossier d'upload s'il n'existe pas
-        Path uploadDir = Paths.get(applicationProperties.getUpload().getPath());
+        Path uploadDir = Path.of(applicationProperties.getUpload().getPath());
         if (!Files.exists(uploadDir)) {
             Files.createDirectories(uploadDir);
         }
@@ -769,7 +768,7 @@ public class TicketResource {
     @GetMapping("/images/{filename:.+}")
     public ResponseEntity<byte[]> getImage(@PathVariable String filename) {
         try {
-            Path filePath = Paths.get(applicationProperties.getUpload().getPath()).resolve(filename);
+            Path filePath = Path.of(applicationProperties.getUpload().getPath()).resolve(filename);
             if (!Files.exists(filePath)) {
                 return ResponseEntity.notFound().build();
             }
@@ -1276,7 +1275,7 @@ public class TicketResource {
                 try {
                     var user = userRepository.findOneByLogin(ticket.getCreatedBy());
                     if (user.isPresent()) {
-                        var u = user.get();
+                        var u = user.orElseThrow();
                         if (u.getFirstName() != null && u.getLastName() != null) {
                             this.clientName = u.getFirstName() + " " + u.getLastName();
                         } else if (u.getFirstName() != null) {

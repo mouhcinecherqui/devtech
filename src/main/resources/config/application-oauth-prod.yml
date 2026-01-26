@@ -1,14 +1,13 @@
-# Configuration OAuth2 pour Google en production
-# IMPORTANT: Vous devez configurer https://devtechly.com/login/oauth2/code/google
-# comme URI de redirection autorisée dans Google Cloud Console
+# Configuration OAuth2 pour Google en production (GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET depuis .env.prod)
+# IMPORTANT: Configurer https://devtechly.com/login/oauth2/code/google dans Google Cloud Console
 spring:
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
-            client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: openid, profile, email
             redirect-uri: 'https://devtechly.com/login/oauth2/code/{registrationId}'
         provider:

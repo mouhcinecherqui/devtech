@@ -1,14 +1,14 @@
-package devtech.service;
+package devtechly.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import devtech.domain.Ticket;
-import devtech.domain.TicketMessage;
-import devtech.repository.TicketMessageRepository;
-import devtech.repository.TicketRepository;
+import devtechly.domain.Ticket;
+import devtechly.domain.TicketMessage;
+import devtechly.repository.TicketMessageRepository;
+import devtechly.repository.TicketRepository;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;

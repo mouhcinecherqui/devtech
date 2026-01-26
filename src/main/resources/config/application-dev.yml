@@ -18,7 +18,7 @@ logging:
     ROOT: DEBUG
     tech.jhipster: DEBUG
     org.hibernate.SQL: DEBUG
-    devtech: DEBUG
+    devtechly: DEBUG
 
 spring:
   devtools:
@@ -37,11 +37,10 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    # Utilise le service name 'mysql' pour Docker, 'localhost' pour développement local
-    # Spring Boot mappe automatiquement SPRING_DATASOURCE_URL de docker-compose vers spring.datasource.url
-    url: jdbc:mysql://localhost:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: devtech
-    password: root
+    # Variables chargées depuis .env (local) ou docker-compose (VPS)
+    url: ${DB_URL:jdbc:mysql://localhost:3306/devtech?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -53,10 +52,11 @@ spring:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
   mail:
-    host: sandbox.smtp.mailtrap.io
-    port: 2525
-    username: 5e8f2040acbe73
-    password: 147a7788ae5be1
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    # Placeholders si .env absent ; utiliser npm run backend:start:env + .env pour le vrai mail
+    username: ${SPRING_MAIL_USERNAME:dev@local}
+    password: ${SPRING_MAIL_PASSWORD:noreply}
     protocol: smtp
     tls: true
     properties:
@@ -65,8 +65,10 @@ spring:
           auth: true
           starttls:
             enable: true
-          ssl:
-            trust: sandbox.smtp.mailtrap.io
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
@@ -84,10 +86,13 @@ server:
 # ===================================================================
 
 jhipster:
+  mail:
+    from: ${SPRING_MAIL_USERNAME:devtechly@localhost}
+    base-url: http://localhost:3000
   # CORS is only enabled by default with the "dev" profile
   cors:
     # Allow Ionic for JHipster by default (* no longer allowed in Spring Boot 2.4+)
-    allowed-origins: 'http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:4200,https://localhost:4200'
+    allowed-origins: 'http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:3000,https://localhost:3000,http://localhost:4200,https://localhost:4200'
     # Enable CORS when running in GitHub Codespaces
     allowed-origin-patterns: 'https://*.githubpreview.dev'
     allowed-methods: '*'
@@ -98,13 +103,11 @@ jhipster:
   security:
     authentication:
       jwt:
-        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: NDMyNzk5OTM2MThlOTE3MTI5ZGY5YTQ5ZmE3ZmY3NTg0ZjE2MDZlODVjNTlmOTFkYTU4ZDI5ZDgzOGNkNjk3ODNlN2EwYjNhOTFhYTI5N2NlMTNiMDE1YWE5MjJlMmZiNDFmMWM4YTcyYjU0N2U0NjViMDQ5MjllODliNTU0YzY=
+        # Secret chargé depuis .env (JWT_SECRET). Doit être en Base64, min 256 bits : `openssl rand -base64 64`
+        base64-secret: ${JWT_SECRET:NDMyNzk5OTM2MThlOTE3MTI5ZGY5YTQ5ZmE3ZmY3NTg0ZjE2MDZlODVjNTlmOTFkYTU4ZDI5ZDgzOGNkNjk3ODNlN2EwYjNhOTFhYTI5N2NlMTNiMDE1YWE5MjJlMmZiNDFmMWM4YTcyYjU0N2U0NjViMDQ5MjllODliNTU0YzY=}
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
-  mail:
-    from: noreply@devtech.com
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
@@ -122,7 +125,7 @@ jhipster:
 # ===================================================================
 
 admin:
-  mail: admin@devtech.com
+  mail: ${SPRING_MAIL_USERNAME:dev@local}
 
 # Configuration CMI pour le développement
 cmi:
@@ -130,7 +133,7 @@ cmi:
     id: '000000000000001'
   store:
     key: 'TEST123456789'
-    name: 'DevTech Store'
+    name: 'devtechly Store'
   gateway:
     url: 'https://testpayment.cmi.co.ma/fim/est3Dgate'
   callback:
@@ -154,8 +157,9 @@ cmi:
       client:
         registration:
           google:
-            client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
-            client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+            # Placeholders si .env absent ; .env + backend:start:env pour OAuth2 réel
+            client-id: ${GOOGLE_CLIENT_ID:dev-google-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:dev-google-client-secret}
             scope: openid,profile,email
             redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
         provider:

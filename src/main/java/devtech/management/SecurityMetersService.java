@@ -1,4 +1,4 @@
-package devtech.management;
+package devtechly.management;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;

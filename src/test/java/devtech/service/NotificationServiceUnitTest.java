@@ -1,10 +1,11 @@
-package devtech.service;
+package devtechly.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import devtech.domain.Notification;
-import devtech.repository.NotificationRepository;
+import devtechly.domain.Notification;
+import devtechly.repository.NotificationRepository;
+import devtechly.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -14,7 +15,8 @@ class NotificationServiceUnitTest {
     @Test
     void notifyUser_shouldPersistNotificationWithDefaults() {
         NotificationRepository repo = mock(NotificationRepository.class);
-        NotificationService service = new NotificationService(repo);
+        UserRepository userRepo = mock(UserRepository.class);
+        NotificationService service = new NotificationService(repo, userRepo);
 
         service.notifyUser("jane", "Hello", "INFO");
 

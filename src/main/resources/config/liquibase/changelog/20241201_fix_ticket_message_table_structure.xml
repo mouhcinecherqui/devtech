@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <!-- Créer la table ticket_message si elle n'existe pas -->
-    <changeSet id="20241201_create_ticket_message_table" author="devtech">
+    <changeSet id="20241201_create_ticket_message_table" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="ticket_message"/>
@@ -39,31 +39,65 @@
         </createTable>
     </changeSet>
 
-    <!-- Ajouter des index pour améliorer les performances -->
-    <changeSet id="20241201_add_ticket_message_indexes" author="devtech">
+    <!-- Ajouter des index pour améliorer les performances (sans doublons) -->
+    <changeSet id="20241201_add_ticket_message_ticket_id_index" author="devtechly">
         <preConditions onFail="MARK_RAN">
-            <tableExists tableName="ticket_message"/>
+            <and>
+                <tableExists tableName="ticket_message"/>
+                <not>
+                    <indexExists indexName="idx_ticket_message_ticket_id" tableName="ticket_message"/>
+                </not>
+            </and>
         </preConditions>
-        
         <createIndex tableName="ticket_message" indexName="idx_ticket_message_ticket_id">
             <column name="ticket_id"/>
         </createIndex>
-        
+    </changeSet>
+
+    <changeSet id="20241201_add_ticket_message_created_date_index" author="devtechly">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="ticket_message"/>
+                <not>
+                    <indexExists indexName="idx_ticket_message_created_date" tableName="ticket_message"/>
+                </not>
+            </and>
+        </preConditions>
         <createIndex tableName="ticket_message" indexName="idx_ticket_message_created_date">
             <column name="created_date"/>
         </createIndex>
-        
+    </changeSet>
+
+    <changeSet id="20241201_add_ticket_message_author_login_index" author="devtechly">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="ticket_message"/>
+                <not>
+                    <indexExists indexName="idx_ticket_message_author_login" tableName="ticket_message"/>
+                </not>
+            </and>
+        </preConditions>
         <createIndex tableName="ticket_message" indexName="idx_ticket_message_author_login">
             <column name="author_login"/>
         </createIndex>
-        
+    </changeSet>
+
+    <changeSet id="20241201_add_ticket_message_author_type_index" author="devtechly">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="ticket_message"/>
+                <not>
+                    <indexExists indexName="idx_ticket_message_author_type" tableName="ticket_message"/>
+                </not>
+            </and>
+        </preConditions>
         <createIndex tableName="ticket_message" indexName="idx_ticket_message_author_type">
             <column name="author_type"/>
         </createIndex>
     </changeSet>
 
     <!-- Vérifier et corriger les contraintes existantes -->
-    <changeSet id="20241201_fix_ticket_message_constraints" author="devtech">
+    <changeSet id="20241201_fix_ticket_message_constraints" author="devtechly">
         <preConditions onFail="MARK_RAN">
             <tableExists tableName="ticket_message"/>
         </preConditions>

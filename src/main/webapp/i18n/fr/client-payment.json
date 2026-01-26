@@ -1,0 +1,135 @@
+{
+  "clientPayment": {
+    "pageTitle": "Mes moyens de paiement",
+    "header": {
+      "title": "Paiement sécurisé",
+      "subtitle": "Payez en toute sécurité via PayPal ou par virement bancaire direct"
+    },
+    "alerts": {
+      "errorPrefix": "Erreur :",
+      "successPrefix": "Succès :"
+    },
+    "sections": {
+      "amount": {
+        "title": "Montant du paiement"
+      },
+      "currency": {
+        "title": "Devise"
+      },
+      "method": {
+        "title": "Moyen de paiement"
+      },
+      "description": {
+        "title": "Description"
+      },
+      "date": {
+        "title": "Date de paiement"
+      },
+      "security": {
+        "title": "Paiement sécurisé",
+        "message": "Votre paiement sera traité de manière sécurisée. Vos informations bancaires ne sont jamais stockées sur nos serveurs."
+      }
+    },
+    "fields": {
+      "amount": {
+        "label": "Montant (MAD)",
+        "placeholder": "Entrez le montant"
+      },
+      "currency": {
+        "label": "Devise",
+        "options": {
+          "MAD": "MAD - Dirham Marocain",
+          "EUR": "EUR - Euro",
+          "USD": "USD - Dollar US"
+        }
+      },
+      "cardNumber": {
+        "label": "Numéro de carte",
+        "placeholder": "1234 5678 9012 3456"
+      },
+      "expiryDate": {
+        "label": "Date d'expiration",
+        "placeholder": "MM/AA"
+      },
+      "cvv": {
+        "label": "CVV",
+        "placeholder": "123"
+      },
+      "cardHolder": {
+        "label": "Nom du titulaire",
+        "placeholder": "Nom tel qu'il apparaît sur la carte"
+      },
+      "description": {
+        "label": "Description du paiement",
+        "placeholder": "Décrivez la raison de ce paiement"
+      },
+      "date": {
+        "label": "Date"
+      }
+    },
+    "savedMethods": {
+      "title": "Moyens de paiement enregistrés",
+      "defaultBadge": "Par défaut",
+      "useNew": "Utiliser un nouveau moyen de paiement",
+      "newTitle": "Nouveau moyen de paiement",
+      "newSubtitle": "Saisir les informations de carte"
+    },
+    "actions": {
+      "cancel": "Annuler",
+      "submit": "Procéder au paiement",
+      "processing": "Traitement...",
+      "submitPaypal": "Payer avec PayPal",
+      "submitBankTransfer": "Confirmer le virement"
+    },
+    "info": {
+      "title": "Informations importantes",
+      "items": {
+        "realTime": "Le paiement sera traité en temps réel",
+        "confirmation": "Vous recevrez une confirmation par email",
+        "invoice": "Une facture sera générée automatiquement",
+        "support": "Support disponible 24/7 en cas de problème"
+      }
+    },
+    "methods": {
+      "bankTransfer": "Virement bancaire",
+      "bankTransferDesc": "Payez par virement bancaire direct et envoyez le reçu.",
+      "paypal": "PayPal",
+      "paypalDesc": "Utilisez votre compte PayPal pour un paiement instantané et sécurisé."
+    },
+    "messages": {
+      "createSuccess": "Demande de paiement créée avec succès. Redirection vers la passerelle de paiement...",
+      "createSuccessBankTransfer": "Demande enregistrée. Veuillez effectuer le virement et partager le justificatif.",
+      "createSuccessPaypal": "Demande enregistrée. Ouverture de PayPal pour finaliser votre paiement...",
+      "createError": "Erreur lors de la création de la demande de paiement : {{error}}",
+      "unknownError": "Erreur inconnue"
+    },
+    "validation": {
+      "required": "Ce champ est requis",
+      "amountMin": "Le montant minimum est {{min}}",
+      "amountMax": "Le montant maximum est {{max}}",
+      "descriptionMax": "La description ne peut pas dépasser {{max}} caractères"
+    },
+    "bankDetails": {
+      "title": "Payer par virement bancaire",
+      "description": "Effectuez le virement vers le compte ci-dessous puis envoyez le justificatif par email pour accélérer la validation.",
+      "accountNameLabel": "Titulaire du compte",
+      "accountName": "MOUHCINE CHERQUI",
+      "bankName": "CIH BANK",
+      "iban": "MA64 2302 7035 5923 3211 0334 0052",
+      "bic": "CIHMMAMC",
+      "referenceLabel": "Référence",
+      "referenceValue": "Ajoutez votre numéro de facture ou votre email dans la référence",
+      "note": "Après le virement, envoyez le reçu à support@devtechly.com pour une confirmation plus rapide."
+    },
+    "paypal": {
+      "title": "Payer avec PayPal",
+      "description": "Vous serez redirigé vers PayPal pour confirmer le paiement.",
+      "steps": {
+        "instant": "Validation instantanée avec votre compte PayPal",
+        "secure": "Aucune donnée bancaire n'est stockée sur notre site",
+        "confirmation": "Un reçu PayPal vous sera envoyé après paiement"
+      },
+      "note": "Le montant saisi ci-dessus sera pré-rempli sur PayPal."
+    }
+  }
+}

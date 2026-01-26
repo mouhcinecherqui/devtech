@@ -1,4 +1,4 @@
 /**
  * Data transfer objects mappers.
  */
-package devtech.service.mapper;
+package devtechly.service.mapper;

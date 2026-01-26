@@ -1,6 +1,6 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.AppUser;
+import devtechly.domain.AppUser;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

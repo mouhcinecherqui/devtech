@@ -9,6 +9,7 @@ import { RefreshButtonComponent } from '../../shared/components/refresh-button/r
 import SharedModule from '../../shared/shared.module';
 import { IPaiement } from './paiement.model';
 import { AddPaiementModalComponent } from './add-paiement-modal.component';
+import { AlertService } from '../../core/util/alert.service';
 
 @Component({
   selector: 'jhi-admin-paiements',
@@ -25,6 +26,7 @@ export class PaiementsComponent implements OnInit {
   private readonly modalService = inject(NgbModal);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly autoRefreshService = inject(AutoRefreshService);
+  private readonly alertService = inject(AlertService);
 
   ngOnInit(): void {
     this.loadPaiements();
@@ -100,9 +102,13 @@ export class PaiementsComponent implements OnInit {
           a.click();
           window.URL.revokeObjectURL(url);
         },
-        error(error) {
+        error: error => {
           console.error('Erreur lors du téléchargement de la facture:', error);
-          alert('Erreur lors du téléchargement de la facture');
+          this.alertService.addAlert({
+            type: 'danger',
+            message: 'Erreur lors du téléchargement de la facture',
+            timeout: 5000,
+          });
         },
       });
     }

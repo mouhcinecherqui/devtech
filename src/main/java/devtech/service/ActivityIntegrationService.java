@@ -1,9 +1,9 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.ActivityType;
-import devtech.domain.Ticket;
-import devtech.domain.User;
-import devtech.repository.UserRepository;
+import devtechly.domain.ActivityType;
+import devtechly.domain.Ticket;
+import devtechly.domain.User;
+import devtechly.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

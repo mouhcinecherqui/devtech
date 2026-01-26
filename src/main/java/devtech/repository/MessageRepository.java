@@ -1,6 +1,6 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.Message;
+import devtechly.domain.Message;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;

@@ -7,6 +7,7 @@ import SharedModule from 'app/shared/shared.module';
 @Component({
   selector: 'jhi-error',
   templateUrl: './error.component.html',
+  styleUrl: './error.component.scss',
   imports: [SharedModule],
 })
 export default class ErrorComponent implements OnInit, OnDestroy {

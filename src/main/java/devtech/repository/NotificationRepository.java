@@ -1,6 +1,6 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.Notification;
+import devtechly.domain.Notification;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -21,6 +21,16 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     List<Notification> findByUserId(Long userId);
 
     /**
+     * Find notifications by user login with pagination
+     */
+    Page<Notification> findByUserLoginOrderByTimestampDesc(String userLogin, Pageable pageable);
+
+    /**
+     * Find a notification for a specific user by id
+     */
+    Optional<Notification> findByIdAndUserLogin(Long id, String userLogin);
+
+    /**
      * Find all unread notifications
      */
     List<Notification> findByReadFalse();
@@ -29,6 +39,11 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
      * Find all unread notifications by user ID
      */
     List<Notification> findByUserIdAndReadFalse(Long userId);
+
+    /**
+     * Find unread notifications by user login
+     */
+    List<Notification> findByUserLoginAndReadFalse(String userLogin);
 
     /**
      * Count unread notifications by user ID

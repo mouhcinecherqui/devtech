@@ -1,9 +1,9 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.Activity;
-import devtech.repository.ActivityRepository;
-import devtech.service.dto.ActivityDTO;
-import devtech.service.mapper.ActivityMapper;
+import devtechly.domain.Activity;
+import devtechly.repository.ActivityRepository;
+import devtechly.service.dto.ActivityDTO;
+import devtechly.service.mapper.ActivityMapper;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -224,7 +224,7 @@ public class ActivityService {
      * @return the created activity.
      */
     public ActivityDTO createActivity(
-        devtech.domain.ActivityType activityType,
+        devtechly.domain.ActivityType activityType,
         String title,
         String description,
         Long userId,
@@ -254,7 +254,7 @@ public class ActivityService {
      * @param activityType the activity type.
      * @return the icon name.
      */
-    private String getIconForActivityType(devtech.domain.ActivityType activityType) {
+    private String getIconForActivityType(devtechly.domain.ActivityType activityType) {
         return switch (activityType) {
             case SUCCESS -> "check";
             case INFO -> "info";

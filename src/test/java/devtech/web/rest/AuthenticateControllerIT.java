@@ -1,4 +1,4 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
@@ -10,10 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import devtech.IntegrationTest;
-import devtech.domain.User;
-import devtech.repository.UserRepository;
-import devtech.web.rest.vm.LoginVM;
+import devtechly.IntegrationTest;
+import devtechly.domain.User;
+import devtechly.repository.UserRepository;
+import devtechly.web.rest.vm.LoginVM;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

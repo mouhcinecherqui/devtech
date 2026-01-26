@@ -1,8 +1,8 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.AppUser;
-import devtech.repository.AppUserRepository;
-import devtech.security.SecurityUtils;
+import devtechly.domain.AppUser;
+import devtechly.repository.AppUserRepository;
+import devtechly.security.SecurityUtils;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
@@ -81,7 +81,7 @@ public class OAuth2JwtService {
 
         if (existingUser.isPresent()) {
             // Mettre à jour l'utilisateur existant
-            AppUser user = existingUser.get();
+            AppUser user = existingUser.orElseThrow();
             if (name != null && !name.isEmpty()) {
                 String[] nameParts = name.split(" ", 2);
                 user.setFirstName(nameParts[0]);

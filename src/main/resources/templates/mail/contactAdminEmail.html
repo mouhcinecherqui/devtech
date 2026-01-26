@@ -1,0 +1,369 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:lang="${#locale.language}" lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nouvelle demande de contact client - DevTechly</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        line-height: 1.6;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.15);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .email-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .logo {
+        width: 90px;
+        height: 90px;
+        margin: 0 auto 20px;
+        display: block;
+        background-color: white;
+        border-radius: 12px;
+        padding: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .company-name {
+        font-size: 28px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .company-tagline {
+        font-size: 14px;
+        opacity: 0.9;
+        margin: 5px 0 0;
+      }
+
+      .email-content {
+        padding: 40px 30px;
+      }
+
+      .greeting {
+        font-size: 18px;
+        color: #1e293b;
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+
+      .content-text {
+        font-size: 16px;
+        color: #475569;
+        margin-bottom: 20px;
+        line-height: 1.7;
+      }
+
+      .contact-box {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        border: 2px solid #667eea;
+        border-radius: 8px;
+        padding: 25px;
+        margin: 25px 0;
+      }
+
+      .contact-title {
+        color: #667eea;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .info-section {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      .info-section h3 {
+        color: #667eea;
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 0;
+        margin-bottom: 15px;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+        padding-bottom: 10px;
+      }
+
+      .info-item {
+        display: flex;
+        margin-bottom: 12px;
+        padding: 10px;
+        background-color: white;
+        border-radius: 6px;
+        border-left: 3px solid #667eea;
+      }
+
+      .info-label {
+        font-weight: 600;
+        color: #1e293b;
+        min-width: 140px;
+        margin-right: 10px;
+      }
+
+      .info-value {
+        color: #475569;
+        flex: 1;
+      }
+
+      .info-value a {
+        color: #667eea;
+        text-decoration: none;
+      }
+
+      .info-value a:hover {
+        text-decoration: underline;
+      }
+
+      .message-box {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        border-left: 4px solid #667eea;
+        padding: 20px;
+        margin: 25px 0;
+        border-radius: 0 8px 8px 0;
+      }
+
+      .message-content {
+        background-color: white;
+        padding: 15px;
+        border-radius: 6px;
+        color: #475569;
+        line-height: 1.8;
+        white-space: pre-wrap;
+      }
+
+      .priority-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .priority-normal {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+        color: #667eea;
+      }
+
+      .priority-high {
+        background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(232, 90, 43, 0.2) 100%);
+        color: #ff6b35;
+      }
+
+      .priority-urgent {
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.2) 0%, rgba(200, 35, 51, 0.2) 100%);
+        color: #dc3545;
+      }
+
+      .email-footer {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+        padding: 30px;
+        text-align: center;
+        border-top: 2px solid rgba(102, 126, 234, 0.2);
+      }
+
+      .footer-logo {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 15px;
+        display: block;
+        background-color: white;
+        border-radius: 10px;
+        padding: 6px;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+      }
+
+      .footer-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .footer-text {
+        font-size: 14px;
+        color: #64748b;
+        margin: 10px 0;
+      }
+
+      .contact-info {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      .contact-item {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 500;
+      }
+
+      .copyright {
+        font-size: 12px;
+        color: #999;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(102, 126, 234, 0.1);
+      }
+
+      @media (max-width: 600px) {
+        .email-container {
+          margin: 0;
+          box-shadow: none;
+        }
+
+        .email-content {
+          padding: 20px 15px;
+        }
+
+        .email-header {
+          padding: 20px 15px;
+        }
+
+        .company-name {
+          font-size: 24px;
+        }
+
+        .info-item {
+          flex-direction: column;
+        }
+
+        .info-label {
+          min-width: auto;
+          margin-bottom: 5px;
+        }
+
+        .contact-info {
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <!-- Header -->
+      <div class="email-header">
+        <div class="logo">
+          <img th:src="|cid:dt-logo.png|" alt="DevTechly Logo" />
+        </div>
+        <h1 class="company-name">DevTechly</h1>
+        <p class="company-tagline">Solutions Technologiques Innovantes</p>
+      </div>
+
+      <!-- Content -->
+      <div class="email-content">
+        <div class="greeting">Bonjour,</div>
+
+        <div class="content-text">Une nouvelle demande de contact a été soumise depuis l'interface client. Voici les détails :</div>
+
+        <div class="contact-box">
+          <div class="contact-title">📋 Nouvelle Demande de Contact Client</div>
+
+          <!-- Informations client -->
+          <div class="info-section">
+            <h3>👤 Informations Client</h3>
+            <div class="info-item">
+              <span class="info-label">Nom d'utilisateur :</span>
+              <span class="info-value" th:text="${clientLogin}">client@example.com</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Email client :</span>
+              <span class="info-value">
+                <a th:href="|mailto:${clientEmail}|" th:text="${clientEmail}">client@example.com</a>
+              </span>
+            </div>
+          </div>
+
+          <!-- Informations de la demande -->
+          <div class="info-section">
+            <h3>📝 Informations de la Demande</h3>
+            <div class="info-item">
+              <span class="info-label">Priorité :</span>
+              <span class="info-value">
+                <span
+                  th:class="${(contactRequest.priority == 'urgent') ? 'priority-badge priority-urgent' : 
+                            ((contactRequest.priority == 'high') ? 'priority-badge priority-high' : 'priority-badge priority-normal')}"
+                  th:text="${contactRequest.priority}"
+                  >normal</span
+                >
+              </span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Sujet :</span>
+              <span class="info-value" th:text="${contactRequest.subject}">Sujet de la demande</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Date :</span>
+              <span class="info-value" th:text="${contactRequest.timestamp}">2026-01-26T16:33:56.961Z</span>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="message-box">
+            <h3 style="color: #667eea; margin-top: 0; margin-bottom: 15px">💬 Message</h3>
+            <div class="message-content" th:text="${contactRequest.message}">Contenu du message du client...</div>
+          </div>
+        </div>
+
+        <div class="content-text">
+          <strong>Action requise :</strong> Veuillez répondre à cette demande dans les plus brefs délais selon la priorité indiquée.
+        </div>
+
+        <div class="content-text">
+          Cordialement,<br />
+          <strong>Le système DevTechly</strong>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="email-footer">
+        <div class="footer-logo">
+          <img th:src="|cid:dt-logo.png|" alt="DevTechly Logo" />
+        </div>
+        <div class="footer-text">
+          <strong>DevTechly</strong><br />
+          Solutions Technologiques Innovantes
+        </div>
+
+        <div class="contact-info">
+          <div class="contact-item">📧 contact@devtechly.com</div>
+          <div class="contact-item">📱 +212 6XX XXX XXX</div>
+          <div class="contact-item">🌐 www.devtechly.com</div>
+        </div>
+
+        <div class="copyright">
+          <p>Cet email a été envoyé automatiquement par le système DevTechly.</p>
+          <p>© 2024 DevTechly. Tous droits réservés.</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

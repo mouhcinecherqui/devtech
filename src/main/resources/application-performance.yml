@@ -1,4 +1,4 @@
-# Configuration d'optimisation des performances pour DevTech
+# Configuration d'optimisation des performances pour devtechly
 
 server:
   tomcat:
@@ -42,6 +42,10 @@ spring:
 
   # Optimiser la base de données
   datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/devtechly?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
     hikari:
       # Pool de connexions optimisé
       maximum-pool-size: 10
@@ -60,6 +64,21 @@ spring:
       - parameters
       - users
       - tickets
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope: openid,profile,email
+            redirect-uri: '{baseUrl}/login/oauth2/code/{registrationId}'
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            user-name-attribute: sub
 
 # Optimiser les logs pour réduire l'I/O
 logging:
@@ -68,7 +87,7 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: WARN
     org.springframework.web: WARN
     org.springframework.security: WARN
-    devtech: INFO
+    devtechly: INFO
   pattern:
     console: '%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n'
 

@@ -1,4 +1,4 @@
-package devtech.repository.timezone;
+package devtechly.repository.timezone;
 
 import jakarta.persistence.*;
 import java.io.Serializable;

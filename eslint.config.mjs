@@ -21,6 +21,11 @@ export default tseslint.config(
   eslint.configs.recommended,
   {
     files: ['**/*.{js,cjs,mjs}'],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.json'],
+      },
+    },
     rules: {
       'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },

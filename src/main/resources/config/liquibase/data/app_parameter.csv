@@ -17,5 +17,5 @@ id,param_key,param_value,param_type,description
 16,max_tickets_per_user,10,other,Nombre maximum de tickets par utilisateur
 17,ticket_auto_close_days,30,other,Nombre de jours avant fermeture automatique des tickets résolus
 18,notification_email_enabled,true,other,Activer les notifications par email
-19,support_email,support@devtech.com,other,Email de support
-20,company_name,DevTech,other,Nom de l'entreprise 
+19,support_email,support@devtechly.com,other,Email de support
+20,company_name,devtechly,other,Nom de l'entreprise 

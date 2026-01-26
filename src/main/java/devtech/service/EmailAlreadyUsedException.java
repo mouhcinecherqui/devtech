@@ -1,4 +1,4 @@
-package devtech.service;
+package devtechly.service;
 
 public class EmailAlreadyUsedException extends RuntimeException {
 

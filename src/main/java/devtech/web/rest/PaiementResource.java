@@ -1,14 +1,15 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.service.PaiementService;
-import devtech.service.dto.PaiementDTO;
-import devtech.service.exception.PaiementException;
-import devtech.web.rest.ErrorResponse;
+import devtechly.service.PaiementService;
+import devtechly.service.dto.PaiementDTO;
+import devtechly.service.exception.PaiementException;
+import devtechly.web.rest.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,12 @@ import org.springframework.web.bind.annotation.*;
 public class PaiementResource {
 
     private final PaiementService paiementService;
+
+    @Value("${cmi.ok.url:https://devtechly.com/payment-success}")
+    private String okUrl;
+
+    @Value("${cmi.fail.url:https://devtechly.com/payment-failed}")
+    private String failUrl;
 
     public PaiementResource(PaiementService paiementService) {
         this.paiementService = paiementService;
@@ -183,14 +190,15 @@ public class PaiementResource {
             // Rediriger vers la page de résultat appropriée
             String redirectUrl;
             if ("COMPLETED".equals(paiementDTO.status)) {
-                redirectUrl = "http://localhost:3000/payment-result?status=success&oid=" + paiementDTO.cmiOrderId;
+                redirectUrl = okUrl + "?status=success&oid=" + paiementDTO.cmiOrderId;
             } else {
-                redirectUrl = "http://localhost:3000/payment-result?status=failed&oid=" + paiementDTO.cmiOrderId;
+                redirectUrl = failUrl + "?status=failed&oid=" + paiementDTO.cmiOrderId;
             }
 
             return ResponseEntity.ok().header("Location", redirectUrl).body("<script>window.location.href='" + redirectUrl + "';</script>");
         } catch (Exception e) {
-            String redirectUrl = "http://localhost:3000/payment-result?status=failed&error=" + e.getMessage();
+            String redirectUrl =
+                failUrl + "?status=failed&error=" + java.net.URLEncoder.encode(e.getMessage(), java.nio.charset.StandardCharsets.UTF_8);
             return ResponseEntity.ok().header("Location", redirectUrl).body("<script>window.location.href='" + redirectUrl + "';</script>");
         }
     }

@@ -1,9 +1,9 @@
-package devtech.domain;
+package devtechly.domain;
 
-import static devtech.domain.AuthorityTestSamples.*;
+import static devtechly.domain.AuthorityTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import devtech.web.rest.TestUtil;
+import devtechly.web.rest.TestUtil;
 import org.junit.jupiter.api.Test;
 
 class AuthorityTest {

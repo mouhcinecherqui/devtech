@@ -1,4 +1,4 @@
-package devtech.domain.util;
+package devtechly.domain.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

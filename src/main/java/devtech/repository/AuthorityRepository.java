@@ -1,6 +1,6 @@
-package devtech.repository;
+package devtechly.repository;
 
-import devtech.domain.Authority;
+import devtechly.domain.Authority;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 

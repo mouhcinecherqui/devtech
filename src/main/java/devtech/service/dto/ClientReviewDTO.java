@@ -1,4 +1,4 @@
-package devtech.service.dto;
+package devtechly.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link devtech.domain.ClientReview} entity.
+ * A DTO for the {@link devtechly.domain.ClientReview} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ClientReviewDTO implements Serializable {

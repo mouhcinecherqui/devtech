@@ -42,7 +42,7 @@
     }
   },
   "global": {
-    "title": "Devtech",
+    "title": "devtechly",
     "menu": {
       "home": "Inicio",
       "login": "Iniciar sesión",
@@ -57,7 +57,22 @@
     "form": {
       "username": "Usuario",
       "password": "Contraseña",
-      "email": "Correo electrónico"
+      "email": {
+        "label": "Correo electrónico",
+        "placeholder": "Tu correo electrónico"
+      },
+      "newpassword": {
+        "label": "Nueva contraseña",
+        "placeholder": "Ingresa tu nueva contraseña"
+      },
+      "confirmpassword": {
+        "label": "Confirmar nueva contraseña",
+        "placeholder": "Confirma tu nueva contraseña"
+      },
+      "currentpassword": {
+        "label": "Contraseña actual",
+        "placeholder": "Ingresa tu contraseña actual"
+      }
     },
     "messages": {
       "error": {
@@ -68,15 +83,24 @@
           "noaccount": "¿Aún no tienes una cuenta?",
           "link": "Crear una cuenta"
         }
+      },
+      "validate": {
+        "email": {
+          "required": "Tu correo electrónico es obligatorio.",
+          "minlength": "Tu correo electrónico debe tener al menos 5 caracteres.",
+          "maxlength": "Tu correo electrónico no puede tener más de 50 caracteres.",
+          "invalid": "Tu correo electrónico no es válido."
+        }
       }
     },
     "field": {
       "id": "ID"
     },
+    "cancel": "Cancelar",
     "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
     "home": {
-      "title": "Bienvenido a DevTech",
-      "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
+      "title": "Bienvenido a devtechly",
+      "subtitle": "devtechly es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
       "servicesTitle": "Nuestros servicios",
       "service1": {
         "title": "Desarrollo de aplicaciones web a medida",
@@ -90,7 +114,7 @@
         "title": "Sistemas de gestión de contenidos (CMS)",
         "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
       },
-      "whyChooseTitle": "¿Por qué elegir DevTech?",
+      "whyChooseTitle": "¿Por qué elegir devtechly?",
       "why1": "Equipo experimentado de desarrolladores y diseñadores web",
       "why2": "Enfoque centrado en el cliente y comunicación transparente",
       "why3": "Proceso ágil de desarrollo para una entrega más rápida",
@@ -150,6 +174,56 @@
     "payments": "Pagos",
     "settings": "Parámetros",
     "users": "Usuarios"
+  },
+  "settings": {
+    "title": "Perfil del usuario [<strong>{{username}}</strong>]",
+    "titlePrefix": "Perfil de",
+    "form": {
+      "firstname": "Nombre",
+      "firstname.placeholder": "Tu nombre",
+      "lastname": "Apellido",
+      "lastname.placeholder": "Tu apellido",
+      "phone": "Teléfono",
+      "phone.placeholder": "Tu número de teléfono",
+      "language": "Idioma",
+      "button": "Guardar",
+      "changePassword": "Cambiar contraseña"
+    },
+    "oauth": {
+      "googleAccount": "Cuenta de Google:",
+      "googleAccountMessage": "Has iniciado sesión a través de Google. Puedes establecer una contraseña para tu cuenta para poder iniciar sesión con tus credenciales tradicionales."
+    },
+    "messages": {
+      "error": {
+        "fail": "<strong>¡Ha ocurrido un error!</strong> Tu perfil no se ha guardado.",
+        "emailexists": "<strong>¡Este correo ya está en uso!</strong> Por favor elige otro."
+      },
+      "success": "<strong>¡Tu perfil ha sido guardado!</strong>",
+      "validate": {
+        "firstname": {
+          "required": "Tu nombre es obligatorio.",
+          "minlength": "Tu nombre debe tener al menos 1 carácter.",
+          "maxlength": "Tu nombre no puede tener más de 50 caracteres."
+        },
+        "lastname": {
+          "required": "Tu apellido es obligatorio.",
+          "minlength": "Tu apellido debe tener al menos 1 carácter.",
+          "maxlength": "Tu apellido no puede tener más de 50 caracteres."
+        }
+      }
+    }
+  },
+  "password": {
+    "title": "Cambiar contraseña para {{username}}",
+    "messages": {
+      "success": "¡Contraseña cambiada exitosamente!",
+      "error": "¡Ha ocurrido un error! La contraseña no se pudo cambiar."
+    },
+    "form": {
+      "button": "Guardar",
+      "setPassword": "Establecer contraseña",
+      "changePassword": "Cambiar contraseña"
+    }
   },
   "login": {
     "title": "Autenticación",
@@ -335,14 +409,43 @@
     "hostingUrl": "URL de hosting",
     "cancel": "Cancelar",
     "detail": "Detalle del ticket",
-    "info": "Información del ticket",
+    "info": {
+      "title": "Información del ticket",
+      "backofficeUrlPlaceholder": "https://tu-backoffice.com",
+      "loginPlaceholder": "Tu usuario",
+      "passwordPlaceholder": "Tu contraseña",
+      "hostingUrlPlaceholder": "https://tu-alojamiento.com"
+    },
     "status": "Estado",
     "date": "Fecha",
     "history": "Historial de mis tickets",
     "loading": "Cargando...",
     "backoffice": "Backoffice",
     "hosting": "Hosting",
-    "noTickets": "No hay tickets todavía."
+    "noTickets": "No hay tickets todavía.",
+    "adminMessages": {
+      "singular": "{{count}} mensaje del equipo",
+      "plural": "{{count}} mensajes del equipo"
+    },
+    "status": {
+      "nouveau": "Nuevo",
+      "enCours": "En curso",
+      "resolu": "Resuelto",
+      "ferme": "Cerrado",
+      "urgent": "Urgente",
+      "enAttentePaiement": "Pendiente de pago",
+      "paiementValide": "Pago validado",
+      "devisValide": "Presupuesto validado"
+    },
+    "viewDetails": "Ver detalles →",
+    "meta": {
+      "backoffice": "Backoffice",
+      "hosting": "Alojamiento"
+    },
+    "empty": {
+      "title": "No se encontraron tickets",
+      "cta": "Crea tu primer ticket"
+    }
   },
   "clientsAdmin": {
     "title": "Clientes",
@@ -481,7 +584,11 @@
       "phone": "Teléfono",
       "email": "Email",
       "address": "Dirección",
-      "workingHours": "Horario de Atención"
+      "workingHours": "Horario de Atención",
+      "name": "devtechly",
+      "phoneValue": "+33 1 23 45 67 89",
+      "emailValue": "contact@devtechly.com",
+      "workingHoursValue": "Lunes - Viernes: 9:00 - 18:00"
     },
     "form": {
       "title": "Enviar Mensaje",

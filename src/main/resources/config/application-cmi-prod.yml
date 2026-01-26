@@ -7,7 +7,7 @@ cmi:
   # Clé secrète du magasin (à remplacer par votre vraie clé)
   store:
     key: 'your-secret-store-key-here'
-    name: 'DevTech Store'
+    name: 'devtechly Store'
 
   # URLs de la passerelle CMI
   gateway:
@@ -16,7 +16,7 @@ cmi:
 
   # URLs de callback
   callback:
-    url: 'https://devtechly.com/api/paiements/cmi-callback'
+    url: 'https://devtechly.com/api/paiements/cmi/callback'
 
   # URLs de redirection
   ok:

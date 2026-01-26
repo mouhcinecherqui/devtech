@@ -1,10 +1,10 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.AppUser;
-import devtech.domain.Devis;
-import devtech.domain.Message;
-import devtech.domain.Paiement;
-import devtech.domain.Ticket;
+import devtechly.domain.AppUser;
+import devtechly.domain.Devis;
+import devtechly.domain.Message;
+import devtechly.domain.Paiement;
+import devtechly.domain.Ticket;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
@@ -67,56 +67,44 @@ public class ClientEmailService {
      * Send email when a ticket is updated.
      */
     public void sendTicketUpdatedEmail(AppUser client, Ticket ticket) {
-        String subject = String.format("DevTech - Mise à jour du ticket #%d", ticket.getId());
-        String content = String.format(
-            "Bonjour %s %s,\n\n" +
-            "Votre ticket de support a été mis à jour.\n\n" +
-            "Détails du ticket :\n" +
-            "• Numéro : #%d\n" +
-            "• Type : %s\n" +
-            "• Description : %s\n" +
-            "• Nouveau statut : %s\n" +
-            "• Dernière mise à jour : %s\n\n" +
-            "Vous pouvez consulter tous les détails depuis votre espace client.\n\n" +
-            "Cordialement,\n" +
-            "L'équipe DevTech",
-            client.getFirstName(),
-            client.getLastName(),
-            ticket.getId(),
-            ticket.getType(),
-            ticket.getDescription(),
-            ticket.getStatus(),
-            ticket.getLastModifiedDate()
-        );
+        String subject = String.format("DevTechly - Mise à jour du ticket #%d", ticket.getId());
 
-        sendEmail(client.getEmail(), subject, content);
+        Context context = new Context();
+        context.setVariable("client", client);
+        context.setVariable("ticket", ticket);
+
+        // Créer un objet Devis temporaire si le ticket a des informations de paiement
+        Devis devisForEmail = null;
+        if (ticket.getPaymentAmount() != null && ticket.getPaymentAmount() > 0) {
+            devisForEmail = new Devis();
+            devisForEmail.setId(ticket.getId());
+            devisForEmail.setAmount(ticket.getPaymentAmount());
+            devisForEmail.setDescription(ticket.getDescription());
+            devisForEmail.setDateValidation(ticket.getLastModifiedDate());
+        }
+        context.setVariable("devis", devisForEmail);
+        context.setVariable("baseUrl", "https://www.devtechly.com");
+
+        String content = templateEngine.process("mail/ticketUpdatedEmail", context);
+
+        sendHtmlEmail(client.getEmail(), subject, content);
     }
 
     /**
      * Send email when a message is added to a ticket.
      */
     public void sendTicketMessageEmail(AppUser client, Ticket ticket, Message message) {
-        String subject = String.format("DevTech - Nouveau message sur le ticket #%d", ticket.getId());
-        String content = String.format(
-            "Bonjour %s %s,\n\n" +
-            "Un nouveau message a été ajouté à votre ticket de support.\n\n" +
-            "Détails :\n" +
-            "• Ticket : #%d\n" +
-            "• Expéditeur : %s\n" +
-            "• Message : %s\n" +
-            "• Date : %s\n\n" +
-            "Vous pouvez répondre directement depuis votre espace client.\n\n" +
-            "Cordialement,\n" +
-            "L'équipe DevTech",
-            client.getFirstName(),
-            client.getLastName(),
-            ticket.getId(),
-            message.getSender(),
-            message.getContent(),
-            message.getCreatedDate()
-        );
+        String subject = String.format("DevTechly - Nouveau message sur le ticket #%d", ticket.getId());
 
-        sendEmail(client.getEmail(), subject, content);
+        Context context = new Context();
+        context.setVariable("client", client);
+        context.setVariable("ticket", ticket);
+        context.setVariable("message", message);
+        context.setVariable("baseUrl", "https://www.devtechly.com");
+
+        String content = templateEngine.process("mail/ticketMessageEmail", context);
+
+        sendHtmlEmail(client.getEmail(), subject, content);
     }
 
     /**
@@ -139,27 +127,16 @@ public class ClientEmailService {
      * Send email when a quote is validated.
      */
     public void sendQuoteValidatedEmail(AppUser client, Devis devis) {
-        String subject = String.format("DevTech - Devis validé #%d", devis.getId());
-        String content = String.format(
-            "Bonjour %s %s,\n\n" +
-            "Votre devis a été validé avec succès.\n\n" +
-            "Détails du devis :\n" +
-            "• Numéro : #%d\n" +
-            "• Montant : %.2f MAD\n" +
-            "• Description : %s\n" +
-            "• Date de validation : %s\n\n" +
-            "Vous pouvez maintenant procéder au paiement depuis votre espace client.\n\n" +
-            "Cordialement,\n" +
-            "L'équipe DevTech",
-            client.getFirstName(),
-            client.getLastName(),
-            devis.getId(),
-            devis.getAmount(),
-            devis.getDescription(),
-            devis.getDateValidation()
-        );
+        String subject = String.format("DevTechly - Devis validé #%d", devis.getId());
 
-        sendEmail(client.getEmail(), subject, content);
+        Context context = new Context();
+        context.setVariable("client", client);
+        context.setVariable("devis", devis);
+        context.setVariable("baseUrl", "https://www.devtechly.com");
+
+        String content = templateEngine.process("mail/quoteValidatedEmail", context);
+
+        sendHtmlEmail(client.getEmail(), subject, content);
     }
 
     /**
@@ -182,27 +159,18 @@ public class ClientEmailService {
      * Send email when ticket status changes.
      */
     public void sendTicketStatusChangedEmail(AppUser client, Ticket ticket, String oldStatus, String newStatus) {
-        String subject = String.format("DevTech - Changement de statut du ticket #%d", ticket.getId());
-        String content = String.format(
-            "Bonjour %s %s,\n\n" +
-            "Le statut de votre ticket de support a été modifié.\n\n" +
-            "Détails :\n" +
-            "• Ticket : #%d\n" +
-            "• Ancien statut : %s\n" +
-            "• Nouveau statut : %s\n" +
-            "• Date de modification : %s\n\n" +
-            "Vous pouvez suivre l'avancement depuis votre espace client.\n\n" +
-            "Cordialement,\n" +
-            "L'équipe DevTech",
-            client.getFirstName(),
-            client.getLastName(),
-            ticket.getId(),
-            oldStatus,
-            newStatus,
-            ticket.getLastModifiedDate()
-        );
+        String subject = String.format("DevTechly - Changement de statut du ticket #%d", ticket.getId());
 
-        sendEmail(client.getEmail(), subject, content);
+        Context context = new Context();
+        context.setVariable("client", client);
+        context.setVariable("ticket", ticket);
+        context.setVariable("oldStatus", oldStatus);
+        context.setVariable("newStatus", newStatus);
+        context.setVariable("baseUrl", "https://www.devtechly.com");
+
+        String content = templateEngine.process("mail/ticketStatusChangedEmail", context);
+
+        sendHtmlEmail(client.getEmail(), subject, content);
     }
 
     /**

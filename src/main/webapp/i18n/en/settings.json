@@ -1,0 +1,40 @@
+{
+  "settings": {
+    "title": "User profile [<strong>{{username}}</strong>]",
+    "titlePrefix": "Profile of",
+    "form": {
+      "firstname": "First name",
+      "firstname.placeholder": "Your first name",
+      "lastname": "Last name",
+      "lastname.placeholder": "Your last name",
+      "phone": "Phone",
+      "phone.placeholder": "Your phone number",
+      "language": "Language",
+      "button": "Save",
+      "changePassword": "Change password"
+    },
+    "oauth": {
+      "googleAccount": "Google Account:",
+      "googleAccountMessage": "You are logged in via Google. You can set a password for your account in order to be able to log in with your traditional credentials."
+    },
+    "messages": {
+      "error": {
+        "fail": "<strong>Something went wrong!</strong> Your profile could not be saved.",
+        "emailexists": "<strong>This email is already in use!</strong> Please choose another."
+      },
+      "success": "<strong>Your profile has been saved!</strong>",
+      "validate": {
+        "firstname": {
+          "required": "Your first name is required.",
+          "minlength": "Your first name must be at least 1 character.",
+          "maxlength": "Your first name cannot be longer than 50 characters."
+        },
+        "lastname": {
+          "required": "Your last name is required.",
+          "minlength": "Your last name must be at least 1 character.",
+          "maxlength": "Your last name cannot be longer than 50 characters."
+        }
+      }
+    }
+  }
+}

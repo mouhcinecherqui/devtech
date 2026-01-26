@@ -1,6 +1,6 @@
-package devtech.security;
+package devtechly.security;
 
-import devtech.config.Constants;
+import devtechly.config.Constants;
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;

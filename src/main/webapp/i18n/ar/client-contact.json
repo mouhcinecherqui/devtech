@@ -1,0 +1,44 @@
+{
+  "contact": {
+    "title": "اتصل بالإدارة",
+    "description": "تحتاج مساعدة؟ اتصل بفريقنا الإداري لأي أسئلة أو مساعدة.",
+    "companyInfo": {
+      "title": "معلومات الاتصال",
+      "phone": "الهاتف",
+      "email": "البريد الإلكتروني",
+      "address": "العنوان",
+      "workingHours": "ساعات العمل",
+      "name": "ديفتكلي",
+      "phoneValue": "+33 1 23 45 67 89",
+      "emailValue": "contact@devtechly.com",
+      "workingHoursValue": "الاثنين - الجمعة: 9:00 صباحًا - 6:00 مساءً"
+    },
+    "form": {
+      "title": "إرسال رسالة",
+      "subject": "الموضوع",
+      "subjectPlaceholder": "اوصف طلبك باختصار",
+      "priority": "الأولوية",
+      "message": "الرسالة",
+      "messagePlaceholder": "اوصف طلبك بالتفصيل...",
+      "send": "إرسال الرسالة",
+      "sending": "جاري الإرسال...",
+      "clear": "مسح"
+    },
+    "priorities": {
+      "low": "منخفضة",
+      "normal": "عادية",
+      "high": "عالية",
+      "urgent": "عاجلة"
+    },
+    "messages": {
+      "success": "تم إرسال رسالتك بنجاح. سنرد عليك في أقرب وقت ممكن.",
+      "error": "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى."
+    },
+    "validation": {
+      "subjectRequired": "الموضوع مطلوب",
+      "subjectMinLength": "يجب أن يحتوي الموضوع على 5 أحرف على الأقل",
+      "messageRequired": "الرسالة مطلوبة",
+      "messageMinLength": "يجب أن تحتوي الرسالة على 20 حرف على الأقل"
+    }
+  }
+}

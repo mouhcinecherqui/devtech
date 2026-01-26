@@ -1,4 +1,4 @@
-package devtech.service.exception;
+package devtechly.service.exception;
 
 public class PaiementException extends RuntimeException {
 

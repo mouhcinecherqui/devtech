@@ -1,4 +1,4 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -7,9 +7,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import devtech.domain.ActivityType;
-import devtech.service.ActivityService;
-import devtech.service.dto.ActivityDTO;
+import devtechly.domain.ActivityType;
+import devtechly.service.ActivityService;
+import devtechly.service.dto.ActivityDTO;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;

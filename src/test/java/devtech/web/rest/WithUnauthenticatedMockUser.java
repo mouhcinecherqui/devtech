@@ -1,4 +1,4 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

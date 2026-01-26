@@ -34,12 +34,12 @@ export default class AppComponent {
     this.iconLibrary.addIcons(...fontAwesomeIcons);
     this.dpConfig.minDate = { year: dayjs().subtract(100, 'year').year(), month: 1, day: 1 };
     // SEO: titre et meta par défaut
-    this.titleService.setTitle('DevTech - Support & Gestion');
+    this.titleService.setTitle('devtechly - Support & Gestion');
     this.metaService.updateTag({
       name: 'description',
-      content: 'Plateforme DevTech : gestion des tickets, support client, administration, notifications et plus.',
+      content: 'Plateforme devtechly : gestion des tickets, support client, administration, notifications et plus.',
     });
-    this.metaService.updateTag({ name: 'keywords', content: 'support, tickets, admin, gestion, DevTech, client, SaaS' });
+    this.metaService.updateTag({ name: 'keywords', content: 'support, tickets, admin, gestion, devtechly, client, SaaS' });
 
     // Call OAuth2Service to check for success parameters in URL
     this.oauth2Service.checkOAuth2Success();

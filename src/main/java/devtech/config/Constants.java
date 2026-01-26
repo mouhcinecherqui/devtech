@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 /**
  * Application constants.

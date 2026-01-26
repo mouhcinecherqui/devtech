@@ -1,7 +1,7 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.AppParameter;
-import devtech.service.AppParameterService;
+import devtechly.domain.AppParameter;
+import devtechly.service.AppParameterService;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

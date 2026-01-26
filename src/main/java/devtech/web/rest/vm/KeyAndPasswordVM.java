@@ -1,4 +1,4 @@
-package devtech.web.rest.vm;
+package devtechly.web.rest.vm;
 
 /**
  * View Model object for storing the user's key and password.

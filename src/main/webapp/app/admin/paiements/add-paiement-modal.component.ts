@@ -8,6 +8,7 @@ import { ClientsService, AppUser } from '../clients/clients.service';
 import SharedModule from '../../shared/shared.module';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { AlertService } from '../../core/util/alert.service';
 
 @Component({
   selector: 'jhi-add-paiement-modal',
@@ -339,6 +340,7 @@ export class AddPaiementModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private paiementsService: PaiementsService,
     private clientsService: ClientsService,
+    private alertService: AlertService,
   ) {
     this.paiementForm = this.formBuilder.group({
       user: ['', [Validators.required, Validators.minLength(2)]],
@@ -381,13 +383,29 @@ export class AddPaiementModalComponent implements OnInit {
 
           // Afficher plus de détails sur l'erreur
           if (error.status === 400) {
-            alert('Données invalides. Vérifiez que tous les champs requis sont remplis correctement.');
+            this.alertService.addAlert({
+              type: 'warning',
+              message: 'Données invalides. Vérifiez que tous les champs requis sont remplis correctement.',
+              timeout: 5000,
+            });
           } else if (error.status === 401) {
-            alert('Non autorisé. Veuillez vous reconnecter.');
+            this.alertService.addAlert({
+              type: 'danger',
+              message: 'Non autorisé. Veuillez vous reconnecter.',
+              timeout: 5000,
+            });
           } else if (error.status === 403) {
-            alert("Accès refusé. Vous n'avez pas les permissions nécessaires.");
+            this.alertService.addAlert({
+              type: 'danger',
+              message: "Accès refusé. Vous n'avez pas les permissions nécessaires.",
+              timeout: 5000,
+            });
           } else {
-            alert("Erreur lors de l'ajout du paiement: " + (error.message || 'Erreur inconnue'));
+            this.alertService.addAlert({
+              type: 'danger',
+              message: "Erreur lors de l'ajout du paiement: " + (error.message || 'Erreur inconnue'),
+              timeout: 5000,
+            });
           }
         },
       });

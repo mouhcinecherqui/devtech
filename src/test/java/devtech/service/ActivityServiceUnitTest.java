@@ -1,13 +1,13 @@
-package devtech.service;
+package devtechly.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import devtech.domain.Activity;
-import devtech.domain.ActivityType;
-import devtech.repository.ActivityRepository;
-import devtech.service.dto.ActivityDTO;
-import devtech.service.mapper.ActivityMapper;
+import devtechly.domain.Activity;
+import devtechly.domain.ActivityType;
+import devtechly.repository.ActivityRepository;
+import devtechly.service.dto.ActivityDTO;
+import devtechly.service.mapper.ActivityMapper;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;

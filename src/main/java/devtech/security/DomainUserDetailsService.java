@@ -1,8 +1,8 @@
-package devtech.security;
+package devtechly.security;
 
-import devtech.domain.Authority;
-import devtech.domain.User;
-import devtech.repository.UserRepository;
+import devtechly.domain.Authority;
+import devtechly.domain.User;
+import devtechly.repository.UserRepository;
 import java.util.*;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;

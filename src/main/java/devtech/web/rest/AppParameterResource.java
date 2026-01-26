@@ -1,8 +1,8 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.AppParameter;
-import devtech.service.AppParameterService;
-import devtech.web.rest.errors.BadRequestAlertException;
+import devtechly.domain.AppParameter;
+import devtechly.service.AppParameterService;
+import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;

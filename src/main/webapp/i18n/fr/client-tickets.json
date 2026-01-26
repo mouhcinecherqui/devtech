@@ -1,0 +1,115 @@
+{
+  "ticketsClient": {
+    "pageTitle": "Mes tickets",
+    "title": "Mes tickets",
+    "subtitle": "Gérez vos demandes de support et suivez leur progression",
+    "create": "Créer un ticket",
+    "history": "Historique des tickets",
+    "loading": "Chargement...",
+    "stats": {
+      "total": "Total tickets",
+      "open": "En cours",
+      "resolved": "Résolus"
+    },
+    "filters": {
+      "all": "Tous les statuts",
+      "status": {
+        "nouveau": "Nouveau",
+        "enCours": "En cours",
+        "resolu": "Résolu",
+        "ferme": "Fermé",
+        "urgent": "Urgent",
+        "enAttentePaiement": "En attente de paiement",
+        "paiementValide": "Paiement validé"
+      }
+    },
+    "types": {
+      "bug": "Bug",
+      "demande": "Demande",
+      "support": "Support",
+      "autre": "Autre"
+    },
+    "status": {
+      "nouveau": "Nouveau",
+      "enCours": "En cours",
+      "resolu": "Résolu",
+      "ferme": "Fermé",
+      "urgent": "Urgent",
+      "enAttentePaiement": "En attente de paiement",
+      "paiementValide": "Paiement validé",
+      "devisValide": "Devis validé"
+    },
+    "adminMessages": {
+      "singular": "{{count}} message de l'équipe",
+      "plural": "{{count}} messages de l'équipe"
+    },
+    "meta": {
+      "backoffice": "Backoffice",
+      "hosting": "Hébergement"
+    },
+    "viewDetails": "Voir les détails →",
+    "type": "Type de ticket",
+    "selectType": "Sélectionnez un type",
+    "description": "Description du problème",
+    "backofficeUrl": "Lien Backoffice",
+    "backofficeLogin": "Identifiant Backoffice",
+    "backofficePassword": "Mot de passe Backoffice",
+    "hostingUrl": "URL d'hébergement",
+    "cancel": "Annuler",
+    "noTickets": "Aucun ticket pour le moment.",
+    "empty": {
+      "title": "Aucun ticket trouvé",
+      "cta": "Créer votre premier ticket"
+    },
+    "devis": {
+      "title": "Envoyer un devis",
+      "amount": "Montant (MAD)",
+      "description": "Description du devis",
+      "cancel": "Annuler",
+      "submit": "Envoyer le devis"
+    },
+    "image": {
+      "label": "Image (optionnel)",
+      "add": "Cliquez pour ajouter une image",
+      "hint": "PNG, JPG jusqu'à 5MB",
+      "previewAlt": "Aperçu de l'image"
+    },
+    "form": {
+      "ticketPlaceholder": "Décrivez votre problème en détail...",
+      "backofficeSection": "Informations Backoffice (optionnel)",
+      "devisPlaceholder": "Détails du devis...",
+      "creating": "Création..."
+    },
+    "payment": {
+      "title": "Valider le paiement",
+      "ticketLabel": "Ticket n°{{id}}",
+      "confirm": "Confirmer le paiement pour le ticket suivant :",
+      "cancel": "Annuler",
+      "validate": "Valider le paiement"
+    },
+    "info": {
+      "backofficeUrlPlaceholder": "https://votre-backoffice.com",
+      "hostingUrlPlaceholder": "https://votre-hebergement.com",
+      "loginPlaceholder": "Votre identifiant",
+      "passwordPlaceholder": "Votre mot de passe"
+    },
+    "messages": {
+      "invalidImage": "Veuillez sélectionner une image valide",
+      "imageTooLarge": "L'image ne doit pas dépasser 5MB",
+      "devisSuccess": "Devis envoyé avec succès !",
+      "devisError": "Erreur lors de l'envoi du devis.",
+      "devisInvalid": "Veuillez saisir un montant valide pour le devis.",
+      "paymentSuccess": "Paiement validé avec succès !",
+      "paymentError": "Erreur lors de la validation du paiement.",
+      "closeSuccess": "Ticket fermé avec succès !",
+      "closeError": "Erreur lors de la fermeture du ticket.",
+      "createSuccess": "Ticket créé avec succès !",
+      "createError": "Erreur lors de la création du ticket",
+      "loadTicketsError": "Erreur lors du chargement des tickets",
+      "loadStatusesError": "Erreur lors du chargement des statuts : {{error}}",
+      "loadTypesError": "Erreur lors du chargement des types : {{error}}",
+      "loadPrioritiesError": "Erreur lors du chargement des priorités : {{error}}",
+      "unknownError": "Erreur inconnue"
+    }
+  }
+}

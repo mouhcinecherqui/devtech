@@ -38,8 +38,8 @@
   },
   "home": {
     "home": {
-      "title": "Bienvenido a DevTech",
-      "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
+      "title": "Bienvenido a devtechly",
+      "subtitle": "devtechly es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
       "servicesTitle": "Nuestros servicios",
       "service1": {
         "title": "Desarrollo de aplicaciones web a medida",
@@ -53,7 +53,7 @@
         "title": "Sistemas de gestión de contenidos (CMS)",
         "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
       },
-      "whyChooseTitle": "¿Por qué elegir DevTech?",
+      "whyChooseTitle": "¿Por qué elegir devtechly?",
       "why1": "Equipo experimentado de desarrolladores y diseñadores web",
       "why2": "Enfoque centrado en el cliente y comunicación transparente",
       "why3": "Proceso ágil de desarrollo para una entrega más rápida",
@@ -114,7 +114,7 @@
     }
   },
   "global": {
-    "title": "Devtech",
+    "title": "devtechly",
     "browsehappy": "Está usando un navegador <strong>obsoleto</strong>. Por favor <a href=\"http://browsehappy.com/?locale=es\">actualice su navegador</a> para mejorar su experiencia.",
     "menu": {
       "home": "Inicio",
@@ -202,8 +202,8 @@
     },
     "item-count": "Mostrando {{first}} - {{second}} de {{total}} elementos.",
     "home": {
-      "title": "Bienvenido a DevTech",
-      "subtitle": "DevTech es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
+      "title": "Bienvenido a devtechly",
+      "subtitle": "devtechly es su socio de confianza para la innovación digital. Nos especializamos en crear aplicaciones web modernas y plataformas de comercio electrónico robustas con integración de CMS. Nuestra misión es potenciar su negocio con las últimas tecnologías web y ofrecer soluciones adaptadas a sus necesidades.",
       "servicesTitle": "Nuestros servicios",
       "service1": {
         "title": "Desarrollo de aplicaciones web a medida",
@@ -217,7 +217,7 @@
         "title": "Sistemas de gestión de contenidos (CMS)",
         "desc": "Soluciones CMS flexibles y fáciles de usar para una gestión sencilla del sitio web."
       },
-      "whyChooseTitle": "¿Por qué elegir DevTech?",
+      "whyChooseTitle": "¿Por qué elegir devtechly?",
       "why1": "Equipo experimentado de desarrolladores y diseñadores web",
       "why2": "Enfoque centrado en el cliente y comunicación transparente",
       "why3": "Proceso ágil de desarrollo para una entrega más rápida",

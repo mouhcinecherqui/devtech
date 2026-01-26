@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 import java.sql.SQLException;
 import org.slf4j.Logger;
@@ -17,7 +17,7 @@ import tech.jhipster.config.JHipsterConstants;
 import tech.jhipster.config.h2.H2ConfigurationHelper;
 
 @Configuration
-@EnableJpaRepositories({ "devtech.repository" })
+@EnableJpaRepositories({ "devtechly.repository" })
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 @EnableConfigurationProperties(H2ConsoleProperties.class)

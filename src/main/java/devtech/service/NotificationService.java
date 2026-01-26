@@ -1,17 +1,27 @@
-package devtech.service;
+package devtechly.service;
 
-import devtech.domain.Notification;
-import devtech.repository.NotificationRepository;
+import devtechly.domain.Notification;
+import devtechly.domain.User;
+import devtechly.repository.NotificationRepository;
+import devtechly.repository.UserRepository;
+import devtechly.security.AuthoritiesConstants;
 import java.time.Instant;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NotificationService {
 
-    private final NotificationRepository notificationRepository;
+    private static final Logger LOG = LoggerFactory.getLogger(NotificationService.class);
 
-    public NotificationService(NotificationRepository notificationRepository) {
+    private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
+
+    public NotificationService(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -47,7 +57,17 @@ public class NotificationService {
      * Notifier tous les administrateurs
      */
     public void notifyAdmins(String message, String type, Long ticketId, String actionUrl) {
-        notifyUser("admin", message, type, ticketId, actionUrl, null);
+        List<User> admins = userRepository.findAllByAuthority(AuthoritiesConstants.ADMIN);
+
+        if (admins == null || admins.isEmpty()) {
+            LOG.warn("Aucun administrateur trouvé pour notification: {}", message);
+            return;
+        }
+
+        for (User admin : admins) {
+            // Utiliser le login système comme identifiant côté notifications
+            notifyUser(admin.getLogin(), message, type, ticketId, actionUrl, admin.getId());
+        }
     }
 
     /**

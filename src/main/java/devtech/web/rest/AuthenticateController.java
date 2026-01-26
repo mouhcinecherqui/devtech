@@ -1,12 +1,12 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import static devtech.security.SecurityUtils.AUTHORITIES_CLAIM;
-import static devtech.security.SecurityUtils.JWT_ALGORITHM;
-import static devtech.security.SecurityUtils.USER_ID_CLAIM;
+import static devtechly.security.SecurityUtils.AUTHORITIES_CLAIM;
+import static devtechly.security.SecurityUtils.JWT_ALGORITHM;
+import static devtechly.security.SecurityUtils.USER_ID_CLAIM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import devtech.security.DomainUserDetailsService.UserWithId;
-import devtech.web.rest.vm.LoginVM;
+import devtechly.security.DomainUserDetailsService.UserWithId;
+import devtechly.web.rest.vm.LoginVM;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import java.time.Instant;

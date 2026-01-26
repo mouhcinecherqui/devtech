@@ -1,8 +1,8 @@
-package devtech;
+package devtechly;
 
-import devtech.config.AsyncSyncConfiguration;
-import devtech.config.EmbeddedSQL;
-import devtech.config.JacksonConfiguration;
+import devtechly.config.AsyncSyncConfiguration;
+import devtechly.config.EmbeddedSQL;
+import devtechly.config.JacksonConfiguration;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

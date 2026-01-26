@@ -1,13 +1,13 @@
-package devtech.service.dto;
+package devtechly.service.dto;
 
-import devtech.domain.ActivityType;
+import devtechly.domain.ActivityType;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link devtech.domain.Activity} entity.
+ * A DTO for the {@link devtechly.domain.Activity} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ActivityDTO implements Serializable {

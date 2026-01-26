@@ -67,7 +67,7 @@ const routes: Routes = [
     loadComponent: () => import('./payment-methods/payment-methods.component').then(m => m.PaymentMethodsComponent),
     canActivate: [UserRouteAccessService],
     data: { authorities: [Authority.USER, Authority.CLIENT] },
-    title: 'Mes Moyens de Paiement',
+    title: 'clientPayment.pageTitle',
   },
   {
     path: 'user-tickets',
@@ -107,7 +107,7 @@ const routes: Routes = [
     loadComponent: () => import('./client-tickets/client-tickets.component').then(m => m.ClientTicketsComponent),
     canActivate: [UserRouteAccessService],
     data: { authorities: [Authority.CLIENT] },
-    title: 'Mes Tickets',
+    title: 'ticketsClient.pageTitle',
   },
   {
     path: 'client-dashboard',
@@ -121,7 +121,7 @@ const routes: Routes = [
     loadComponent: () => import('./client-tickets/client-tickets.component').then(m => m.ClientTicketsComponent),
     canActivate: [UserRouteAccessService],
     data: { authorities: [Authority.CLIENT] },
-    title: 'Mes Tickets',
+    title: 'ticketsClient.pageTitle',
   },
   {
     path: 'client-tickets/:id',
@@ -146,6 +146,13 @@ const routes: Routes = [
     canActivate: [UserRouteAccessService],
     data: { authorities: [Authority.CLIENT] },
     title: 'Contact Administration',
+  },
+  {
+    path: 'client-payment',
+    loadComponent: () => import('./client-payment/client-payment.component').then(m => m.ClientPaymentComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.CLIENT] },
+    title: 'clientPayment.pageTitle',
   },
   ...errorRoute,
 ];

@@ -1,4 +1,4 @@
-package devtech.web.rest.vm;
+package devtechly.web.rest.vm;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

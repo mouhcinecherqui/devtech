@@ -1,7 +1,7 @@
-package devtech.service.mapper;
+package devtechly.service.mapper;
 
-import devtech.domain.Activity;
-import devtech.service.dto.ActivityDTO;
+import devtechly.domain.Activity;
+import devtechly.service.dto.ActivityDTO;
 import org.mapstruct.*;
 
 /**
@@ -16,15 +16,15 @@ public interface ActivityMapper extends EntityMapper<ActivityDTO, Activity> {
     Activity toEntity(ActivityDTO activityDTO);
 
     @Named("activityTypeToString")
-    default String activityTypeToString(devtech.domain.ActivityType activityType) {
+    default String activityTypeToString(devtechly.domain.ActivityType activityType) {
         return activityType != null ? activityType.getValue() : null;
     }
 
     @Named("stringToActivityType")
-    default devtech.domain.ActivityType stringToActivityType(String activityType) {
+    default devtechly.domain.ActivityType stringToActivityType(String activityType) {
         if (activityType == null) {
             return null;
         }
-        return devtech.domain.ActivityType.valueOf(activityType.toUpperCase());
+        return devtechly.domain.ActivityType.valueOf(activityType.toUpperCase());
     }
 }

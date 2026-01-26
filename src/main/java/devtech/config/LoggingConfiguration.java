@@ -1,4 +1,4 @@
-package devtech.config;
+package devtechly.config;
 
 import static tech.jhipster.config.logging.LoggingUtils.*;
 

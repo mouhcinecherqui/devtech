@@ -1,4 +1,4 @@
-package devtech.security;
+package devtechly.security;
 
 import org.springframework.security.core.AuthenticationException;
 

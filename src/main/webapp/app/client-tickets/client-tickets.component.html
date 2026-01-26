@@ -11,7 +11,7 @@
   <div class="page-header">
     <div class="header-content">
       <h1 class="page-title">{{ 'ticketsClient.title' | translate }}</h1>
-      <p class="page-subtitle">Gérez vos demandes de support et suivez leur progression</p>
+      <p class="page-subtitle">{{ 'ticketsClient.subtitle' | translate }}</p>
     </div>
     <div class="header-actions">
       <button class="create-ticket-btn" (click)="openModal()">
@@ -38,7 +38,7 @@
       </div>
       <div class="stat-content">
         <div class="stat-number">{{ tickets().length }}</div>
-        <div class="stat-label">Total tickets</div>
+        <div class="stat-label">{{ 'ticketsClient.stats.total' | translate }}</div>
       </div>
     </div>
     <div class="stat-card">
@@ -54,7 +54,7 @@
       </div>
       <div class="stat-content">
         <div class="stat-number">{{ getOpenTickets() }}</div>
-        <div class="stat-label">En cours</div>
+        <div class="stat-label">{{ 'ticketsClient.stats.open' | translate }}</div>
       </div>
     </div>
     <div class="stat-card">
@@ -72,7 +72,7 @@
       </div>
       <div class="stat-content">
         <div class="stat-number">{{ getResolvedTickets() }}</div>
-        <div class="stat-label">Résolus</div>
+        <div class="stat-label">{{ 'ticketsClient.stats.resolved' | translate }}</div>
       </div>
     </div>
   </div>
@@ -83,12 +83,14 @@
       <h2>{{ 'ticketsClient.history' | translate }}</h2>
       <div class="filters">
         <select class="filter-select" [(ngModel)]="statusFilter" (change)="filterTickets()">
-          <option value="">Tous les statuts</option>
-          <option value="Nouveau">Nouveau</option>
-          <option value="En cours">En cours</option>
-          <option value="Résolu">Résolu</option>
-          <option value="Fermé">Fermé</option>
-          <option value="Urgent">Urgent</option>
+          <option value="">{{ 'ticketsClient.filters.all' | translate }}</option>
+          <option value="Nouveau">{{ 'ticketsClient.filters.status.nouveau' | translate }}</option>
+          <option value="En cours">{{ 'ticketsClient.filters.status.enCours' | translate }}</option>
+          <option value="Résolu">{{ 'ticketsClient.filters.status.resolu' | translate }}</option>
+          <option value="En attente de paiement">{{ 'ticketsClient.filters.status.enAttentePaiement' | translate }}</option>
+          <option value="Paiement validé">{{ 'ticketsClient.filters.status.paiementValide' | translate }}</option>
+          <option value="Fermé">{{ 'ticketsClient.filters.status.ferme' | translate }}</option>
+          <option value="Urgent">{{ 'ticketsClient.filters.status.urgent' | translate }}</option>
         </select>
       </div>
     </div>
@@ -124,7 +126,7 @@
                 stroke-linecap="round"
               />
             </svg>
-            <span>{{ ticket.messageStrings.length }} message{{ ticket.messageStrings.length > 1 ? 's' : '' }} de l'équipe</span>
+            <span>{{ getAdminMessagesLabel(ticket.messageStrings.length) }}</span>
           </div>
 
           <div class="ticket-meta">
@@ -144,7 +146,7 @@
                   stroke-linecap="round"
                 />
               </svg>
-              <span>Backoffice</span>
+              <span>{{ 'ticketsClient.meta.backoffice' | translate }}</span>
             </div>
 
             <div *ngIf="ticket.hostingUrl" class="meta-item">
@@ -156,13 +158,13 @@
                   stroke-linecap="round"
                 />
               </svg>
-              <span>Hébergement</span>
+              <span>{{ 'ticketsClient.meta.hosting' | translate }}</span>
             </div>
           </div>
         </div>
 
         <div class="ticket-footer">
-          <span class="view-details">Voir les détails →</span>
+          <span class="view-details">{{ 'ticketsClient.viewDetails' | translate }}</span>
         </div>
       </div>
     </div>
@@ -184,9 +186,9 @@
           <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
-      <h3>Aucun ticket trouvé</h3>
+      <h3>{{ 'ticketsClient.empty.title' | translate }}</h3>
       <p>{{ 'ticketsClient.noTickets' | translate }}</p>
-      <button class="create-first-ticket-btn" (click)="openModal()">Créer votre premier ticket</button>
+      <button class="create-first-ticket-btn" (click)="openModal()">{{ 'ticketsClient.empty.cta' | translate }}</button>
     </div>
   </div>
 
@@ -208,10 +210,10 @@
             <label for="type">{{ 'ticketsClient.type' | translate }} *</label>
             <select id="type" formControlName="type" required class="form-select">
               <option value="" disabled>{{ 'ticketsClient.selectType' | translate }}</option>
-              <option value="Bug">Bug</option>
-              <option value="Demande">Demande</option>
-              <option value="Support">Support</option>
-              <option value="Autre">Autre</option>
+              <option value="Bug">{{ 'ticketsClient.types.bug' | translate }}</option>
+              <option value="Demande">{{ 'ticketsClient.types.demande' | translate }}</option>
+              <option value="Support">{{ 'ticketsClient.types.support' | translate }}</option>
+              <option value="Autre">{{ 'ticketsClient.types.autre' | translate }}</option>
             </select>
           </div>
         </div>
@@ -224,12 +226,12 @@
             required
             rows="4"
             class="form-textarea"
-            placeholder="Décrivez votre problème en détail..."
+            [placeholder]="'ticketsClient.form.ticketPlaceholder' | translate"
           ></textarea>
         </div>
 
         <div class="form-group">
-          <label for="imageUpload">Image (optionnel)</label>
+          <label for="imageUpload">{{ 'ticketsClient.image.label' | translate }}</label>
           <div class="image-upload-container">
             <input
               type="file"
@@ -251,11 +253,11 @@
                     stroke-linejoin="round"
                   />
                 </svg>
-                <p>Cliquez pour ajouter une image</p>
-                <span class="upload-hint">PNG, JPG jusqu'à 5MB</span>
+                <p>{{ 'ticketsClient.image.add' | translate }}</p>
+                <span class="upload-hint">{{ 'ticketsClient.image.hint' | translate }}</span>
               </div>
               <div *ngIf="selectedImagePreview()" class="image-preview">
-                <img [src]="selectedImagePreview()" alt="Aperçu de l'image" class="preview-image" />
+                <img [src]="selectedImagePreview()" [alt]="'ticketsClient.image.previewAlt' | translate" class="preview-image" />
                 <button type="button" class="remove-image-btn" (click)="removeImage($event)">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -273,7 +275,7 @@
         </div>
 
         <div class="form-section">
-          <h4>Informations Backoffice (optionnel)</h4>
+          <h4>{{ 'ticketsClient.form.backofficeSection' | translate }}</h4>
           <div class="form-row">
             <div class="form-group">
               <label for="backofficeUrl">{{ 'ticketsClient.backofficeUrl' | translate }}</label>
@@ -282,7 +284,7 @@
                 formControlName="backofficeUrl"
                 type="url"
                 class="form-input"
-                placeholder="https://votre-backoffice.com"
+                [placeholder]="'ticketsClient.info.backofficeUrlPlaceholder' | translate"
               />
             </div>
             <div class="form-group">
@@ -292,7 +294,7 @@
                 formControlName="backofficeLogin"
                 type="text"
                 class="form-input"
-                placeholder="Votre identifiant"
+                [placeholder]="'ticketsClient.info.loginPlaceholder' | translate"
               />
             </div>
           </div>
@@ -303,14 +305,20 @@
               formControlName="backofficePassword"
               type="password"
               class="form-input"
-              placeholder="Votre mot de passe"
+              [placeholder]="'ticketsClient.info.passwordPlaceholder' | translate"
             />
           </div>
         </div>
 
         <div class="form-group">
           <label for="hostingUrl">{{ 'ticketsClient.hostingUrl' | translate }}</label>
-          <input id="hostingUrl" formControlName="hostingUrl" type="url" class="form-input" placeholder="https://votre-hebergement.com" />
+          <input
+            id="hostingUrl"
+            formControlName="hostingUrl"
+            type="url"
+            class="form-input"
+            [placeholder]="'ticketsClient.info.hostingUrlPlaceholder' | translate"
+          />
         </div>
 
         <div class="form-actions">
@@ -319,7 +327,7 @@
           </button>
           <button type="submit" class="btn-primary" [disabled]="ticketForm.invalid || loading()">
             <span *ngIf="!loading()">{{ 'ticketsClient.create' | translate }}</span>
-            <span *ngIf="loading()">Création...</span>
+            <span *ngIf="loading()">{{ 'ticketsClient.form.creating' | translate }}</span>
           </button>
         </div>
 
@@ -356,7 +364,7 @@
             [(ngModel)]="devisDescription"
             class="form-control"
             rows="4"
-            placeholder="Détails du devis..."
+            [placeholder]="'ticketsClient.form.devisPlaceholder' | translate"
           ></textarea>
         </div>
         <div class="modal-actions">
@@ -384,7 +392,7 @@
         <div class="payment-validation-info">
           <p>{{ 'ticketsClient.payment.confirm' | translate }}</p>
           <div class="ticket-info">
-            <strong>Ticket #{{ selectedTicketForPayment?.id }}</strong
+            <strong>{{ 'ticketsClient.payment.ticketLabel' | translate: { id: selectedTicketForPayment?.id } }}</strong
             ><br />
             <span>{{ selectedTicketForPayment?.type }} - {{ selectedTicketForPayment?.description }}</span>
           </div>
@@ -409,7 +417,7 @@
           <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
-      <img [src]="selectedImageUrl()" alt="Image du ticket" class="full-size-image" />
+      <img [src]="selectedImageUrl()" [alt]="'ticketsClient.image.previewAlt' | translate" class="full-size-image" />
     </div>
   </div>
 </div>

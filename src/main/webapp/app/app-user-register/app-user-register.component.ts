@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import SharedModule from '../shared/shared.module';
 
 @Component({
   selector: 'jhi-user-register',
   standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule],
   templateUrl: './app-user-register.component.html',
   styleUrls: ['./app-user-register.component.scss'],
 })

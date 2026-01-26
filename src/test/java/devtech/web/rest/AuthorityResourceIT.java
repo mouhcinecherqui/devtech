@@ -1,15 +1,15 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import static devtech.domain.AuthorityAsserts.*;
+import static devtechly.domain.AuthorityAsserts.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import devtech.IntegrationTest;
-import devtech.domain.Authority;
-import devtech.repository.AuthorityRepository;
+import devtechly.IntegrationTest;
+import devtechly.domain.Authority;
+import devtechly.repository.AuthorityRepository;
 import jakarta.persistence.EntityManager;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;

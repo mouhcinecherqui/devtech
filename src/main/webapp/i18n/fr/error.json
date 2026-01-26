@@ -1,12 +1,20 @@
 {
   "error": {
     "title": "Page d'erreur !",
+    "description": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
     "http": {
       "400": "Mauvaise requête.",
       "403": "Vous n'avez pas les droits pour accéder à cette page.",
+      "403.title": "Accès refusé",
+      "403.description": "Désolé, vous n'êtes pas autorisé à accéder à cette page.",
       "404": "La page n'existe pas.",
+      "404.title": "Page non trouvée",
+      "404.description": "Désolé, la page que vous recherchez n'existe pas. Il se peut qu'elle ait été supprimée ou que son adresse ait changé.",
       "405": "Le verbe HTTP que vous avez utilisé n'est pas reconnu par cet URL.",
-      "500": "Erreur interne du serveur."
+      "500": "Erreur interne du serveur.",
+      "500.title": "Erreur interne du serveur !",
+      "500.description": "Désolé, une erreur interne du serveur s'est produite. Veuillez réessayer plus tard ou contacter l'assistance.",
+      "backToHome": "Retour à l'accueil"
     },
     "concurrencyFailure": "Un autre utilisateur a modifié ces données en même temps que vous. Vos changements n'ont pas été sauvegardés.",
     "validation": "Erreur de validation côté serveur."

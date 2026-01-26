@@ -306,6 +306,11 @@ textarea.form-input {
     margin-bottom: 0.25rem;
   }
 
+  .payment-method-description {
+    font-size: 0.9rem;
+    color: $gray-600;
+  }
+
   .payment-method-holder {
     font-size: 0.875rem;
     color: $gray-600;
@@ -337,6 +342,91 @@ textarea.form-input {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+}
+
+.method-details {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(99, 102, 241, 0.15);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f8fafc, #eef2ff);
+  color: $gray-700;
+
+  .method-details-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+
+    .method-icon {
+      font-size: 1.5rem;
+    }
+
+    h4 {
+      margin: 0;
+      font-weight: 700;
+      color: $gray-900;
+    }
+
+    p {
+      margin: 0.1rem 0 0 0;
+      color: $gray-600;
+    }
+  }
+
+  .bank-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem 1rem;
+
+    .bank-detail {
+      display: flex;
+      flex-direction: column;
+      padding: 0.75rem;
+      border: 1px dashed rgba(99, 102, 241, 0.3);
+      border-radius: 10px;
+      background: white;
+
+      .label {
+        font-size: 0.85rem;
+        color: $gray-500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.25rem;
+      }
+
+      .value {
+        font-weight: 700;
+        color: $gray-800;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .method-bullets {
+    margin: 0.5rem 0 0;
+    padding-left: 1.25rem;
+    color: $gray-700;
+
+    li {
+      margin-bottom: 0.35rem;
+    }
+  }
+
+  .method-note {
+    margin-top: 1rem;
+    padding: 0.85rem 1rem;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 10px;
+    color: $gray-800;
+    font-weight: 600;
+  }
+}
+
+.paypal-details {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  border-color: rgba(14, 165, 233, 0.3);
 }
 
 .new-payment-form {

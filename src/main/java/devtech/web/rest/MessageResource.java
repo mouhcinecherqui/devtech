@@ -1,8 +1,8 @@
-package devtech.web.rest;
+package devtechly.web.rest;
 
-import devtech.domain.Message;
-import devtech.repository.MessageRepository;
-import devtech.web.rest.errors.BadRequestAlertException;
+import devtechly.domain.Message;
+import devtechly.repository.MessageRepository;
+import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -26,7 +26,7 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link devtech.domain.Message}.
+ * REST controller for managing {@link devtechly.domain.Message}.
  */
 @RestController
 @RequestMapping("/api/messages")
