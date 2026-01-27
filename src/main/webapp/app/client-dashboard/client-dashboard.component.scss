@@ -366,44 +366,78 @@ $shadow-soft: 0 28px 60px -32px rgba(15, 23, 42, 0.32);
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.75rem 1.75rem 1.25rem;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+  padding: 1.85rem 1.75rem 1.4rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
   border-top-left-radius: $radius-large;
   border-top-right-radius: $radius-large;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
 }
 
 .card-title {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-  font-size: 1.1rem;
+  gap: 0.75rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #0f172a;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 
   svg {
     color: $primary;
+    filter: drop-shadow(0 2px 4px rgba(79, 70, 229, 0.2));
+    transition: transform 0.2s ease;
+  }
+
+  &:hover svg {
+    transform: scale(1.1) rotate(5deg);
   }
 }
 
 .view-all-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.55rem 1.1rem;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
   border-radius: 999px;
-  border: 1px solid rgba(79, 70, 229, 0.22);
+  border: 1.5px solid rgba(79, 70, 229, 0.25);
   color: $primary;
-  background: rgba(79, 70, 229, 0.08);
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(79, 70, 229, 0.12) 100%);
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.87rem;
+  letter-spacing: 0.01em;
   transition:
-    background 0.2s ease,
+    all 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+  }
 
   &:hover {
-    background: rgba(79, 70, 229, 0.16);
-    transform: translateY(-1px);
+    border-color: rgba(79, 70, 229, 0.4);
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(79, 70, 229, 0.2) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+    color: #4338ca;
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
   }
 }
 
@@ -532,150 +566,236 @@ $shadow-soft: 0 28px 60px -32px rgba(15, 23, 42, 0.32);
 // ==========================================================================
 
 .tickets-card {
-  padding-bottom: 1.25rem;
+  padding-bottom: 1.5rem;
+  background: linear-gradient(to bottom, $surface 0%, rgba(255, 255, 255, 0.98) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  box-shadow: 0 20px 60px -30px rgba(15, 23, 42, 0.25);
 }
 
 .tickets-list {
   display: flex;
   flex-direction: column;
-  padding: 0 1.6rem;
-  gap: 1rem;
+  padding: 0 1.75rem 0.5rem;
+  gap: 1.1rem;
 }
 
 .ticket-item {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 1.25rem;
-  padding: 1.25rem 1.1rem;
-  border: 1px solid rgba(226, 232, 240, 0.85);
-  border-radius: $radius-medium;
-  background: rgba(243, 244, 246, 0.5);
+  grid-template-columns: 5px 1fr auto;
+  gap: 1.4rem;
+  padding: 1.4rem 1.5rem;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  border-left: none;
+  border-radius: 0 $radius-medium $radius-medium 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    all 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
   &:hover {
-    border-color: rgba(79, 70, 229, 0.28);
-    box-shadow: 0 18px 40px -30px rgba(79, 70, 229, 0.45);
+    border-color: rgba(79, 70, 229, 0.25);
+    box-shadow:
+      0 12px 40px -20px rgba(79, 70, 229, 0.3),
+      0 0 0 1px rgba(79, 70, 229, 0.08);
+    transform: translateX(4px);
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(249, 250, 251, 0.98) 100%);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .ticket-status {
+      transform: scaleY(1.05);
+      box-shadow: 0 0 12px rgba(251, 146, 60, 0.4);
+    }
   }
 }
 
 .ticket-status {
-  width: 6px;
+  width: 5px;
   border-radius: 999px;
-  background: rgba(148, 163, 184, 0.8);
+  background: linear-gradient(180deg, #fb923c 0%, #f97316 100%);
   position: relative;
+  align-self: stretch;
+  box-shadow: 0 0 8px rgba(251, 146, 60, 0.3);
+  transition: all 0.3s ease;
 
   &::after {
     content: '';
     position: absolute;
-    inset: 18px -6px;
-    border-radius: 999px;
-    background: rgba(148, 163, 184, 0.2);
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
 
   &.urgent,
   &.urgent::after {
-    background: #ef4444;
+    background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
   }
 
   &.normal,
   &.en,
   &.cours {
-    background: $primary;
+    background: linear-gradient(180deg, #4f46e5 0%, #4338ca 100%);
+    box-shadow: 0 0 8px rgba(79, 70, 229, 0.3);
   }
 
   &.résolu,
   &.resolu,
   &.resolved,
   &.closed {
-    background: #10b981;
+    background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
   }
 
   &.nouveau,
   &.new {
-    background: #f59e0b;
+    background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
   }
 }
 
 .ticket-content {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
+  gap: 0.65rem;
+  min-width: 0;
 
   h4 {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
     color: #0f172a;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    margin: 0;
   }
 
   p {
     margin: 0;
     color: $text-muted;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.5;
   }
 }
 
 .ticket-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.85rem;
   align-items: center;
-  font-size: 0.82rem;
-  color: $text-muted;
+  margin-top: 0.25rem;
 }
 
 .ticket-priority {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.75rem;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 999px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  font-size: 0.74rem;
-  background: rgba(148, 163, 184, 0.16);
-  color: $text-muted;
+  letter-spacing: 0.05em;
+  font-size: 0.72rem;
+  background: rgba(148, 163, 184, 0.12);
+  color: #64748b;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  transition: all 0.2s ease;
 
   &.urgent {
-    background: rgba(239, 68, 68, 0.12);
-    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border-color: rgba(239, 68, 68, 0.2);
   }
 
   &.normal {
-    background: rgba(79, 70, 229, 0.12);
-    color: $primary;
+    background: rgba(79, 70, 229, 0.1);
+    color: #4f46e5;
+    border-color: rgba(79, 70, 229, 0.2);
   }
 
   &.low {
-    background: rgba(14, 165, 233, 0.12);
-    color: #0284c7;
+    background: rgba(148, 163, 184, 0.1);
+    color: #64748b;
+    border-color: rgba(148, 163, 184, 0.2);
   }
+}
+
+.ticket-time {
+  color: rgba(100, 116, 139, 0.7);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .ticket-actions {
   display: flex;
   align-items: center;
+  align-self: flex-start;
+  margin-top: 0.5rem;
 }
 
 .ticket-btn {
-  padding: 0.6rem 1.1rem;
+  padding: 0.65rem 1.3rem;
   border-radius: 999px;
-  border: 1px solid rgba(79, 70, 229, 0.2);
-  background: $surface;
-  color: $primary;
+  border: 1.5px solid rgba(79, 70, 229, 0.25);
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(79, 70, 229, 0.12) 100%);
+  color: #4f46e5;
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.87rem;
+  letter-spacing: 0.01em;
   transition:
-    border-color 0.2s ease,
-    background 0.2s ease,
+    all 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
+  }
 
   &:hover {
-    border-color: rgba(79, 70, 229, 0.35);
-    background: rgba(79, 70, 229, 0.08);
-    transform: translateY(-1px);
+    border-color: rgba(79, 70, 229, 0.4);
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(79, 70, 229, 0.2) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.25);
+    color: #4338ca;
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.15);
   }
 }
 
@@ -814,11 +934,20 @@ $shadow-soft: 0 28px 60px -32px rgba(15, 23, 42, 0.32);
   }
 
   .ticket-item {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 5px 1fr;
+    gap: 1.1rem;
+    padding: 1.2rem 1.25rem;
+
+    &:hover {
+      transform: translateX(2px);
+    }
   }
 
   .ticket-actions {
-    justify-self: flex-end;
+    grid-column: 1 / -1;
+    justify-self: flex-start;
+    margin-top: 0.75rem;
+    margin-left: 0;
   }
 
   .logout-btn {
@@ -840,11 +969,29 @@ $shadow-soft: 0 28px 60px -32px rgba(15, 23, 42, 0.32);
   }
 
   .ticket-item {
-    grid-template-columns: 6px 1fr;
+    grid-template-columns: 5px 1fr;
+    padding: 1.1rem 1rem;
+    gap: 1rem;
+  }
+
+  .ticket-content h4 {
+    font-size: 0.98rem;
+  }
+
+  .ticket-content p {
+    font-size: 0.88rem;
   }
 
   .ticket-meta {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .ticket-btn {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.85rem;
+    width: 100%;
+    justify-content: center;
   }
 }

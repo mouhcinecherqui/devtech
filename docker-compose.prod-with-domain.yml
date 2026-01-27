@@ -1,0 +1,75 @@
+# Docker Compose pour production avec nom de domaine
+# Utilise Nginx comme reverse proxy pour exposer l'application sur le port 80/443
+
+name: devtechly-prod-domain
+services:
+  # Application Spring Boot
+  devtechly-app:
+    image: mocherqu/devtechly:latest
+    # Ne pas exposer le port 8080 publiquement, seulement pour Nginx
+    expose:
+      - '8080'
+    env_file:
+      - .env.prod
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-prod}
+      - DB_URL=${DB_URL}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - JWT_SECRET=${JWT_SECRET}
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME}
+      - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}
+      - JHIPSTER_MAIL_BASE_URL=${JHIPSTER_MAIL_BASE_URL:-https://devtechly.com}
+    depends_on:
+      mysql:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - devtechly-network
+
+  # Reverse Proxy Nginx
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro # Pour les certificats SSL (si HTTPS)
+    depends_on:
+      - devtechly-app
+    restart: unless-stopped
+    networks:
+      - devtechly-network
+
+  # Base de données MySQL
+  mysql:
+    image: mysql:8.0.32
+    volumes:
+      - ./src/main/docker/config/mysql:/etc/mysql/conf.d
+      - prod-db-data:/var/lib/mysql
+    env_file:
+      - .env.prod
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER:-devtechly}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-devtechly}
+    command: mysqld --lower_case_table_names=1 --skip-mysqlx --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+    healthcheck:
+      test: ['CMD-SHELL', 'mysql -e "SHOW DATABASES;" && sleep 5']
+      interval: 5s
+      timeout: 10s
+      retries: 10
+    networks:
+      - devtechly-network
+
+volumes:
+  prod-db-data:
+
+networks:
+  devtechly-network:
+    driver: bridge

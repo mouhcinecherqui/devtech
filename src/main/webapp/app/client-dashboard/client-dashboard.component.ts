@@ -137,26 +137,9 @@ export class ClientDashboardComponent implements OnInit, OnDestroy {
 
   private loadFallbackData(): void {
     console.log('Chargement des données de fallback');
-    // Données de fallback réalistes pour un affichage immédiat
+    // Données de fallback - tableau vide pour les activités (sera rempli par les vraies données)
     this.tickets = [];
-    this.activities = [
-      {
-        id: 1,
-        activityType: 'SUCCESS',
-        title: 'Dashboard chargé',
-        description: 'Votre espace client est prêt',
-        timestamp: new Date().toISOString(),
-        icon: 'check',
-      },
-      {
-        id: 2,
-        activityType: 'INFO',
-        title: 'Bienvenue',
-        description: 'Gérez vos tickets et suivez vos projets',
-        timestamp: new Date(Date.now() - 300000).toISOString(), // 5 minutes ago
-        icon: 'info',
-      },
-    ];
+    this.activities = []; // Pas de données de fallback pour les activités - on affichera "Aucune activité" si vide
     this.updateStats();
     console.log('Données de fallback chargées');
   }
@@ -222,7 +205,7 @@ export class ClientDashboardComponent implements OnInit, OnDestroy {
   }
 
   viewDocumentation(): void {
-    this.router.navigate(['/documentation']);
+    this.router.navigate(['/client-documentation']);
   }
 
   viewHistory(): void {

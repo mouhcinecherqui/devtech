@@ -134,6 +134,81 @@ $white: #ffffff;
     }
   }
 
+  // Error Alert Styles
+  .login-alert {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(220, 38, 38, 0.12) 100%);
+    border: 1.5px solid rgba(239, 68, 68, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow:
+      0 4px 20px rgba(239, 68, 68, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: slideDown 0.3s ease-out;
+
+    &.error {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, rgba(220, 38, 38, 0.1) 100%);
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+
+    .alert-icon-wrapper {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ef4444;
+      border: 2px solid rgba(239, 68, 68, 0.3);
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.25);
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .alert-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-width: 0;
+
+      .alert-title {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: #dc2626;
+        letter-spacing: 0.01em;
+        line-height: 1.4;
+      }
+
+      .alert-message {
+        font-size: 0.875rem;
+        color: rgba(220, 38, 38, 0.9);
+        line-height: 1.5;
+        font-weight: 500;
+      }
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   .login-form {
     .form-group {
       margin-bottom: 1.5rem;
@@ -444,5 +519,32 @@ $white: #ffffff;
     left: auto;
     transform: none;
     margin-top: 2rem;
+  }
+
+  .login-alert {
+    padding: 0.875rem 1rem;
+    gap: 0.75rem;
+
+    .alert-icon-wrapper {
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .alert-content {
+      gap: 0.3rem;
+
+      .alert-title {
+        font-size: 0.9rem;
+      }
+
+      .alert-message {
+        font-size: 0.8rem;
+      }
+    }
   }
 }

@@ -14,11 +14,39 @@
   z-index: 100;
   overflow-y: auto;
   border-right: 1px solid rgba(102, 126, 234, 0.2);
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  // Visible par défaut sur desktop
+  transform: translateX(0);
+  // S'assurer que le contenu est visible
+  visibility: visible;
+  opacity: 1;
+
+  @media (max-width: 768px) {
+    transform: translateX(-100%);
+    width: 280px;
+    z-index: 1001;
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
+    height: calc(100vh - 70px); // Hauteur fixe pour mobile
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &.mobile-open {
+      transform: translateX(0);
+      display: flex !important; // Forcer l'affichage
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+  }
 
   &:hover {
     background: linear-gradient(135deg, rgba(30, 41, 59, 0.98) 0%, rgba(51, 65, 85, 0.98) 100%);
     box-shadow: 6px 0 25px rgba(0, 0, 0, 0.15);
+
+    @media (max-width: 768px) {
+      box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3);
+    }
   }
 
   &::-webkit-scrollbar {
@@ -44,11 +72,22 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  flex: 1; // Prendre tout l'espace disponible
 }
 
 .sidebar-nav li {
   margin-bottom: 0.5rem;
   padding: 0 1rem;
+  flex-shrink: 0; // Empêche les éléments de se rétrécir
+  width: 100%;
+  box-sizing: border-box;
+  display: block; // Assure que les li sont visibles
+  visibility: visible;
+  opacity: 1;
 }
 
 .sidebar-nav a {
@@ -125,7 +164,44 @@
   color: #fff;
 }
 
-@media (max-width: 900px) {
+// Separator for account section - Visible par défaut, masqué sur desktop
+.sidebar-nav li.sidebar-separator {
+  display: block; // Visible par défaut
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 0.5rem;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  height: 0;
+
+  // Masqué sur desktop (écrans > 768px)
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+// Style spécial pour les liens Account et Logout - Visibles par défaut, masqués sur desktop
+.sidebar-nav li.sidebar-account-item {
+  display: block; // Visible par défaut
+
+  // Masqué sur desktop (écrans > 768px)
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+.sidebar-nav li.sidebar-logout-item {
+  display: block; // Visible par défaut
+
+  // Masqué sur desktop (écrans > 768px)
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
   .sidebar-nav {
     width: 70px;
     padding: 1rem 0;
@@ -152,5 +228,171 @@
   .sidebar-nav li.active a {
     border-left: none;
     border-bottom: 3px solid #667eea;
+  }
+
+  // Masquer Account et Déconnexion sur cette taille d'écran aussi
+  .sidebar-nav li.sidebar-separator,
+  .sidebar-nav li.sidebar-account-item,
+  .sidebar-nav li.sidebar-logout-item {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-nav {
+    width: 280px;
+    padding: 1.5rem 0 4rem 0; // Ajout de padding-bottom pour voir les éléments en bas
+    max-height: calc(100vh - 70px);
+    height: calc(100vh - 70px); // Hauteur fixe pour garantir l'affichage
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch; // Smooth scrolling sur iOS
+    display: flex !important; // Forcer l'affichage en flex
+    flex-direction: column !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: fixed !important;
+    top: 70px !important;
+    left: 0 !important;
+    z-index: 1001 !important;
+
+    // S'assurer que le ul est visible et prend toute la hauteur
+    ul {
+      display: flex !important;
+      flex-direction: column !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      height: auto !important;
+      min-height: auto !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      list-style: none !important;
+      flex: 1 1 auto !important;
+      overflow: visible !important;
+    }
+
+    // S'assurer que TOUS les li sont visibles (même ceux avec *ngIf)
+    li {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      height: auto !important;
+      min-height: auto !important;
+      width: 100% !important;
+      margin-bottom: 0.5rem !important;
+      padding: 0 1rem !important;
+      box-sizing: border-box !important;
+    }
+
+    a {
+      padding: 1rem 1.5rem;
+      font-size: 1rem;
+      flex-direction: row;
+      justify-content: flex-start;
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+
+      .icon {
+        margin-right: 1rem;
+        margin-bottom: 0;
+        display: flex !important;
+        visibility: visible !important;
+      }
+
+      span:not(.icon) {
+        display: inline !important;
+        visibility: visible !important;
+      }
+    }
+
+    li.active a {
+      border-left: 4px solid #667eea;
+      border-bottom: none;
+    }
+
+    // Styles pour le séparateur sur mobile - FORCER l'affichage
+    li.sidebar-separator,
+    .sidebar-nav li.sidebar-separator {
+      display: block !important;
+      margin-top: 2rem !important;
+      padding-top: 1rem !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+      margin-bottom: 0.5rem !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      padding-bottom: 0 !important;
+      height: 0 !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative !important;
+      width: 100% !important;
+    }
+
+    // Styles pour Account sur mobile - FORCER l'affichage
+    li.sidebar-account-item,
+    .sidebar-nav li.sidebar-account-item {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative !important;
+      width: 100% !important;
+      margin-bottom: 0.5rem !important;
+
+      a {
+        color: rgba(255, 255, 255, 0.9) !important;
+        font-weight: 600 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 1rem 1.5rem !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+
+        &:hover,
+        &:active,
+        &:focus {
+          background: rgba(102, 126, 234, 0.25) !important;
+          color: #fff !important;
+        }
+      }
+    }
+
+    // Styles pour Logout sur mobile - FORCER l'affichage
+    li.sidebar-logout-item,
+    .sidebar-nav li.sidebar-logout-item {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      position: relative !important;
+      width: 100% !important;
+      margin-bottom: 0.5rem !important;
+
+      a {
+        color: rgba(255, 200, 200, 0.9) !important;
+        font-weight: 600 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 1rem 1.5rem !important;
+        cursor: pointer !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: relative !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+
+        &:hover,
+        &:active,
+        &:focus {
+          background: rgba(239, 68, 68, 0.3) !important;
+          color: #fff !important;
+        }
+      }
+    }
   }
 }

@@ -12,6 +12,7 @@ import devtechly.repository.TicketMessageRepository;
 import devtechly.repository.TicketRepository;
 import devtechly.repository.UserRepository;
 import devtechly.security.SecurityUtils;
+import devtechly.service.ActivityIntegrationService;
 import devtechly.service.ClientEmailService;
 import devtechly.service.MailService;
 import devtechly.service.NotificationService;
@@ -61,6 +62,7 @@ public class TicketResource {
     private final UserRepository userRepository;
     private final ClientEmailService clientEmailService;
     private final AppUserRepository appUserRepository;
+    private final ActivityIntegrationService activityIntegrationService;
 
     public TicketResource(
         TicketRepository ticketRepository,
@@ -71,7 +73,8 @@ public class TicketResource {
         TicketMessageRepository ticketMessageRepository,
         UserRepository userRepository,
         ClientEmailService clientEmailService,
-        AppUserRepository appUserRepository
+        AppUserRepository appUserRepository,
+        ActivityIntegrationService activityIntegrationService
     ) {
         this.ticketRepository = ticketRepository;
         this.mailService = mailService;
@@ -82,6 +85,7 @@ public class TicketResource {
         this.userRepository = userRepository;
         this.clientEmailService = clientEmailService;
         this.appUserRepository = appUserRepository;
+        this.activityIntegrationService = activityIntegrationService;
     }
 
     // Méthode utilitaire pour récupérer l'AppUser à partir du login
@@ -430,6 +434,10 @@ public class TicketResource {
             result.getId(),
             "/admin/tickets/" + result.getId()
         );
+
+        // Créer une activité pour la création du ticket
+        activityIntegrationService.createTicketCreatedActivity(result);
+
         return ResponseEntity.created(new URI("/api/tickets/" + result.getId())).body(result);
     }
 
@@ -502,6 +510,9 @@ public class TicketResource {
 
             // Envoyer email au client si le statut a changé
             if (!oldStatus.equals(updated.getStatus())) {
+                // Créer une activité pour le changement de statut
+                activityIntegrationService.createTicketStatusUpdatedActivity(updated, oldStatus, updated.getStatus());
+
                 AppUser client = getAppUserByLogin(existing.getCreatedBy());
                 if (client != null) {
                     try {
@@ -942,10 +953,29 @@ public class TicketResource {
                 return ResponseEntity.notFound().build();
             }
 
+            // Sauvegarder l'ancien statut pour l'activité
+            String oldStatus = ticket.getStatus();
+
             // Mettre à jour le statut du ticket
             ticket.setStatus("Paiement validé");
             ticket.setPaymentStatus("COMPLETED");
             ticketRepository.save(ticket);
+
+            // Créer une activité pour le paiement validé
+            String amount = ticket.getPaymentAmount() != null
+                ? ticket.getPaymentAmount() + " " + (ticket.getPaymentCurrency() != null ? ticket.getPaymentCurrency() : "MAD")
+                : "montant inconnu";
+            activityIntegrationService.createPaymentActivity(
+                id,
+                ticket.getPaymentType() != null ? ticket.getPaymentType() : "En ligne",
+                amount,
+                true
+            );
+
+            // Créer aussi une activité pour le changement de statut
+            if (!oldStatus.equals("Paiement validé")) {
+                activityIntegrationService.createTicketStatusUpdatedActivity(ticket, oldStatus, "Paiement validé");
+            }
 
             // Envoyer email au client
             AppUser client = getAppUserByLogin(ticket.getCreatedBy());

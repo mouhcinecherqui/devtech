@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { AccountService } from 'app/core/auth/account.service';
 
 // ==========================================================================
 // Interfaces
@@ -56,11 +57,20 @@ export class ClientDashboardService {
   private activitiesUrl = '/api/activities';
   private ticketsUrl = '/api/tickets';
   private projectsUrl = '/api/projects';
+  private accountService = inject(AccountService);
 
   constructor(private http: HttpClient) {}
 
   getActivities(): Observable<Activity[]> {
-    return this.http.get<Activity[]>(this.activitiesUrl + '/recent/all');
+    const account = this.accountService.trackCurrentAccount();
+
+    if (!account()) {
+      // Si pas d'utilisateur connecté, retourner un tableau vide
+      return of([]);
+    }
+
+    // Récupérer les activités du client connecté automatiquement via l'endpoint /recent/my
+    return this.http.get<Activity[]>(`${this.activitiesUrl}/recent/my`);
   }
 
   getTickets(): Observable<Ticket[]> {

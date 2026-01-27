@@ -23,6 +23,7 @@ public class TicketPaymentService {
     private final CmiPaymentService cmiPaymentService;
     private final TicketRepository ticketRepository;
     private final PaiementRepository paiementRepository;
+    private final ActivityIntegrationService activityIntegrationService;
 
     // Configuration des types de paiement
     private static final Map<String, Double> PAYMENT_TYPES = new HashMap<>();
@@ -36,11 +37,13 @@ public class TicketPaymentService {
     public TicketPaymentService(
         CmiPaymentService cmiPaymentService,
         TicketRepository ticketRepository,
-        PaiementRepository paiementRepository
+        PaiementRepository paiementRepository,
+        ActivityIntegrationService activityIntegrationService
     ) {
         this.cmiPaymentService = cmiPaymentService;
         this.ticketRepository = ticketRepository;
         this.paiementRepository = paiementRepository;
+        this.activityIntegrationService = activityIntegrationService;
     }
 
     /**
@@ -114,9 +117,22 @@ public class TicketPaymentService {
                     // Activer les fonctionnalités selon le type de paiement
                     activateTicketFeatures(ticket);
 
+                    // Créer une activité pour le paiement réussi
+                    String amount = ticket.getPaymentAmount() != null
+                        ? ticket.getPaymentAmount() + " " + (ticket.getPaymentCurrency() != null ? ticket.getPaymentCurrency() : "MAD")
+                        : "montant inconnu";
+                    activityIntegrationService.createPaymentActivity(ticket.getId(), ticket.getPaymentType(), amount, true);
+
                     log.info("Paiement traité avec succès pour le ticket {}: {}", ticket.getId(), orderId);
                 } else {
                     ticket.setPaymentStatus("FAILED");
+
+                    // Créer une activité pour le paiement échoué
+                    String amount = ticket.getPaymentAmount() != null
+                        ? ticket.getPaymentAmount() + " " + (ticket.getPaymentCurrency() != null ? ticket.getPaymentCurrency() : "MAD")
+                        : "montant inconnu";
+                    activityIntegrationService.createPaymentActivity(ticket.getId(), ticket.getPaymentType(), amount, false);
+
                     log.warn("Paiement échoué pour le ticket {}: {}", ticket.getId(), orderId);
                 }
 

@@ -6,7 +6,8 @@
 
 <!-- Sidebar and theme switch only for authenticated pages -->
 <ng-container *ngIf="accountService.isAuthenticated()">
-  <div class="main-layout-with-sidebar">
+  <div class="main-layout-with-sidebar" [class.sidebar-open]="sidebarOpen">
+    <div class="sidebar-overlay" *ngIf="sidebarOpen" (click)="closeSidebar()"></div>
     <jhi-sidebar></jhi-sidebar>
     <div class="main-content-area">
       <div class="container-fluid">

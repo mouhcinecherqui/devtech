@@ -248,4 +248,20 @@ public class ActivityResource {
         List<ActivityDTO> activities = activityService.findByEntityTypeAndEntityId(entityType, entityId);
         return ResponseEntity.ok().body(activities);
     }
+
+    /**
+     * {@code GET  /activities/recent/my} : get all recent activities for the current authenticated user without pagination.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of recent activities in body.
+     */
+    @GetMapping("/recent/my")
+    public ResponseEntity<List<ActivityDTO>> getMyRecentActivities() {
+        log.debug("REST request to get all recent Activities for current user");
+        Long userId = devtechly.security.SecurityUtils.getCurrentUserId().orElse(null);
+        if (userId == null) {
+            return ResponseEntity.ok().body(java.util.Collections.emptyList());
+        }
+        List<ActivityDTO> activities = activityService.findRecentActivitiesByUser(userId);
+        return ResponseEntity.ok().body(activities);
+    }
 }

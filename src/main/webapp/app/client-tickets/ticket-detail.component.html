@@ -165,8 +165,8 @@
             </div>
           </div>
 
-          <!-- Paiement -->
-          <div class="info-section payment-section">
+          <!-- Paiement - Affiché uniquement à partir de l'étape "Résolu" -->
+          <div *ngIf="getStepIndex(ticket()?.status || 'Nouveau') >= 2" class="info-section payment-section">
             <h5>Paiement</h5>
             <jhi-ticket-payment
               [ticketId]="ticket()?.id || 0"

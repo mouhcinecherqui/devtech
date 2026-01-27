@@ -199,77 +199,80 @@
             </h2>
           </div>
           <div class="activity-list">
-            <div class="activity-item" *ngFor="let activity of activities.slice(0, 3); let i = index">
-              <div class="activity-icon" [class]="getActivityTypeClass(activity.activityType)">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    *ngIf="activity.activityType === 'SUCCESS'"
-                  />
-                  <path
-                    d="M22 4L12 14.01L9 11.01"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    *ngIf="activity.activityType === 'SUCCESS'"
-                  />
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" *ngIf="activity.activityType === 'INFO'" />
-                  <path
-                    d="M12 16V12"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    *ngIf="activity.activityType === 'INFO'"
-                  />
-                  <path
-                    d="M12 8H12.01"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    *ngIf="activity.activityType === 'INFO'"
-                  />
-                  <path
-                    d="M10.29 3.86L1.82 18A2 2 0 0 0 3.82 20H20.18A2 2 0 0 0 22.18 18L13.71 3.86A2 2 0 0 0 10.29 3.86Z"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    *ngIf="activity.activityType === 'WARNING'"
-                  />
-                  <path
-                    d="M12 9V13"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    *ngIf="activity.activityType === 'WARNING'"
-                  />
-                  <path
-                    d="M12 17H12.01"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    *ngIf="activity.activityType === 'WARNING'"
-                  />
-                </svg>
+            <!-- Afficher les activités si elles existent -->
+            <ng-container *ngIf="activities.length > 0">
+              <div class="activity-item" *ngFor="let activity of activities.slice(0, 3); let i = index">
+                <div class="activity-icon" [class]="getActivityTypeClass(activity.activityType)">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M22 11.08V12A10 10 0 1 1 5.68 3.49"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      *ngIf="activity.activityType === 'SUCCESS'"
+                    />
+                    <path
+                      d="M22 4L12 14.01L9 11.01"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      *ngIf="activity.activityType === 'SUCCESS'"
+                    />
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" *ngIf="activity.activityType === 'INFO'" />
+                    <path
+                      d="M12 16V12"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      *ngIf="activity.activityType === 'INFO'"
+                    />
+                    <path
+                      d="M12 8H12.01"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      *ngIf="activity.activityType === 'INFO'"
+                    />
+                    <path
+                      d="M10.29 3.86L1.82 18A2 2 0 0 0 3.82 20H20.18A2 2 0 0 0 22.18 18L13.71 3.86A2 2 0 0 0 10.29 3.86Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      *ngIf="activity.activityType === 'WARNING'"
+                    />
+                    <path
+                      d="M12 9V13"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      *ngIf="activity.activityType === 'WARNING'"
+                    />
+                    <path
+                      d="M12 17H12.01"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      *ngIf="activity.activityType === 'WARNING'"
+                    />
+                  </svg>
+                </div>
+                <div class="activity-content">
+                  <h4>{{ activity.title }}</h4>
+                  <p>{{ activity.description }}</p>
+                  <span class="activity-time">{{ getTimeAgo(activity.timestamp) }}</span>
+                </div>
               </div>
-              <div class="activity-content">
-                <h4>{{ activity.title }}</h4>
-                <p>{{ activity.description }}</p>
-                <span class="activity-time">{{ getTimeAgo(activity.timestamp) }}</span>
-              </div>
-            </div>
+            </ng-container>
 
-            <!-- Fallback content if no activities -->
-            <div class="activity-item" *ngIf="activities.length === 0">
+            <!-- Afficher "Aucune activité" si aucune activité -->
+            <div class="activity-item" *ngIf="activities.length === 0 && !loading">
               <div class="activity-icon info">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
@@ -280,7 +283,7 @@
               <div class="activity-content">
                 <h4>{{ 'clientDashboard.activities.noActivity' | translate }}</h4>
                 <p>{{ 'clientDashboard.activities.noActivityDesc' | translate }}</p>
-                <span class="activity-time">Maintenant</span>
+                <span class="activity-time">{{ 'clientDashboard.common.now' | translate }}</span>
               </div>
             </div>
           </div>

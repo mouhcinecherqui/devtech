@@ -67,6 +67,13 @@ spring:
           writetimeout: 5000
   thymeleaf:
     cache: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+      file-size-threshold: 2KB
+      location: ${java.io.tmpdir}
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:

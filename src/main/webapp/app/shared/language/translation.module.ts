@@ -24,6 +24,10 @@ import frClientTickets from 'i18n/fr/client-tickets.json';
 import enClientTickets from 'i18n/en/client-tickets.json';
 import esClientTickets from 'i18n/es/client-tickets.json';
 import arClientTickets from 'i18n/ar/client-tickets.json';
+import frClientDocumentation from 'i18n/fr/client-documentation.json';
+import enClientDocumentation from 'i18n/en/client-documentation.json';
+import esClientDocumentation from 'i18n/es/client-documentation.json';
+import arClientDocumentation from 'i18n/ar/client-documentation.json';
 
 @NgModule({
   imports: [
@@ -48,10 +52,21 @@ export class TranslationModule {
     this.translateService.setDefaultLang('fr');
     // if user have changed language and navigates away from the application and back to the application then use previously chosen language
     const langKey = this.stateStorageService.getLocale() ?? 'fr';
-    // Charger les traductions statiques en premier (elles ont priorité)
-    this.registerCustomTranslations();
-    // Ensuite charger la langue
-    this.translateService.use(langKey);
+
+    // Charger d'abord les traductions via HTTP (fichiers fusionnés contenant toutes les traductions)
+    // Le TranslateHttpLoader chargera automatiquement les fichiers fusionnés depuis /i18n/{lang}.json
+    this.translateService.use(langKey).subscribe({
+      next: () => {
+        // Les traductions HTTP sont chargées, maintenant ajouter les traductions personnalisées par-dessus
+        this.registerCustomTranslations();
+        console.log('Traductions chargées pour la langue:', langKey);
+      },
+      error: error => {
+        console.error('Erreur lors du chargement des traductions HTTP:', error);
+        // En cas d'erreur, charger les traductions statiques comme fallback
+        this.registerCustomTranslations();
+      },
+    });
   }
 
   private registerCustomTranslations(): void {
@@ -66,17 +81,21 @@ export class TranslationModule {
     this.translateService.setTranslation('fr', frClientContact as Record<string, unknown>, true);
     this.translateService.setTranslation('fr', frClientPayment as Record<string, unknown>, true);
     this.translateService.setTranslation('fr', frClientTickets as Record<string, unknown>, true);
+    this.translateService.setTranslation('fr', frClientDocumentation as Record<string, unknown>, true);
     this.translateService.setTranslation('en', enCustomDashboard as Record<string, unknown>, true);
     this.translateService.setTranslation('en', enClientContact as Record<string, unknown>, true);
     this.translateService.setTranslation('en', enClientPayment as Record<string, unknown>, true);
     this.translateService.setTranslation('en', enClientTickets as Record<string, unknown>, true);
+    this.translateService.setTranslation('en', enClientDocumentation as Record<string, unknown>, true);
     this.translateService.setTranslation('es', esCustomDashboard as Record<string, unknown>, true);
     this.translateService.setTranslation('es', esClientContact as Record<string, unknown>, true);
     this.translateService.setTranslation('es', esClientPayment as Record<string, unknown>, true);
     this.translateService.setTranslation('es', esClientTickets as Record<string, unknown>, true);
+    this.translateService.setTranslation('es', esClientDocumentation as Record<string, unknown>, true);
     this.translateService.setTranslation('ar', arCustomDashboard as Record<string, unknown>, true);
     this.translateService.setTranslation('ar', arClientContact as Record<string, unknown>, true);
     this.translateService.setTranslation('ar', arClientPayment as Record<string, unknown>, true);
     this.translateService.setTranslation('ar', arClientTickets as Record<string, unknown>, true);
+    this.translateService.setTranslation('ar', arClientDocumentation as Record<string, unknown>, true);
   }
 }

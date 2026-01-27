@@ -102,6 +102,7 @@ $gray-900: #0f172a;
   z-index: 1000;
   animation: slideDown 0.3s ease-out;
   overflow: hidden;
+  transform-origin: top right;
 }
 
 // Header du dropdown
@@ -346,9 +347,19 @@ $gray-900: #0f172a;
 
 // Responsive
 @media (max-width: 768px) {
+  .notification-bell-container {
+    position: static;
+  }
+
   .notification-dropdown {
-    width: 320px;
-    right: -50px;
+    position: fixed !important;
+    top: 70px !important;
+    right: 1rem !important;
+    left: auto !important;
+    width: calc(100vw - 2rem) !important;
+    max-width: 360px !important;
+    transform: none !important;
+    transform-origin: top right !important;
   }
 
   .notification-item {

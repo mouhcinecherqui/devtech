@@ -4,8 +4,45 @@
       <img src="/content/images/dt-logo.png" alt="dt-logo Logo" />
     </a>
   </div>
-  <nav class="header-nav">
-    <a *ngIf="!account()" routerLink="/home" routerLinkActive="active">{{ 'navbar.home' | translate }}</a>
+  <div class="header-right-mobile">
+    <jhi-notification-bell *ngIf="account()" class="mobile-notification-bell"></jhi-notification-bell>
+    <button
+      class="mobile-menu-toggle"
+      [class.menu-open]="account() ? sidebarService.isOpen : !isNavbarCollapsed()"
+      (click)="toggleNavbar()"
+      aria-label="Toggle menu"
+    >
+      <svg
+        class="hamburger-icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+      <svg
+        class="close-icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+      >
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+  <nav class="header-nav" [class.mobile-open]="!isNavbarCollapsed()">
+    <a *ngIf="!account()" routerLink="/home" routerLinkActive="active" (click)="collapseNavbar()">{{ 'navbar.home' | translate }}</a>
     <a
       *ngIf="
         account() &&
@@ -15,38 +52,48 @@
       "
       routerLink="/user-dashboard"
       routerLinkActive="active"
+      (click)="collapseNavbar()"
       >{{ 'navbar.userDashboard' | translate }}</a
     >
     <ng-container *ngIf="account() && account()?.authorities?.includes('ROLE_ADMIN')">
-      <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/admin-dashboard" routerLinkActive="active">{{
+      <a *jhiHasAnyAuthority="'ROLE_ADMIN'" routerLink="/admin-dashboard" routerLinkActive="active" (click)="collapseNavbar()">{{
         'navbar.adminDashboard' | translate
       }}</a>
     </ng-container>
-    <a *ngIf="account() && account()?.authorities?.includes('ROLE_MANAGER')" routerLink="/manager-dashboard" routerLinkActive="active">{{
-      'navbar.managerDashboard' | translate
-    }}</a>
-    <a *ngIf="account() && account()?.authorities?.includes('ROLE_CLIENT')" routerLink="/client-dashboard" routerLinkActive="active">
+    <a
+      *ngIf="account() && account()?.authorities?.includes('ROLE_MANAGER')"
+      routerLink="/manager-dashboard"
+      routerLinkActive="active"
+      (click)="collapseNavbar()"
+      >{{ 'navbar.managerDashboard' | translate }}</a
+    >
+    <a
+      *ngIf="account() && account()?.authorities?.includes('ROLE_CLIENT')"
+      routerLink="/client-dashboard"
+      routerLinkActive="active"
+      (click)="collapseNavbar()"
+    >
       {{ 'navbar.clientDashboard' | translate }}
     </a>
     <jhi-notification-bell *ngIf="account()"></jhi-notification-bell>
     <div class="language-switcher dropdown">
-      <button class="lang-btn" type="button">
+      <button class="lang-btn" type="button" (click)="toggleLangMenu = !toggleLangMenu">
         <span *ngIf="translateService.currentLang === 'fr'">Français</span>
         <span *ngIf="translateService.currentLang === 'en'">English</span>
         <span *ngIf="translateService.currentLang === 'es'">Español</span>
         <span *ngIf="translateService.currentLang === 'ar'">العربية</span>
-        <svg style="margin-left: 6px; vertical-align: middle" width="12" height="12" viewBox="0 0 20 20">
+        <svg style="margin-left: 6px; vertical-align: middle" width="12" height="12" viewBox="0 0 20 20" [class.rotated]="toggleLangMenu">
           <path d="M5.5 8l4.5 4.5L14.5 8" stroke="#333" stroke-width="2" fill="none" />
         </svg>
       </button>
-      <ul class="lang-dropdown">
-        <li (click)="changeLanguage('fr')">Français</li>
-        <li (click)="changeLanguage('en')">English</li>
-        <li (click)="changeLanguage('es')">Español</li>
-        <li (click)="changeLanguage('ar')">العربية</li>
+      <ul class="lang-dropdown" *ngIf="toggleLangMenu">
+        <li (click)="changeLanguage('fr'); toggleLangMenu = false; collapseNavbar()">Français</li>
+        <li (click)="changeLanguage('en'); toggleLangMenu = false; collapseNavbar()">English</li>
+        <li (click)="changeLanguage('es'); toggleLangMenu = false; collapseNavbar()">Español</li>
+        <li (click)="changeLanguage('ar'); toggleLangMenu = false; collapseNavbar()">العربية</li>
       </ul>
     </div>
-    <a *ngIf="!account()" (click)="login()">{{ 'navbar.login' | translate }}</a>
+    <a *ngIf="!account()" (click)="login(); collapseNavbar()">{{ 'navbar.login' | translate }}</a>
     <div *ngIf="account()" class="language-switcher dropdown" style="margin-left: 1rem">
       <button class="lang-btn" type="button" (click)="toggleUserMenu = !toggleUserMenu">
         <span>👤 {{ account()?.firstName || 'Account' }}</span>

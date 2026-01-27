@@ -10,6 +10,7 @@ import { AppPageTitleStrategy } from 'app/app-page-title-strategy';
 import FooterComponent from '../footer/footer.component';
 import PageRibbonComponent from '../profiles/page-ribbon.component';
 import { SidebarComponent } from './sidebar.component';
+import { SidebarService } from './sidebar.service';
 
 @Component({
   selector: 'jhi-main',
@@ -27,7 +28,10 @@ export default class MainComponent implements OnInit, OnDestroy {
   readonly accountService = inject(AccountService);
   private readonly translateService = inject(TranslateService);
   private readonly rootRenderer = inject(RendererFactory2);
+  private readonly sidebarService = inject(SidebarService);
   private readonly destroy$ = new Subject<void>();
+
+  sidebarOpen = false; // État de la sidebar pour mobile
 
   constructor() {
     this.renderer = this.rootRenderer.createRenderer(document.querySelector('html'), null);
@@ -39,10 +43,10 @@ export default class MainComponent implements OnInit, OnDestroy {
       .identity()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next() {
+        next: () => {
           // User is authenticated, continue normally
         },
-        error() {
+        error: () => {
           // User is not authenticated, but don't redirect - let them access public pages
           console.warn('User not authenticated, allowing access to public pages');
         },
@@ -52,6 +56,11 @@ export default class MainComponent implements OnInit, OnDestroy {
       this.appPageTitleStrategy.updateTitle(this.router.routerState.snapshot);
       dayjs.locale(langChangeEvent.lang);
       this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);
+    });
+
+    // Écouter les changements d'état de la sidebar
+    this.sidebarService.sidebarOpen$.pipe(takeUntil(this.destroy$)).subscribe(open => {
+      this.sidebarOpen = open;
     });
   }
 
@@ -69,5 +78,13 @@ export default class MainComponent implements OnInit, OnDestroy {
       html?.classList.remove('light-theme');
       html?.classList.add('dark-theme');
     }
+  }
+
+  toggleSidebar(): void {
+    this.sidebarService.toggleSidebar();
+  }
+
+  closeSidebar(): void {
+    this.sidebarService.closeSidebar();
   }
 }

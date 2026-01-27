@@ -154,6 +154,13 @@ const routes: Routes = [
     data: { authorities: [Authority.CLIENT] },
     title: 'clientPayment.pageTitle',
   },
+  {
+    path: 'client-documentation',
+    loadComponent: () => import('./client-documentation/client-documentation.component').then(m => m.ClientDocumentationComponent),
+    canActivate: [UserRouteAccessService],
+    data: { authorities: [Authority.CLIENT] },
+    title: 'clientDocumentation.title',
+  },
   ...errorRoute,
 ];
 

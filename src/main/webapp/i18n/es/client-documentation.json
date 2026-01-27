@@ -1,0 +1,157 @@
+{
+  "clientDocumentation": {
+    "title": "Documentación",
+    "subtitle": "Guía completa para usar la plataforma devtechly",
+    "nav": {
+      "overview": "Resumen",
+      "dashboard": "Panel de control",
+      "tickets": "Tickets",
+      "account": "Cuenta",
+      "payment": "Pago",
+      "contact": "Contacto"
+    },
+    "overview": {
+      "title": "Resumen",
+      "intro": "Bienvenido a la documentación de la plataforma devtechly. Esta guía le ayudará a entender y usar todas las funciones disponibles para clientes.",
+      "features": {
+        "dashboard": {
+          "title": "Panel de control personalizado",
+          "desc": "Acceda a un panel de control completo con toda su información importante en un solo lugar."
+        },
+        "tickets": {
+          "title": "Gestión de tickets",
+          "desc": "Cree y gestione sus tickets de soporte para obtener ayuda rápida y eficiente."
+        },
+        "account": {
+          "title": "Gestión de cuenta",
+          "desc": "Modifique su información personal, contraseña y preferencias de cuenta."
+        }
+      }
+    },
+    "dashboard": {
+      "title": "Panel de control",
+      "intro": "El panel de control es su punto de entrada principal a la aplicación. Le da una visión general de sus actividades.",
+      "steps": {
+        "access": {
+          "title": "Acceder al panel",
+          "desc": "Después de iniciar sesión, será redirigido automáticamente a su panel de control. También puede acceder a través del menú de navegación."
+        },
+        "overview": {
+          "title": "Vista general",
+          "desc": "El panel muestra sus estadísticas principales: número de tickets, estado de pagos, notificaciones recientes, etc."
+        },
+        "navigation": {
+          "title": "Navegación",
+          "desc": "Use el menú lateral para navegar entre las diferentes secciones: tickets, pagos, contacto, documentación."
+        }
+      }
+    },
+    "tickets": {
+      "title": "Gestión de tickets",
+      "intro": "Los tickets le permiten comunicarse con el equipo de soporte para resolver sus problemas o hacer preguntas.",
+      "create": {
+        "title": "Crear un ticket",
+        "steps": {
+          "open": {
+            "title": "Abrir el formulario",
+            "desc": "Haga clic en el botón 'Crear ticket' en la página de tickets o use el menú lateral para acceder a la sección de tickets."
+          },
+          "fill": {
+            "title": "Completar el formulario",
+            "desc": "Complete todos los campos requeridos:",
+            "fields": {
+              "type": "Tipo de ticket: seleccione la categoría apropiada",
+              "description": "Descripción: describa su problema o pregunta en detalle",
+              "backoffice": "Información de backoffice: si es necesario, proporcione la URL, inicio de sesión y contraseña",
+              "image": "Imagen: puede adjuntar una captura de pantalla para ilustrar su problema"
+            }
+          },
+          "submit": {
+            "title": "Enviar el ticket",
+            "desc": "Revise su información y haga clic en 'Crear' para enviar su ticket. Recibirá un correo de confirmación."
+          }
+        }
+      },
+      "manage": {
+        "title": "Gestionar sus tickets",
+        "intro": "Una vez creado, puede seguir y gestionar sus tickets:",
+        "features": {
+          "view": "Ver todos sus tickets con su estado actual",
+          "status": "Seguir los cambios de estado: Nuevo, En progreso, Resuelto, etc.",
+          "messages": "Intercambiar mensajes con el equipo de soporte",
+          "filter": "Filtrar sus tickets por estado o fecha"
+        }
+      }
+    },
+    "account": {
+      "title": "Configuración de cuenta",
+      "intro": "Gestione su información personal y configuración de cuenta.",
+      "profile": {
+        "title": "Editar perfil",
+        "steps": {
+          "access": {
+            "title": "Acceder a configuración",
+            "desc": "Haga clic en su nombre en el menú superior derecho, luego seleccione 'Perfil' o 'Configuración'."
+          },
+          "edit": {
+            "title": "Editar información",
+            "desc": "Modifique su información personal: nombre, correo electrónico, teléfono, dirección, etc. Asegúrese de que la información esté actualizada."
+          },
+          "save": {
+            "title": "Guardar cambios",
+            "desc": "Haga clic en 'Guardar' para guardar sus cambios. Recibirá una confirmación."
+          }
+        }
+      },
+      "password": {
+        "title": "Cambiar contraseña",
+        "intro": "Por razones de seguridad, se recomienda cambiar su contraseña regularmente.",
+        "warning": "Asegúrese de usar una contraseña segura con al menos 8 caracteres, incluyendo letras mayúsculas, minúsculas, números y caracteres especiales."
+      }
+    },
+    "payment": {
+      "title": "Gestión de pagos",
+      "intro": "Gestione sus métodos de pago y siga sus transacciones.",
+      "steps": {
+        "access": {
+          "title": "Acceder a pagos",
+          "desc": "Use el menú lateral para acceder a la sección 'Pagos' o 'Métodos de pago'."
+        },
+        "methods": {
+          "title": "Gestionar métodos de pago",
+          "desc": "Agregue, modifique o elimine sus métodos de pago. Puede guardar múltiples tarjetas o cuentas bancarias."
+        },
+        "process": {
+          "title": "Realizar un pago",
+          "desc": "Seleccione un método de pago, ingrese los detalles de la transacción y confirme. Recibirá un recibo por correo electrónico."
+        }
+      }
+    },
+    "contact": {
+      "title": "Contactar administración",
+      "intro": "Use el formulario de contacto para comunicarse directamente con el equipo administrativo.",
+      "steps": {
+        "access": {
+          "title": "Acceder al formulario",
+          "desc": "Haga clic en 'Contactar administración' en el menú lateral para acceder al formulario de contacto."
+        },
+        "form": {
+          "title": "Completar el formulario",
+          "desc": "Complete el formulario con su nombre, correo electrónico, asunto y mensaje. Sea lo más específico posible para una respuesta rápida."
+        },
+        "response": {
+          "title": "Recibir una respuesta",
+          "desc": "El equipo administrativo le responderá por correo electrónico lo antes posible, generalmente en 24-48 horas."
+        }
+      }
+    },
+    "help": {
+      "title": "¿Necesita ayuda adicional?",
+      "content": "Si tiene preguntas o encuentra problemas, no dude en contactarnos. ¡Nuestro equipo está aquí para ayudarle!",
+      "button": "Contactar soporte"
+    }
+  },
+  "sidebar": {
+    "documentation": "Documentación"
+  }
+}

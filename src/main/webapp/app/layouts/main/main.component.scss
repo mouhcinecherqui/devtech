@@ -8,11 +8,16 @@ body {
 .main-layout-with-sidebar {
   display: flex;
   min-height: 100vh;
-  width: 99vw;
+  width: 100vw;
   overflow: hidden;
-  padding-top: 64px;
-  padding-left: 220px;
+  padding-top: 70px;
+  padding-left: 250px;
   overflow-x: hidden;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding-left: 0;
+  }
 }
 
 .main-content-area {
@@ -26,9 +31,27 @@ body {
   overflow-x: hidden;
 }
 
+.sidebar-overlay {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+  }
+}
+
 .container-fluid {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }

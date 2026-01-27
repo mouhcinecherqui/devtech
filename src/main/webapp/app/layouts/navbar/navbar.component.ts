@@ -14,6 +14,7 @@ import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import { environment } from 'environments/environment';
 import NavbarItem from './navbar-item.model';
 import { NotificationBellComponent } from 'app/core/components/notification-bell/notification-bell.component';
+import { SidebarService } from '../main/sidebar.service';
 
 @Component({
   selector: 'jhi-navbar',
@@ -31,12 +32,14 @@ export default class NavbarComponent implements OnInit {
   entitiesNavbarItems: NavbarItem[] = [];
   isRTL = signal(false);
   toggleUserMenu = false;
+  toggleLangMenu = false;
 
   public translateService = inject(TranslateService);
   private readonly loginService = inject(LoginService);
   private readonly stateStorageService = inject(StateStorageService);
   private readonly profileService = inject(ProfileService);
   private readonly router = inject(Router);
+  readonly sidebarService = inject(SidebarService);
 
   constructor() {
     const { VERSION } = environment;
@@ -91,6 +94,11 @@ export default class NavbarComponent implements OnInit {
 
   collapseNavbar(): void {
     this.isNavbarCollapsed.set(true);
+    this.toggleLangMenu = false; // Fermer le menu des langues quand on ferme la navbar
+    // Fermer aussi la sidebar si elle est ouverte
+    if (this.account()) {
+      this.sidebarService.closeSidebar();
+    }
   }
 
   login(): void {
@@ -104,7 +112,13 @@ export default class NavbarComponent implements OnInit {
   }
 
   toggleNavbar(): void {
-    this.isNavbarCollapsed.update(isNavbarCollapsed => !isNavbarCollapsed);
+    // Si l'utilisateur est authentifié, contrôler la sidebar
+    if (this.account()) {
+      this.sidebarService.toggleSidebar();
+    } else {
+      // Sinon, contrôler le menu de navigation
+      this.isNavbarCollapsed.update(isNavbarCollapsed => !isNavbarCollapsed);
+    }
   }
 
   getLogoLink(): string {

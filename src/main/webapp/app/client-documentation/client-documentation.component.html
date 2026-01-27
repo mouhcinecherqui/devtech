@@ -1,0 +1,266 @@
+<div class="documentation-container">
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="header-content">
+      <div class="header-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <div class="header-text">
+        <h1>{{ 'clientDocumentation.title' | translate }}</h1>
+        <p>{{ 'clientDocumentation.subtitle' | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-content-wrapper">
+    <!-- Sidebar Navigation -->
+    <nav class="doc-sidebar">
+      <ul class="nav-list">
+        <li [class.active]="activeSection === 'overview'">
+          <a (click)="scrollToSection('overview')">{{ 'clientDocumentation.nav.overview' | translate }}</a>
+        </li>
+        <li [class.active]="activeSection === 'dashboard'">
+          <a (click)="scrollToSection('dashboard')">{{ 'clientDocumentation.nav.dashboard' | translate }}</a>
+        </li>
+        <li [class.active]="activeSection === 'tickets'">
+          <a (click)="scrollToSection('tickets')">{{ 'clientDocumentation.nav.tickets' | translate }}</a>
+        </li>
+        <li [class.active]="activeSection === 'account'">
+          <a (click)="scrollToSection('account')">{{ 'clientDocumentation.nav.account' | translate }}</a>
+        </li>
+        <li [class.active]="activeSection === 'contact'">
+          <a (click)="scrollToSection('contact')">{{ 'clientDocumentation.nav.contact' | translate }}</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="doc-main-content">
+      <!-- Overview Section -->
+      <section id="overview" class="doc-section">
+        <h2>{{ 'clientDocumentation.overview.title' | translate }}</h2>
+        <p>{{ 'clientDocumentation.overview.intro' | translate }}</p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" />
+                <path d="M3 9H21" stroke="currentColor" stroke-width="2" />
+                <path d="M9 21V9" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h3>{{ 'clientDocumentation.overview.features.dashboard.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.overview.features.dashboard.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h3>{{ 'clientDocumentation.overview.features.tickets.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.overview.features.tickets.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="feature-content">
+              <h3>{{ 'clientDocumentation.overview.features.account.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.overview.features.account.desc' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dashboard Section -->
+      <section id="dashboard" class="doc-section">
+        <h2>{{ 'clientDocumentation.dashboard.title' | translate }}</h2>
+        <p>{{ 'clientDocumentation.dashboard.intro' | translate }}</p>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>{{ 'clientDocumentation.dashboard.steps.access.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.dashboard.steps.access.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>{{ 'clientDocumentation.dashboard.steps.overview.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.dashboard.steps.overview.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>{{ 'clientDocumentation.dashboard.steps.navigation.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.dashboard.steps.navigation.desc' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tickets Section -->
+      <section id="tickets" class="doc-section">
+        <h2>{{ 'clientDocumentation.tickets.title' | translate }}</h2>
+        <p>{{ 'clientDocumentation.tickets.intro' | translate }}</p>
+
+        <h3>{{ 'clientDocumentation.tickets.create.title' | translate }}</h3>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>{{ 'clientDocumentation.tickets.create.steps.open.title' | translate }}</h4>
+              <p>{{ 'clientDocumentation.tickets.create.steps.open.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>{{ 'clientDocumentation.tickets.create.steps.fill.title' | translate }}</h4>
+              <p>{{ 'clientDocumentation.tickets.create.steps.fill.desc' | translate }}</p>
+              <ul class="info-list">
+                <li>{{ 'clientDocumentation.tickets.create.steps.fill.fields.type' | translate }}</li>
+                <li>{{ 'clientDocumentation.tickets.create.steps.fill.fields.description' | translate }}</li>
+                <li>{{ 'clientDocumentation.tickets.create.steps.fill.fields.backoffice' | translate }}</li>
+                <li>{{ 'clientDocumentation.tickets.create.steps.fill.fields.image' | translate }}</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>{{ 'clientDocumentation.tickets.create.steps.submit.title' | translate }}</h4>
+              <p>{{ 'clientDocumentation.tickets.create.steps.submit.desc' | translate }}</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>{{ 'clientDocumentation.tickets.manage.title' | translate }}</h3>
+        <p>{{ 'clientDocumentation.tickets.manage.intro' | translate }}</p>
+        <ul class="info-list">
+          <li>{{ 'clientDocumentation.tickets.manage.features.view' | translate }}</li>
+          <li>{{ 'clientDocumentation.tickets.manage.features.status' | translate }}</li>
+          <li>{{ 'clientDocumentation.tickets.manage.features.messages' | translate }}</li>
+          <li>{{ 'clientDocumentation.tickets.manage.features.filter' | translate }}</li>
+        </ul>
+      </section>
+
+      <!-- Account Settings Section -->
+      <section id="account" class="doc-section">
+        <h2>{{ 'clientDocumentation.account.title' | translate }}</h2>
+        <p>{{ 'clientDocumentation.account.intro' | translate }}</p>
+
+        <h3>{{ 'clientDocumentation.account.profile.title' | translate }}</h3>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h4>{{ 'clientDocumentation.account.profile.steps.access.title' | translate }}</h4>
+              <p>{{ 'clientDocumentation.account.profile.steps.access.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h4>{{ 'clientDocumentation.account.profile.steps.edit.title' | translate }}</h4>
+              <p>{{ 'clientDocumentation.account.profile.steps.edit.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h4>{{ 'clientDocumentation.account.profile.steps.save.title' | translate }}</h4>
+              <p>{{ 'clientDocumentation.account.profile.steps.save.desc' | translate }}</p>
+            </div>
+          </div>
+        </div>
+
+        <h3>{{ 'clientDocumentation.account.password.title' | translate }}</h3>
+        <p>{{ 'clientDocumentation.account.password.intro' | translate }}</p>
+        <div class="warning-box">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <p>{{ 'clientDocumentation.account.password.warning' | translate }}</p>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="doc-section">
+        <h2>{{ 'clientDocumentation.contact.title' | translate }}</h2>
+        <p>{{ 'clientDocumentation.contact.intro' | translate }}</p>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3>{{ 'clientDocumentation.contact.steps.access.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.contact.steps.access.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3>{{ 'clientDocumentation.contact.steps.form.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.contact.steps.form.desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3>{{ 'clientDocumentation.contact.steps.response.title' | translate }}</h3>
+              <p>{{ 'clientDocumentation.contact.steps.response.desc' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Help Section -->
+      <section id="help" class="doc-section">
+        <div class="help-box">
+          <h3>{{ 'clientDocumentation.help.title' | translate }}</h3>
+          <p>{{ 'clientDocumentation.help.content' | translate }}</p>
+          <a routerLink="/client-contact" class="help-button">
+            {{ 'clientDocumentation.help.button' | translate }}
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>

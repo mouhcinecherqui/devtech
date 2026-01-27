@@ -4,6 +4,7 @@ import devtechly.domain.ActivityType;
 import devtechly.domain.Ticket;
 import devtechly.domain.User;
 import devtechly.repository.UserRepository;
+import devtechly.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -145,12 +146,10 @@ public class ActivityIntegrationService {
     }
 
     /**
-     * Get current user ID (you may need to implement this based on your security context).
+     * Get current user ID from security context.
      */
     private Long getCurrentUserId() {
-        // TODO: Implement based on your security context
-        // For now, return a default user ID or get it from SecurityContextHolder
-        return 1L; // This should be replaced with actual current user ID
+        return SecurityUtils.getCurrentUserId().orElse(null);
     }
 
     /**

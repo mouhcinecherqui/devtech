@@ -1,0 +1,157 @@
+{
+  "clientDocumentation": {
+    "title": "Documentation",
+    "subtitle": "Guide complet pour utiliser la plateforme devtechly",
+    "nav": {
+      "overview": "Vue d'ensemble",
+      "dashboard": "Tableau de bord",
+      "tickets": "Tickets",
+      "account": "Compte",
+      "payment": "Paiement",
+      "contact": "Contact"
+    },
+    "overview": {
+      "title": "Vue d'ensemble",
+      "intro": "Bienvenue dans la documentation de la plateforme devtechly. Ce guide vous aidera à comprendre et utiliser toutes les fonctionnalités disponibles pour les clients.",
+      "features": {
+        "dashboard": {
+          "title": "Tableau de bord personnalisé",
+          "desc": "Accédez à un tableau de bord complet avec toutes vos informations importantes en un seul endroit."
+        },
+        "tickets": {
+          "title": "Gestion des tickets",
+          "desc": "Créez et gérez vos tickets de support pour obtenir de l'aide rapidement et efficacement."
+        },
+        "account": {
+          "title": "Gestion du compte",
+          "desc": "Modifiez vos informations personnelles, votre mot de passe et vos préférences de compte."
+        }
+      }
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "intro": "Le tableau de bord est votre point d'entrée principal dans l'application. Il vous donne une vue d'ensemble de vos activités.",
+      "steps": {
+        "access": {
+          "title": "Accéder au tableau de bord",
+          "desc": "Après vous être connecté, vous serez automatiquement redirigé vers votre tableau de bord. Vous pouvez également y accéder via le menu de navigation."
+        },
+        "overview": {
+          "title": "Vue d'ensemble",
+          "desc": "Le tableau de bord affiche vos statistiques principales : nombre de tickets, statut des paiements, notifications récentes, etc."
+        },
+        "navigation": {
+          "title": "Navigation",
+          "desc": "Utilisez le menu latéral pour naviguer entre les différentes sections : tickets, paiements, contact, documentation."
+        }
+      }
+    },
+    "tickets": {
+      "title": "Gestion des tickets",
+      "intro": "Les tickets vous permettent de communiquer avec l'équipe de support pour résoudre vos problèmes ou poser des questions.",
+      "create": {
+        "title": "Créer un ticket",
+        "steps": {
+          "open": {
+            "title": "Ouvrir le formulaire",
+            "desc": "Cliquez sur le bouton 'Créer un ticket' dans la page des tickets ou utilisez le menu latéral pour accéder à la section tickets."
+          },
+          "fill": {
+            "title": "Remplir le formulaire",
+            "desc": "Remplissez tous les champs requis :",
+            "fields": {
+              "type": "Type de ticket : sélectionnez la catégorie appropriée",
+              "description": "Description : décrivez votre problème ou votre question en détail",
+              "backoffice": "Informations backoffice : si nécessaire, fournissez l'URL, le login et le mot de passe",
+              "image": "Image : vous pouvez joindre une capture d'écran pour illustrer votre problème"
+            }
+          },
+          "submit": {
+            "title": "Soumettre le ticket",
+            "desc": "Vérifiez vos informations et cliquez sur 'Créer' pour soumettre votre ticket. Vous recevrez une confirmation par email."
+          }
+        }
+      },
+      "manage": {
+        "title": "Gérer vos tickets",
+        "intro": "Une fois créé, vous pouvez suivre et gérer vos tickets :",
+        "features": {
+          "view": "Voir tous vos tickets avec leur statut actuel",
+          "status": "Suivre l'évolution du statut : Nouveau, En cours, Résolu, etc.",
+          "messages": "Échanger des messages avec l'équipe de support",
+          "filter": "Filtrer vos tickets par statut ou date"
+        }
+      }
+    },
+    "account": {
+      "title": "Paramètres du compte",
+      "intro": "Gérez vos informations personnelles et les paramètres de votre compte.",
+      "profile": {
+        "title": "Modifier le profil",
+        "steps": {
+          "access": {
+            "title": "Accéder aux paramètres",
+            "desc": "Cliquez sur votre nom dans le menu en haut à droite, puis sélectionnez 'Profil' ou 'Paramètres'."
+          },
+          "edit": {
+            "title": "Modifier les informations",
+            "desc": "Modifiez vos informations personnelles : nom, email, téléphone, adresse, etc. Assurez-vous que les informations sont à jour."
+          },
+          "save": {
+            "title": "Enregistrer les modifications",
+            "desc": "Cliquez sur 'Sauvegarder' pour enregistrer vos modifications. Vous recevrez une confirmation."
+          }
+        }
+      },
+      "password": {
+        "title": "Changer le mot de passe",
+        "intro": "Pour des raisons de sécurité, il est recommandé de changer votre mot de passe régulièrement.",
+        "warning": "Assurez-vous d'utiliser un mot de passe fort avec au moins 8 caractères, incluant des lettres majuscules, minuscules, chiffres et caractères spéciaux."
+      }
+    },
+    "payment": {
+      "title": "Gestion des paiements",
+      "intro": "Gérez vos méthodes de paiement et suivez vos transactions.",
+      "steps": {
+        "access": {
+          "title": "Accéder aux paiements",
+          "desc": "Utilisez le menu latéral pour accéder à la section 'Paiements' ou 'Méthodes de paiement'."
+        },
+        "methods": {
+          "title": "Gérer les méthodes de paiement",
+          "desc": "Ajoutez, modifiez ou supprimez vos méthodes de paiement. Vous pouvez enregistrer plusieurs cartes ou comptes bancaires."
+        },
+        "process": {
+          "title": "Effectuer un paiement",
+          "desc": "Sélectionnez une méthode de paiement, entrez les détails de la transaction et confirmez. Vous recevrez un reçu par email."
+        }
+      }
+    },
+    "contact": {
+      "title": "Contacter l'administration",
+      "intro": "Utilisez le formulaire de contact pour communiquer directement avec l'équipe administrative.",
+      "steps": {
+        "access": {
+          "title": "Accéder au formulaire",
+          "desc": "Cliquez sur 'Contact Administration' dans le menu latéral pour accéder au formulaire de contact."
+        },
+        "form": {
+          "title": "Remplir le formulaire",
+          "desc": "Remplissez le formulaire avec votre nom, email, sujet et message. Soyez aussi précis que possible pour une réponse rapide."
+        },
+        "response": {
+          "title": "Recevoir une réponse",
+          "desc": "L'équipe administrative vous répondra par email dans les plus brefs délais, généralement sous 24-48 heures."
+        }
+      }
+    },
+    "help": {
+      "title": "Besoin d'aide supplémentaire ?",
+      "content": "Si vous avez des questions ou rencontrez des problèmes, n'hésitez pas à nous contacter. Notre équipe est là pour vous aider !",
+      "button": "Contacter le support"
+    }
+  },
+  "sidebar": {
+    "documentation": "Documentation"
+  }
+}

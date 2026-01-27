@@ -1,8 +1,7 @@
-<div style="color: red; font-size: 10px; word-break: break-all">{{ accountService.trackCurrentAccount() | json }}</div>
-<nav class="sidebar-nav">
+<nav class="sidebar-nav" [class.mobile-open]="sidebarOpen" (click)="$event.stopPropagation()">
   <ul>
     <li routerLinkActive="active" *ngIf="isUser">
-      <a routerLink="/user-tickets">
+      <a routerLink="/user-tickets" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -22,7 +21,7 @@
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="isClient">
-      <a routerLink="/client-tickets">
+      <a routerLink="/client-tickets" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -42,7 +41,7 @@
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="isUser">
-      <a routerLink="/payment-methods">
+      <a routerLink="/payment-methods" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" />
@@ -53,7 +52,7 @@
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="isClient">
-      <a routerLink="/client-contact">
+      <a routerLink="/client-contact" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -68,8 +67,25 @@
         {{ 'sidebar.contactAdmin' | translate }}
       </a>
     </li>
+    <li routerLinkActive="active" *ngIf="isClient">
+      <a routerLink="/client-documentation" (click)="closeSidebarOnMobile()">
+        <span class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        {{ 'sidebar.documentation' | translate }}
+      </a>
+    </li>
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
-      <a routerLink="/admin/tickets">
+      <a routerLink="/admin/tickets" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -89,7 +105,7 @@
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
-      <a routerLink="/admin/clients">
+      <a routerLink="/admin/clients" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -106,7 +122,7 @@
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdmin">
-      <a routerLink="/admin/paiements">
+      <a routerLink="/admin/paiements" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -121,7 +137,7 @@
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdminOrManager">
-      <a routerLink="/admin/parameters">
+      <a routerLink="/admin/parameters" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -144,7 +160,7 @@
       </a>
     </li>
     <li routerLinkActive="active" *ngIf="isAdmin">
-      <a routerLink="/admin/users">
+      <a routerLink="/admin/users" (click)="closeSidebarOnMobile()">
         <span class="icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path
@@ -172,6 +188,45 @@
           </svg>
         </span>
         {{ 'sidebar.users' | translate }}
+      </a>
+    </li>
+    <!-- Separator for account section -->
+    <li class="sidebar-separator"></li>
+    <!-- Account link -->
+    <li routerLinkActive="active" class="sidebar-account-item">
+      <a routerLink="/account/settings" (click)="closeSidebarOnMobile()">
+        <span class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        {{ 'global.menu.account.main' | translate }}
+      </a>
+    </li>
+    <!-- Logout link -->
+    <li class="sidebar-logout-item">
+      <a (click)="logout(); closeSidebarOnMobile()" style="cursor: pointer">
+        <span class="icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        {{ 'navbar.logout' | translate }}
       </a>
     </li>
   </ul>

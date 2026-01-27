@@ -1,0 +1,157 @@
+{
+  "clientDocumentation": {
+    "title": "Documentation",
+    "subtitle": "Complete guide to using the devtechly platform",
+    "nav": {
+      "overview": "Overview",
+      "dashboard": "Dashboard",
+      "tickets": "Tickets",
+      "account": "Account",
+      "payment": "Payment",
+      "contact": "Contact"
+    },
+    "overview": {
+      "title": "Overview",
+      "intro": "Welcome to the devtechly platform documentation. This guide will help you understand and use all available features for clients.",
+      "features": {
+        "dashboard": {
+          "title": "Personalized Dashboard",
+          "desc": "Access a comprehensive dashboard with all your important information in one place."
+        },
+        "tickets": {
+          "title": "Ticket Management",
+          "desc": "Create and manage your support tickets to get help quickly and efficiently."
+        },
+        "account": {
+          "title": "Account Management",
+          "desc": "Modify your personal information, password, and account preferences."
+        }
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "intro": "The dashboard is your main entry point into the application. It gives you an overview of your activities.",
+      "steps": {
+        "access": {
+          "title": "Access the Dashboard",
+          "desc": "After logging in, you will be automatically redirected to your dashboard. You can also access it via the navigation menu."
+        },
+        "overview": {
+          "title": "Overview",
+          "desc": "The dashboard displays your main statistics: number of tickets, payment status, recent notifications, etc."
+        },
+        "navigation": {
+          "title": "Navigation",
+          "desc": "Use the side menu to navigate between different sections: tickets, payments, contact, documentation."
+        }
+      }
+    },
+    "tickets": {
+      "title": "Ticket Management",
+      "intro": "Tickets allow you to communicate with the support team to resolve your issues or ask questions.",
+      "create": {
+        "title": "Create a Ticket",
+        "steps": {
+          "open": {
+            "title": "Open the Form",
+            "desc": "Click the 'Create Ticket' button on the tickets page or use the side menu to access the tickets section."
+          },
+          "fill": {
+            "title": "Fill out the Form",
+            "desc": "Fill in all required fields:",
+            "fields": {
+              "type": "Ticket type: select the appropriate category",
+              "description": "Description: describe your problem or question in detail",
+              "backoffice": "Backoffice information: if necessary, provide the URL, login, and password",
+              "image": "Image: you can attach a screenshot to illustrate your problem"
+            }
+          },
+          "submit": {
+            "title": "Submit the Ticket",
+            "desc": "Review your information and click 'Create' to submit your ticket. You will receive a confirmation email."
+          }
+        }
+      },
+      "manage": {
+        "title": "Manage Your Tickets",
+        "intro": "Once created, you can track and manage your tickets:",
+        "features": {
+          "view": "View all your tickets with their current status",
+          "status": "Track status changes: New, In Progress, Resolved, etc.",
+          "messages": "Exchange messages with the support team",
+          "filter": "Filter your tickets by status or date"
+        }
+      }
+    },
+    "account": {
+      "title": "Account Settings",
+      "intro": "Manage your personal information and account settings.",
+      "profile": {
+        "title": "Edit Profile",
+        "steps": {
+          "access": {
+            "title": "Access Settings",
+            "desc": "Click on your name in the top right menu, then select 'Profile' or 'Settings'."
+          },
+          "edit": {
+            "title": "Edit Information",
+            "desc": "Modify your personal information: name, email, phone, address, etc. Make sure the information is up to date."
+          },
+          "save": {
+            "title": "Save Changes",
+            "desc": "Click 'Save' to save your changes. You will receive a confirmation."
+          }
+        }
+      },
+      "password": {
+        "title": "Change Password",
+        "intro": "For security reasons, it is recommended to change your password regularly.",
+        "warning": "Make sure to use a strong password with at least 8 characters, including uppercase, lowercase letters, numbers, and special characters."
+      }
+    },
+    "payment": {
+      "title": "Payment Management",
+      "intro": "Manage your payment methods and track your transactions.",
+      "steps": {
+        "access": {
+          "title": "Access Payments",
+          "desc": "Use the side menu to access the 'Payments' or 'Payment Methods' section."
+        },
+        "methods": {
+          "title": "Manage Payment Methods",
+          "desc": "Add, modify, or delete your payment methods. You can save multiple cards or bank accounts."
+        },
+        "process": {
+          "title": "Make a Payment",
+          "desc": "Select a payment method, enter transaction details, and confirm. You will receive a receipt by email."
+        }
+      }
+    },
+    "contact": {
+      "title": "Contact Administration",
+      "intro": "Use the contact form to communicate directly with the administrative team.",
+      "steps": {
+        "access": {
+          "title": "Access the Form",
+          "desc": "Click 'Contact Administration' in the side menu to access the contact form."
+        },
+        "form": {
+          "title": "Fill out the Form",
+          "desc": "Fill out the form with your name, email, subject, and message. Be as specific as possible for a quick response."
+        },
+        "response": {
+          "title": "Receive a Response",
+          "desc": "The administrative team will respond to you by email as soon as possible, usually within 24-48 hours."
+        }
+      }
+    },
+    "help": {
+      "title": "Need Additional Help?",
+      "content": "If you have questions or encounter problems, don't hesitate to contact us. Our team is here to help you!",
+      "button": "Contact Support"
+    }
+  },
+  "sidebar": {
+    "documentation": "Documentation"
+  }
+}
