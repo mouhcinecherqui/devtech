@@ -41,7 +41,7 @@ public class Notification implements Serializable {
     private Instant timestamp;
 
     @NotNull
-    @Column(name = "is_read", nullable = false)
+    @Column(name = "read", nullable = false)
     private Boolean read = false;
 
     @Column(name = "user_id")

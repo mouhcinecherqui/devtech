@@ -334,111 +334,168 @@ public class TicketResource {
         @RequestParam(value = "hostingUrl", required = false) String hostingUrl,
         @RequestParam(value = "image", required = false) MultipartFile image
     ) throws URISyntaxException {
-        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-        if (login == null) return ResponseEntity.badRequest().build();
+        try {
+            String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+            if (login == null) return ResponseEntity.badRequest().build();
 
-        Ticket ticket = new Ticket();
-        ticket.setType(type);
-        ticket.setDescription(description);
-        ticket.setBackofficeUrl(backofficeUrl);
-        ticket.setBackofficeLogin(backofficeLogin);
-        ticket.setBackofficePassword(backofficePassword);
-        ticket.setHostingUrl(hostingUrl);
-        ticket.setCreatedBy(login);
-        ticket.setCreatedDate(java.time.Instant.now());
+            Ticket ticket = new Ticket();
+            ticket.setType(type);
+            ticket.setDescription(description);
+            ticket.setBackofficeUrl(backofficeUrl);
+            ticket.setBackofficeLogin(backofficeLogin);
+            ticket.setBackofficePassword(backofficePassword);
+            ticket.setHostingUrl(hostingUrl);
+            ticket.setCreatedBy(login);
+            ticket.setCreatedDate(java.time.Instant.now());
 
-        // Gérer l'upload d'image
-        if (image != null && !image.isEmpty()) {
-            try {
-                // Vérifier la taille du fichier
-                long maxFileSize = applicationProperties.getUpload().getMaxFileSizeInBytes();
-                if (image.getSize() > maxFileSize) {
+            // Gérer l'upload d'image
+            if (image != null && !image.isEmpty()) {
+                try {
+                    // Vérifier la taille du fichier
+                    long maxFileSize = applicationProperties.getUpload().getMaxFileSizeInBytes();
+                    if (image.getSize() > maxFileSize) {
+                        return ResponseEntity.badRequest().build();
+                    }
+
+                    String imageUrl = saveImage(image);
+                    ticket.setImageUrl(imageUrl);
+                } catch (IOException e) {
+                    LOG.error("Erreur lors de l'upload de l'image: {}", e.getMessage());
                     return ResponseEntity.badRequest().build();
                 }
-
-                String imageUrl = saveImage(image);
-                ticket.setImageUrl(imageUrl);
-            } catch (IOException e) {
-                return ResponseEntity.badRequest().build();
             }
-        }
 
-        Ticket result = ticketRepository.save(ticket);
+            Ticket result = ticketRepository.save(ticket);
 
-        // Envoyer email au client
-        AppUser client = getAppUserByLogin(login);
-        if (client != null) {
+            // Envoyer email au client
+            AppUser client = getAppUserByLogin(login);
+            if (client != null) {
+                try {
+                    clientEmailService.sendTicketCreatedEmail(client, result);
+                    LOG.info("Email de création de ticket envoyé au client: {}", client.getEmail());
+                } catch (Exception e) {
+                    LOG.error(
+                        "Erreur lors de l'envoi de l'email de création de ticket au client {}: {}",
+                        client.getEmail(),
+                        e.getMessage()
+                    );
+                }
+            }
+
+            // Envoyer email admin (ne pas bloquer la création si l'email échoue)
             try {
-                clientEmailService.sendTicketCreatedEmail(client, result);
-                LOG.info("Email de création de ticket envoyé au client: {}", client.getEmail());
+                mailService.sendTicketCreatedEmail(result);
             } catch (Exception e) {
-                LOG.error("Erreur lors de l'envoi de l'email de création de ticket au client {}: {}", client.getEmail(), e.getMessage());
+                LOG.error("Erreur lors de l'envoi de l'email de création de ticket à l'admin: {}", e.getMessage());
             }
+
+            // Notifications pour la création de tickets (ne pas bloquer si les notifications échouent)
+            try {
+                notificationService.notifyClient(
+                    login,
+                    "Votre ticket #" + result.getId() + " a été créé avec succès",
+                    "TICKET_CREATED",
+                    result.getId(),
+                    "/tickets/" + result.getId()
+                );
+            } catch (Exception e) {
+                LOG.error("Erreur lors de la notification au client: {}", e.getMessage());
+            }
+
+            try {
+                notificationService.notifyAdmins(
+                    "Nouveau ticket créé par " + login + " - #" + result.getId(),
+                    "TICKET_CREATED",
+                    result.getId(),
+                    "/admin/tickets/" + result.getId()
+                );
+            } catch (Exception e) {
+                LOG.error("Erreur lors de la notification aux admins: {}", e.getMessage());
+            }
+
+            // Créer une activité pour la création du ticket (ne pas bloquer si l'activité échoue)
+            try {
+                activityIntegrationService.createTicketCreatedActivity(result);
+            } catch (Exception e) {
+                LOG.error("Erreur lors de la création de l'activité pour le ticket: {}", e.getMessage());
+            }
+
+            return ResponseEntity.created(new URI("/api/tickets/" + result.getId())).body(result);
+        } catch (Exception e) {
+            LOG.error("Erreur lors de la création du ticket avec image: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).build();
         }
-
-        mailService.sendTicketCreatedEmail(result);
-
-        // Notifications pour la création de tickets
-        notificationService.notifyClient(
-            login,
-            "Votre ticket #" + result.getId() + " a été créé avec succès",
-            "TICKET_CREATED",
-            result.getId(),
-            "/tickets/" + result.getId()
-        );
-
-        notificationService.notifyAdmins(
-            "Nouveau ticket créé par " + login + " - #" + result.getId(),
-            "TICKET_CREATED",
-            result.getId(),
-            "/admin/tickets/" + result.getId()
-        );
-        return ResponseEntity.created(new URI("/api/tickets/" + result.getId())).body(result);
     }
 
     // Créer un ticket (méthode existante pour compatibilité)
     @PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<Ticket> createTicket(@Valid @RequestBody Ticket ticket) throws URISyntaxException {
-        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-        if (login == null) return ResponseEntity.badRequest().build();
-        ticket.setCreatedBy(login);
-        ticket.setCreatedDate(java.time.Instant.now());
-        Ticket result = ticketRepository.save(ticket);
+        try {
+            String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+            if (login == null) return ResponseEntity.badRequest().build();
+            ticket.setCreatedBy(login);
+            ticket.setCreatedDate(java.time.Instant.now());
+            Ticket result = ticketRepository.save(ticket);
 
-        // Envoyer email au client
-        AppUser client = getAppUserByLogin(login);
-        if (client != null) {
-            try {
-                clientEmailService.sendTicketCreatedEmail(client, result);
-                LOG.info("Email de création de ticket envoyé au client: {}", client.getEmail());
-            } catch (Exception e) {
-                LOG.error("Erreur lors de l'envoi de l'email de création de ticket au client {}: {}", client.getEmail(), e.getMessage());
+            // Envoyer email au client
+            AppUser client = getAppUserByLogin(login);
+            if (client != null) {
+                try {
+                    clientEmailService.sendTicketCreatedEmail(client, result);
+                    LOG.info("Email de création de ticket envoyé au client: {}", client.getEmail());
+                } catch (Exception e) {
+                    LOG.error(
+                        "Erreur lors de l'envoi de l'email de création de ticket au client {}: {}",
+                        client.getEmail(),
+                        e.getMessage()
+                    );
+                }
             }
+
+            // Envoyer email admin (ne pas bloquer la création si l'email échoue)
+            try {
+                mailService.sendTicketCreatedEmail(result);
+            } catch (Exception e) {
+                LOG.error("Erreur lors de l'envoi de l'email de création de ticket à l'admin: {}", e.getMessage());
+            }
+
+            // Notifications pour la création de tickets (ne pas bloquer si les notifications échouent)
+            try {
+                notificationService.notifyClient(
+                    login,
+                    "Votre ticket #" + result.getId() + " a été créé avec succès",
+                    "TICKET_CREATED",
+                    result.getId(),
+                    "/tickets/" + result.getId()
+                );
+            } catch (Exception e) {
+                LOG.error("Erreur lors de la notification au client: {}", e.getMessage());
+            }
+
+            try {
+                notificationService.notifyAdmins(
+                    "Nouveau ticket créé par " + login + " - #" + result.getId(),
+                    "TICKET_CREATED",
+                    result.getId(),
+                    "/admin/tickets/" + result.getId()
+                );
+            } catch (Exception e) {
+                LOG.error("Erreur lors de la notification aux admins: {}", e.getMessage());
+            }
+
+            // Créer une activité pour la création du ticket (ne pas bloquer si l'activité échoue)
+            try {
+                activityIntegrationService.createTicketCreatedActivity(result);
+            } catch (Exception e) {
+                LOG.error("Erreur lors de la création de l'activité pour le ticket: {}", e.getMessage());
+            }
+
+            return ResponseEntity.created(new URI("/api/tickets/" + result.getId())).body(result);
+        } catch (Exception e) {
+            LOG.error("Erreur lors de la création du ticket: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).build();
         }
-
-        mailService.sendTicketCreatedEmail(result);
-
-        // Notifications pour la création de tickets
-        notificationService.notifyClient(
-            login,
-            "Votre ticket #" + result.getId() + " a été créé avec succès",
-            "TICKET_CREATED",
-            result.getId(),
-            "/tickets/" + result.getId()
-        );
-
-        notificationService.notifyAdmins(
-            "Nouveau ticket créé par " + login + " - #" + result.getId(),
-            "TICKET_CREATED",
-            result.getId(),
-            "/admin/tickets/" + result.getId()
-        );
-
-        // Créer une activité pour la création du ticket
-        activityIntegrationService.createTicketCreatedActivity(result);
-
-        return ResponseEntity.created(new URI("/api/tickets/" + result.getId())).body(result);
     }
 
     // Mettre à jour le statut d'un ticket

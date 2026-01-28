@@ -21,7 +21,7 @@
             <column name="content" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="timestamp" type="${datetimeType}">
+            <column name="timestamp" type="datetime(6)">
                 <constraints nullable="false"/>
             </column>
             <column name="ticket_id" type="bigint">
@@ -42,7 +42,7 @@
             <column name="sender" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
-            <column name="created_date" type="${datetimeType}">
+            <column name="created_date" type="datetime(6)">
                 <constraints nullable="true"/>
             </column>
         </createTable>
