@@ -559,6 +559,114 @@ $shadow-soft: 0 28px 60px -32px rgba(15, 23, 42, 0.32);
       box-shadow: 0 18px 35px -25px rgba(79, 70, 229, 0.6);
     }
   }
+
+  .action-btn-wrapper.history-dropdown {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .action-btn {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.5rem;
+
+      .dropdown-chevron {
+        margin-left: auto;
+        transition: transform 0.2s ease;
+
+        &.open {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .history-dropdown-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin-top: 0.5rem;
+      background: $surface;
+      border: 1px solid rgba(79, 70, 229, 0.2);
+      border-radius: $radius-medium;
+      box-shadow: 0 12px 40px -16px rgba(15, 23, 42, 0.35);
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 50;
+      padding: 0.5rem 0;
+    }
+
+    .history-dropdown-header {
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: $text-strong;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .history-item-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        min-width: 0;
+        flex: 1;
+      }
+
+      .history-item-type {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: $text-strong;
+      }
+
+      .history-item-desc {
+        font-size: 0.8rem;
+        color: $text-muted;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .history-item-btn {
+        flex-shrink: 0;
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border-radius: 8px;
+        border: 1px solid rgba(79, 70, 229, 0.3);
+        background: rgba(79, 70, 229, 0.1);
+        color: $primary;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(79, 70, 229, 0.2);
+          border-color: $primary;
+        }
+      }
+    }
+
+    .history-empty {
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: $text-muted;
+      text-align: center;
+    }
+  }
 }
 
 // ==========================================================================

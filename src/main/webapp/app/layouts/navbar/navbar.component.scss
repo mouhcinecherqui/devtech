@@ -565,21 +565,24 @@ Logo styles
 
   @media (max-width: 768px) {
     position: static;
-    display: none; // Fermé par défaut sur mobile
     min-width: auto;
     width: 100%;
     margin-top: 0.5rem;
     box-shadow: none;
     border: 1px solid rgba(102, 126, 234, 0.1);
+    // Visibilité gérée par *ngIf (toggleLangMenu) dans le template
   }
 }
 
 .language-switcher.dropdown:hover .lang-dropdown,
 .language-switcher.dropdown:focus-within .lang-dropdown {
   display: block;
+}
 
-  @media (max-width: 768px) {
-    display: none; // Sur mobile, on utilise uniquement le contrôle Angular (*ngIf)
+// Sur mobile, le dropdown est contrôlé par *ngIf (toggleLangMenu) : quand il est dans le DOM, il doit être visible
+@media (max-width: 768px) {
+  .language-switcher.dropdown .lang-dropdown {
+    display: block !important; // Afficher quand *ngIf a rendu le dropdown (clic sur le bouton)
   }
 }
 

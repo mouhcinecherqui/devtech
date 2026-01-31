@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil, interval, timeout, catchError, of } from 'rxjs';
 import SharedModule from '../shared/shared.module';
@@ -197,19 +197,39 @@ export class ClientDashboardComponent implements OnInit, OnDestroy {
   // user menu removed; handled in navbar
 
   createNewTicket(): void {
-    this.router.navigate(['/client-tickets/new']);
+    this.router.navigate(['/client-tickets'], { queryParams: { create: 'true' } });
   }
 
   contactSupport(): void {
-    this.router.navigate(['/support']);
+    this.router.navigate(['/client-contact']);
   }
 
   viewDocumentation(): void {
     this.router.navigate(['/client-documentation']);
   }
 
-  viewHistory(): void {
-    this.router.navigate(['/history']);
+  showHistoryDropdown = false;
+
+  toggleHistoryDropdown(): void {
+    this.showHistoryDropdown = !this.showHistoryDropdown;
+  }
+
+  get closedTickets(): Ticket[] {
+    return this.tickets.filter(t => t.status === 'Résolu' || t.status === 'Fermé' || t.status === 'Paiement validé');
+  }
+
+  goToTicket(ticketId: number): void {
+    this.showHistoryDropdown = false;
+    this.router.navigate(['/client-tickets', ticketId]);
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (this.showHistoryDropdown && target && !target.closest('.history-dropdown')) {
+      this.showHistoryDropdown = false;
+      this.cdr.detectChanges();
+    }
   }
 
   viewAllTickets(): void {

@@ -8,6 +8,7 @@ import devtechly.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -29,7 +30,9 @@ public class ActivityIntegrationService {
 
     /**
      * Create activity when a ticket is created.
+     * Uses REQUIRES_NEW propagation to avoid affecting the parent transaction.
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
     public void createTicketCreatedActivity(Ticket ticket) {
         if (ticket == null || ticket.getId() == null) {
             return;

@@ -76,8 +76,8 @@
       {{ 'navbar.clientDashboard' | translate }}
     </a>
     <jhi-notification-bell *ngIf="account()"></jhi-notification-bell>
-    <div class="language-switcher dropdown">
-      <button class="lang-btn" type="button" (click)="toggleLangMenu = !toggleLangMenu">
+    <div class="language-switcher dropdown" (click)="$event.stopPropagation()">
+      <button class="lang-btn" type="button" (click)="toggleLangMenu = !toggleLangMenu; $event.stopPropagation()">
         <span *ngIf="translateService.currentLang === 'fr'">Français</span>
         <span *ngIf="translateService.currentLang === 'en'">English</span>
         <span *ngIf="translateService.currentLang === 'es'">Español</span>

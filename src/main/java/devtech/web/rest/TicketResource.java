@@ -365,7 +365,19 @@ public class TicketResource {
                 }
             }
 
-            Ticket result = ticketRepository.save(ticket);
+            Ticket result;
+            try {
+                result = ticketRepository.save(ticket);
+                LOG.debug("Ticket sauvegardé avec succès, ID: {}", result.getId());
+            } catch (Exception e) {
+                LOG.error("Erreur lors de la sauvegarde du ticket en base de données: {}", e.getMessage(), e);
+                LOG.error("Type d'erreur: {}", e.getClass().getSimpleName());
+                if (e.getCause() != null) {
+                    LOG.error("Cause: {}", e.getCause().getMessage());
+                }
+                // Re-lancer l'exception pour qu'elle soit catchée par le bloc catch externe
+                throw e;
+            }
 
             // Envoyer email au client
             AppUser client = getAppUserByLogin(login);
@@ -421,8 +433,18 @@ public class TicketResource {
             }
 
             return ResponseEntity.created(new URI("/api/tickets/" + result.getId())).body(result);
+        } catch (URISyntaxException e) {
+            LOG.error("Erreur URI lors de la création du ticket: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).build();
         } catch (Exception e) {
             LOG.error("Erreur lors de la création du ticket avec image: {}", e.getMessage(), e);
+            LOG.error("Stack trace complet:", e);
+            // Logs détaillés pour le débogage en production
+            LOG.error("Type d'erreur: {}", e.getClass().getSimpleName());
+            LOG.error("Message d'erreur: {}", e.getMessage());
+            if (e.getCause() != null) {
+                LOG.error("Cause: {}", e.getCause().getMessage());
+            }
             return ResponseEntity.status(500).build();
         }
     }
@@ -492,8 +514,18 @@ public class TicketResource {
             }
 
             return ResponseEntity.created(new URI("/api/tickets/" + result.getId())).body(result);
+        } catch (URISyntaxException e) {
+            LOG.error("Erreur URI lors de la création du ticket: {}", e.getMessage(), e);
+            return ResponseEntity.status(500).build();
         } catch (Exception e) {
             LOG.error("Erreur lors de la création du ticket: {}", e.getMessage(), e);
+            LOG.error("Stack trace complet:", e);
+            // Logs détaillés pour le débogage en production
+            LOG.error("Type d'erreur: {}", e.getClass().getSimpleName());
+            LOG.error("Message d'erreur: {}", e.getMessage());
+            if (e.getCause() != null) {
+                LOG.error("Cause: {}", e.getCause().getMessage());
+            }
             return ResponseEntity.status(500).build();
         }
     }
@@ -812,8 +844,22 @@ public class TicketResource {
     private String saveImage(MultipartFile file) throws IOException {
         // Créer le dossier d'upload s'il n'existe pas
         Path uploadDir = Path.of(applicationProperties.getUpload().getPath());
+        LOG.info("Chemin d'upload configuré: {}", uploadDir.toAbsolutePath());
+
         if (!Files.exists(uploadDir)) {
-            Files.createDirectories(uploadDir);
+            try {
+                Files.createDirectories(uploadDir);
+                LOG.info("Dossier d'upload créé: {}", uploadDir.toAbsolutePath());
+            } catch (IOException e) {
+                LOG.error("Impossible de créer le dossier d'upload {}: {}", uploadDir.toAbsolutePath(), e.getMessage());
+                throw new IOException("Impossible de créer le dossier d'upload: " + e.getMessage(), e);
+            }
+        }
+
+        // Vérifier les permissions d'écriture
+        if (!Files.isWritable(uploadDir)) {
+            LOG.error("Le dossier d'upload n'est pas accessible en écriture: {}", uploadDir.toAbsolutePath());
+            throw new IOException("Le dossier d'upload n'est pas accessible en écriture: " + uploadDir.toAbsolutePath());
         }
 
         // Générer un nom de fichier unique

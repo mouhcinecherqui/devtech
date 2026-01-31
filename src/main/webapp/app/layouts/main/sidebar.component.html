@@ -1,5 +1,39 @@
 <nav class="sidebar-nav" [class.mobile-open]="sidebarOpen" (click)="$event.stopPropagation()">
   <ul>
+    <!-- Sélecteur de langue (visible sur mobile) -->
+    <li class="sidebar-lang-item">
+      <div class="sidebar-lang-switcher">
+        <button class="sidebar-lang-btn" type="button" (click)="toggleLangMenu = !toggleLangMenu">
+          <span class="icon">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          </span>
+          <span class="lang-label">
+            <span *ngIf="translateService.currentLang === 'fr'">Français</span>
+            <span *ngIf="translateService.currentLang === 'en'">English</span>
+            <span *ngIf="translateService.currentLang === 'es'">Español</span>
+            <span *ngIf="translateService.currentLang === 'ar'">العربية</span>
+          </span>
+        </button>
+        <ul class="sidebar-lang-dropdown" *ngIf="toggleLangMenu">
+          <li (click)="changeLanguage('fr')">Français</li>
+          <li (click)="changeLanguage('en')">English</li>
+          <li (click)="changeLanguage('es')">Español</li>
+          <li (click)="changeLanguage('ar')">العربية</li>
+        </ul>
+      </div>
+    </li>
     <li routerLinkActive="active" *ngIf="isUser">
       <a routerLink="/user-tickets" (click)="closeSidebarOnMobile()">
         <span class="icon">

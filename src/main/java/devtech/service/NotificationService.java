@@ -10,6 +10,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class NotificationService {
@@ -32,8 +34,10 @@ public class NotificationService {
     }
 
     /**
-     * Notifier un utilisateur avec tous les détails
+     * Notifier un utilisateur avec tous les détails.
+     * REQUIRES_NEW évite que toute exception (ex: contrainte) ne marque la transaction appelante comme rollback-only.
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
     public void notifyUser(String userLogin, String message, String type, Long ticketId, String actionUrl, Long userId) {
         Notification notif = new Notification();
         notif.setUserLogin(userLogin);
@@ -54,8 +58,10 @@ public class NotificationService {
     }
 
     /**
-     * Notifier tous les administrateurs
+     * Notifier tous les administrateurs.
+     * REQUIRES_NEW pour ne pas affecter la transaction de création de ticket en cas d'erreur.
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
     public void notifyAdmins(String message, String type, Long ticketId, String actionUrl) {
         List<User> admins = userRepository.findAllByAuthority(AuthoritiesConstants.ADMIN);
 
@@ -71,8 +77,10 @@ public class NotificationService {
     }
 
     /**
-     * Notifier un client spécifique
+     * Notifier un client spécifique.
+     * REQUIRES_NEW pour ne pas affecter la transaction de création de ticket en cas d'erreur.
      */
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
     public void notifyClient(String clientLogin, String message, String type, Long ticketId, String actionUrl) {
         notifyUser(clientLogin, message, type, ticketId, actionUrl, null);
     }

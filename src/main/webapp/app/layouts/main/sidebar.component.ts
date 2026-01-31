@@ -1,7 +1,9 @@
 import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
+import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { JsonPipe, CommonModule } from '@angular/common';
+import { TranslateService } from '@ngx-translate/core';
 import SharedModule from '../../shared/shared.module';
 import { SidebarService } from './sidebar.service';
 import { LoginService } from 'app/login/login.service';
@@ -17,11 +19,14 @@ import { Subject, takeUntil } from 'rxjs';
 export class SidebarComponent implements OnInit, OnDestroy {
   constructor(public accountService: AccountService) {}
   readonly sidebarService = inject(SidebarService);
+  readonly translateService = inject(TranslateService);
+  private readonly stateStorageService = inject(StateStorageService);
   private readonly loginService = inject(LoginService);
   private readonly router = inject(Router);
   private readonly destroy$ = new Subject<void>();
 
   sidebarOpen = false;
+  toggleLangMenu = false;
 
   ngOnInit(): void {
     this.sidebarService.sidebarOpen$.pipe(takeUntil(this.destroy$)).subscribe(open => {
@@ -45,6 +50,16 @@ export class SidebarComponent implements OnInit, OnDestroy {
     this.closeSidebarOnMobile();
     this.loginService.logout();
     this.router.navigate(['']);
+  }
+
+  changeLanguage(languageKey: string): void {
+    this.stateStorageService.storeLocale(languageKey);
+    this.translateService.use(languageKey).subscribe({
+      next: () => {},
+      error: () => this.translateService.use(languageKey),
+    });
+    this.toggleLangMenu = false;
+    this.closeSidebarOnMobile();
   }
 
   get isAdmin(): boolean {

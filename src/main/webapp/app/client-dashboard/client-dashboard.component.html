@@ -343,17 +343,39 @@
               </svg>
               <span>{{ 'clientDashboard.actions.documentation' | translate }}</span>
             </button>
-            <button class="action-btn" (click)="viewHistory()">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
-                  stroke="currentColor"
-                  stroke-width="2"
-                />
-                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              <span>{{ 'clientDashboard.actions.history' | translate }}</span>
-            </button>
+            <div class="action-btn-wrapper history-dropdown" (click)="$event.stopPropagation()">
+              <button class="action-btn" (click)="toggleHistoryDropdown()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  />
+                  <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span>{{ 'clientDashboard.actions.history' | translate }}</span>
+                <svg class="dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" [class.open]="showHistoryDropdown">
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <div class="history-dropdown-list" *ngIf="showHistoryDropdown">
+                <div class="history-dropdown-header">{{ 'clientDashboard.actions.history' | translate }}</div>
+                <ng-container *ngIf="closedTickets.length > 0; else noClosedTickets">
+                  <div class="history-item" *ngFor="let ticket of closedTickets">
+                    <div class="history-item-info">
+                      <span class="history-item-type">#{{ ticket.id }} - {{ ticket.type }}</span>
+                      <span class="history-item-desc">{{ ticket.description }}</span>
+                    </div>
+                    <button type="button" class="history-item-btn" (click)="goToTicket(ticket.id!)">
+                      {{ 'clientDashboard.tickets.view' | translate }}
+                    </button>
+                  </div>
+                </ng-container>
+                <ng-template #noClosedTickets>
+                  <div class="history-empty">{{ 'clientDashboard.tickets.noTickets' | translate }}</div>
+                </ng-template>
+              </div>
+            </div>
           </div>
         </div>
 

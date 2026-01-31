@@ -22,10 +22,10 @@ public class PaiementResource {
 
     private final PaiementService paiementService;
 
-    @Value("${cmi.ok.url:https://devtechly.com/payment-success}")
+    @Value("${cmi.ok.url:http://localhost:8080/payment-success}")
     private String okUrl;
 
-    @Value("${cmi.fail.url:https://devtechly.com/payment-failed}")
+    @Value("${cmi.fail.url:http://localhost:8080/payment-failed}")
     private String failUrl;
 
     public PaiementResource(PaiementService paiementService) {

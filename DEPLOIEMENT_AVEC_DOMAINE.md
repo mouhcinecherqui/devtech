@@ -1,6 +1,6 @@
 # 🌐 Déploiement avec Nom de Domaine
 
-Guide pour déployer votre application devtechly avec votre nom de domaine (devtechly.com) au lieu de localhost.
+Guide pour déployer votre application devtechly avec votre nom de domaine (localhost) au lieu de localhost.
 
 ## 📊 Situation actuelle vs avec domaine
 
@@ -12,7 +12,7 @@ Guide pour déployer votre application devtechly avec votre nom de domaine (devt
 
 ### ✅ Avec nom de domaine
 
-- **URL :** `https://devtechly.com` (ou `http://devtechly.com` si pas de SSL)
+- **URL :** `http://localhost`
 - **Accès :** Depuis Internet
 - **Configuration :** `docker-compose.prod-with-domain.yml` + Nginx
 
@@ -33,7 +33,7 @@ Internet
 ## 📋 Prérequis
 
 1. ✅ **Serveur avec IP publique** (VPS, Cloud, etc.)
-2. ✅ **Nom de domaine** configuré (devtechly.com)
+2. ✅ **Nom de domaine** configuré (localhost)
 3. ✅ **DNS configuré** : A record pointant vers l'IP du serveur
 4. ✅ **Docker installé** sur le serveur
 5. ✅ **Ports 80 et 443 ouverts** dans le firewall
@@ -52,8 +52,8 @@ A       www     VOTRE_IP        Auto
 
 **Exemple :**
 
-- `devtechly.com` → `123.45.67.89`
-- `www.devtechly.com` → `123.45.67.89`
+- `localhost` → `123.45.67.89`
+- `localhost` → `123.45.67.89`
 
 ### Étape 2 : Préparer les fichiers sur le serveur
 
@@ -103,7 +103,7 @@ docker compose -f docker-compose.prod-with-domain.yml logs -f
 curl http://localhost/management/health
 
 # Tester depuis Internet
-curl http://devtechly.com/management/health
+curl http://localhost/management/health
 ```
 
 ## 🔒 Configuration HTTPS (Recommandé)
@@ -121,11 +121,11 @@ sudo apt install certbot python3-certbot-nginx
 docker compose -f docker-compose.prod-with-domain.yml stop nginx
 
 # 3. Obtenir les certificats
-sudo certbot certonly --standalone -d devtechly.com -d www.devtechly.com
+sudo certbot certonly --standalone -d localhost
 
 # 4. Copier les certificats dans le répertoire nginx/ssl
-sudo cp /etc/letsencrypt/live/devtechly.com/fullchain.pem nginx/ssl/
-sudo cp /etc/letsencrypt/live/devtechly.com/privkey.pem nginx/ssl/
+sudo cp /etc/letsencrypt/live/localhost/fullchain.pem nginx/ssl/
+sudo cp /etc/letsencrypt/live/localhost/privkey.pem nginx/ssl/
 sudo chmod 644 nginx/ssl/*.pem
 
 # 5. Décommenter la section HTTPS dans nginx/conf.d/devtechly.conf
@@ -143,7 +143,7 @@ certbot:
   image: certbot/certbot
   volumes:
     - ./nginx/ssl:/etc/letsencrypt
-  command: certonly --standalone -d devtechly.com -d www.devtechly.com --email votre-email@example.com --agree-tos
+  command: certonly --standalone -d localhost --email votre-email@example.com --agree-tos
 ```
 
 ## ⚙️ Configuration de l'application
@@ -154,7 +154,7 @@ Assurez-vous que `.env.prod` contient :
 
 ```bash
 # URL de base de l'application
-JHIPSTER_MAIL_BASE_URL=https://devtechly.com
+JHIPSTER_MAIL_BASE_URL=http://localhost
 
 # Autres variables...
 SPRING_PROFILES_ACTIVE=prod
@@ -164,7 +164,7 @@ DB_URL=jdbc:mysql://mysql:3306/devtechly?useUnicode=true&characterEncoding=utf8&
 
 ### Configuration Spring Boot
 
-L'application est déjà configurée pour `devtechly.com` dans :
+L'application est déjà configurée pour `localhost` dans :
 
 - `src/main/resources/config/application-prod.yml`
 - `src/main/webapp/environments/environment.prod.ts`
@@ -188,15 +188,15 @@ docker compose -f docker-compose.prod-with-domain.yml exec nginx nginx -t
 curl http://localhost/management/health
 
 # Depuis Internet
-curl http://devtechly.com/management/health
+curl http://localhost/management/health
 ```
 
 ### Vérifier les DNS
 
 ```bash
 # Vérifier que le DNS pointe vers votre serveur
-nslookup devtechly.com
-dig devtechly.com
+nslookup localhost
+dig localhost
 ```
 
 ## 🔧 Dépannage
@@ -260,7 +260,7 @@ docker compose -f docker-compose.prod-with-domain.yml --env-file .env.prod up -d
 docker compose -f docker-compose.prod-with-domain.yml ps
 
 echo "[OK] Déploiement terminé!"
-echo "[*] Application accessible sur: https://devtechly.com"
+echo "[*] Application accessible sur: http://localhost"
 ```
 
 ## 🔄 Mise à jour de l'application
@@ -294,8 +294,8 @@ docker compose -f docker-compose.prod-with-domain.yml up -d
 
 Une fois déployé, votre application sera accessible sur :
 
-- **HTTP :** `http://devtechly.com`
-- **HTTPS :** `https://devtechly.com` (après configuration SSL)
+- **HTTP :** `http://localhost`
+- **HTTP :** `http://localhost` (après configuration SSL)
 
 Au lieu de `http://localhost:8080` !
 

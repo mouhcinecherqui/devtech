@@ -2,7 +2,7 @@ import { Component, OnInit, signal, ViewChild, ElementRef, ChangeDetectorRef, co
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import SharedModule from '../shared/shared.module';
@@ -94,6 +94,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private translateService: TranslateService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.ticketForm = this.fb.group({
       type: ['', Validators.required],
@@ -109,6 +110,12 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.fetchTickets();
     this.loadApplicationParameters();
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe(params => {
+      if (params['create'] === 'true') {
+        this.router.navigate([], { relativeTo: this.route, queryParams: {}, queryParamsHandling: '' });
+        setTimeout(() => this.openModal(), 300);
+      }
+    });
   }
 
   ngOnDestroy(): void {

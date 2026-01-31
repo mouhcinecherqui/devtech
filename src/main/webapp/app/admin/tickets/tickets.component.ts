@@ -163,6 +163,26 @@ export class TicketsComponent implements OnInit {
   saveTicket(): void {
     if (!this.selectedTicket) return;
 
+    const showSuccess = (): void => {
+      this.alertService.addAlert({
+        type: 'success',
+        message: 'Enregistrement réussi. Le ticket a été mis à jour.',
+        timeout: 4000,
+        toast: true,
+        position: 'top right',
+      });
+    };
+
+    const showError = (message: string): void => {
+      this.alertService.addAlert({
+        type: 'danger',
+        message,
+        timeout: 5000,
+        toast: true,
+        position: 'top right',
+      });
+    };
+
     // Mettre à jour le statut du ticket
     this.http.put<Ticket>(`/api/tickets/${this.selectedTicket.id}`, this.selectedTicket).subscribe({
       next: updated => {
@@ -192,30 +212,20 @@ export class TicketsComponent implements OnInit {
                     },
                   });
                 }
+                this.newMessage = '';
+                showSuccess();
               },
               error: () => {
-                this.alertService.addAlert({
-                  type: 'danger',
-                  message: "Erreur lors de l'ajout du message",
-                  timeout: 5000,
-                });
+                showError("Erreur lors de l'enregistrement : l'ajout du message a échoué.");
               },
             });
+        } else {
+          this.newMessage = '';
+          showSuccess();
         }
-
-        this.newMessage = '';
-        this.alertService.addAlert({
-          type: 'success',
-          message: 'Ticket mis à jour avec succès',
-          timeout: 3000,
-        });
       },
       error: () => {
-        this.alertService.addAlert({
-          type: 'danger',
-          message: 'Erreur lors de la mise à jour du ticket',
-          timeout: 5000,
-        });
+        showError("Erreur lors de l'enregistrement : la mise à jour du ticket a échoué.");
       },
     });
   }

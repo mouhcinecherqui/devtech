@@ -198,7 +198,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
       '@type': 'Organization',
       name: 'DevTechly',
       url: `${baseUrl}/home`,
-      logo: `${baseUrl}/favicon.ico`,
+      logo: `${baseUrl}/content/images/dt-logo.png`,
       sameAs: ['https://www.linkedin.com/company/devtechly', 'https://twitter.com/devtechly'],
       contactPoint: [
         {
