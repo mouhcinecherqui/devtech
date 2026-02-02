@@ -126,6 +126,8 @@ jhipster:
 
 admin:
   mail: ${SPRING_MAIL_USERNAME:dev@local}
+  # Emails admin OAuth2 pour les notifications (séparés par des virgules)
+  notification-emails: admin@devtechly.com,fatimazahra@devtechly.com,devtechly@gmail.com,mouhcinecherqui@gmail.com
 
 # Configuration CMI pour le développement
 cmi:

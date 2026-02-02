@@ -26,19 +26,29 @@
     <nav class="doc-sidebar">
       <ul class="nav-list">
         <li [class.active]="activeSection === 'overview'">
-          <a (click)="scrollToSection('overview')">{{ 'clientDocumentation.nav.overview' | translate }}</a>
+          <a href="#overview" (click)="scrollToSection('overview'); $event.preventDefault()">{{
+            'clientDocumentation.nav.overview' | translate
+          }}</a>
         </li>
         <li [class.active]="activeSection === 'dashboard'">
-          <a (click)="scrollToSection('dashboard')">{{ 'clientDocumentation.nav.dashboard' | translate }}</a>
+          <a href="#dashboard" (click)="scrollToSection('dashboard'); $event.preventDefault()">{{
+            'clientDocumentation.nav.dashboard' | translate
+          }}</a>
         </li>
         <li [class.active]="activeSection === 'tickets'">
-          <a (click)="scrollToSection('tickets')">{{ 'clientDocumentation.nav.tickets' | translate }}</a>
+          <a href="#tickets" (click)="scrollToSection('tickets'); $event.preventDefault()">{{
+            'clientDocumentation.nav.tickets' | translate
+          }}</a>
         </li>
         <li [class.active]="activeSection === 'account'">
-          <a (click)="scrollToSection('account')">{{ 'clientDocumentation.nav.account' | translate }}</a>
+          <a href="#account" (click)="scrollToSection('account'); $event.preventDefault()">{{
+            'clientDocumentation.nav.account' | translate
+          }}</a>
         </li>
         <li [class.active]="activeSection === 'contact'">
-          <a (click)="scrollToSection('contact')">{{ 'clientDocumentation.nav.contact' | translate }}</a>
+          <a href="#contact" (click)="scrollToSection('contact'); $event.preventDefault()">{{
+            'clientDocumentation.nav.contact' | translate
+          }}</a>
         </li>
       </ul>
     </nav>

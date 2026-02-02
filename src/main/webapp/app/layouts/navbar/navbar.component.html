@@ -1,7 +1,10 @@
 <header class="main-header" [class.rtl]="isRTL()">
   <div class="header-left">
     <a class="site-title" [routerLink]="getLogoLink()">
-      <img src="/content/images/dt-logo.png" alt="dt-logo Logo" />
+      <picture>
+        <source srcset="/content/images/dt-logo.webp" type="image/webp" />
+        <img src="/content/images/dt-logo.png" alt="devtechly Logo" width="40" height="40" fetchpriority="high" decoding="async" />
+      </picture>
     </a>
   </div>
   <div class="header-right-mobile">
@@ -93,7 +96,7 @@
         <li (click)="changeLanguage('ar'); toggleLangMenu = false; collapseNavbar()">العربية</li>
       </ul>
     </div>
-    <a *ngIf="!account()" (click)="login(); collapseNavbar()">{{ 'navbar.login' | translate }}</a>
+    <a *ngIf="!account()" routerLink="/login" (click)="collapseNavbar()">{{ 'navbar.login' | translate }}</a>
     <div *ngIf="account()" class="language-switcher dropdown" style="margin-left: 1rem">
       <button class="lang-btn" type="button" (click)="toggleUserMenu = !toggleUserMenu">
         <span>👤 {{ account()?.firstName || 'Account' }}</span>

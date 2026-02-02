@@ -8,6 +8,7 @@ import { Subject, takeUntil } from 'rxjs';
 import SharedModule from '../shared/shared.module';
 import { TicketPaymentComponent } from '../ticket-payment/ticket-payment.component';
 import { AppParametersService } from 'app/core/services/app-parameters.service';
+import { NotificationService } from 'app/core/services/notification.service';
 import { AppParameter } from 'app/admin/parameters/parameters.model';
 import { ClientReviewService } from 'app/core/services/client-review.service';
 import { ClientReviewComponent } from 'app/client-review/client-review.component';
@@ -38,6 +39,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   private readonly appParametersService = inject(AppParametersService);
   private readonly clientReviewService = inject(ClientReviewService);
+  private readonly notificationService = inject(NotificationService);
 
   ticket = signal<Ticket | null>(null);
   loading = signal(false);
@@ -216,11 +218,13 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
       })
       .subscribe({
         next: () => {
+          this.notificationService.forceRefresh();
           this.showSuccessMessage('Devis accepté avec succès !');
           this.loadTicket();
         },
-        error: () => {
-          this.showErrorMessage("Erreur lors de l'acceptation du devis.");
+        error: (err: any) => {
+          const detail = err?.error?.detail;
+          this.showErrorMessage(detail && typeof detail === 'string' ? detail : "Erreur lors de l'acceptation du devis.");
         },
       });
   }
@@ -230,11 +234,13 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
 
     this.http.put(`/api/tickets/${this.ticket()!.id}/reject-devis`, {}).subscribe({
       next: () => {
+        this.notificationService.forceRefresh();
         this.showSuccessMessage("Devis refusé. L'équipe vous recontactera.");
         this.loadTicket();
       },
-      error: () => {
-        this.showErrorMessage('Erreur lors du refus du devis.');
+      error: (err: any) => {
+        const detail = err?.error?.detail;
+        this.showErrorMessage(detail && typeof detail === 'string' ? detail : 'Erreur lors du refus du devis.');
       },
     });
   }
@@ -383,13 +389,16 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
   acceptDevisFromDescription(devis: any, index: number): void {
     if (!this.ticket()) return;
 
+    const amount = Number(devis.amount);
+    const validAmount = Number.isFinite(amount) ? amount : 0;
+
     this.http
       .put(
         `/api/tickets/${this.ticket()!.id}/accept-devis`,
         {
           devisIndex: index,
-          amount: parseFloat(devis.amount),
-          description: devis.description,
+          amount: validAmount,
+          description: devis.description ?? '',
         },
         {
           headers: { 'Content-Type': 'application/json' },
@@ -398,13 +407,14 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.showSuccessMessage('Devis accepté avec succès !');
-          // Mettre à jour le devis localement
           devis.accepted = true;
           devis.acceptedDate = new Date();
           this.loadTicket();
         },
-        error: () => {
-          this.showErrorMessage("Erreur lors de l'acceptation du devis.");
+        error: err => {
+          const detail = err?.error?.detail;
+          const msg = detail && typeof detail === 'string' ? detail : "Erreur lors de l'acceptation du devis.";
+          this.showErrorMessage(msg);
         },
       });
   }
@@ -412,13 +422,16 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
   rejectDevisFromDescription(devis: any, index: number): void {
     if (!this.ticket()) return;
 
+    const amount = Number(devis.amount);
+    const validAmount = Number.isFinite(amount) ? amount : 0;
+
     this.http
       .put(
         `/api/tickets/${this.ticket()!.id}/reject-devis`,
         {
           devisIndex: index,
-          amount: parseFloat(devis.amount),
-          description: devis.description,
+          amount: validAmount,
+          description: devis.description ?? '',
         },
         {
           headers: { 'Content-Type': 'application/json' },
@@ -427,13 +440,14 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.showSuccessMessage("Devis refusé. L'équipe vous recontactera.");
-          // Mettre à jour le devis localement
           devis.rejected = true;
           devis.rejectedDate = new Date();
           this.loadTicket();
         },
-        error: () => {
-          this.showErrorMessage('Erreur lors du refus du devis.');
+        error: err => {
+          const detail = err?.error?.detail;
+          const msg = detail && typeof detail === 'string' ? detail : 'Erreur lors du refus du devis.';
+          this.showErrorMessage(msg);
         },
       });
   }
@@ -463,6 +477,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
           this.clientReply = '';
           this.sendingReply.set(false);
           this.loadTicket(); // Recharger pour avoir les nouveaux messages
+          this.notificationService.forceRefresh();
         },
         error: () => {
           this.showErrorMessage("Erreur lors de l'envoi de la réponse.");
@@ -560,6 +575,7 @@ export class TicketDetailComponent implements OnInit, OnDestroy {
   validatePayment(ticketId: number): void {
     this.http.put(`/api/tickets/${ticketId}/validate-payment`, {}).subscribe({
       next: () => {
+        this.notificationService.forceRefresh();
         this.showSuccessMessage('Paiement validé avec succès !');
         this.loadTicket();
       },

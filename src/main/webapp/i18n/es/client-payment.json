@@ -119,7 +119,7 @@
       "bic": "CIHMMAMC",
       "referenceLabel": "Referencia",
       "referenceValue": "Añade tu número de factura o correo en la referencia",
-      "note": "Tras la transferencia, envía el justificante a support@devtechly.com para una confirmación más rápida."
+      "note": "Tras la transferencia, envía el justificante a contact.devtechly@gmail.com para una confirmación más rápida."
     },
     "paypal": {
       "title": "Pagar con PayPal",

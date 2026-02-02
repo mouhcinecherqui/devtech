@@ -113,8 +113,8 @@
     <div *ngIf="!isLoading() && reviews().length === 0" class="row">
       <div class="col-12 text-center">
         <div class="no-reviews">
-          <i class="fas fa-star-o fa-3x text-muted mb-3"></i>
-          <h4 class="text-muted">Aucun avis pour le moment</h4>
+          <i class="fas fa-star-o fa-3x text-muted mb-3" aria-hidden="true"></i>
+          <h3 class="text-muted">Aucun avis pour le moment</h3>
           <p class="text-muted">Soyez le premier à donner votre avis !</p>
         </div>
       </div>

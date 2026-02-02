@@ -107,8 +107,8 @@ describe('ClientContactComponent', () => {
 
   it('should display company information correctly', () => {
     expect(component.companyInfo.name).toBe('devtechly');
-    expect(component.companyInfo.phone).toBe('+33 1 23 45 67 89');
-    expect(component.companyInfo.email).toBe('contact@devtechly.com');
+    expect(component.companyInfo.phone).toBe('0727691934');
+    expect(component.companyInfo.email).toBe('contact.devtechly@gmail.com');
   });
 
   it('should not trigger HTTP when just validating form', () => {

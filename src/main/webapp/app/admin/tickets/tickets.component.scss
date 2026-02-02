@@ -1,310 +1,191 @@
-// Modern Design Variables
-$primary-color: #667eea;
-$primary-light: #818cf8;
-$primary-dark: #4f46e5;
-$success-color: #10b981;
-$warning-color: #f59e0b;
-$danger-color: #ef4444;
-$info-color: #06b6d4;
-$gray-50: #f8fafc;
-$gray-100: #f1f5f9;
-$gray-200: #e2e8f0;
-$gray-300: #cbd5e1;
-$gray-400: #94a3b8;
-$gray-500: #64748b;
-$gray-600: #475569;
-$gray-700: #334155;
-$gray-800: #1e293b;
-$gray-900: #0f172a;
+$pri: #667eea;
+$pri-l: #818cf8;
+$pri-d: #4f46e5;
+$ok: #10b981;
+$warn: #f59e0b;
+$err: #ef4444;
+$info: #06b6d4;
+$g: #64748b;
+$g9: #0f172a;
 
-// Modern Mixins
-@mixin glassmorphism {
+@mixin glass {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(102, 126, 234, 0.2);
 }
-
-@mixin modern-shadow {
-  box-shadow:
-    0 10px 25px -5px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+@mixin sh {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+@mixin tr {
+  transition: all 0.2s ease;
+}
+@mixin grad($s, $e) {
+  background: linear-gradient(135deg, $s, $e);
 }
 
-@mixin modern-shadow-hover {
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-@mixin smooth-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@mixin gradient-bg($start, $end) {
-  background: linear-gradient(135deg, $start 0%, $end 100%);
-}
-
-// Main Container
 .admin-tickets-container {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #667eea, #764ba2);
   position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
-    pointer-events: none;
-  }
 }
-
-// Header Section
 .admin-tickets-header {
-  @include glassmorphism;
+  @include glass;
   border-radius: 24px;
   padding: 2.5rem;
   margin-bottom: 2.5rem;
-  @include modern-shadow;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  }
-
+  @include sh;
   .header-content {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 2rem;
   }
-
   .header-text {
     flex: 1;
-
     h2 {
       font-size: 2.5rem;
       font-weight: 800;
-      background: linear-gradient(135deg, $gray-900, $primary-color);
+      background: linear-gradient(135deg, $g9, $pri);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin: 0 0 0.75rem 0;
-      letter-spacing: -0.025em;
+      margin: 0 0 0.75rem;
     }
-
     p {
-      color: $gray-600;
+      color: $g;
       font-size: 1.125rem;
       margin: 0;
       font-weight: 500;
     }
   }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-  }
-
   .create-ticket-btn {
-    @include gradient-bg($success-color, #059669);
-    color: white;
+    @include grad($ok, #059669);
+    color: #fff;
     padding: 1rem 1.5rem;
     border-radius: 16px;
     font-weight: 700;
-    font-size: 0.95rem;
     border: none;
     cursor: pointer;
-    @include smooth-transition;
+    @include tr;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-
     &:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
     }
-
-    svg {
-      width: 18px;
-      height: 18px;
-      color: currentColor;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-    }
   }
 }
-
-// Modern Table Styles
 table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   margin-top: 2rem;
-  @include glassmorphism;
+  @include glass;
   border-radius: 20px;
   overflow: hidden;
-  @include modern-shadow;
-
+  @include sh;
   th,
   td {
     padding: 1.25rem 1rem;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-
   th {
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    color: $gray-900;
+    color: $g9;
     font-weight: 700;
     font-size: 0.95rem;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     position: sticky;
     top: 0;
     z-index: 10;
-
-    &:first-child {
-      border-top-left-radius: 20px;
-    }
-
-    &:last-child {
-      border-top-right-radius: 20px;
-    }
   }
-
   td {
-    color: $gray-700;
+    color: $g;
     font-weight: 500;
-    font-size: 0.95rem;
-    @include smooth-transition;
-
+    @include tr;
     &:first-child {
       font-weight: 700;
-      color: $primary-color;
+      color: $pri;
     }
   }
-
   tbody tr {
-    @include smooth-transition;
-
+    @include tr;
     &:hover {
       background: rgba(255, 255, 255, 0.1);
       transform: translateY(-2px);
     }
-
     &:last-child td {
       border-bottom: none;
-
-      &:first-child {
-        border-bottom-left-radius: 20px;
-      }
-
-      &:last-child {
-        border-bottom-right-radius: 20px;
-      }
     }
   }
 }
-
-// Status Badges
 .status-badge {
   padding: 0.5rem 1rem;
   border-radius: 25px;
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   display: inline-block;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
   &.status-nouveau {
     background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-    color: $info-color;
+    color: $info;
     border: 1px solid rgba(6, 182, 212, 0.2);
   }
-
   &.status-en-cours {
     background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    color: $warning-color;
+    color: $warn;
     border: 1px solid rgba(245, 158, 11, 0.2);
   }
-
   &.status-résolu {
     background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-    color: $success-color;
+    color: $ok;
     border: 1px solid rgba(16, 185, 129, 0.2);
   }
-
   &.status-fermé {
     background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    color: $gray-600;
+    color: $g;
     border: 1px solid rgba(100, 116, 139, 0.2);
   }
-
   &.status-urgent {
     background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    color: $danger-color;
+    color: $err;
     border: 1px solid rgba(239, 68, 68, 0.2);
   }
 }
-
-// Type Badges
 .type-badge {
   padding: 0.5rem 1rem;
   border-radius: 25px;
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   display: inline-block;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-
   &.type-bug {
     background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    color: $danger-color;
+    color: $err;
     border: 1px solid rgba(239, 68, 68, 0.2);
   }
-
   &.type-demande {
     background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    color: $primary-color;
+    color: $pri;
     border: 1px solid rgba(99, 102, 241, 0.2);
   }
-
   &.type-support {
     background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-    color: $success-color;
+    color: $ok;
     border: 1px solid rgba(16, 185, 129, 0.2);
   }
-
   &.type-autre {
     background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-    color: $gray-600;
+    color: $g;
     border: 1px solid rgba(100, 116, 139, 0.2);
   }
 }
-
-// Modern Button Styles
 .btn {
   padding: 0.75rem 1.5rem;
   border-radius: 12px;
@@ -312,179 +193,132 @@ table {
   font-size: 0.9rem;
   border: none;
   cursor: pointer;
-  @include smooth-transition;
+  @include tr;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-
-  svg {
-    width: 16px;
-    height: 16px;
-    color: currentColor;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  }
-
   &.btn-primary {
-    @include gradient-bg($primary-color, $primary-light);
-    color: white;
-
+    @include grad($pri, $pri-l);
+    color: #fff;
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
     }
   }
-
   &.btn-success {
-    @include gradient-bg($success-color, #059669);
-    color: white;
-
+    @include grad($ok, #059669);
+    color: #fff;
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
     }
   }
-
   &.btn-info {
-    @include gradient-bg($info-color, #0891b2);
-    color: white;
-
+    @include grad($info, #0891b2);
+    color: #fff;
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.4);
     }
   }
-
+  &.btn-warning {
+    @include grad($warn, #fbbf24);
+    color: #fff;
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  &.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: $g;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
   &.btn-sm {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
   }
 }
-
-// Loading and Error States
-.loading-state {
-  @include glassmorphism;
-  border-radius: 20px;
-  padding: 3rem 2rem;
-  text-align: center;
-  margin: 2rem 0;
-  @include modern-shadow;
-
-  .loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid $primary-color;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1rem;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-}
-
-.error-state {
-  @include glassmorphism;
-  border-radius: 20px;
-  padding: 2rem;
-  margin: 2rem 0;
-  @include modern-shadow;
-  border-left: 4px solid $danger-color;
-  background: linear-gradient(135deg, #fef2f2, #fee2e2);
-
-  .error {
-    color: $danger-color;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-}
-
+.loading-state,
+.error-state,
 .empty-state {
-  @include glassmorphism;
+  @include glass;
   border-radius: 20px;
-  padding: 4rem 2rem;
-  text-align: center;
+  padding: 2rem 3rem;
   margin: 2rem 0;
-  @include modern-shadow;
-
-  .empty-icon {
-    margin-bottom: 1.5rem;
-    opacity: 0.7;
-
-    svg {
-      width: 64px;
-      height: 64px;
-      color: $gray-400;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-    }
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: $gray-900;
-    margin: 0 0 0.5rem 0;
-  }
-
-  p {
-    color: $gray-600;
-    font-size: 1.1rem;
-    margin: 0;
+  @include sh;
+  text-align: center;
+}
+.loading-state .loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: $pri;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+.error-state {
+  border-left: 4px solid $err;
+  background: linear-gradient(135deg, #fef2f2, #fee2e2);
+  .error {
+    color: $err;
+    font-weight: 600;
   }
 }
-
-// Modern Modal Styles
-.admin-ticket-modal {
-  display: flex;
-  flex-direction: column;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
+.empty-state .empty-icon {
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+  svg {
+    width: 64px;
+    height: 64px;
+    color: $g;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.admin-ticket-modal,
+.admin-create-ticket-modal,
+.admin-devis-modal {
+  @include glass;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 24px;
-  @include modern-shadow-hover;
   padding: 3rem;
   min-width: 500px;
   max-width: 90vw;
   max-height: 90vh;
   overflow-y: auto;
-  position: relative;
   margin: 0 auto;
-  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-  @keyframes modalSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(-30px) scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
   h3 {
     font-size: 1.75rem;
     font-weight: 700;
-    color: $gray-900;
+    color: $g9;
     margin-bottom: 2rem;
     text-align: center;
-    background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
+    @include grad($pri, $pri-d);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 }
-
+.admin-create-ticket-modal h3 {
+  @include grad($ok, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.admin-devis-modal .devis-info {
+  @include glass;
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  color: $g;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+}
 .admin-ticket-row {
   display: flex;
   align-items: flex-start;
@@ -492,54 +326,56 @@ table {
   padding: 1rem;
   background: rgba(248, 250, 252, 0.8);
   border-radius: 12px;
-  @include smooth-transition;
+  @include tr;
   border: 1px solid rgba(226, 232, 240, 0.5);
-
   &:hover {
     background: rgba(241, 245, 249, 0.9);
-    transform: translateX(5px);
-  }
-
-  &.chat-section {
-    flex: 1;
-    display: flex;
   }
 }
-
+.admin-ticket-row.payment-proof-row {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+.payment-proof-alert {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.payment-proof-badge {
+  background: linear-gradient(135deg, $ok, #059669);
+  color: #fff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
 .admin-ticket-label {
   min-width: 140px;
-  color: $primary-color;
+  color: $pri;
   font-weight: 700;
   font-size: 0.95rem;
   margin-right: 1rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
 }
-
 .admin-ticket-value {
-  color: $gray-900;
+  color: $g9;
   font-size: 1rem;
   font-weight: 500;
   word-break: break-word;
   flex: 1;
 }
-
-// Enhanced Image Styles
 .admin-ticket-image-container {
-  position: relative;
-  display: inline-block;
   border-radius: 16px;
   overflow: hidden;
   cursor: pointer;
-  @include smooth-transition;
-  @include modern-shadow;
-
+  @include tr;
+  @include sh;
   &:hover {
     transform: scale(1.05);
-    @include modern-shadow-hover;
   }
 }
-
 .admin-ticket-image {
   max-width: 250px;
   max-height: 180px;
@@ -548,68 +384,46 @@ table {
   display: block;
   object-fit: cover;
 }
-
 .admin-ticket-image-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  color: white;
+  color: #fff;
   padding: 1rem;
   font-size: 0.9rem;
   text-align: center;
   opacity: 0;
-  @include smooth-transition;
+  @include tr;
   font-weight: 600;
 }
-
 .admin-ticket-image-container:hover .admin-ticket-image-overlay {
   opacity: 1;
 }
-
-// Enhanced Form Elements
+.status-select {
+  min-width: 180px;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid $pri !important;
+  color: $pri;
+  font-weight: 600;
+}
 .admin-ticket-modal select,
 .admin-ticket-modal textarea {
   border-radius: 12px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   padding: 0.75rem 1rem;
   font-size: 1rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin: 0.5rem 0 0.75rem;
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  color: $gray-700;
-  font-weight: 500;
-  @include smooth-transition;
-
+  color: $g;
+  @include tr;
   &:focus {
-    border: 2px solid $primary-color;
+    border-color: $pri;
     outline: none;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  &::placeholder {
-    color: $gray-400;
   }
 }
-
-.status-select {
-  min-width: 180px;
-  background: rgba(255, 255, 255, 0.2) !important;
-  border: 2px solid $primary-color !important;
-  color: $primary-color;
-  font-weight: 600;
-
-  &:focus {
-    border: 2px solid $primary-dark !important;
-    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-  }
-}
-
-// Enhanced Messages Section
 .admin-ticket-messages {
   background: rgba(248, 250, 252, 0.9);
   border-radius: 12px;
@@ -618,35 +432,16 @@ table {
   max-height: 150px;
   overflow-y: auto;
   border: 1px solid rgba(226, 232, 240, 0.6);
-  backdrop-filter: blur(10px);
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: $primary-color;
-    border-radius: 3px;
-  }
-
   li {
     margin-bottom: 0.75rem;
-    color: $gray-800;
+    color: $g;
     font-size: 0.95rem;
-    font-weight: 500;
     padding: 0.5rem;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 8px;
-    border-left: 3px solid $primary-color;
+    border-left: 3px solid $pri;
   }
 }
-
-// Enhanced Actions Section
 .admin-ticket-actions {
   display: flex;
   gap: 1rem;
@@ -655,8 +450,6 @@ table {
   padding-top: 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
-
-// Enhanced Close Button
 .close-modal-btn {
   position: absolute;
   top: 1.5rem;
@@ -665,53 +458,28 @@ table {
   border: none;
   padding: 0.75rem;
   cursor: pointer;
-  @include smooth-transition;
+  @include tr;
   border-radius: 50%;
   width: 40px;
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(10px);
-
   &:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: rotate(90deg);
   }
-
-  svg {
-    width: 20px;
-    height: 20px;
-    color: $gray-700;
-  }
 }
-
-// Enhanced Image Modal
 .image-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background: rgba(0, 0, 0, 0.8);
   z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  backdrop-filter: blur(8px);
-  animation: fadeIn 0.3s ease-out;
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
 }
-
 .image-modal-container {
   position: relative;
   max-width: 90vw;
@@ -719,37 +487,26 @@ table {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.image-modal-close-btn {
-  position: absolute;
-  top: -50px;
-  right: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  color: white;
-  padding: 1rem;
-  border-radius: 50%;
-  cursor: pointer;
-  @include smooth-transition;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(1.1);
-  }
-
-  svg {
-    width: 24px;
-    height: 24px;
+  .image-modal-close-btn {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
   }
 }
-
 .full-size-image {
   max-width: 100%;
   max-height: 90vh;
@@ -757,749 +514,280 @@ table {
   border-radius: 16px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
-
-// Modal de création de ticket
-.admin-create-ticket-modal {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 24px;
-  @include modern-shadow-hover;
-  padding: 3rem;
-  min-width: 500px;
-  max-width: 90vw;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  margin: 0 auto;
-  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-  h3 {
-    font-size: 1.75rem;
+.form-group {
+  margin-bottom: 1.5rem;
+  label {
+    display: block;
+    color: $g9;
     font-weight: 700;
-    color: $gray-900;
-    margin-bottom: 2rem;
-    text-align: center;
-    background: linear-gradient(135deg, $success-color 0%, #059669 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .form-group {
-    margin-bottom: 1.5rem;
-
-    label {
-      display: block;
-      color: $gray-900;
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 1rem 1.25rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      color: $gray-700;
-      font-weight: 500;
-      @include smooth-transition;
-
-      &:focus {
-        border: 2px solid $success-color;
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      &::placeholder {
-        color: $gray-400;
-      }
-
-      &.ng-invalid.ng-touched {
-        border-color: $danger-color;
-        box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
-      }
-    }
-
-    textarea.form-control {
-      resize: vertical;
-      min-height: 100px;
-    }
-  }
-
-  .form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-    justify-content: flex-end;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-
-    .btn {
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      @include smooth-transition;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-
-      &.btn-secondary {
-        background: rgba(255, 255, 255, 0.2);
-        color: $gray-700;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.3);
-          transform: translateY(-1px);
-        }
-      }
-
-      &.btn-primary {
-        @include gradient-bg($success-color, #059669);
-        color: white;
-        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-
-        &:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-        }
-
-        &:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-          transform: none;
-        }
-      }
-    }
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
   }
 }
-
-// Modal de création de devis (quote)
-.admin-devis-modal {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 24px;
-  @include modern-shadow-hover;
-  padding: 2rem 2.25rem;
-  min-width: 380px;
-  max-width: 520px;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  margin: 0 auto;
-  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-  h3 {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: $gray-900;
-    margin-bottom: 2rem;
-    text-align: center;
-    background: linear-gradient(135deg, $primary-color 0%, $primary-dark 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.form-control {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: $g;
+  @include tr;
+  &:focus {
+    border-color: $pri;
+    outline: none;
   }
-
-  .devis-info {
-    @include glassmorphism;
-    border-radius: 16px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.25rem;
-    color: $gray-800;
-    border: 1px solid rgba(226, 232, 240, 0.6);
-  }
-
-  .form-group {
-    margin-bottom: 1.5rem;
-
-    label {
-      display: block;
-      color: $gray-900;
-      font-weight: 700;
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 1rem 1.25rem;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      color: $gray-700;
-      font-weight: 500;
-      @include smooth-transition;
-
-      &:focus {
-        border: 2px solid $primary-color;
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      &::placeholder {
-        color: $gray-400;
-      }
-    }
-
-    textarea.form-control {
-      resize: vertical;
-      min-height: 100px;
-    }
-  }
-
-  .form-actions {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2rem;
-    justify-content: flex-end;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-
-    .btn {
-      padding: 0.75rem 1.5rem;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      @include smooth-transition;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-
-      &.btn-secondary {
-        background: rgba(255, 255, 255, 0.2);
-        color: $gray-700;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.3);
-          transform: translateY(-1px);
-        }
-      }
-
-      &.btn-primary {
-        @include gradient-bg($primary-color, $primary-light);
-        color: white;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-
-        &:hover:not(:disabled) {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        &:disabled {
-          opacity: 0.6;
-          cursor: not-allowed;
-          transform: none;
-        }
-      }
-    }
+  &.ng-invalid.ng-touched {
+    border-color: $err;
   }
 }
-
-@media (max-width: 768px) {
-  .admin-devis-modal {
-    margin: 1rem;
-    padding: 2rem;
-    min-width: calc(100vw - 2rem);
+.form-group textarea.form-control {
+  resize: vertical;
+  min-height: 100px;
+}
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: flex-end;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.form-actions .btn-secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: $g;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
   }
 }
-
-// Pagination Section
+.form-actions .btn-primary {
+  @include grad($ok, #059669);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
 .pagination-section {
-  @include glassmorphism;
+  @include glass;
   border-radius: 20px;
   padding: 2rem;
-  @include modern-shadow;
+  @include sh;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 2rem;
   margin-top: 2rem;
 }
-
 .pagination-info {
-  color: $gray-600;
+  color: $g;
   font-weight: 500;
   font-size: 0.95rem;
 }
-
-.pagination-controls {
-  .modern-pagination {
-    ::ng-deep {
-      .page-link {
-        border: none;
-        background: rgba(255, 255, 255, 0.1);
-        color: $gray-700;
-        border-radius: 12px;
-        margin: 0 0.25rem;
-        padding: 0.75rem 1rem;
-        font-weight: 600;
-        @include smooth-transition;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.2);
-          color: $primary-color;
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
-        }
-
-        &:focus {
-          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-          outline: none;
-        }
-      }
-
-      .page-item.active .page-link {
-        background: linear-gradient(135deg, $primary-color, $primary-light);
-        color: white;
-        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-      }
-
-      .page-item.disabled .page-link {
-        opacity: 0.5;
-        cursor: not-allowed;
-        background: rgba(255, 255, 255, 0.05);
-        color: $gray-400;
-      }
-
-      .pagination {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
+.pagination-controls ::ng-deep {
+  .page-link {
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: $g;
+    border-radius: 12px;
+    margin: 0 0.25rem;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    @include tr;
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: $pri;
+      transform: translateY(-1px);
     }
+  }
+  .page-item.active .page-link {
+    @include grad($pri, $pri-l);
+    color: #fff;
+  }
+  .page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
-
-// Responsive Design
-@media (max-width: 768px) {
-  .admin-tickets-container {
-    padding: 1rem;
-  }
-
-  .admin-tickets-header {
-    padding: 2rem;
-
-    h2 {
-      font-size: 2rem;
-    }
-  }
-
-  table {
-    th,
-    td {
-      padding: 1rem 0.75rem;
-      font-size: 0.9rem;
-    }
-  }
-
-  .admin-ticket-modal {
-    margin: 1rem;
-    padding: 2rem;
-    min-width: calc(100vw - 2rem);
-  }
-
-  .admin-ticket-row {
-    flex-direction: column;
-    gap: 0.5rem;
-
-    .admin-ticket-label {
-      min-width: auto;
-      margin-right: 0;
-    }
-  }
-
-  .admin-ticket-actions {
-    flex-direction: column;
-
-    .btn {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-
-  .pagination-section {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-    padding: 1.5rem;
-  }
-
-  .pagination-controls {
-    .modern-pagination {
-      ::ng-deep {
-        .page-link {
-          padding: 0.5rem 0.75rem;
-          font-size: 0.9rem;
-          margin: 0 0.15rem;
-        }
-      }
-    }
-  }
-}
-
-// Styles pour le Chat Professionnel
-.chat-section {
+.admin-ticket-row.chat-section {
   flex: 1;
   display: flex;
-  .chat-container {
+  .admin-ticket-value.chat-container {
     display: flex;
     flex-direction: column;
     flex: 1;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
     border-radius: 16px;
     border: 1px solid rgba(102, 126, 234, 0.1);
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  .chat-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-    .chat-title {
+    .chat-header {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      padding: 1.5rem;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 1rem;
-
-      h5 {
-        margin: 0;
-        font-size: 1.1rem;
-        font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      .chat-title {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        h5 {
+          margin: 0;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
       }
-
       .chat-status-badge {
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
         font-size: 0.8rem;
         font-weight: 500;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
         border: 1px solid rgba(255, 255, 255, 0.3);
-
-        &.status-nouveau {
-          background: rgba(59, 130, 246, 0.8);
-        }
-        &.status-en-cours {
-          background: rgba(245, 158, 11, 0.8);
-        }
-        &.status-résolu {
-          background: rgba(16, 185, 129, 0.8);
-        }
-        &.status-urgent {
-          background: rgba(239, 68, 68, 0.8);
-        }
-        &.status-fermé {
-          background: rgba(107, 114, 128, 0.8);
-        }
       }
-    }
-
-    .chat-actions {
-      display: flex;
-      gap: 0.5rem;
-
       .chat-action-btn {
         background: rgba(255, 255, 255, 0.1);
         border: 1px solid rgba(255, 255, 255, 0.2);
-        color: white;
+        color: #fff;
         padding: 0.5rem;
         border-radius: 8px;
         cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
+        @include tr;
         &:hover {
           background: rgba(255, 255, 255, 0.2);
-          transform: translateY(-1px);
-        }
-
-        &.active {
-          background: rgba(255, 255, 255, 0.3);
-          border-color: rgba(255, 255, 255, 0.5);
         }
       }
     }
-  }
-
-  .messages-container {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-height: 420px;
-
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 3px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-
-      &:hover {
-        background: #94a3b8;
-      }
-    }
-  }
-
-  .message-bubble {
-    max-width: 80%;
-    padding: 1rem;
-    border-radius: 16px;
-    position: relative;
-    animation: messageSlideIn 0.3s ease-out;
-
-    &.admin-message {
-      align-self: flex-end;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      margin-left: auto;
-      border-bottom-right-radius: 4px;
-
-      .message-header {
-        .message-author {
-          .author-avatar {
-            background: rgba(255, 255, 255, 0.2);
-          }
-        }
-      }
-    }
-
-    &.client-message {
-      align-self: flex-start;
-      background: #f8fafc;
-      color: #334155;
-      border: 1px solid #e2e8f0;
-      margin-right: auto;
-      border-bottom-left-radius: 4px;
-
-      .message-header {
-        .message-author {
-          .author-avatar {
-            background: #e2e8f0;
-          }
-        }
-      }
-    }
-
-    .message-header {
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      background: #fff;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.75rem;
-
-      .message-author {
+      flex-direction: column;
+      gap: 1rem;
+      max-height: 420px;
+    }
+    .message-bubble {
+      max-width: 80%;
+      padding: 1rem;
+      border-radius: 16px;
+      &.admin-message {
+        align-self: flex-end;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        margin-left: auto;
+        border-bottom-right-radius: 4px;
+      }
+      &.client-message {
+        align-self: flex-start;
+        background: #f8fafc;
+        color: #334155;
+        border: 1px solid #e2e8f0;
+        margin-right: auto;
+        border-bottom-left-radius: 4px;
+      }
+      .message-header {
         display: flex;
+        justify-content: space-between;
         align-items: center;
-        gap: 0.5rem;
+        margin-bottom: 0.75rem;
         font-size: 0.85rem;
-        font-weight: 500;
-
-        .author-avatar {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #64748b;
-
-          svg {
-            width: 12px;
-            height: 12px;
-          }
-        }
-
-        .author-name {
-          font-weight: 600;
-        }
       }
-
-      .message-time {
-        font-size: 0.75rem;
-        opacity: 0.7;
-        font-weight: 400;
+      .message-content {
+        line-height: 1.5;
+        font-size: 0.9rem;
       }
     }
-
-    .message-content {
-      line-height: 1.5;
-      font-size: 0.9rem;
-      word-wrap: break-word;
-    }
-  }
-
-  .chat-input {
-    position: sticky;
-    bottom: 0;
-    background: white;
-    border-top: 1px solid #e2e8f0;
-    padding: 1.5rem;
-
-    .input-container {
-      .message-textarea {
+    .chat-input {
+      position: sticky;
+      bottom: 0;
+      background: #fff;
+      border-top: 1px solid #e2e8f0;
+      padding: 1.5rem;
+      .input-container .message-textarea {
         width: 100%;
         border: 2px solid #e2e8f0;
         border-radius: 12px;
         padding: 1rem;
         font-size: 0.9rem;
-        line-height: 1.5;
-        resize: vertical;
         min-height: 80px;
-        transition: border-color 0.2s ease;
-        font-family: inherit;
-
+        resize: vertical;
         &:focus {
           outline: none;
-          border-color: #667eea;
-          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        &::placeholder {
-          color: #94a3b8;
+          border-color: $pri;
         }
       }
-
-      .input-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 1rem;
-
-        .char-count {
-          font-size: 0.8rem;
-          color: #64748b;
-          font-weight: 500;
+      .input-container .send-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        @include tr;
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
         }
-
-        .send-btn {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white;
-          border: none;
-          padding: 0.75rem 1.5rem;
-          border-radius: 10px;
-          font-weight: 600;
-          font-size: 0.9rem;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-
-          &:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-          }
-
-          &:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-          }
-
-          svg {
-            width: 14px;
-            height: 14px;
-          }
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
         }
       }
     }
   }
 }
-
-// Animation pour les messages
-@keyframes messageSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-// Responsive pour le chat
 @media (max-width: 768px) {
-  .chat-section {
-    .chat-header {
-      padding: 1rem;
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-
-      .chat-title {
-        flex-direction: column;
-        gap: 0.5rem;
-      }
+  .admin-tickets-container {
+    padding: 1rem;
+  }
+  .admin-tickets-header {
+    padding: 2rem;
+    h2 {
+      font-size: 2rem;
     }
-
-    .messages-container {
-      height: 300px;
-      max-height: 300px;
-      padding: 1rem;
+  }
+  table th,
+  table td {
+    padding: 1rem 0.75rem;
+    font-size: 0.9rem;
+  }
+  .admin-ticket-modal {
+    margin: 1rem;
+    padding: 2rem;
+    min-width: calc(100vw - 2rem);
+  }
+  .admin-ticket-row {
+    flex-direction: column;
+    gap: 0.5rem;
+    .admin-ticket-label {
+      min-width: auto;
     }
-
-    .chat-input {
-      padding: 1rem;
-
-      .input-container {
-        .input-actions {
-          flex-direction: column;
-          gap: 1rem;
-          align-items: stretch;
-
-          .send-btn {
-            width: 100%;
-            justify-content: center;
-          }
-        }
-      }
-    }
+  }
+  .admin-ticket-actions {
+    flex-direction: column;
+  }
+  .pagination-section {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding: 1.5rem;
+  }
+  .chat-section .messages-container {
+    max-height: 300px;
+    padding: 1rem;
+  }
+  .chat-section .chat-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 }

@@ -6,6 +6,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import SharedModule from '../../shared/shared.module';
 import { TicketPaymentComponent } from '../../ticket-payment/ticket-payment.component';
 import { AutoRefreshService } from '../../core/services/auto-refresh.service';
+import { NotificationService } from '../../core/services/notification.service';
 import ItemCountComponent from '../../shared/pagination/item-count.component';
 import { createRequestOption } from '../../core/request/request-util';
 import { Pagination } from '../../core/request/request.model';
@@ -24,6 +25,8 @@ interface Ticket {
   createdDate?: string;
   status?: string;
   imageUrl?: string;
+  /** URL du justificatif de paiement (virement) déposé par le client */
+  paymentProofFileUrl?: string;
   messages?: string[];
   messageStrings?: string[];
 }
@@ -51,6 +54,9 @@ export class TicketsComponent implements OnInit {
   showImageModal = false;
   selectedImageUrl: string | null = null;
 
+  /** Chargement du justificatif de paiement (requête authentifiée) */
+  loadingPaymentProof = false;
+
   // Propriétés pour la modal de création
   showCreateModal = false;
   creating = false;
@@ -72,6 +78,7 @@ export class TicketsComponent implements OnInit {
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly autoRefreshService = inject(AutoRefreshService);
   private readonly alertService = inject(AlertService);
+  private readonly notificationService = inject(NotificationService);
 
   ngOnInit(): void {
     this.fetchTickets();
@@ -139,8 +146,18 @@ export class TicketsComponent implements OnInit {
   }
 
   openDetailModal(ticket: Ticket): void {
-    this.selectedTicket = { ...ticket, messageStrings: ticket.messageStrings || [] };
     this.showDetailModal = true;
+    this.selectedTicket = { ...ticket, messageStrings: ticket.messageStrings || [] };
+    // Recharger le ticket depuis l'API pour avoir les données à jour (ex. justificatif de paiement)
+    if (ticket.id) {
+      this.http.get<Ticket>(`/api/tickets/${ticket.id}`).subscribe({
+        next: fresh => {
+          this.selectedTicket = { ...fresh, messageStrings: fresh.messageStrings || this.selectedTicket?.messageStrings || [] };
+          this.cdr.detectChanges();
+        },
+        error: () => {},
+      });
+    }
   }
 
   closeDetailModal(): void {
@@ -156,8 +173,51 @@ export class TicketsComponent implements OnInit {
   }
 
   closeImageModal(): void {
+    if (this.selectedImageUrl?.startsWith('blob:')) {
+      URL.revokeObjectURL(this.selectedImageUrl);
+    }
     this.showImageModal = false;
     this.selectedImageUrl = null;
+  }
+
+  /**
+   * Ouvre le justificatif de paiement via une requête authentifiée (évite le 401 en nouvel onglet).
+   * Affiche l'image en modal, ou ouvre PDF/autre dans un nouvel onglet.
+   */
+  openPaymentProof(url: string): void {
+    if (!url) return;
+    this.loadingPaymentProof = true;
+    this.http.get(url, { responseType: 'blob' }).subscribe({
+      next: blob => {
+        this.loadingPaymentProof = false;
+        const blobUrl = URL.createObjectURL(blob);
+        // Détecter image par Content-Type ou par extension dans l'URL
+        const isImageByType = blob.type.startsWith('image/');
+        const isImageByUrl = /\.(png|jpe?g|gif|webp|bmp)(\?|$)/i.test(url);
+        const isImage = isImageByType || isImageByUrl;
+        if (isImage) {
+          this.selectedImageUrl = blobUrl;
+          this.showImageModal = true;
+          this.cdr.detectChanges();
+        } else {
+          const w = window.open(blobUrl, '_blank');
+          if (w) setTimeout(() => URL.revokeObjectURL(blobUrl), 30000);
+          else URL.revokeObjectURL(blobUrl);
+        }
+      },
+      error: err => {
+        this.loadingPaymentProof = false;
+        const is404 = err.status === 404;
+        const message = is404
+          ? "Le justificatif n'est plus disponible (fichier perdu après redémarrage du serveur). Demandez au client de le renvoyer."
+          : 'Impossible de charger le justificatif. Vérifiez votre connexion.';
+        this.alertService.addAlert({
+          type: 'danger',
+          message,
+          timeout: 8000,
+        });
+      },
+    });
   }
 
   saveTicket(): void {
@@ -198,6 +258,7 @@ export class TicketsComponent implements OnInit {
             })
             .subscribe({
               next: () => {
+                this.notificationService.forceRefresh();
                 // Recharger les messages du ticket
                 if (this.selectedTicket) {
                   this.http.get<string[]>(`/api/tickets/${this.selectedTicket.id}/messages`).subscribe({
@@ -220,6 +281,7 @@ export class TicketsComponent implements OnInit {
               },
             });
         } else {
+          this.notificationService.forceRefresh();
           this.newMessage = '';
           showSuccess();
         }
@@ -242,6 +304,7 @@ export class TicketsComponent implements OnInit {
       })
       .subscribe({
         next: response => {
+          this.notificationService.forceRefresh();
           console.warn('Message envoyé avec succès:', response);
           if (this.selectedTicket) {
             this.selectedTicket.messageStrings = this.selectedTicket.messageStrings || [];
@@ -308,6 +371,7 @@ export class TicketsComponent implements OnInit {
 
     this.http.post<Ticket>('/api/tickets', ticketData).subscribe({
       next: createdTicket => {
+        this.notificationService.forceRefresh();
         this.tickets.unshift(createdTicket); // Ajouter au début de la liste
         this.closeCreateTicketModal();
         this.alertService.addAlert({
@@ -364,6 +428,7 @@ export class TicketsComponent implements OnInit {
 
     this.http.post('/api/tickets/devis', devisData).subscribe({
       next: () => {
+        this.notificationService.forceRefresh();
         this.alertService.addAlert({
           type: 'success',
           message: 'Devis envoyé avec succès !',
@@ -497,6 +562,7 @@ export class TicketsComponent implements OnInit {
       })
       .subscribe({
         next: response => {
+          this.notificationService.forceRefresh();
           console.warn('Message de validation du paiement envoyé avec succès:', response);
 
           // Changer le statut du ticket vers "En attente de paiement"
@@ -560,6 +626,7 @@ export class TicketsComponent implements OnInit {
 
     this.http.put(`/api/tickets/${ticket.id}/validate-payment`, {}).subscribe({
       next: () => {
+        this.notificationService.forceRefresh();
         // Mettre à jour le statut localement
         ticket.status = 'Paiement validé';
 

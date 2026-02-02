@@ -112,6 +112,7 @@ $white: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: pulse 2s ease-in-out infinite;
 
   svg {
     width: 80px;
@@ -121,21 +122,18 @@ $white: #ffffff;
     stroke: currentColor;
     fill: none;
   }
+}
 
-  // Animation for icon
-  @keyframes pulse {
-    0%,
-    100% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    50% {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
-
-  animation: pulse 2s ease-in-out infinite;
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
 }
 
 // Error Title

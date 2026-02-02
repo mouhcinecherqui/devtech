@@ -54,10 +54,16 @@ public class TicketMessageService {
                 throw new RuntimeException("Le type d'auteur ne peut pas être null");
             }
 
+            // Limiter author_login à 100 caractères (contrainte DB varchar(100))
+            String safeAuthorLogin = authorLogin.trim();
+            if (safeAuthorLogin.length() > 100) {
+                safeAuthorLogin = safeAuthorLogin.substring(0, 100);
+            }
+
             log.info("Validation OK, création du message...");
 
             // Créer le message
-            TicketMessage message = new TicketMessage(ticket, content.trim(), authorType, authorLogin);
+            TicketMessage message = new TicketMessage(ticket, content.trim(), authorType, safeAuthorLogin);
             log.info("Message créé, tentative de sauvegarde...");
 
             // Sauvegarder le message

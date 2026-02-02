@@ -1,5 +1,6 @@
 # robotstxt.org/
+# Remarque : Mettre à jour l'URL du Sitemap avec votre domaine de production
 
 User-agent: *
 Allow: /
-Sitemap: /sitemap.xml
+Sitemap: https://devtechly.example.com/sitemap.xml

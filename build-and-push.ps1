@@ -5,7 +5,7 @@ param(
     [string]$Registry = "docker.io",  # docker.io, ghcr.io, ou votre registre privé
     [string]$Username = "",           # Votre nom d'utilisateur du registre
     [string]$ImageName = "devtechly", # Nom de l'image
-    [string]$Tag = "v1.0.4",          # Tag de l'image
+    [string]$Tag = "v1.0.15",          # Tag de l'image
     [switch]$SkipBuild = $false,      # Passer la construction si l'image existe déjà
     [switch]$SkipPush = $false        # Ne pas pousser vers le registre
 )

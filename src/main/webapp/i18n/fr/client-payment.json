@@ -119,7 +119,7 @@
       "bic": "CIHMMAMC",
       "referenceLabel": "Référence",
       "referenceValue": "Ajoutez votre numéro de facture ou votre email dans la référence",
-      "note": "Après le virement, envoyez le reçu à support@devtechly.com pour une confirmation plus rapide."
+      "note": "Après le virement, envoyez le reçu à contact.devtechly@gmail.com pour une confirmation plus rapide."
     },
     "paypal": {
       "title": "Payer avec PayPal",

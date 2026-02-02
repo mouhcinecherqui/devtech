@@ -1,23 +1,32 @@
 package devtechly.web.rest;
 
 import devtechly.domain.Notification;
+import devtechly.domain.User;
 import devtechly.repository.NotificationRepository;
+import devtechly.repository.UserRepository;
 import devtechly.security.SecurityUtils;
 import devtechly.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
@@ -39,9 +48,53 @@ public class NotificationResource {
     private String applicationName;
 
     private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
 
-    public NotificationResource(NotificationRepository notificationRepository) {
+    public NotificationResource(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
+        this.userRepository = userRepository;
+    }
+
+    /**
+     * Get the list of identifiers (login + email) for the current user.
+     * OAuth2 users: JWT sub and email claim are used so notifications match.
+     * JHipster User: login and email (if different) are both included.
+     * Lowercase variants are added for case-insensitive matching.
+     */
+    private List<String> getCurrentUserLoginIdentifiers() {
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        if (login == null) {
+            return List.of();
+        }
+        Set<String> identifiers = new LinkedHashSet<>();
+        identifiers.add(login);
+        identifiers.add(login.toLowerCase());
+        // Claim "email" from JWT (OAuth2) au cas où sub diffère
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() instanceof Jwt jwt) {
+            String emailClaim = jwt.getClaimAsString("email");
+            if (emailClaim != null && !emailClaim.isBlank()) {
+                identifiers.add(emailClaim.trim());
+                identifiers.add(emailClaim.trim().toLowerCase());
+            }
+        }
+        userRepository
+            .findOneByLogin(login)
+            .map(User::getEmail)
+            .filter(e -> e != null && !e.equals(login))
+            .ifPresent(e -> {
+                identifiers.add(e);
+                identifiers.add(e.toLowerCase());
+            });
+        userRepository
+            .findOneByEmailIgnoreCase(login)
+            .map(User::getLogin)
+            .filter(l -> l != null && !l.equals(login))
+            .ifPresent(l -> {
+                identifiers.add(l);
+                identifiers.add(l.toLowerCase());
+            });
+        return new ArrayList<>(identifiers);
     }
 
     /**
@@ -171,15 +224,17 @@ public class NotificationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of notifications in body.
      */
     @GetMapping("")
-    public ResponseEntity<List<Notification>> getAllNotifications(@org.springdoc.core.annotations.ParameterObject Pageable pageable) {
-        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-        log.debug("REST request to get notifications for user: {}", login);
+    public ResponseEntity<List<Notification>> getAllNotifications(
+        @org.springdoc.core.annotations.ParameterObject @PageableDefault(size = 50) Pageable pageable
+    ) {
+        List<String> loginIdentifiers = getCurrentUserLoginIdentifiers();
+        log.debug("REST request to get notifications for user identifiers: {}", loginIdentifiers);
 
-        if (login == null) {
+        if (loginIdentifiers.isEmpty()) {
             return ResponseEntity.status(401).build();
         }
 
-        Page<Notification> page = notificationRepository.findByUserLoginOrderByTimestampDesc(login, pageable);
+        Page<Notification> page = notificationRepository.findByUserLoginInOrderByTimestampDesc(loginIdentifiers, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -192,14 +247,14 @@ public class NotificationResource {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Notification> getNotification(@PathVariable Long id) {
-        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-        log.debug("REST request to get Notification : {} for user {}", id, login);
+        List<String> loginIdentifiers = getCurrentUserLoginIdentifiers();
+        log.debug("REST request to get Notification : {} for user identifiers {}", id, loginIdentifiers);
 
-        if (login == null) {
+        if (loginIdentifiers.isEmpty()) {
             return ResponseEntity.status(401).build();
         }
 
-        Optional<Notification> notification = notificationRepository.findByIdAndUserLogin(id, login);
+        Optional<Notification> notification = notificationRepository.findByIdAndUserLoginIn(id, loginIdentifiers);
         return ResponseUtil.wrapOrNotFound(notification);
     }
 
@@ -226,14 +281,14 @@ public class NotificationResource {
      */
     @PutMapping("/{id}/read")
     public ResponseEntity<Void> markNotificationAsRead(@PathVariable Long id) {
-        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-        log.debug("REST request to mark Notification as read : {} for user {}", id, login);
+        List<String> loginIdentifiers = getCurrentUserLoginIdentifiers();
+        log.debug("REST request to mark Notification as read : {} for user identifiers {}", id, loginIdentifiers);
 
-        if (login == null) {
+        if (loginIdentifiers.isEmpty()) {
             return ResponseEntity.status(401).build();
         }
 
-        Optional<Notification> notificationOpt = notificationRepository.findByIdAndUserLogin(id, login);
+        Optional<Notification> notificationOpt = notificationRepository.findByIdAndUserLoginIn(id, loginIdentifiers);
         notificationOpt.ifPresent(notification -> {
             notification.setRead(true);
             notificationRepository.save(notification);
@@ -248,14 +303,14 @@ public class NotificationResource {
      */
     @PutMapping("/read-all")
     public ResponseEntity<Void> markAllNotificationsAsRead() {
-        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-        log.debug("REST request to mark all Notifications as read for user {}", login);
+        List<String> loginIdentifiers = getCurrentUserLoginIdentifiers();
+        log.debug("REST request to mark all Notifications as read for user identifiers {}", loginIdentifiers);
 
-        if (login == null) {
+        if (loginIdentifiers.isEmpty()) {
             return ResponseEntity.status(401).build();
         }
 
-        List<Notification> notifications = notificationRepository.findByUserLoginAndReadFalse(login);
+        List<Notification> notifications = notificationRepository.findByUserLoginInAndReadFalse(loginIdentifiers);
         for (Notification notification : notifications) {
             notification.setRead(true);
             notificationRepository.save(notification);

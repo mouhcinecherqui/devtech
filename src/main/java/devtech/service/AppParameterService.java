@@ -115,7 +115,7 @@ public class AppParameterService {
     }
 
     public String getSupportEmail() {
-        return getValueByKeyOrDefault("support_email", "support@devtechly.com");
+        return getValueByKeyOrDefault("support_email", "contact.devtechly@gmail.com");
     }
 
     public String getCompanyName() {

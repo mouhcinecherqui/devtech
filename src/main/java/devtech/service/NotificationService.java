@@ -6,9 +6,14 @@ import devtechly.repository.NotificationRepository;
 import devtechly.repository.UserRepository;
 import devtechly.security.AuthoritiesConstants;
 import java.time.Instant;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +25,10 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
+
+    /** Emails admin OAuth2 (sans User JHipster) pour lesquels créer des notifications. Liste séparée par des virgules. */
+    @Value("${admin.notification-emails:}")
+    private String adminNotificationEmailsConfig;
 
     public NotificationService(NotificationRepository notificationRepository, UserRepository userRepository) {
         this.notificationRepository = notificationRepository;
@@ -39,8 +48,14 @@ public class NotificationService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
     public void notifyUser(String userLogin, String message, String type, Long ticketId, String actionUrl, Long userId) {
+        if (userLogin == null || userLogin.isBlank()) {
+            LOG.warn("notifyUser skipped: userLogin is null or blank");
+            return;
+        }
         Notification notif = new Notification();
-        notif.setUserLogin(userLogin);
+        // Normaliser pour correspondance fiable (casse, espaces)
+        String normalizedLogin = userLogin.trim().toLowerCase();
+        notif.setUserLogin(normalizedLogin);
         notif.setMessage(message);
         notif.setType(type);
         notif.setTicketId(ticketId);
@@ -63,17 +78,36 @@ public class NotificationService {
      */
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class)
     public void notifyAdmins(String message, String type, Long ticketId, String actionUrl) {
+        Set<String> notified = new HashSet<>();
+
+        // 1) Admins de la table User (JHipster) — utiliser l'email pour que OAuth2 les retrouve
         List<User> admins = userRepository.findAllByAuthority(AuthoritiesConstants.ADMIN);
-
-        if (admins == null || admins.isEmpty()) {
-            LOG.warn("Aucun administrateur trouvé pour notification: {}", message);
-            return;
+        if (admins != null) {
+            for (User admin : admins) {
+                String adminIdentifier = (admin.getEmail() != null && !admin.getEmail().isEmpty()) ? admin.getEmail() : admin.getLogin();
+                if (notified.add(adminIdentifier)) {
+                    notifyUser(adminIdentifier, message, type, ticketId, actionUrl, admin.getId());
+                }
+            }
         }
 
-        for (User admin : admins) {
-            // Utiliser le login système comme identifiant côté notifications
-            notifyUser(admin.getLogin(), message, type, ticketId, actionUrl, admin.getId());
+        // 2) Emails admin OAuth2 (sans User) — pour que les admins connectés via Google voient les notifications
+        List<String> oauth2AdminEmails = parseAdminNotificationEmails();
+        for (String email : oauth2AdminEmails) {
+            if (email != null && !email.isBlank() && notified.add(email.trim())) {
+                notifyUser(email.trim(), message, type, ticketId, actionUrl, null);
+            }
         }
+    }
+
+    private List<String> parseAdminNotificationEmails() {
+        if (adminNotificationEmailsConfig == null || adminNotificationEmailsConfig.isBlank()) {
+            return List.of();
+        }
+        return Arrays.stream(adminNotificationEmailsConfig.split(","))
+            .map(String::trim)
+            .filter(s -> !s.isEmpty())
+            .collect(Collectors.toList());
     }
 
     /**

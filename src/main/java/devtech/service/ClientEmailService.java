@@ -10,6 +10,7 @@ import jakarta.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -203,6 +204,16 @@ public class ClientEmailService {
             message.setSubject(subject);
             message.setText(content, true); // true indicates HTML
             message.setFrom("noreply@devtechly.com");
+
+            // Logo inline pour les templates (cid:dt-logo.png)
+            try {
+                ClassPathResource logo = new ClassPathResource("static/content/images/dt-logo.png");
+                if (logo.exists()) {
+                    message.addInline("dt-logo.png", logo, "image/png");
+                }
+            } catch (Exception e) {
+                log.debug("Logo not attached to email: {}", e.getMessage());
+            }
 
             javaMailSender.send(mimeMessage);
             log.info("HTML email sent successfully to '{}' with subject '{}'", to, subject);

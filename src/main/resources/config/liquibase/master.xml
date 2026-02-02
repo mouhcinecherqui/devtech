@@ -40,6 +40,7 @@
     <include file="config/liquibase/changelog/20250115_add_message_table.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250903_add_payment_method_table.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20250915_add_ticket_last_modified_date.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20250202_add_ticket_payment_proof_file_path.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->

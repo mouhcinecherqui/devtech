@@ -18,15 +18,7 @@ import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/c
   templateUrl: './clients.component.html',
   styleUrls: ['./clients.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SharedModule,
-    RefreshButtonComponent,
-    NgbPaginationModule,
-    ItemCountComponent,
-    ConfirmDialogComponent,
-  ],
+  imports: [CommonModule, FormsModule, SharedModule, RefreshButtonComponent, NgbPaginationModule, ItemCountComponent],
 })
 export class ClientsComponent implements OnInit {
   clients: AppUser[] = [];

@@ -8,7 +8,6 @@ import { ClientsService } from 'app/admin/clients/clients.service';
 import { DashboardDataService, Ticket, DashboardStats } from './dashboard-data.service';
 import { AutoRefreshService } from '../core/services/auto-refresh.service';
 import { RefreshButtonComponent } from '../shared/components/refresh-button/refresh-button.component';
-import { NotificationBadgeComponent } from '../shared/components/notification-badge/notification-badge.component';
 import { MessageNotificationService } from '../core/services/message-notification.service';
 import SharedModule from '../shared/shared.module';
 
@@ -19,7 +18,7 @@ import SharedModule from '../shared/shared.module';
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterModule, SharedModule, RefreshButtonComponent, NotificationBadgeComponent],
+  imports: [CommonModule, RouterModule, SharedModule, RefreshButtonComponent],
   // changeDetection: ChangeDetectionStrategy.OnPush, // Commenté pour permettre la détection automatique
 })
 export class AdminDashboardComponent implements OnInit, OnDestroy {

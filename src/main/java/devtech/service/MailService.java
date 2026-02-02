@@ -82,9 +82,11 @@ public class MailService {
         LOG.debug("Email content length: {} characters", content != null ? content.length() : 0);
 
         // Prepare message using a Spring helper
+        // Use multipart when HTML so we can attach inline images (logo)
+        boolean useMultipart = isMultipart || isHtml;
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
-            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage, useMultipart, StandardCharsets.UTF_8.name());
             message.setTo(to);
             String fromEmail = jHipsterProperties.getMail().getFrom();
             LOG.debug("Sending email from: {}", fromEmail);
@@ -92,11 +94,15 @@ public class MailService {
             message.setSubject(subject);
             message.setText(content, isHtml);
             if (isHtml) {
-                // Try to add the logo image as an inline resource if it exists
+                // Add the logo as inline resource (requires multipart)
                 try {
                     ClassPathResource logo = new ClassPathResource("static/content/images/dt-logo.png");
                     if (logo.exists()) {
                         message.addInline("dt-logo.png", logo, "image/png");
+                    } else {
+                        LOG.warn(
+                            "Logo not found at static/content/images/dt-logo.png (classpath). Ensure webapp build ran or copy logo to src/main/resources/static/content/images/"
+                        );
                     }
                 } catch (Exception e) {
                     LOG.debug("Logo image not found, continuing without inline logo: {}", e.getMessage());

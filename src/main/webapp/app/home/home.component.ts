@@ -203,7 +203,7 @@ export default class HomeComponent implements OnInit, OnDestroy {
       contactPoint: [
         {
           '@type': 'ContactPoint',
-          telephone: '+212612345678',
+          telephone: '0727691934',
           contactType: 'customer service',
           availableLanguage: ['fr', 'en'],
           areaServed: 'Worldwide',

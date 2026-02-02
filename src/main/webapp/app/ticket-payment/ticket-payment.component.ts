@@ -40,6 +40,10 @@ export class TicketPaymentComponent implements OnInit, OnChanges {
   hasAttemptedLoad = false;
   showTransferInfo = false;
   transferProofName: string | null = null;
+  /** Fichier sélectionné pour l'upload du justificatif */
+  selectedProofFile: File | null = null;
+  uploadingProof = false;
+  proofUploadSuccess = false;
 
   private paymentMethodService = inject(PaymentMethodService);
   private router = inject(Router);
@@ -167,10 +171,43 @@ export class TicketPaymentComponent implements OnInit, OnChanges {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
+      this.selectedProofFile = file;
       this.transferProofName = `${file.name} (${Math.round(file.size / 1024)} Ko)`;
+      this.proofUploadSuccess = false;
     } else {
+      this.selectedProofFile = null;
       this.transferProofName = null;
     }
+  }
+
+  /**
+   * Envoie le justificatif de paiement au serveur pour que l'admin puisse le consulter.
+   */
+  uploadProof(): void {
+    if (!this.ticketId || !this.selectedProofFile) return;
+
+    this.uploadingProof = true;
+    this.errorMessage = '';
+
+    const formData = new FormData();
+    formData.append('file', this.selectedProofFile);
+
+    this.http.post(`/api/tickets/${this.ticketId}/payment-proof`, formData).subscribe({
+      next: () => {
+        this.uploadingProof = false;
+        this.proofUploadSuccess = true;
+        this.selectedProofFile = null;
+        this.transferProofName = null;
+        this.errorMessage = '';
+        const input = document.getElementById('transferProof') as HTMLInputElement;
+        if (input) input.value = '';
+        this.paymentCompleted.emit(true);
+      },
+      error: err => {
+        this.uploadingProof = false;
+        this.errorMessage = err.error?.message || err.message || "Erreur lors de l'envoi du justificatif.";
+      },
+    });
   }
 
   private getPaymentAmount(): number {

@@ -14,21 +14,47 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://devtechly.example.com/" />
-    <meta property="og:image" content="/content/images/devtechly.png" />
+    <meta property="og:image" content="/content/images/dt-logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="devtechly - Support & Gestion" />
     <meta
       name="twitter:description"
       content="Plateforme devtechly : gestion des tickets, support client, administration, notifications et plus."
     />
-    <meta name="twitter:image" content="/content/images/devtechly.png" />
+    <meta name="twitter:image" content="/content/images/dt-logo.png" />
     <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
     <base href="/" />
-    <link rel="icon" type="image/png" href="content/images/dt-logo.png" />
+    <link rel="icon" type="image/png" href="/content/images/dt-logo.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/content/images/dt-logo.png" sizes="48x48" />
+    <link rel="apple-touch-icon" href="/content/images/dt-logo.png" />
+    <link rel="preload" href="/content/images/dt-logo.png" as="image" />
     <link rel="manifest" href="manifest.webapp" />
-    <link rel="stylesheet" href="content/css/loading.css" />
+    <style>
+      .app-loading {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        top: 10em;
+      }
+      .app-loading p {
+        display: block;
+        font-size: 1.17em;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
+        font-weight: normal;
+      }
+      .app-loading .app-loading-logo {
+        width: 120px;
+        height: auto;
+        max-height: 120px;
+        object-fit: contain;
+      }
+    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -38,9 +64,18 @@
       onload="this.onload=null;this.rel='stylesheet'"
     />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" /></noscript>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet" />
+    <!-- Material Icons loaded async to avoid render-blocking -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Outlined&family=Material+Icons+Sharp&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Outlined&family=Material+Icons+Sharp&display=swap"
+    /></noscript>
 
     <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
   </head>
@@ -53,7 +88,10 @@
     <![endif]-->
     <jhi-app>
       <div class="app-loading">
-        <img src="content/images/dt-logo.png" alt="devtechly" class="app-loading-logo" />
+        <picture>
+          <source srcset="content/images/dt-logo.webp" type="image/webp" />
+          <img src="content/images/dt-logo.png" alt="devtechly" class="app-loading-logo" width="120" height="120" decoding="async" />
+        </picture>
       </div>
       <div class="app-loading">
         <div id="jhipster-error" style="display: none">

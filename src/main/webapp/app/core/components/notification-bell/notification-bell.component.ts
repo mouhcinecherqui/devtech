@@ -1,6 +1,6 @@
 import { Component, inject, signal, computed, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NotificationService, Notification } from '../../services/notification.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { NotificationService, Notification } from '../../services/notification.s
 })
 export class NotificationBellComponent implements OnInit, OnDestroy {
   private readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
 
   // Signals
   public readonly notifications = this.notificationService.notifications$;
@@ -63,9 +64,19 @@ export class NotificationBellComponent implements OnInit, OnDestroy {
   markAsRead(notification: Notification): void {
     if (!notification.read) {
       this.notificationService.markAsRead(notification.id).subscribe(() => {
-        // Recharger les notifications après marquage
         this.notificationService.fetchNotifications().subscribe();
       });
+    }
+  }
+
+  /**
+   * Clic sur une notification : marquer comme lue et naviguer vers actionUrl si présent
+   */
+  onNotificationClick(notification: Notification): void {
+    this.markAsRead(notification);
+    if (notification.actionUrl) {
+      this.closeDropdown();
+      this.router.navigateByUrl(notification.actionUrl);
     }
   }
 
@@ -79,8 +90,13 @@ export class NotificationBellComponent implements OnInit, OnDestroy {
     });
   }
 
+  /** Type utilisé pour icône/couleur (backend brut ou fallback) */
+  getDisplayType(notification: Notification): string {
+    return notification.rawType ?? notification.type ?? 'info';
+  }
+
   /**
-   * Obtenir l'icône basée sur le type de notification
+   * Obtenir l'icône basée sur le type de notification (type backend : TICKET_CREATED, etc.)
    */
   getNotificationIcon(type: string): string {
     switch (type) {

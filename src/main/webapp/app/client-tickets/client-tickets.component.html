@@ -257,7 +257,13 @@
                 <span class="upload-hint">{{ 'ticketsClient.image.hint' | translate }}</span>
               </div>
               <div *ngIf="selectedImagePreview()" class="image-preview">
-                <img [src]="selectedImagePreview()" [alt]="'ticketsClient.image.previewAlt' | translate" class="preview-image" />
+                <img
+                  [src]="selectedImagePreview()"
+                  [alt]="'ticketsClient.image.previewAlt' | translate"
+                  class="preview-image"
+                  width="200"
+                  height="150"
+                />
                 <button type="button" class="remove-image-btn" (click)="removeImage($event)">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
@@ -417,7 +423,13 @@
           <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
-      <img [src]="selectedImageUrl()" [alt]="'ticketsClient.image.previewAlt' | translate" class="full-size-image" />
+      <img
+        [src]="selectedImageUrl()"
+        [alt]="'ticketsClient.image.previewAlt' | translate"
+        class="full-size-image"
+        width="800"
+        height="600"
+      />
     </div>
   </div>
 </div>

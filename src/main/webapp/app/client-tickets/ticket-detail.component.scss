@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 /* ===========================================================================
    Ticket detail page — modern client experience
    ========================================================================= */
@@ -498,7 +500,7 @@ $radius-pill: 999px;
       color: $color-surface;
 
       &:hover {
-        background: darken($color-success, 6%);
+        background: color.adjust($color-success, $lightness: -6%);
       }
     }
 
@@ -507,7 +509,7 @@ $radius-pill: 999px;
       color: $color-surface;
 
       &:hover {
-        background: darken($color-danger, 6%);
+        background: color.adjust($color-danger, $lightness: -6%);
       }
     }
   }

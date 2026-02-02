@@ -19,12 +19,32 @@
       Référence à indiquer : Ticket #{{ ticketId }}<br />
       Montant : {{ paymentStatus?.paymentAmount || paymentInfo?.amount || 0 }}
       {{ paymentStatus?.paymentCurrency || paymentInfo?.currency || 'MAD' }}<br />
-      Envoyez le justificatif à support&#64;devtechly.com pour validation rapide.
+      Envoyez le justificatif à contact.devtechly&#64;gmail.com pour validation rapide.
       <div class="proof-upload">
         <label class="form-label" for="transferProof">Joindre le justificatif (capture ou PDF)</label>
-        <input id="transferProof" type="file" class="form-control" accept="image/*,.pdf" (change)="onTransferProofSelected($event)" />
+        <input
+          id="transferProof"
+          type="file"
+          class="form-control"
+          accept="image/*,.pdf"
+          (change)="onTransferProofSelected($event)"
+          [disabled]="uploadingProof"
+        />
         <div class="proof-hint">Formats acceptés : images ou PDF, max ~10 Mo.</div>
         <div *ngIf="transferProofName" class="proof-selected">Fichier sélectionné : {{ transferProofName }}</div>
+        <button
+          *ngIf="selectedProofFile"
+          type="button"
+          class="btn btn-primary btn-sm mt-2"
+          [disabled]="uploadingProof"
+          (click)="uploadProof()"
+        >
+          <span *ngIf="!uploadingProof">Envoyer le justificatif</span>
+          <span *ngIf="uploadingProof">Envoi en cours...</span>
+        </button>
+        <div *ngIf="proofUploadSuccess" class="alert alert-success mt-2 mb-0">
+          Justificatif envoyé. L'administration pourra le consulter pour validation.
+        </div>
       </div>
     </div>
   </div>

@@ -521,6 +521,7 @@ $shadow-soft: 0 28px 60px -32px rgba(15, 23, 42, 0.32);
 
 .actions-card {
   padding: 0 0 1.5rem;
+  overflow: visible; // Permet au dropdown History de s'afficher complètement
 
   .actions-grid {
     padding: 1.25rem 1.75rem 1.25rem;
@@ -593,9 +594,9 @@ $shadow-soft: 0 28px 60px -32px rgba(15, 23, 42, 0.32);
       border: 1px solid rgba(79, 70, 229, 0.2);
       border-radius: $radius-medium;
       box-shadow: 0 12px 40px -16px rgba(15, 23, 42, 0.35);
-      max-height: 280px;
+      max-height: min(450px, 70vh);
       overflow-y: auto;
-      z-index: 50;
+      z-index: 100;
       padding: 0.5rem 0;
     }
 

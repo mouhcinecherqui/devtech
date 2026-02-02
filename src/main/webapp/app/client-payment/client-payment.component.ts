@@ -2,8 +2,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
-
 import SharedModule from 'app/shared/shared.module';
 import { PaiementsService } from 'app/admin/paiements/paiements.service';
 import { AccountService } from 'app/core/auth/account.service';
@@ -14,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './client-payment.component.html',
   styleUrls: ['./client-payment.component.scss'],
   standalone: true,
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, NgbAlert],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule],
 })
 export class ClientPaymentComponent implements OnInit {
   paymentForm!: FormGroup;

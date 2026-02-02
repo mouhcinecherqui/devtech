@@ -90,11 +90,16 @@
   opacity: 1;
 }
 
-// Sélecteur de langue (mobile)
+// Sélecteur de langue (visible uniquement sur mobile, masqué sur desktop)
 .sidebar-nav li.sidebar-lang-item {
   padding: 0 1rem 1rem;
   margin-bottom: 0.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  // Masqué sur desktop (écrans > 768px)
+  @media (min-width: 769px) {
+    display: none !important;
+  }
 }
 
 .sidebar-lang-switcher {
@@ -313,10 +318,11 @@
     border-bottom: 3px solid #667eea;
   }
 
-  // Masquer Account et Déconnexion sur cette taille d'écran aussi
+  // Masquer Account, Déconnexion et switch langue sur cette taille d'écran aussi
   .sidebar-nav li.sidebar-separator,
   .sidebar-nav li.sidebar-account-item,
-  .sidebar-nav li.sidebar-logout-item {
+  .sidebar-nav li.sidebar-logout-item,
+  .sidebar-nav li.sidebar-lang-item {
     display: none !important;
   }
 }

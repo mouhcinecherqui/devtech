@@ -99,12 +99,17 @@ docker compose -f docker-compose.prod-with-domain.yml logs -f
 ### Étape 5 : Vérifier le déploiement
 
 ```bash
-# Tester depuis le serveur
+# Option 1 — Depuis le serveur (après redéploiement avec nginx à jour)
 curl http://localhost/management/health
 
-# Tester depuis Internet
-curl http://localhost/management/health
+# Option 2 — Test fiable sans passer par le port 80 (si vous avez encore une 301)
+docker compose -f docker-compose.prod-with-domain.yml exec nginx wget -qO- http://devtechly-app:8080/management/health
+
+# Depuis Internet (remplacer par votre domaine)
+curl http://devtechly.com/management/health
 ```
+
+> **Si vous obtenez une 301** : un autre Nginx (ou Apache) sur l'hôte peut écouter sur le port 80. l’Utilisez l'option 2 (exec dans le conteneur) pour vérifier que l'application répond. Le bloc Nginx inclut localhost dans server_name ; redéployez après modification de nginx/conf.d/devtechly.conf.
 
 ## 🔒 Configuration HTTPS (Recommandé)
 

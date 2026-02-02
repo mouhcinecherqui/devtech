@@ -7,9 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import SharedModule from '../shared/shared.module';
 import { AppParametersService } from 'app/core/services/app-parameters.service';
+import { NotificationService } from 'app/core/services/notification.service';
 import { AppParameter } from 'app/admin/parameters/parameters.model';
-import { NotificationBadgeComponent } from '../shared/components/notification-badge/notification-badge.component';
-
 interface Ticket {
   id?: number;
   type: string;
@@ -30,11 +29,12 @@ interface Ticket {
   templateUrl: './client-tickets.component.html',
   styleUrls: ['./client-tickets.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule, NotificationBadgeComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, SharedModule],
 })
 export class ClientTicketsComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   private readonly appParametersService = inject(AppParametersService);
+  private readonly notificationService = inject(NotificationService);
 
   tickets = signal<Ticket[]>([]);
   loading = signal(false);
@@ -56,7 +56,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   defaultType = 'Support';
   defaultPriority = 'Normal';
   maxTicketsPerUser = 10;
-  supportEmail = 'support@devtechly.com';
+  supportEmail = 'contact.devtechly@gmail.com';
   companyName = 'devtechly';
 
   // États de chargement
@@ -217,6 +217,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
 
     this.http.post('/api/tickets/devis', devisData).subscribe({
       next: () => {
+        this.notificationService.forceRefresh();
         this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.devisSuccess'));
         this.closeDevisModal();
         this.fetchTickets();
@@ -242,6 +243,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   validatePayment(ticketId: number): void {
     this.http.put(`/api/tickets/${ticketId}/validate-payment`, {}).subscribe({
       next: () => {
+        this.notificationService.forceRefresh();
         this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.paymentSuccess'));
         this.fetchTickets();
       },
@@ -266,6 +268,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
   closeTicket(ticketId: number): void {
     this.http.put(`/api/tickets/${ticketId}/close`, {}).subscribe({
       next: () => {
+        this.notificationService.forceRefresh();
         this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.closeSuccess'));
         this.fetchTickets();
       },
@@ -460,6 +463,7 @@ export class ClientTicketsComponent implements OnInit, OnDestroy {
             this.loading.set(false);
             this.uploadProgress.set(100);
             this.showSuccessMessage(this.translateService.instant('ticketsClient.messages.createSuccess'));
+            this.notificationService.forceRefresh();
           }
         },
         error: () => {

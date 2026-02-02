@@ -194,7 +194,14 @@
         </div>
         <div class="info-content">
           <div class="ticket-image-container">
-            <img [src]="ticket()?.imageUrl" alt="Image du ticket" class="ticket-image" (click)="openImageModal(ticket()?.imageUrl || '')" />
+            <img
+              [src]="ticket()?.imageUrl"
+              alt="Image du ticket"
+              class="ticket-image"
+              width="200"
+              height="150"
+              (click)="openImageModal(ticket()?.imageUrl || '')"
+            />
           </div>
         </div>
       </div>
@@ -424,7 +431,7 @@
           <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
-      <img [src]="selectedImageUrl()" alt="Image du ticket" class="full-size-image" />
+      <img [src]="selectedImageUrl()" alt="Image du ticket" class="full-size-image" width="800" height="600" />
     </div>
   </div>
 </div>

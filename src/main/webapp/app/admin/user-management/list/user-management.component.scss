@@ -1,49 +1,32 @@
-// Modern Design Variables
-$primary-color: #667eea;
-$primary-light: #818cf8;
-$primary-dark: #4f46e5;
-$success-color: #10b981;
-$warning-color: #f59e0b;
-$danger-color: #ef4444;
-$info-color: #06b6d4;
-$gray-50: #f8fafc;
-$gray-100: #f1f5f9;
-$gray-200: #e2e8f0;
-$gray-300: #cbd5e1;
-$gray-400: #94a3b8;
-$gray-500: #64748b;
-$gray-600: #475569;
-$gray-700: #334155;
-$gray-800: #1e293b;
-$gray-900: #0f172a;
-
-// Modern Mixins
-@mixin glassmorphism {
+$pri: #667eea;
+$pri-l: #818cf8;
+$pri-d: #4f46e5;
+$ok: #10b981;
+$warn: #f59e0b;
+$err: #ef4444;
+$info: #06b6d4;
+$g50: #f8fafc;
+$g100: #f1f5f9;
+$g200: #e2e8f0;
+$g500: #64748b;
+$g600: #475569;
+$g700: #334155;
+$g900: #0f172a;
+@mixin glass {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(102, 126, 234, 0.2);
 }
-
-@mixin modern-shadow {
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+@mixin sh {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-@mixin modern-shadow-hover {
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+@mixin sh-hover {
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
 }
-
-@mixin smooth-transition {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+@mixin tr {
+  transition: all 0.2s ease;
 }
-
-@mixin gradient-bg($start, $end) {
-  background: linear-gradient(135deg, $start 0%, $end 100%);
+@mixin grad($s, $e) {
+  background: linear-gradient(135deg, $s, $e);
 }
 
 // Main Container
@@ -71,11 +54,11 @@ $gray-900: #0f172a;
 
 // Header Section
 .admin-users-header {
-  @include glassmorphism;
+  @include glass;
   border-radius: 24px;
   padding: 2.5rem;
   margin-bottom: 2.5rem;
-  @include modern-shadow;
+  @include sh;
   position: relative;
   overflow: hidden;
 
@@ -92,7 +75,7 @@ $gray-900: #0f172a;
   h2 {
     font-size: 2.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, $gray-900, $primary-color);
+    background: linear-gradient(135deg, $g900, $pri);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -101,7 +84,7 @@ $gray-900: #0f172a;
   }
 
   p {
-    color: $gray-600;
+    color: $g600;
     font-size: 1.125rem;
     margin: 0;
     font-weight: 500;
@@ -118,17 +101,17 @@ $gray-900: #0f172a;
 }
 
 .stats-card {
-  @include glassmorphism;
+  @include glass;
   border-radius: 20px;
   padding: 1.5rem 2rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  @include modern-shadow;
-  @include smooth-transition;
+  @include sh;
+  @include tr;
 
   &:hover {
-    @include modern-shadow-hover;
+    @include sh-hover;
     transform: translateY(-2px);
   }
 
@@ -139,7 +122,7 @@ $gray-900: #0f172a;
     svg {
       width: 2rem;
       height: 2rem;
-      color: $primary-color;
+      color: $pri;
       filter: drop-shadow(0 2px 4px rgba(99, 102, 241, 0.3));
     }
   }
@@ -148,13 +131,13 @@ $gray-900: #0f172a;
     h3 {
       font-size: 2rem;
       font-weight: 800;
-      color: $primary-color;
+      color: $pri;
       margin: 0;
       line-height: 1;
     }
 
     p {
-      color: $gray-600;
+      color: $g600;
       font-size: 0.9rem;
       font-weight: 600;
       margin: 0;
@@ -179,8 +162,8 @@ $gray-900: #0f172a;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  @include smooth-transition;
-  @include modern-shadow;
+  @include tr;
+  @include sh;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
@@ -211,7 +194,7 @@ $gray-900: #0f172a;
   }
 
   &.btn-refresh {
-    background: linear-gradient(135deg, $info-color, #0891b2);
+    background: linear-gradient(135deg, $info, #0891b2);
     color: white;
 
     &:hover:not(:disabled) {
@@ -220,7 +203,7 @@ $gray-900: #0f172a;
   }
 
   &.add-user-btn {
-    @include gradient-bg($primary-color, $primary-light);
+    @include grad($pri, $pri-l);
     color: white;
 
     &:hover:not(:disabled) {
@@ -233,10 +216,10 @@ $gray-900: #0f172a;
 .users-table-container {
   border-radius: 20px;
   overflow: hidden;
-  @include modern-shadow;
+  @include sh;
   margin-bottom: 2rem;
   background: #fff;
-  border: 1px solid $gray-200;
+  border: 1px solid $g200;
 }
 
 // Modern Table Styles
@@ -295,8 +278,8 @@ $gray-900: #0f172a;
   } // Actions (increased)
 
   th {
-    background: $gray-100;
-    color: $gray-900;
+    background: $g100;
+    color: $g900;
     font-weight: 700;
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -323,18 +306,18 @@ $gray-900: #0f172a;
   }
 
   td {
-    color: $gray-700;
+    color: $g700;
     font-weight: 500;
     font-size: 0.95rem;
-    @include smooth-transition;
+    @include tr;
     background: #fff;
   }
 
   tbody tr {
-    @include smooth-transition;
+    @include tr;
 
     &:hover {
-      background: $gray-50;
+      background: $g50;
       transform: translateY(-1px);
     }
 
@@ -360,7 +343,7 @@ $gray-900: #0f172a;
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, $primary-color, $primary-light);
+    background: linear-gradient(135deg, $pri, $pri-l);
     color: white;
     display: flex;
     align-items: center;
@@ -376,7 +359,7 @@ $gray-900: #0f172a;
     flex: 1;
 
     strong {
-      color: $gray-900;
+      color: $g900;
       font-size: 1rem;
       display: block;
       white-space: nowrap;
@@ -391,10 +374,10 @@ $gray-900: #0f172a;
   min-width: 0; // Allow text to be truncated
 
   .email-link {
-    color: $primary-color;
+    color: $pri;
     text-decoration: none;
     font-weight: 500;
-    @include smooth-transition;
+    @include tr;
     display: block;
     white-space: nowrap;
     overflow: hidden;
@@ -402,7 +385,7 @@ $gray-900: #0f172a;
     cursor: help; // Indicate that there's more content
 
     &:hover {
-      color: $primary-dark;
+      color: $pri-d;
       text-decoration: underline;
     }
   }
@@ -419,14 +402,14 @@ $gray-900: #0f172a;
   display: inline-block;
   border: none;
   cursor: pointer;
-  @include smooth-transition;
+  @include tr;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 80px;
   text-align: center;
 
   &.status-active {
     background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-    color: $success-color;
+    color: $ok;
     border: 1px solid rgba(16, 185, 129, 0.2);
 
     &:hover:not(:disabled) {
@@ -443,7 +426,7 @@ $gray-900: #0f172a;
 
   &.status-inactive {
     background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    color: $danger-color;
+    color: $err;
     border: 1px solid rgba(239, 68, 68, 0.2);
 
     &:hover:not(:disabled) {
@@ -461,7 +444,7 @@ $gray-900: #0f172a;
   font-size: 0.8rem;
   font-weight: 600;
   background: linear-gradient(135deg, #eff6ff, #dbeafe);
-  color: $primary-color;
+  color: $pri;
   border: 1px solid rgba(99, 102, 241, 0.2);
   display: inline-block;
 }
@@ -480,7 +463,7 @@ $gray-900: #0f172a;
   font-size: 0.8rem;
   font-weight: 600;
   background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  color: $info-color;
+  color: $info;
   border: 1px solid rgba(6, 182, 212, 0.2);
   display: inline-block;
   text-align: center;
@@ -519,15 +502,15 @@ $gray-900: #0f172a;
       display: flex;
       align-items: center;
       justify-content: center;
-      @include smooth-transition;
-      @include modern-shadow;
+      @include tr;
+      @include sh;
 
       &:hover:not(:disabled) {
         transform: translateY(-2px);
       }
 
       &.btn-view {
-        background: linear-gradient(135deg, $info-color, #0891b2);
+        background: linear-gradient(135deg, $info, #0891b2);
         color: white;
 
         &:hover:not(:disabled) {
@@ -536,7 +519,7 @@ $gray-900: #0f172a;
       }
 
       &.btn-edit {
-        background: linear-gradient(135deg, $warning-color, #fbbf24);
+        background: linear-gradient(135deg, $warn, #fbbf24);
         color: white;
 
         &:hover:not(:disabled) {
@@ -545,7 +528,7 @@ $gray-900: #0f172a;
       }
 
       &.btn-role {
-        background: linear-gradient(135deg, $info-color, #22d3ee);
+        background: linear-gradient(135deg, $info, #22d3ee);
         color: white;
 
         &:hover:not(:disabled) {
@@ -554,7 +537,7 @@ $gray-900: #0f172a;
       }
 
       &.btn-delete {
-        background: linear-gradient(135deg, $danger-color, #f87171);
+        background: linear-gradient(135deg, $err, #f87171);
         color: white;
 
         &:hover:not(:disabled) {
@@ -583,10 +566,10 @@ $gray-900: #0f172a;
 
 // Pagination Section
 .pagination-section {
-  @include glassmorphism;
+  @include glass;
   border-radius: 20px;
   padding: 2rem;
-  @include modern-shadow;
+  @include sh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -594,7 +577,7 @@ $gray-900: #0f172a;
 }
 
 .pagination-info {
-  color: $gray-600;
+  color: $g600;
   font-weight: 500;
 }
 
@@ -604,16 +587,16 @@ $gray-900: #0f172a;
       .page-link {
         border: none;
         background: rgba(255, 255, 255, 0.1);
-        color: $gray-700;
+        color: $g700;
         border-radius: 12px;
         margin: 0 0.25rem;
         padding: 0.75rem 1rem;
         font-weight: 600;
-        @include smooth-transition;
+        @include tr;
 
         &:hover {
           background: rgba(255, 255, 255, 0.2);
-          color: $primary-color;
+          color: $pri;
           transform: translateY(-1px);
         }
 
@@ -623,7 +606,7 @@ $gray-900: #0f172a;
       }
 
       .page-item.active .page-link {
-        background: linear-gradient(135deg, $primary-color, $primary-light);
+        background: linear-gradient(135deg, $pri, $pri-l);
         color: white;
         box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
       }

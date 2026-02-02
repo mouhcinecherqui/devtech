@@ -22,15 +22,7 @@ import { AlertService } from '../../../core/util/alert.service';
   selector: 'jhi-user-mgmt',
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.scss'],
-  imports: [
-    RouterModule,
-    SharedModule,
-    SortDirective,
-    SortByDirective,
-    ItemCountComponent,
-    UserManagementRoleDialogComponent,
-    RefreshButtonComponent,
-  ],
+  imports: [RouterModule, SharedModule, SortDirective, SortByDirective, ItemCountComponent, RefreshButtonComponent],
 })
 export default class UserManagementComponent implements OnInit {
   currentAccount = inject(AccountService).trackCurrentAccount();

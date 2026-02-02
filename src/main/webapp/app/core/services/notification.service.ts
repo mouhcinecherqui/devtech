@@ -9,13 +9,15 @@ export interface Notification {
   title: string;
   message: string;
   type: 'info' | 'success' | 'warning' | 'error';
+  /** Type brut du backend (TICKET_CREATED, MESSAGE_RECEIVED, etc.) pour icônes */
+  rawType?: string;
   timestamp: string;
   read: boolean;
   userId?: number;
   ticketId?: number;
   paymentId?: number;
   actionUrl?: string;
-  createdDate?: string; // Ajouté pour compatibilité avec le backend
+  createdDate?: string;
 }
 
 export interface NotificationStats {
@@ -42,7 +44,7 @@ export class NotificationService {
   private readonly lastFetch = signal<Date | null>(null);
 
   // Observable pour le rafraîchissement automatique
-  private refreshInterval$ = new BehaviorSubject<number>(10000); // 10 secondes par défaut
+  private refreshInterval$ = new BehaviorSubject<number>(5000); // 5 secondes par défaut
   private isEnabled$ = new BehaviorSubject<boolean>(true);
   private destroy$ = new BehaviorSubject<boolean>(false);
 
@@ -108,6 +110,7 @@ export class NotificationService {
           title: notif.title || 'Notification',
           message: notif.message || 'Message par défaut',
           type: this.mapNotificationType(notif.type),
+          rawType: notif.type,
           timestamp: notif.timestamp || notif.createdDate || new Date().toISOString(),
           read: notif.read || false,
           userId: notif.userId,

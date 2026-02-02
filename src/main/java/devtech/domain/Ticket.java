@@ -67,6 +67,10 @@ public class Ticket implements Serializable {
     @Column(name = "paiement_id")
     private Long paiementId;
 
+    /** Chemin du justificatif de paiement (virement) déposé par le client */
+    @Column(name = "payment_proof_file_path", length = 500)
+    private String paymentProofFilePath;
+
     @JsonIgnore
     @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TicketMessage> messages = new ArrayList<>();
@@ -225,6 +229,14 @@ public class Ticket implements Serializable {
 
     public void setPaiementId(Long paiementId) {
         this.paiementId = paiementId;
+    }
+
+    public String getPaymentProofFilePath() {
+        return paymentProofFilePath;
+    }
+
+    public void setPaymentProofFilePath(String paymentProofFilePath) {
+        this.paymentProofFilePath = paymentProofFilePath;
     }
 
     @JsonIgnore

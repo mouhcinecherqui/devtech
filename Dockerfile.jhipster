@@ -13,15 +13,20 @@ WORKDIR /app
 
 # Copy Maven wrapper and pom.xml d'abord (pour optimiser le cache)
 COPY mvnw .
-RUN chmod +x mvnw
 COPY .mvn .mvn
 COPY pom.xml .
+
+# Corriger les fins de ligne CRLF (Windows) pour mvnw et .mvn (sinon distributionUrl invalide)
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw && find .mvn -type f -exec sed -i 's/\r$//' {} \;
 
 # Download dependencies (cette couche sera mise en cache si pom.xml ne change pas)
 RUN ./mvnw dependency:go-offline -B
 
 # Copier le code source seulement après l'installation des dépendances
 COPY . .
+
+# Réappliquer CRLF -> LF sur mvnw/.mvn (COPY . . les a réécrits depuis le contexte Windows)
+RUN sed -i 's/\r$//' mvnw && chmod +x mvnw && find .mvn -type f -exec sed -i 's/\r$//' {} \;
 
 # Build the application (avec frontend intégré)
 # Les erreurs Sass critiques ont été corrigées dans le code source

@@ -69,10 +69,15 @@
           </div>
         } @else {
           @for (notification of recentNotifications(); track notification.id) {
-            <div class="notification-item" [class.unread]="!notification.read">
+            <div
+              class="notification-item"
+              [class.unread]="!notification.read"
+              [class.clickable]="notification.actionUrl"
+              (click)="onNotificationClick(notification)"
+            >
               <!-- Icône de notification -->
-              <div class="notification-icon" [class]="'icon-' + getNotificationColor(notification.type)">
-                @switch (getNotificationIcon(notification.type)) {
+              <div class="notification-icon" [class]="'icon-' + getNotificationColor(getDisplayType(notification))">
+                @switch (getNotificationIcon(getDisplayType(notification))) {
                   @case ('ticket') {
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path

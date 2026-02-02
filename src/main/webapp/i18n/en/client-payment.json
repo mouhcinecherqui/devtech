@@ -119,7 +119,7 @@
       "bic": "CIHMMAMC",
       "referenceLabel": "Reference",
       "referenceValue": "Add your invoice number or email in the transfer reference",
-      "note": "After your transfer, send the receipt to support@devtechly.com for a faster confirmation."
+      "note": "After your transfer, send the receipt to contact.devtechly@gmail.com for a faster confirmation."
     },
     "paypal": {
       "title": "Pay with PayPal",

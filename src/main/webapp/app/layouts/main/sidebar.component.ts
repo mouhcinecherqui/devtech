@@ -2,7 +2,7 @@ import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AccountService } from 'app/core/auth/account.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
-import { JsonPipe, CommonModule } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import SharedModule from '../../shared/shared.module';
 import { SidebarService } from './sidebar.service';
@@ -14,7 +14,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [RouterModule, JsonPipe, CommonModule, SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   constructor(public accountService: AccountService) {}

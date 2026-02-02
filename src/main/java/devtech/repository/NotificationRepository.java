@@ -1,6 +1,7 @@
 package devtechly.repository;
 
 import devtechly.domain.Notification;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -26,9 +27,19 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
     Page<Notification> findByUserLoginOrderByTimestampDesc(String userLogin, Pageable pageable);
 
     /**
+     * Find notifications by user login OR email (for OAuth2: login = email; for User: login and email can differ)
+     */
+    Page<Notification> findByUserLoginInOrderByTimestampDesc(Collection<String> userLogins, Pageable pageable);
+
+    /**
      * Find a notification for a specific user by id
      */
     Optional<Notification> findByIdAndUserLogin(Long id, String userLogin);
+
+    /**
+     * Find a notification by id when userLogin is one of the given identifiers (login or email)
+     */
+    Optional<Notification> findByIdAndUserLoginIn(Long id, Collection<String> userLogins);
 
     /**
      * Find all unread notifications
@@ -44,6 +55,11 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
      * Find unread notifications by user login
      */
     List<Notification> findByUserLoginAndReadFalse(String userLogin);
+
+    /**
+     * Find unread notifications by user login or email
+     */
+    List<Notification> findByUserLoginInAndReadFalse(Collection<String> userLogins);
 
     /**
      * Count unread notifications by user ID

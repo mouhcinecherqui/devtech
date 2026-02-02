@@ -176,7 +176,9 @@ $gray-900: #0f172a;
     border-left: 3px solid $primary-color;
   }
 
-  // Styles cliquables supprimés
+  &.clickable {
+    cursor: pointer;
+  }
 
   &:last-child {
     border-bottom: none;

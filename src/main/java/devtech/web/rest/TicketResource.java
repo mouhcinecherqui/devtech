@@ -16,6 +16,7 @@ import devtechly.service.ActivityIntegrationService;
 import devtechly.service.ClientEmailService;
 import devtechly.service.MailService;
 import devtechly.service.NotificationService;
+import devtechly.service.TicketDevisService;
 import devtechly.service.TicketMessageService;
 import jakarta.validation.Valid;
 import java.io.File;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +59,7 @@ public class TicketResource {
     private final MailService mailService;
     private final NotificationService notificationService;
     private final TicketMessageService ticketMessageService;
+    private final TicketDevisService ticketDevisService;
     private final ApplicationProperties applicationProperties;
     private final TicketMessageRepository ticketMessageRepository;
     private final UserRepository userRepository;
@@ -69,6 +72,7 @@ public class TicketResource {
         MailService mailService,
         NotificationService notificationService,
         TicketMessageService ticketMessageService,
+        TicketDevisService ticketDevisService,
         ApplicationProperties applicationProperties,
         TicketMessageRepository ticketMessageRepository,
         UserRepository userRepository,
@@ -80,6 +84,7 @@ public class TicketResource {
         this.mailService = mailService;
         this.notificationService = notificationService;
         this.ticketMessageService = ticketMessageService;
+        this.ticketDevisService = ticketDevisService;
         this.applicationProperties = applicationProperties;
         this.ticketMessageRepository = ticketMessageRepository;
         this.userRepository = userRepository;
@@ -597,80 +602,102 @@ public class TicketResource {
             // S'assurer que les messages ne sont pas chargés pour éviter les problèmes de sérialisation
             updated.setMessages(new ArrayList<>());
 
-            // Envoyer email au client si le statut a changé
-            if (!oldStatus.equals(updated.getStatus())) {
-                // Créer une activité pour le changement de statut
-                activityIntegrationService.createTicketStatusUpdatedActivity(updated, oldStatus, updated.getStatus());
+            // Effets de bord (emails, notifications, activité) : ne pas faire échouer la requête si un échoue
+            try {
+                // Envoyer email au client si le statut a changé
+                if (!oldStatus.equals(updated.getStatus())) {
+                    try {
+                        activityIntegrationService.createTicketStatusUpdatedActivity(updated, oldStatus, updated.getStatus());
+                    } catch (Exception e) {
+                        LOG.error("Erreur lors de la création de l'activité de changement de statut: {}", e.getMessage());
+                    }
+                    AppUser clientStatus = getAppUserByLogin(existing.getCreatedBy());
+                    if (clientStatus != null) {
+                        try {
+                            clientEmailService.sendTicketStatusChangedEmail(clientStatus, updated, oldStatus, updated.getStatus());
+                            LOG.info("Email de changement de statut envoyé au client: {}", clientStatus.getEmail());
+                        } catch (Exception e) {
+                            LOG.error(
+                                "Erreur lors de l'envoi de l'email de changement de statut au client {}: {}",
+                                clientStatus.getEmail(),
+                                e.getMessage()
+                            );
+                        }
+                    }
+                }
 
+                // Envoyer email de mise à jour générale au client
                 AppUser client = getAppUserByLogin(existing.getCreatedBy());
                 if (client != null) {
                     try {
-                        clientEmailService.sendTicketStatusChangedEmail(client, updated, oldStatus, updated.getStatus());
-                        LOG.info("Email de changement de statut envoyé au client: {}", client.getEmail());
+                        clientEmailService.sendTicketUpdatedEmail(client, updated);
+                        LOG.info("Email de mise à jour de ticket envoyé au client: {}", client.getEmail());
                     } catch (Exception e) {
                         LOG.error(
-                            "Erreur lors de l'envoi de l'email de changement de statut au client {}: {}",
+                            "Erreur lors de l'envoi de l'email de mise à jour de ticket au client {}: {}",
                             client.getEmail(),
                             e.getMessage()
                         );
                     }
                 }
-            }
 
-            // Envoyer email de mise à jour générale
-            AppUser client = getAppUserByLogin(existing.getCreatedBy());
-            if (client != null) {
+                // Email admin (ne pas faire échouer la requête si l'envoi échoue, ex. config SMTP)
                 try {
-                    clientEmailService.sendTicketUpdatedEmail(client, updated);
-                    LOG.info("Email de mise à jour de ticket envoyé au client: {}", client.getEmail());
+                    mailService.sendTicketUpdatedEmail(updated);
                 } catch (Exception e) {
-                    LOG.error(
-                        "Erreur lors de l'envoi de l'email de mise à jour de ticket au client {}: {}",
-                        client.getEmail(),
-                        e.getMessage()
-                    );
+                    LOG.error("Erreur lors de l'envoi de l'email de mise à jour à l'admin: {}", e.getMessage());
                 }
+
+                // Notifications pour les mises à jour de tickets
+                if (!existing.getCreatedBy().equals(login)) {
+                    try {
+                        notificationService.notifyClient(
+                            existing.getCreatedBy(),
+                            "Votre ticket #" +
+                            updated.getId() +
+                            " a été mis à jour par " +
+                            login +
+                            (updated.getStatus() != null ? " - Statut: " + updated.getStatus() : ""),
+                            "TICKET_UPDATED",
+                            updated.getId(),
+                            "/tickets/" + updated.getId()
+                        );
+                        notificationService.notifyUser(
+                            login,
+                            "Vous avez mis à jour le ticket #" + updated.getId() + " de " + existing.getCreatedBy(),
+                            "TICKET_UPDATED",
+                            updated.getId(),
+                            "/admin/tickets/" + updated.getId(),
+                            null
+                        );
+                    } catch (Exception e) {
+                        LOG.error("Erreur lors de l'envoi des notifications (ticket mis à jour): {}", e.getMessage());
+                    }
+                } else {
+                    try {
+                        notificationService.notifyAdmins(
+                            "Le client " +
+                            login +
+                            " a mis à jour son ticket #" +
+                            updated.getId() +
+                            (updated.getStatus() != null ? " - Nouveau statut: " + updated.getStatus() : ""),
+                            "TICKET_UPDATED",
+                            updated.getId(),
+                            "/admin/tickets/" + updated.getId()
+                        );
+                    } catch (Exception e) {
+                        LOG.error("Erreur lors de l'envoi des notifications aux admins: {}", e.getMessage());
+                    }
+                }
+            } catch (Exception sideEffectEx) {
+                LOG.error(
+                    "Erreur lors des effets de bord après mise à jour du ticket {} (ticket tout de même enregistré): {}",
+                    id,
+                    sideEffectEx.getMessage(),
+                    sideEffectEx
+                );
             }
 
-            mailService.sendTicketUpdatedEmail(updated);
-
-            // Notifications pour les mises à jour de tickets
-            if (!existing.getCreatedBy().equals(login)) {
-                // Admin met à jour le ticket -> notifier le client
-                notificationService.notifyClient(
-                    existing.getCreatedBy(),
-                    "Votre ticket #" +
-                    updated.getId() +
-                    " a été mis à jour par " +
-                    login +
-                    (updated.getStatus() != null ? " - Statut: " + updated.getStatus() : ""),
-                    "TICKET_UPDATED",
-                    updated.getId(),
-                    "/tickets/" + updated.getId()
-                );
-
-                // Notifier l'admin qui a fait la mise à jour
-                notificationService.notifyUser(
-                    login,
-                    "Vous avez mis à jour le ticket #" + updated.getId() + " de " + existing.getCreatedBy(),
-                    "TICKET_UPDATED",
-                    updated.getId(),
-                    "/admin/tickets/" + updated.getId(),
-                    null
-                );
-            } else {
-                // Client met à jour son propre ticket -> notifier les admins
-                notificationService.notifyAdmins(
-                    "Le client " +
-                    login +
-                    " a mis à jour son ticket #" +
-                    updated.getId() +
-                    (updated.getStatus() != null ? " - Nouveau statut: " + updated.getStatus() : ""),
-                    "TICKET_UPDATED",
-                    updated.getId(),
-                    "/admin/tickets/" + updated.getId()
-                );
-            }
             return ResponseEntity.ok(updated);
         } catch (Exception e) {
             LOG.error("Erreur lors de la sauvegarde du ticket {}: {}", id, e.getMessage(), e);
@@ -761,50 +788,52 @@ public class TicketResource {
                 TicketMessage savedMessage = ticketMessageRepository.save(message);
                 LOG.info("Message sauvegardé avec succès, ID: {}", savedMessage.getId());
 
-                // Créer les notifications appropriées
-                if (isAdmin) {
-                    // Message de l'admin -> notifier le client
-                    notificationService.notifyClient(
-                        ticket.getCreatedBy(),
-                        "Réponse reçue sur votre ticket #" + id + " : " + content.substring(0, Math.min(content.length(), 50)) + "...",
-                        "MESSAGE_RECEIVED",
-                        id,
-                        "/tickets/" + id
-                    );
-
-                    // Envoyer email au client
-                    AppUser client = getAppUserByLogin(ticket.getCreatedBy());
-                    if (client != null) {
-                        try {
-                            // Créer un objet Message temporaire pour l'email
-                            Message messageForEmail = new Message();
-                            messageForEmail.setSender("Équipe devtechly");
-                            messageForEmail.setContent(content.trim());
-                            messageForEmail.setCreatedDate(Instant.now());
-
-                            clientEmailService.sendTicketMessageEmail(client, ticket, messageForEmail);
-                            LOG.info("Email de nouveau message envoyé au client: {}", client.getEmail());
-                        } catch (Exception e) {
-                            LOG.error(
-                                "Erreur lors de l'envoi de l'email de nouveau message au client {}: {}",
-                                client.getEmail(),
-                                e.getMessage()
-                            );
+                // Créer les notifications appropriées (ne pas faire échouer la requête si notification/email échouent)
+                try {
+                    if (isAdmin) {
+                        notificationService.notifyClient(
+                            ticket.getCreatedBy(),
+                            "Réponse reçue sur votre ticket #" + id + " : " + content.substring(0, Math.min(content.length(), 50)) + "...",
+                            "MESSAGE_RECEIVED",
+                            id,
+                            "/tickets/" + id
+                        );
+                        AppUser client = getAppUserByLogin(ticket.getCreatedBy());
+                        if (client != null) {
+                            try {
+                                Message messageForEmail = new Message();
+                                messageForEmail.setSender("Équipe devtechly");
+                                messageForEmail.setContent(content.trim());
+                                messageForEmail.setCreatedDate(Instant.now());
+                                clientEmailService.sendTicketMessageEmail(client, ticket, messageForEmail);
+                                LOG.info("Email de nouveau message envoyé au client: {}", client.getEmail());
+                            } catch (Exception e) {
+                                LOG.error(
+                                    "Erreur lors de l'envoi de l'email de nouveau message au client {}: {}",
+                                    client.getEmail(),
+                                    e.getMessage()
+                                );
+                            }
                         }
+                    } else {
+                        notificationService.notifyAdmins(
+                            "Nouveau message de " +
+                            login +
+                            " sur le ticket #" +
+                            id +
+                            " : " +
+                            content.substring(0, Math.min(content.length(), 50)) +
+                            "...",
+                            "MESSAGE_RECEIVED",
+                            id,
+                            "/admin/tickets/" + id
+                        );
                     }
-                } else {
-                    // Message du client -> notifier les admins
-                    notificationService.notifyAdmins(
-                        "Nouveau message de " +
-                        login +
-                        " sur le ticket #" +
-                        id +
-                        " : " +
-                        content.substring(0, Math.min(content.length(), 50)) +
-                        "...",
-                        "MESSAGE_RECEIVED",
-                        id,
-                        "/admin/tickets/" + id
+                } catch (Exception notifEx) {
+                    LOG.error(
+                        "Erreur lors de l'envoi de la notification (message tout de même enregistré): {}",
+                        notifEx.getMessage(),
+                        notifEx
                     );
                 }
 
@@ -824,18 +853,23 @@ public class TicketResource {
 
                 // Vérifier si c'est un problème de table
                 try {
-                    // Test simple pour vérifier l'état de la table
                     long count = ticketMessageRepository.count();
                     LOG.info("Nombre total de messages en base: {}", count);
                 } catch (Exception countError) {
                     LOG.error("Impossible de compter les messages - problème de table: {}", countError.getMessage());
                 }
 
-                return ResponseEntity.status(500).build();
+                Map<String, Object> errorBody = new HashMap<>();
+                errorBody.put("success", false);
+                errorBody.put("error", "Erreur lors de l'enregistrement du message.");
+                return ResponseEntity.status(500).body(errorBody);
             }
         } catch (Exception e) {
             LOG.error("Erreur lors de l'ajout du message pour le ticket {}: {}", id, e.getMessage(), e);
-            return ResponseEntity.status(500).build();
+            Map<String, Object> errorBody = new HashMap<>();
+            errorBody.put("success", false);
+            errorBody.put("error", "Erreur serveur.");
+            return ResponseEntity.status(500).body(errorBody);
         }
     }
 
@@ -898,14 +932,64 @@ public class TicketResource {
 
     // Déterminer le type MIME basé sur l'extension
     private String determineContentType(String filename) {
-        String extension = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
+        int lastDot = filename.lastIndexOf(".");
+        if (lastDot < 0) return "application/octet-stream";
+        String extension = filename.substring(lastDot + 1).toLowerCase();
         return switch (extension) {
             case "jpg", "jpeg" -> "image/jpeg";
             case "png" -> "image/png";
             case "gif" -> "image/gif";
             case "webp" -> "image/webp";
+            case "pdf" -> "application/pdf";
             default -> "application/octet-stream";
         };
+    }
+
+    /**
+     * Upload du justificatif de paiement (virement) pour un ticket.
+     * Réservé au créateur du ticket (client).
+     */
+    @PostMapping(value = "/{id}/payment-proof", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Transactional
+    public ResponseEntity<Void> uploadPaymentProof(@PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        if (login == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        Ticket ticket = ticketRepository.findById(id).orElse(null);
+        if (ticket == null) return ResponseEntity.notFound().build();
+
+        if (!ticket.getCreatedBy().equals(login)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        long maxFileSize = applicationProperties.getUpload().getMaxFileSizeInBytes();
+        if (file.getSize() > Math.min(maxFileSize, 10 * 1024 * 1024)) { // max 10 Mo
+            return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).build();
+        }
+
+        String originalFilename = StringUtils.cleanPath(file.getOriginalFilename() != null ? file.getOriginalFilename() : "file");
+        String ext = "";
+        if (originalFilename.contains(".")) {
+            ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+        String lower = ext.toLowerCase();
+        if (!lower.matches("\\.(jpg|jpeg|png|gif|webp|pdf)")) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            String path = saveImage(file); // réutilise la même logique (nom unique, même dossier)
+            ticket.setPaymentProofFilePath(path);
+            ticketRepository.save(ticket);
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            LOG.error("Erreur lors de l'upload du justificatif de paiement pour le ticket {}: {}", id, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     private boolean isAdmin(String login) {
@@ -1247,127 +1331,91 @@ public class TicketResource {
     }
 
     // Endpoint pour accepter un devis (par le client)
+    // Pas de @Transactional ici : la transaction est dans TicketDevisService pour éviter "rollback-only"
     @PutMapping("/{id}/accept-devis")
-    @Transactional
-    public ResponseEntity<Map<String, Object>> acceptDevis(@PathVariable Long id, @RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> acceptDevis(
+        @PathVariable Long id,
+        @RequestBody(required = false) Map<String, Object> request
+    ) {
+        if (request == null) {
+            request = new HashMap<>();
+        }
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        if (login == null || login.isBlank()) {
+            return ResponseEntity.status(401).build();
+        }
+        Ticket ticket = ticketRepository.findById(id).orElse(null);
+        if (ticket == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (!Objects.equals(login, ticket.getCreatedBy())) {
+            return ResponseEntity.status(403).build();
+        }
+        if (!"Nouveau".equals(ticket.getStatus())) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Le devis ne peut être accepté que si le ticket est au statut 'Nouveau'");
+            return ResponseEntity.badRequest().body(response);
+        }
         try {
-            String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-            if (login == null) {
-                return ResponseEntity.status(401).build();
-            }
-
-            Ticket ticket = ticketRepository.findById(id).orElse(null);
-            if (ticket == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            // Vérifier que l'utilisateur est le créateur du ticket
-            if (!ticket.getCreatedBy().equals(login)) {
-                return ResponseEntity.status(403).build();
-            }
-
-            // Vérifier que le ticket est au bon statut
-            if (!"Nouveau".equals(ticket.getStatus())) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("success", false);
-                response.put("message", "Le devis ne peut être accepté que si le ticket est au statut 'Nouveau'");
-                return ResponseEntity.badRequest().body(response);
-            }
-
-            // Extraire les informations du devis
-            Double amount = request.get("amount") != null ? Double.valueOf(request.get("amount").toString()) : null;
-            String description = request.get("description") != null ? request.get("description").toString() : "";
-            Integer devisIndex = request.get("devisIndex") != null ? Integer.valueOf(request.get("devisIndex").toString()) : null;
-
-            // Mettre à jour le statut du ticket
-            ticket.setStatus("Devis validé");
-            ticket.setPaymentStatus("PENDING");
-
-            // Ajouter un message de confirmation
-            String confirmationMessage = String.format(
-                "J'accepte le devis #%d d'un montant de %.2f MAD. %s",
-                devisIndex != null ? devisIndex + 1 : 1,
-                amount,
-                description
-            );
-            ticketMessageService.addMessage(id, confirmationMessage, TicketMessage.AuthorType.CLIENT, login);
-
-            ticketRepository.save(ticket);
-
-            // Envoyer une notification à l'admin
-            notificationService.notifyUser("admin", "Le client a accepté le devis pour le ticket #" + id, "DEVIS_ACCEPTED");
-
+            ticketDevisService.acceptDevis(id, login, request);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "Devis accepté avec succès");
-
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Erreur lors de l'acceptation du devis", e);
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Erreur lors de l'acceptation du devis");
+            if (e.getMessage() != null && !e.getMessage().isBlank()) {
+                response.put("detail", e.getMessage());
+            }
             return ResponseEntity.badRequest().body(response);
         }
     }
 
     // Endpoint pour refuser un devis (par le client)
+    // Pas de @Transactional ici : la transaction est dans TicketDevisService pour éviter "rollback-only"
     @PutMapping("/{id}/reject-devis")
-    @Transactional
-    public ResponseEntity<Map<String, Object>> rejectDevis(@PathVariable Long id, @RequestBody Map<String, Object> request) {
+    public ResponseEntity<Map<String, Object>> rejectDevis(
+        @PathVariable Long id,
+        @RequestBody(required = false) Map<String, Object> request
+    ) {
+        if (request == null) {
+            request = new HashMap<>();
+        }
+        String login = SecurityUtils.getCurrentUserLogin().orElse(null);
+        if (login == null || login.isBlank()) {
+            return ResponseEntity.status(401).build();
+        }
+        Ticket ticket = ticketRepository.findById(id).orElse(null);
+        if (ticket == null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (!Objects.equals(login, ticket.getCreatedBy())) {
+            return ResponseEntity.status(403).build();
+        }
+        if (!"Nouveau".equals(ticket.getStatus())) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", false);
+            response.put("message", "Le devis ne peut être refusé que si le ticket est au statut 'Nouveau'");
+            return ResponseEntity.badRequest().body(response);
+        }
         try {
-            String login = SecurityUtils.getCurrentUserLogin().orElse(null);
-            if (login == null) {
-                return ResponseEntity.status(401).build();
-            }
-
-            Ticket ticket = ticketRepository.findById(id).orElse(null);
-            if (ticket == null) {
-                return ResponseEntity.notFound().build();
-            }
-
-            // Vérifier que l'utilisateur est le créateur du ticket
-            if (!ticket.getCreatedBy().equals(login)) {
-                return ResponseEntity.status(403).build();
-            }
-
-            // Vérifier que le ticket est au bon statut
-            if (!"Nouveau".equals(ticket.getStatus())) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("success", false);
-                response.put("message", "Le devis ne peut être refusé que si le ticket est au statut 'Nouveau'");
-                return ResponseEntity.badRequest().body(response);
-            }
-
-            // Extraire les informations du devis
-            Double amount = request.get("amount") != null ? Double.valueOf(request.get("amount").toString()) : null;
-            String description = request.get("description") != null ? request.get("description").toString() : "";
-            Integer devisIndex = request.get("devisIndex") != null ? Integer.valueOf(request.get("devisIndex").toString()) : null;
-
-            // Ajouter un message de refus
-            String rejectionMessage = String.format(
-                "Je refuse le devis #%d d'un montant de %.2f MAD. %s",
-                devisIndex != null ? devisIndex + 1 : 1,
-                amount,
-                description
-            );
-            ticketMessageService.addMessage(id, rejectionMessage, TicketMessage.AuthorType.CLIENT, login);
-
-            ticketRepository.save(ticket);
-
-            // Envoyer une notification à l'admin
-            notificationService.notifyUser("admin", "Le client a refusé le devis pour le ticket #" + id, "DEVIS_REJECTED");
-
+            ticketDevisService.rejectDevis(id, login, request);
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("message", "Devis refusé avec succès");
-
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             LOG.error("Erreur lors du refus du devis", e);
             Map<String, Object> response = new HashMap<>();
             response.put("success", false);
             response.put("message", "Erreur lors du refus du devis");
+            if (e.getMessage() != null && !e.getMessage().isBlank()) {
+                response.put("detail", e.getMessage());
+            }
             return ResponseEntity.badRequest().body(response);
         }
     }
@@ -1383,6 +1431,8 @@ public class TicketResource {
         public String backofficePassword;
         public String hostingUrl;
         public String imageUrl;
+        /** URL du justificatif de paiement (virement) déposé par le client */
+        public String paymentProofFileUrl;
         public String status;
         public String createdBy;
         public String clientName;
@@ -1398,6 +1448,7 @@ public class TicketResource {
             this.backofficePassword = ticket.getBackofficePassword();
             this.hostingUrl = ticket.getHostingUrl();
             this.imageUrl = ticket.getImageUrl();
+            this.paymentProofFileUrl = ticket.getPaymentProofFilePath();
             this.status = ticket.getStatus();
             this.createdBy = ticket.getCreatedBy();
             this.createdDate = ticket.getCreatedDate();

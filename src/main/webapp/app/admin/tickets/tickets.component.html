@@ -141,6 +141,8 @@
                 [src]="selectedTicket.imageUrl"
                 alt="Image du ticket"
                 class="admin-ticket-image"
+                width="200"
+                height="150"
                 (click)="openImageModal(selectedTicket.imageUrl)"
               />
               <div class="admin-ticket-image-overlay">
@@ -164,6 +166,41 @@
             </select>
           </div>
         </div>
+
+        <!-- Justificatif de paiement déposé par le client (visible dès qu'il existe, pour confirmation admin) -->
+        <div class="admin-ticket-row payment-proof-row" *ngIf="selectedTicket?.paymentProofFileUrl">
+          <div class="admin-ticket-label">Justificatif de paiement :</div>
+          <div class="admin-ticket-value">
+            <div class="payment-proof-alert">
+              <span class="payment-proof-badge">Reçu</span>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                [disabled]="loadingPaymentProof"
+                (click)="openPaymentProof(selectedTicket.paymentProofFileUrl!)"
+              >
+                <span *ngIf="!loadingPaymentProof">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  Voir le justificatif de paiement
+                </span>
+                <span *ngIf="loadingPaymentProof">Chargement...</span>
+              </button>
+            </div>
+            <p class="text-muted small mt-1 mb-0">Le client a déposé une preuve de virement. Le fichier s'ouvre avec votre session.</p>
+          </div>
+        </div>
+
         <!-- Section Chat Professionnel -->
         <div class="admin-ticket-row chat-section">
           <div class="admin-ticket-label" style="align-self: flex-start">
@@ -439,7 +476,7 @@
           <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
         </svg>
       </button>
-      <img [src]="selectedImageUrl" alt="Image du ticket" class="full-size-image" />
+      <img [src]="selectedImageUrl" alt="Image du ticket" class="full-size-image" width="800" height="600" />
     </div>
   </div>
 
